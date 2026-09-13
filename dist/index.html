@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>B.A.C: Form Articulation..... Beta</title>
+  <meta name="description" content="Import polygon linework and explore tangent shapes and line systems.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Cpath d='M7 23L12 9Q14 5 17 9L25 23' fill='none' stroke='%23000' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand"><span>B.A.C: FORM ARTICULATION..... BETA</span></div>
+  <span class="build">BUILD 04 <span>/ DUAL LINE SYSTEMS</span></span>
+  <div class="history-actions"><button id="toggle-projects" class="quiet" aria-controls="project-rail" aria-expanded="true">BOARDS −</button><button id="new-source" class="quiet">IMPORT</button><button id="toggle-controls" class="quiet" aria-controls="control-rail" aria-expanded="false">CONTROLS +</button></div>
+</header>
+<div hidden><button id="undo"></button><button id="redo"></button><button id="reset"></button></div>
+<div id="start-screen" class="start-screen" role="dialog" aria-modal="true" aria-labelledby="start-title" hidden>
+  <section class="start-card">
+    <span class="start-kicker">B.A.C / FORM ARTICULATION / BETA</span>
+    <h1 id="start-title">STARTER FORM LOADED</h1>
+    <p>A starter polygon is already active behind this panel. Use it to begin immediately, or replace it with one closed polygon of your own.</p>
+    <div class="start-grid">
+      <div class="start-option">
+        <span class="micro">REPLACE WITH LINEWORK</span>
+        <input id="source-file" type="file" accept="image/svg+xml,.svg,.dxf,.dwg,application/dxf,application/acad" hidden>
+        <button id="import-source" class="start-action">IMPORT SVG / DXF / DWG <span>↑</span></button>
+        <p class="hint">SVG: closed straight paths. DXF: closed POLYLINE/LWPOLYLINE. DWG: decoded locally in the browser.</p>
+      </div>
+      <div class="start-option">
+        <span class="micro">CHANGE STARTER FORM</span>
+        <label class="sr-only" for="sample">Sample polygon</label>
+        <select id="sample"><option value="sample:Fold">Fold</option><option value="sample:Notch">Notch</option><option value="sample:Triangle">Triangle</option></select>
+        <button id="use-sample" class="secondary">LOAD SAMPLE</button>
+      </div>
+    </div>
+    <p class="start-status" id="source-note" role="status">Coordinates are preserved for SVG and DXF export. Large shapes are fitted to the canvas without changing their source dimensions.</p>
+    <button id="cancel-start" class="start-cancel">BEGIN WITH STARTER FORM</button>
+  </section>
+</div>
+<main id="app-shell" class="controls-hidden">
+  <aside id="project-rail" class="project-rail" aria-label="Boards and saved boards">
+    <div class="project-heading"><span>BOARDS</span><button id="new-project" class="rail-add" title="New board">+</button></div>
+    <div class="project-actions"><button id="rename-project" class="rail-action">RENAME</button><button id="delete-project" class="rail-action">DELETE</button></div>
+    <div id="project-list" class="board-tree"></div>
+    <div id="iteration-list" hidden></div>
+    <div id="iteration-actions" hidden></div>
+    <p class="project-note">SAVED LOCALLY IN THIS BROWSER.</p>
+  </aside>
+  <div id="comparison-screen" class="comparison-screen" hidden role="dialog" aria-modal="true" aria-label="Compare saved iterations"><section class="comparison-panel"><div class="comparison-header"><span>COMPARE ITERATIONS</span><button id="close-comparison">CLOSE</button></div><div id="comparison-grid" class="comparison-grid"></div></section></div>
+  <section class="workspace" aria-label="Geometry workspace">
+    <div class="workspace-bar">
+      <nav class="tool-tabs" aria-label="Tools"><button data-tool="shape" class="active"><span>01</span>Shape Interpreter</button><button data-tool="lines"><span>02</span>System Line Organizer</button></nav>
+      <div class="views" id="shape-views" aria-label="Shape display"><button data-view="combined" class="active">System lines</button><button data-view="final">Final form</button></div>
+    </div>
+    <div class="drawing" id="drawing">
+      <div class="drawing-label"><span>TANGENT STUDY / <b id="sample-label">FOLD</b></span><span id="anchor-summary">08 ANCHORS</span></div>
+      <svg id="canvas" viewBox="0 0 820 720" role="img" aria-label="Interactive tangent geometry">
+        <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#eaeaea" stroke-width=".8"/><circle cx="0" cy="0" r="1.5" fill="#eaeaea"/></pattern></defs>
+        <rect width="820" height="720" fill="url(#grid)" id="grid-layer"/>
+        <g id="frame-layer" fill="none" stroke="#888" stroke-width="1"><path d="M100 135V110H125 M695 110H720V135 M720 585V610H695 M125 610H100V585"/></g>
+        <g id="geometry"></g>
+      </svg>
+      <div class="canvas-bottom"><div class="canvas-left"><span id="canvas-legend"><i class="legend-line"></i>Output <i class="legend-circle"></i>Construction</span><div class="mode-tabs" aria-label="Display mode"><button class="mode-tab active" data-mode="light">LIGHT</button><button class="mode-tab" data-mode="dark">DARK</button><button class="mode-tab" data-mode="neo">NEO</button></div></div><div class="global-controls"><label title="Shows the canvas drafting grid and corner frame"><input id="show-grid" type="checkbox" checked> Canvas grid + frame</label><label id="fill-control"><input id="fill" type="checkbox"> Fill shape</label></div></div>
+    </div>
+    <div class="statusbar"><span id="status" role="status">Continuous tangent path</span><span id="path-summary">LINE + ARC</span></div>
+  </section>
+  <aside id="control-rail" aria-label="Study controls">
+    <div id="shape-controls">
+      <section class="control-section"><div class="section-heading"><h2>Radius</h2><span class="unit" id="radius-unit">source units</span></div><div class="range-label"><label for="convex">Convex anchors</label><input id="convex-value" type="number" min="0" max="100" step="1" value="34" aria-label="Convex anchors value"></div><input id="convex" type="range" min="0" max="100" step="1" value="34"><div class="range-label"><label for="concave">Concave anchors</label><input id="concave-value" type="number" min="0" max="100" step="1" value="24" aria-label="Concave anchors value"></div><input id="concave" type="range" min="0" max="100" step="1" value="24"><p class="hint">Groups follow the imported polygon’s corners. Locked anchors are preserved.</p></section>
+      <details class="control-section selected-section point-control">
+        <summary>SPECIFIC POINT CONTROL <span>+</span></summary>
+        <div class="point-control-body">
+        <div class="section-heading"><h2 id="selection-title">Anchor 01</h2><button id="lock" class="small">Lock</button></div>
+        <div class="selection-toolbar"><button id="select-all" class="small">Select all</button><button id="deselect" class="small">Deselect</button></div>
+        <div class="set-toolbar"><label for="selection-set">SELECTION SET</label><select id="selection-set"><option value="">CURRENT SELECTION</option></select><button id="save-selection-set" class="small">SAVE SET</button><button id="delete-selection-set" class="small" disabled>DELETE</button></div>
+        <div class="anchor-pills" id="anchor-pills" aria-label="Select anchors"></div>
+        <div class="range-label"><label for="radius">Selected radius</label><input id="radius-number" aria-label="Selected radius value" type="number" min="0" max="100" step="1" value="34"></div>
+        <input id="radius" type="range" min="0" max="100" step="1" value="34" aria-label="Selected radius">
+        <span class="field-label">Wrap side</span><div class="segmented"><button id="outer">Outer</button><button id="inner">Inner</button></div>
+        <p class="hint" id="selection-detail">Convex source corner · Outer wrap</p>
+        </div>
+      </details>
+      <section class="control-section"><div class="section-heading"><h2>Variation</h2><span class="micro">SEEDED</span></div><div class="range-label"><label for="amount">Randomness</label><input id="amount-value" type="number" min="0" max="100" step="1" value="35" aria-label="Randomness value"></div><input id="amount" type="range" min="0" max="100" value="35"><div class="variation-row"><div><label for="mode">Affect</label><select id="mode"><option value="both">Radius + wrap</option><option value="radius">Radius only</option><option value="wrap">Wrap only</option></select></div><div><label for="random-target">Apply to</label><select id="random-target"><option value="all">All points</option><option value="selected">Current selection</option><option value="convex">Convex points</option><option value="concave">Concave points</option></select></div><div><label for="seed">Seed</label><input id="seed" value="1042" maxlength="24"></div></div><div class="preset-toolbar"><label for="generation-preset">PRESET</label><select id="generation-preset"><option value="">CURRENT SETUP</option></select><button id="apply-preset" class="small" disabled>APPLY</button><button id="save-preset" class="small">SAVE</button><button id="delete-preset" class="small" disabled>DELETE</button></div><button id="generate" class="primary">Generate variation <span>↗</span></button><div class="batch-row"><label for="batch-count">BATCH SIZE</label><input id="batch-count" type="number" min="2" max="12" step="1" value="4" aria-label="Batch size"><button id="generate-batch" class="primary">GENERATE + SAVE BATCH <span>↗</span></button></div><p class="hint" id="variation-note">Same seed + starting state = same result.</p></section>
+    </div>
+    <section id="network-controls" class="control-section" hidden>
+      <div class="section-heading"><h2>Line systems</h2><span class="micro">INDEPENDENT</span></div>
+      <label class="outline-toggle"><input id="show-outline" type="checkbox" checked> Show interpreted shape</label>
+      <div class="network-layers"><label><input id="show-tangents" type="checkbox" checked> Tangent lines</label><label><input id="show-centers" type="checkbox" checked> Center lines</label></div>
+      <div class="participation-control"><span class="field-label">SELECTED POINT PARTICIPATION</span><label for="tangent-participation">TANGENT</label><select id="tangent-participation"><option value="" hidden>MIXED</option><option value="0">OFF</option><option value="0.5">LOW</option><option value="1">NORMAL</option><option value="2">HIGH</option></select><label for="center-participation">CENTER</label><select id="center-participation"><option value="" hidden>MIXED</option><option value="0">OFF</option><option value="0.5">LOW</option><option value="1">NORMAL</option><option value="2">HIGH</option></select><p class="hint">Select points in Shape Interpreter, then return here to set their line participation.</p></div>
+      <details class="parameter-panel">
+        <summary><span>Tangent-line parameters</span><output id="tangent-summary">1 FROM / 1 TO</output></summary>
+        <div class="parameter-body">
+          <div class="range-label"><label for="tangent-from">Lines from · maximum</label><input id="tangent-from-value" type="number" min="1" max="10" step="1" value="1"></div><input id="tangent-from" type="range" min="1" max="10" step="1" value="1">
+          <div class="range-label"><label for="tangent-to">Lines to · maximum</label><input id="tangent-to-value" type="number" min="1" max="10" step="1" value="1"></div><input id="tangent-to" type="range" min="1" max="10" step="1" value="1">
+          <div class="range-label"><label for="tangent-connections">Arrangement</label><input id="tangent-connections-value" type="number" min="0" max="1000" step="1" value="0"></div><input id="tangent-connections" type="range" min="0" max="1000" step="1" value="0">
+          <label for="tangent-routing">Routing bias</label><select id="tangent-routing"><option value="mixed">Mixed</option><option value="short">Short links</option><option value="long">Long diagonals</option><option value="crossings">Interior crossings</option><option value="avoid-neighbors">Avoid perimeter neighbors</option></select>
+          <button id="tangent-next" class="primary">Next tangent arrangement <span>↗</span></button>
+          <p class="hint" id="tangent-note">Radius and wrap settings determine how each connection touches its anchor circles.</p>
+        </div>
+      </details>
+      <details class="parameter-panel">
+        <summary><span>Center-line parameters</span><output id="center-summary">2 FROM / 2 TO</output></summary>
+        <div class="parameter-body">
+          <div class="range-label"><label for="center-from">Lines from · maximum</label><input id="center-from-value" type="number" min="1" max="10" step="1" value="2"></div><input id="center-from" type="range" min="1" max="10" step="1" value="2">
+          <div class="range-label"><label for="center-to">Lines to · maximum</label><input id="center-to-value" type="number" min="1" max="10" step="1" value="2"></div><input id="center-to" type="range" min="1" max="10" step="1" value="2">
+          <div class="range-label"><label for="center-connections">Arrangement</label><input id="center-connections-value" type="number" min="0" max="1000" step="1" value="0"></div><input id="center-connections" type="range" min="0" max="1000" step="1" value="0">
+          <label for="center-routing">Routing bias</label><select id="center-routing"><option value="mixed">Mixed</option><option value="short">Short links</option><option value="long">Long diagonals</option><option value="crossings">Interior crossings</option><option value="avoid-neighbors">Avoid perimeter neighbors</option></select>
+          <button id="center-next" class="primary">Next center arrangement <span>↗</span></button>
+          <p class="hint" id="center-note">The center-line graph is generated independently from the tangent-line graph.</p>
+        </div>
+      </details>
+    </section>
+    <section class="control-section export-section">
+      <div class="section-heading"><h2>Export current tool</h2><span class="micro">SOURCE UNITS</span></div>
+      <div class="export-layers" aria-label="Export layers"><span>LAYERS</span><label><input id="export-source" type="checkbox"> SOURCE</label><label><input id="export-shape" type="checkbox" checked> FORM</label><label><input id="export-anchor-metadata" type="checkbox" checked> ANCHOR POINT</label><label><input id="export-tangents" type="checkbox" checked> TANGENTS</label><label><input id="export-centers" type="checkbox" checked> CENTERS</label></div>
+      <div class="export-actions"><button id="export-svg" class="export-button">SVG <span>↓</span></button><button id="export-dxf" class="export-button">DXF <span>↓</span></button><button id="export-dwg" class="export-button unavailable" disabled title="A licensed DWG writer is required">DWG <span>—</span></button></div>
+      <p class="hint">DWG import is decoded locally. DWG export requires a licensed CAD writer; DXF carries the same editable CAD linework now.</p>
+    </section>
+    <footer><span>BUILD 04</span>Independent tangent and center fields.<br>SVG / DXF / DWG import · SVG / DXF export.</footer>
+  </aside>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>
