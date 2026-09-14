@@ -1,6 +1,6 @@
 # Phase 2A local verification
 
-Build `WF-2A-20260914` implements the approved rectangular A/B carrier contract at source commit `002ae94dacade531deb6c88a1414fbe6367b8356`. It is complete in the Foundation checkout and has not been published. The private live Site remains accepted Phase 1B version 2.
+Build `WF-2A-20260914` implements the approved rectangular A/B carrier contract at source commit `002ae94dacade531deb6c88a1414fbe6367b8356`. It was published as private Site version 3 after explicit user approval. Deployment `appgdep_6aa85eb18cd0819184d522c5acb5c64b` succeeded at `https://weave-foundation.notbrandon175.chatgpt.site`; Phase 2A live acceptance remains pending.
 
 ## Settled implementation
 
@@ -22,11 +22,11 @@ Build `WF-2A-20260914` implements the approved rectangular A/B carrier contract 
 
 ## Remaining uncertainties and boundary
 
-The implementation has not been exercised on the hosted origin, so live storage migration, owner-browser backup transfer, responsive rendering, and production asset identity remain pending release verification. The explicit publish gate remains closed. Phase 2B, fields, interactions, stitches, interstices, exports, non-rectangular carriers, independent family directions, and irregular or seeded selection remain outside this batch.
+The deployment and production source identity are verified. Live storage migration, owner-browser backup transfer, responsive behavior, and feature acceptance remain for the user's five live tests. Phase 2B, fields, interactions, stitches, interstices, exports, non-rectangular carriers, independent family directions, and irregular or seeded selection remain outside this batch.
 
 ## Next bounded batch
 
-After explicit publication approval, publish only commit `002ae94dacade531deb6c88a1414fbe6367b8356` to the existing owner-private Weave Generator — Foundation Site, preserve owner-only access, verify the deployment and exact source identity, then stop for live acceptance. This release batch follows established decisions and needs routine release reasoning; it does not need substantial architectural reasoning.
+Stop for Phase 2A live acceptance. Do not begin Phase 2B or another publication without a separately approved proposal and explicit implementation instruction.
 
 The five live acceptance tests remain:
 
