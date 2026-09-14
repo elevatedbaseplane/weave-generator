@@ -36,5 +36,14 @@ export function deformLinePath(path, fields = []) {
     const t = index / segments;
     return displacePoint({ x: x1 + (x2 - x1) * t, y: y1 + (y2 - y1) * t }, fields);
   });
-  return `M${points.map(point => `${point.x.toFixed(3)} ${point.y.toFixed(3)}`).join('L')}`;
+  if (points.length < 3) return `M${points.map(point => `${point.x.toFixed(3)} ${point.y.toFixed(3)}`).join('L')}`;
+  // Midpoint quadratic segments make the sampled force path continuously
+  // readable instead of exposing the sampling as jagged corners.
+  let result = `M${points[0].x.toFixed(3)} ${points[0].y.toFixed(3)}`;
+  for (let index = 1; index < points.length - 1; index += 1) {
+    const current = points[index], next = points[index + 1];
+    result += `Q${current.x.toFixed(3)} ${current.y.toFixed(3)} ${((current.x + next.x) / 2).toFixed(3)} ${((current.y + next.y) / 2).toFixed(3)}`;
+  }
+  const last = points.at(-1);
+  return `${result}T${last.x.toFixed(3)} ${last.y.toFixed(3)}`;
 }
