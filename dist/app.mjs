@@ -224,7 +224,7 @@ function renderLattice() {
     transform = `rotate(${lattice.angle} 410 360)`;
   $("lattice-preview").innerHTML =
     `<g transform="${transform}" fill="none" stroke="#777" stroke-width="1.05">${paths.map((d) => `<path d="${d}"/>`).join("")}</g>`;
-  $("lattice-preview").style.display = $("show-grid").checked ? "" : "none";
+  $("lattice-preview").style.display = $("show-original-weave")?.checked ? "" : "none";
   // Keep an empty family result as an empty group. Rendering an invalid or
   // inherited path must never change the SVG viewport when visibility flips.
   $("thread-preview").replaceChildren();
@@ -621,10 +621,9 @@ $("show-boundary").addEventListener("change", renderPreview);
 $("show-grid").addEventListener("change", () => {
   $("grid-layer").style.display = $("show-grid").checked ? "" : "none";
   $("frame-layer").style.display = $("show-grid").checked ? "" : "none";
-  $("lattice-preview").style.display = $("show-grid").checked ? "" : "none";
 });
 $("show-candidates")?.addEventListener("change", renderCandidates);
-$("show-original-weave")?.addEventListener("change", () => { $("lattice-preview").style.display = $("show-original-weave").checked ? "" : "none"; });
+$("show-original-weave")?.addEventListener("change", () => { renderLattice(); });
 $("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
 document.querySelectorAll("#control-rail details").forEach((section) => { section.open = false; });
 $("show-selected")?.addEventListener("change", renderCandidates);
