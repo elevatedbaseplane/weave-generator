@@ -44,6 +44,17 @@ function seededUnit(seed, index) {
   return ((value >>> 0) / 4294967295) * 2 - 1;
 }
 
+function mayBeInfluencedByField(x1, y1, x2, y2, field) {
+  if (field.enabled === false) return false;
+  const radius = Math.max(1, Number(field.radius || 150));
+  // Fast conservative rejection: if the field's extent does not touch the
+  // source line's bounding box, none of this path's samples can move.
+  return !(Number(field.x || 410) + radius < Math.min(x1, x2)
+    || Number(field.x || 410) - radius > Math.max(x1, x2)
+    || Number(field.y || 360) + radius < Math.min(y1, y2)
+    || Number(field.y || 360) - radius > Math.max(y1, y2));
+}
+
 export function deformLinePath(path, fields = [], options = {}) {
   if (!fields.some((field) => field.enabled !== false) && !Number(options.irregularity)) return path;
   const numbers = (path.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
@@ -55,6 +66,7 @@ export function deformLinePath(path, fields = [], options = {}) {
   const segments = Math.round(8 + smoothness * 0.32);
   const irregularity = clamp(Number(options.irregularity ?? 0), 0, 100);
   const variation = (irregularity / 100) * 18;
+  if (!variation && !fields.some((field) => mayBeInfluencedByField(x1, y1, x2, y2, field))) return path;
   const points = Array.from({ length: segments + 1 }, (_, index) => {
     const t = index / segments;
     const displaced = displacePoint(

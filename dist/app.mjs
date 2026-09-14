@@ -136,7 +136,6 @@ function setInteractionSettingsFromUi() {
   settings.showMarkers = $("show-crossing-markers").checked;
   settings.showZones = $("show-interaction-zones").checked;
   settings.showAnalysis = $("show-event-analysis").checked;
-  settings.liveAnalysis = $("live-event-analysis").checked;
 }
 function renderInteractionControls() {
   const settings = interactionSettings();
@@ -150,7 +149,6 @@ function renderInteractionControls() {
   $("show-crossing-markers").checked = Boolean(settings.showMarkers);
   $("show-interaction-zones").checked = Boolean(settings.showZones);
   $("show-event-analysis").checked = settings.showAnalysis !== false;
-  $("live-event-analysis").checked = Boolean(settings.liveAnalysis);
 }
 function renderFamilies() {
   const family = families.find((item) => item.id === activeFamily);
@@ -275,17 +273,22 @@ function renderLattice() {
   threadGroup.setAttribute("stroke-linecap", "round");
   transformed.forEach((item, index) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", item.d); path.dataset.family = item.familyId; path.dataset.threadId = `${item.familyId}-${item.pathIndex}-${index}`; threadGroup.append(path); });
   $("thread-preview").append(threadGroup);
-  const analysisEnabled = interactionSettings().showAnalysis !== false;
-  const updateAnalysis = analysisEnabled && (!draggingField || interactionSettings().liveAnalysis);
-  if (updateAnalysis) {
+  const settings = interactionSettings();
+  // Analysis is deliberately never part of the field-drag loop. It is a
+  // separate read of the carrier field, rebuilt after the field is released.
+  const analysisEnabled = settings.showAnalysis !== false && !draggingField;
+  const needsInteractionMap = settings.showCommands !== false || settings.showMarkers;
+  const needsCandidates = $("show-candidates")?.checked !== false;
+  if (analysisEnabled && needsInteractionMap) {
     renderInteractionMap();
-    renderCandidates();
   } else {
     $("interaction-preview").replaceChildren();
-    $("interaction-zone-preview").replaceChildren();
-    $("candidate-preview").replaceChildren();
-    $("interaction-summary").textContent = draggingField ? "ANALYSIS PAUSED WHILE MOVING FIELD." : "EVENT ANALYSIS HIDDEN.";
+    $("interaction-summary").textContent = draggingField ? "ANALYSIS PAUSED WHILE MOVING FIELD." : "COMMAND ANALYSIS HIDDEN.";
   }
+  if (analysisEnabled && needsCandidates) renderCandidates();
+  else $("candidate-preview").replaceChildren();
+  if (analysisEnabled && settings.showZones) renderInteractionZones();
+  else $("interaction-zone-preview").replaceChildren();
   $("field-preview").innerHTML =
     `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.id === activeFieldId ? field.radius : 0}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
 }
@@ -315,11 +318,14 @@ function renderInteractionMap() {
     return "";
   }).join("");
   const transform = `rotate(${latticeState().angle} 410 360)`;
-  $("interaction-preview").innerHTML = `<g transform="${transform}">${commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="2.2"/>`).join("")}</g>` : ""}</g>`;
-  $("interaction-preview").style.display = settings.showCommands === false ? "none" : "";
-  $("interaction-zone-preview").innerHTML = settings.showZones ? `<g transform="${transform}">${fields.filter((field) => field.enabled !== false).map((field) => `<circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/>`).join("")}</g>` : "";
+  $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="2.2"/>`).join("")}</g>` : ""}</g>`;
+  $("interaction-preview").style.display = "";
   const summary = interactionSummary(events);
   $("interaction-summary").textContent = `${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
+}
+function renderInteractionZones() {
+  const transform = `rotate(${latticeState().angle} 410 360)`;
+  $("interaction-zone-preview").innerHTML = `<g transform="${transform}">${fields.filter((field) => field.enabled !== false).map((field) => `<circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/>`).join("")}</g>`;
 }
 function renderCandidates() {
   const layer = $("candidate-preview");
@@ -729,7 +735,7 @@ $("show-grid").addEventListener("change", () => {
   $("grid-layer").style.display = $("show-grid").checked ? "" : "none";
   $("frame-layer").style.display = $("show-grid").checked ? "" : "none";
 });
-$("show-candidates")?.addEventListener("change", renderCandidates);
+$("show-candidates")?.addEventListener("change", renderLattice);
 $("preview-polylines")?.addEventListener("click", previewPolylines);
 $("show-original-weave")?.addEventListener("change", () => { renderLattice(); });
 $("interaction-mode")?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
@@ -743,7 +749,7 @@ $("interaction-mode")?.addEventListener("change", () => { setInteractionSettings
   range?.addEventListener("input", () => apply(range.value));
   number?.addEventListener("change", () => apply(number.value));
 });
-["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones", "show-event-analysis", "live-event-analysis"].forEach((id) => {
+["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones", "show-event-analysis"].forEach((id) => {
   $(id)?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
 });
 $("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
