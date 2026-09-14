@@ -81,6 +81,10 @@ let store = loadStore(),
   draggingField = false,
   dragRenderPending = false,
   lastInteractionPreviewAt = 0,
+  // The interaction calculation and its display are deliberately separate.
+  // Visibility controls must never rebuild the carrier field or alter the
+  // working viewport.
+  renderedInteractionEvents = [],
   undoHistory = [],
   redoHistory = [],
   fieldEditStart = null,
@@ -292,6 +296,9 @@ function renderLattice() {
       $("interaction-summary").textContent = "COMMAND ANALYSIS HIDDEN.";
     }
   }
+  // Carrier visibility is independent from event analysis. This also keeps a
+  // hidden analysis layer from accidentally deciding whether paths are shown.
+  $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
   if (analysisEnabled && needsCandidates && analysisUpdateDue) renderCandidates();
   else if (!analysisEnabled || !needsCandidates) $("candidate-preview").replaceChildren();
   if (analysisEnabled && settings.showZones) renderInteractionZones();
@@ -309,26 +316,46 @@ function renderInteractionMap({ preview = false } = {}) {
   }));
   const events = buildInteractionMap(familyPaths, { ...settings, maxEvents: preview ? 180 : 600 }, fields);
   active().interactionMap = events;
-  $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
+  renderedInteractionEvents = events;
+  drawInteractionMap(events, { preview });
+}
+function interactionLine(event, direction, size) {
+  const magnitude = Math.hypot(direction.x, direction.y) || 1;
+  const dx = direction.x / magnitude * size, dy = direction.y / magnitude * size;
+  return `M${(event.x - dx).toFixed(2)} ${(event.y - dy).toFixed(2)}L${(event.x + dx).toFixed(2)} ${(event.y + dy).toFixed(2)}`;
+}
+function drawInteractionMap(events = renderedInteractionEvents, { preview = false } = {}) {
+  const settings = interactionSettings();
   const gap = settings.underpassGap / 2;
-  const line = (event, direction, size) => {
-    const magnitude = Math.hypot(direction.x, direction.y) || 1;
-    const dx = direction.x / magnitude * size, dy = direction.y / magnitude * size;
-    return `M${(event.x - dx).toFixed(2)} ${(event.y - dy).toFixed(2)}L${(event.x + dx).toFixed(2)} ${(event.y + dy).toFixed(2)}`;
-  };
   const commandPaths = events.map((event) => {
-    if (event.command === "OVER_A") return `<path class="interaction-cut" stroke="#fff" d="${line(event, event.localDirectionB, gap)}"/><path class="interaction-over" stroke="#000" d="${line(event, event.localDirectionA, gap + 3)}"/>`;
-    if (event.command === "OVER_B") return `<path class="interaction-cut" stroke="#fff" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-over" stroke="#000" d="${line(event, event.localDirectionB, gap + 3)}"/>`;
-    if (event.command === "BIND") { const normal = { x: event.localDirectionA.y - event.localDirectionB.y, y: event.localDirectionB.x - event.localDirectionA.x }; return `<path class="interaction-bind" stroke="#000" d="${line(event, normal, settings.bindWidth / 2)}"/>`; }
-    if (event.command === "GAP" || event.command === "RELEASE") return `<path class="interaction-cut" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-cut" d="${line(event, event.localDirectionB, gap)}"/>`;
+    const node = `<circle class="interaction-node" cx="${event.x.toFixed(2)}" cy="${event.y.toFixed(2)}" r="2.1"/>`;
+    if (event.command === "OVER_A") return `<path class="interaction-cut" d="${interactionLine(event, event.localDirectionB, gap)}"/><path class="interaction-over" d="${interactionLine(event, event.localDirectionA, gap + 4)}"/>${node}`;
+    if (event.command === "OVER_B") return `<path class="interaction-cut" d="${interactionLine(event, event.localDirectionA, gap)}"/><path class="interaction-over" d="${interactionLine(event, event.localDirectionB, gap + 4)}"/>${node}`;
+    if (event.command === "BIND") { const normal = { x: event.localDirectionA.y - event.localDirectionB.y, y: event.localDirectionB.x - event.localDirectionA.x }; return `<path class="interaction-bind" d="${interactionLine(event, normal, settings.bindWidth / 2)}"/>${node}`; }
+    if (event.command === "GAP" || event.command === "RELEASE") return `<path class="interaction-cut" d="${interactionLine(event, event.localDirectionA, gap)}"/><path class="interaction-cut" d="${interactionLine(event, event.localDirectionB, gap)}"/>${node}`;
     if (event.command === "BYPASS") return `<circle class="interaction-bypass" cx="${event.x}" cy="${event.y}" r="${Math.max(3, gap / 2)}"/>`;
     return "";
   }).join("");
   const transform = `rotate(${latticeState().angle} 410 360)`;
-  $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="3.3"/>`).join("")}</g>` : ""}</g>`;
-  $("interaction-preview").style.display = "";
+  $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : `<g class="interaction-commands">${commandPaths}</g>`}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="4"/>`).join("")}</g>` : ""}</g>`;
+  $("interaction-preview").style.display = settings.showAnalysis === false ? "none" : "";
   const summary = interactionSummary(events);
   $("interaction-summary").textContent = `${preview ? "LIVE PREVIEW / " : ""}${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
+}
+function refreshInteractionVisibility() {
+  const settings = interactionSettings();
+  $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
+  $("candidate-preview").style.display = settings.showAnalysis === false || $("show-candidates")?.checked === false ? "none" : "";
+  if (settings.showAnalysis === false) {
+    $("interaction-preview").style.display = "none";
+    $("interaction-zone-preview").style.display = "none";
+    $("interaction-summary").textContent = "COMMAND ANALYSIS HIDDEN.";
+    return;
+  }
+  if (!renderedInteractionEvents.length) renderedInteractionEvents = active().interactionMap || [];
+  drawInteractionMap(renderedInteractionEvents);
+  $("interaction-zone-preview").style.display = settings.showZones ? "" : "none";
+  if (settings.showZones && !$("interaction-zone-preview").childElementCount) renderInteractionZones();
 }
 function renderInteractionZones() {
   const transform = `rotate(${latticeState().angle} 410 360)`;
@@ -742,9 +769,13 @@ $("show-grid").addEventListener("change", () => {
   $("grid-layer").style.display = $("show-grid").checked ? "" : "none";
   $("frame-layer").style.display = $("show-grid").checked ? "" : "none";
 });
-$("show-candidates")?.addEventListener("change", renderLattice);
+$("show-candidates")?.addEventListener("change", () => {
+  $("candidate-preview").style.display = $("show-candidates").checked ? "" : "none";
+});
 $("preview-polylines")?.addEventListener("click", previewPolylines);
-$("show-original-weave")?.addEventListener("change", () => { renderLattice(); });
+$("show-original-weave")?.addEventListener("change", () => {
+  $("lattice-preview").style.display = $("show-original-weave").checked ? "" : "none";
+});
 $("interaction-mode")?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
 ["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
   const range = $(`interaction-${key}`), number = $(`interaction-${key}-value`);
@@ -757,7 +788,11 @@ $("interaction-mode")?.addEventListener("change", () => { setInteractionSettings
   number?.addEventListener("change", () => apply(number.value));
 });
 ["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones", "show-event-analysis"].forEach((id) => {
-  $(id)?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
+  $(id)?.addEventListener("change", () => {
+    setInteractionSettingsFromUi();
+    save();
+    refreshInteractionVisibility();
+  });
 });
 $("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
 document.querySelectorAll("#control-rail details").forEach((section) => { section.open = false; });

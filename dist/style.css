@@ -2319,11 +2319,12 @@ body.mode-neo .field-marker.active circle:nth-child(2) {
 }
 body.mode-neo #candidate-preview { filter: invert(1); }
 body.mode-neo #candidate-preview circle { fill: #daff33 !important; stroke: #daff33 !important; }
-.interaction-cut { stroke: var(--canvas, #fff); stroke-width: 5.5; stroke-linecap: square; }
-.interaction-over { stroke: currentColor; stroke-width: 2.8; stroke-linecap: square; }
-.interaction-bind { stroke: currentColor; stroke-width: 2.8; stroke-linecap: square; }
+.interaction-cut { stroke: var(--canvas, #fff); stroke-width: 6.5; stroke-linecap: square; }
+.interaction-over { stroke: currentColor; stroke-width: 3.4; stroke-linecap: square; }
+.interaction-bind { stroke: currentColor; stroke-width: 3.4; stroke-linecap: square; }
 .interaction-bypass { fill: var(--canvas, #fff); stroke: currentColor; stroke-width: 1.4; }
 .interaction-markers { fill: currentColor; opacity: .7; }
+.interaction-node { fill: currentColor; pointer-events: none; }
 #interaction-zone-preview { fill: none; stroke: currentColor; stroke-width: .8; stroke-dasharray: 4 4; opacity: .35; pointer-events: none; }
 /* Analysis is intentionally deferred until field release; keep the retired
    live-analysis control out of the existing static control markup. */
@@ -2334,10 +2335,12 @@ body:not(.mode-dark):not(.mode-neo) .interaction-cut { stroke: #fff; }
 body:not(.mode-dark):not(.mode-neo) .interaction-over,
 body:not(.mode-dark):not(.mode-neo) .interaction-bind,
 body:not(.mode-dark):not(.mode-neo) .interaction-bypass { stroke: #000; }
+body:not(.mode-dark):not(.mode-neo) .interaction-node { fill: #000; }
 body:not(.mode-dark):not(.mode-neo) .interaction-markers { fill: #fff; stroke: #000; stroke-width: 1.2; opacity: 1; }
 /* The Neo mode applies a page-level inversion; this pre-inversion value renders
    as #daff33 on canvas. Never use a literal blue visual output in Neo. */
 body.mode-neo .interaction-over, body.mode-neo .interaction-bind, body.mode-neo .interaction-bypass { stroke: #2500cc; }
+body.mode-neo .interaction-node { fill: #2500cc; }
 @media (max-width: 720px) {
   .canvas-left {
     gap: 10px;
