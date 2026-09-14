@@ -6,6 +6,10 @@ The architectural checkpoint is the verified Phase 1A working foundation: one do
 
 The release checkpoint additionally requires an exact pushed source commit, a successful deployment to the rebuild site, and a recorded build identity. If network/approval policy blocks publication, the architectural checkpoint can be reached locally while the release checkpoint remains pending. Do not call that a completed release.
 
+**Current checkpoint outcome:** architectural checkpoint reached locally at implementation commit `4d4e297dde6f7f88b87821a4ea0c95e6e1a92251`; 12 tests plus local browser checks pass. Release checkpoint is blocked by sandbox network access and disabled escalation. It is suitable to switch to Sol Medium now for the remaining established publication/verification steps. Do not start Phase 1B until the first foundation's release gate is resolved and the feature batch is authorized. No model setting was changed by this task.
+
+**Immediate bounded continuation (no new feature code):** retain existing Site ID and archive; obtain a fresh same-site source credential only when needed; allow Git network access through normal permissions; verify current HEAD has no dist differences from the tested implementation; push that exact source to rebuild/main; re-read full HEAD; validate/repackage the nine public files and rebuild manifest; save/deploy privately; verify terminal succeeded status and record literal live URL/version/commit; then perform the exact user acceptance actions. If only records have changed since the implementation commit, identify the documentation-only HEAD separately rather than pretending it was deployed earlier. Never rotate IDs or create another Site to resolve network policy.
+
 Use **GPT-5.6 Sol / Medium** after the checks below are recorded. This is a project-specific judgment based on bounded work, explicit contracts and regression coverage, not a guarantee of model performance. Official documentation confirms Medium support: https://developers.openai.com/api/docs/models/gpt-5.6-sol . Do not switch automatically; the user asked to identify the checkpoint.
 
 ## Settled foundation choices

@@ -54,6 +54,8 @@ Static asset checks passed: entrypoint, relative references, no private guide/bo
 - Tangent/Overlap whole-polyline-set transfer, open polylines, rich metadata and receiver changes are not implemented.
 - Browser saved data remains device/origin-local; JSON backup is required for transfer. Local QA boards were created only at the new loopback test origin; no original browser studies were edited.
 - Publication may be blocked independently of local correctness. Check the current state record before claiming a release.
+- Actual release attempt: source push failed at the sandbox network proxy. Escalation automatically rejected under the task's granular policy. No save/deploy call followed. Rebuild Site read-back: version 0, no live URL, owner-only. Static package validates against all nine public source files.
+- The final viewport correction fills the available body height; final 1280x800 read-back reports bodyHeight/mainBottom/viewportHeight 800 and scrollWidth/clientWidth 1280. Earlier 390x844 visual and coordinate checks passed. No hidden overflow was observed in those checked layouts.
 
 ## Exact user acceptance actions
 
