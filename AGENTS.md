@@ -1,6 +1,6 @@
 # Foundation continuity
 
-User approval gate: Phase 1B is accepted. No later implementation or publication is authorized. Before every future batch, present concise scope, what will be built, what remains, automated verification, and 3–5 simple live tests. Wait for explicit approval before implementation and ensure publication is explicitly authorized. Keep exhaustive rejection/edge-case checks automated unless requested manually. Phase 2A contract is approved as proposed and settled: docs/07-PHASE-2-CARRIER-PROPOSAL.md. Sol Medium checkpoint reached. Contract approval does not lift the explicit implementation hold: wait for a user start instruction; publication remains unauthorized. This user rule supersedes automatic publication language elsewhere.
+User approval gate: Phase 1B is accepted. Phase 2A implementation was authorized by the user's start instruction and is locally complete at commit `002ae94dacade531deb6c88a1414fbe6367b8356`; publication remains unauthorized. Before every future batch, present concise scope, what will be built, what remains, automated verification, and 3–5 simple live tests. Wait for explicit approval before implementation and ensure publication is explicitly authorized. Keep exhaustive rejection/edge-case checks automated unless requested manually. Phase 2A contract is approved as proposed and settled: docs/07-PHASE-2-CARRIER-PROPOSAL.md. Local verification is recorded in docs/08-PHASE-2A-VERIFICATION.md. Sol Medium checkpoint was reached before implementation. This user rule supersedes automatic publication language elsewhere.
 
 Read docs/00-MASTER-GUIDE.md, docs/02-STATE-DECISIONS-AND-TESTS.md, and docs/04-SOL-CHECKPOINT.md before editing.
 
@@ -10,6 +10,6 @@ Public output is only dist/. Keep guides, book, original references, fixtures an
 
 Use immutable named revisions with latest pointers and explicit document coordinates. Display and DOM never supply authoritative geometry. Saved revision libraries are append-only; undo changes the working document, not saved ancestry. Browser-local persistence is explicitly approved for this batch. Do not turn it into cloud sync without scope approval.
 
-Complete bounded batches with meaningful model and browser verification, exact source identity, rebuild-only deployment, deployment verification, and maintained records. A local pass is not a published release. Do not begin carrier or interaction implementation as an incidental extension of foundation work.
+Complete bounded batches with meaningful model and browser verification, exact source identity, rebuild-only deployment, deployment verification, and maintained records. A local pass is not a published release. Do not begin Phase 2B, interactions, or interstices without a separately approved proposal and implementation instruction.
 
 No delegation or subagents are requested. Sol Medium handoff is a recommendation; do not send this task to another model automatically.
