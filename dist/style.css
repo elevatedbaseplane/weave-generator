@@ -75,6 +75,7 @@ body.mode-neo .mode-tab.active,body.mode-neo .mode-tab.active *{border-color:#da
 body.mode-neo .tool-tabs button.active,body.mode-neo .project-item.active,body.mode-neo .iteration-item.active,body.mode-neo .primary,body.mode-neo .export-button{background:#daff33!important;color:#000!important;filter:invert(1)}
 body.mode-neo .tool-tabs button.active *,body.mode-neo .project-item.active *,body.mode-neo .iteration-item.active *,body.mode-neo .primary *,body.mode-neo .export-button *{color:#000!important}
 body.mode-neo .global-controls label:has(input:checked)::before,body.mode-neo .export-layers label:has(input:checked)::before{color:#daff33;filter:invert(1)}
+.field-marker{cursor:grab;fill:none;stroke:#777;stroke-width:1}.field-marker circle:first-child{stroke-dasharray:5 5}.field-marker circle:nth-child(2){fill:#fff;stroke:#000;stroke-width:1.5}.field-marker path{stroke:#000;stroke-width:1}.field-marker.active circle:first-child{stroke:#000;stroke-width:1.5}.field-marker.active circle:nth-child(2){fill:#000}.mode-dark .field-marker,.mode-neo .field-marker{filter:invert(1)}
 @media(max-width:720px){.canvas-left{gap:10px}.canvas-bottom{flex-wrap:wrap}.mode-tab{padding:5px 6px!important}}
 
 /* Board tree: each board contains its generated shape iterations. */

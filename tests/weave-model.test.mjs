@@ -4,9 +4,10 @@ import {addPointSet, addPolylineSet, addWeavePattern, createWeaveProject, duplic
 
 test('weave states preserve immutable source lineage', () => {
   let project = createWeaveProject('studio field', {id:'project-a', createdAt:'2026-09-13T00:00:00.000Z'});
-  let result = addWeavePattern(project, {id:'weave-a', name:'base weave', seed:'81'}); project = result.project;
+  let result = addWeavePattern(project, {id:'weave-a', name:'base weave', seed:'81', influenceFields:[{id:'field-a', type:'attractor', x:410, y:360, strength:50}]}); project = result.project;
   const variation = duplicateWeaveWithVariation(project, 'weave-a', {id:'weave-b', seed:'82'}); project = variation.project;
   assert.equal(project.weavePatterns[0].seed, '81');
+  assert.equal(project.weavePatterns[0].influenceFields[0].type, 'attractor');
   assert.equal(variation.pattern.parentWeaveId, 'weave-a');
   result = addPointSet(project, {id:'points-a', sourceWeaveId:'weave-b', candidates:[{id:'point-1', type:'intersection', score:.9}]}); project = result.project;
   result = addPolylineSet(project, {id:'lines-a', sourcePointSetId:'points-a'}); project = result.project;
