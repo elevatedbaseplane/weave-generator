@@ -267,9 +267,10 @@ function previewPolylines() {
   const selected = active().candidateState?.selectedIds || [];
   const points = source.filter((point) => selected.includes(point.id));
   const max = +$("connector-distance").value || 140, loops = [];
-  for (let index = 0; index + 2 < points.length; index += 3) { const trio = points.slice(index, index + 3); if (trio.every((a, i) => trio.every((b, j) => i === j || Math.hypot(a.x - b.x, a.y - b.y) <= max))) loops.push(trio); }
+  let rejected = 0;
+  for (let index = 0; index + 2 < points.length; index += 3) { const trio = points.slice(index, index + 3); const area = Math.abs((trio[1].x-trio[0].x)*(trio[2].y-trio[0].y)-(trio[2].x-trio[0].x)*(trio[1].y-trio[0].y))/2; if (trio.every((a, i) => trio.every((b, j) => i === j || Math.hypot(a.x - b.x, a.y - b.y) <= max)) && area > 12) loops.push(trio); else rejected += 1; }
   $("polyline-preview").innerHTML = `<g fill="none" stroke="currentColor" stroke-width="1.5">${loops.map((loop) => `<path d="M${loop.map((p) => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join("L")}Z"/>`).join("")}</g>`;
-  $("status").textContent = loops.length ? `${loops.length} VALID CLOSED CANDIDATE LOOPS.` : "NO VALID CLOSED LOOPS / SELECT NEARBY POINTS.";
+  $("status").textContent = loops.length ? `${loops.length} VALID CLOSED LOOPS / ${rejected} REJECTED AS DEGENERATE OR TOO DISTANT.` : "NO VALID CLOSED LOOPS / SELECT NEARBY, NON-COLLINEAR POINTS.";
 }
 function renderBoards() {
   const project = active();
