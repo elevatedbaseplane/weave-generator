@@ -247,9 +247,10 @@ function renderLattice() {
       selectFamily(paths, family, familyIndex).map((path, pathIndex) => {
         const source = familySourcePath(path, family);
         const d = family.tension >= 100 ? source : deformLinePath(source, fields.map((field) => ({ ...field, strength: field.strength * (1 - family.tension / 100) })), {
-          // While a field is moving, use a responsive preview resolution.
-          // The full saved geometry is regenerated on release.
-          smoothness: draggingField ? Math.min(family.smoothness, 28) : family.smoothness,
+          // Carrier deformation stays full-precision while dragging. The
+          // renderer is kept responsive by skipping unaffected paths and
+          // scheduling a single update per screen frame.
+          smoothness: family.smoothness,
           irregularity: family.irregularity,
           seed: $("seed").value,
           pathIndex: `${family.id}:${pathIndex}`,
@@ -318,7 +319,7 @@ function renderInteractionMap({ preview = false } = {}) {
     return "";
   }).join("");
   const transform = `rotate(${latticeState().angle} 410 360)`;
-  $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="2.2"/>`).join("")}</g>` : ""}</g>`;
+  $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="3.3"/>`).join("")}</g>` : ""}</g>`;
   $("interaction-preview").style.display = "";
   const summary = interactionSummary(events);
   $("interaction-summary").textContent = `${preview ? "LIVE PREVIEW / " : ""}${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
