@@ -10,6 +10,7 @@ import {
 import { latticePaths } from "./lattice-geometry.mjs";
 import { deformLinePath } from "./field-forces.mjs";
 import { defaults as familyDefaults, familySourcePath, normalizeFamilies, select as selectFamily } from "./thread-families.mjs";
+import { buildInteractionMap, interactionDefaults, interactionSummary, pointsFromSvgPath } from "./interaction-grammar.mjs";
 
 const $ = (id) => document.getElementById(id);
 const STORE = "bac-weave-generator-projects-v1";
@@ -33,6 +34,8 @@ function freshProject(name = "WEAVE STUDIES") {
   const project = createWeaveProject(name);
   project.boundary = defaultBoundary();
   project.boundaries = [clone(project.boundary)];
+  project.interactionSettings = interactionDefaults();
+  project.interactionMap = [];
   return project;
 }
 function loadStore() {
@@ -43,9 +46,11 @@ function loadStore() {
         .map(hydrateProject)
         .map((p) => ({
           ...p,
-          boundaries: p.boundaries?.length
+      boundaries: p.boundaries?.length
             ? p.boundaries
             : [clone(p.boundary || defaultBoundary())],
+          interactionSettings: { ...interactionDefaults(), ...(p.interactionSettings || {}) },
+          interactionMap: p.interactionMap || [],
         }));
       return saved;
     }
@@ -115,6 +120,32 @@ function latticeState() {
 }
 function activeField() {
   return fields.find((field) => field.id === activeFieldId) || null;
+}
+function interactionSettings() {
+  return (active().interactionSettings ||= interactionDefaults());
+}
+function setInteractionSettingsFromUi() {
+  const settings = interactionSettings();
+  settings.mode = $("interaction-mode").value;
+  ["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
+    settings[key] = +($(`interaction-${key}`).value || 0);
+  });
+  settings.showCarrier = $("show-carrier-field").checked;
+  settings.showCommands = $("show-weave-commands").checked;
+  settings.showMarkers = $("show-crossing-markers").checked;
+  settings.showZones = $("show-interaction-zones").checked;
+}
+function renderInteractionControls() {
+  const settings = interactionSettings();
+  $("interaction-mode").value = settings.mode;
+  ["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
+    $(`interaction-${key}`).value = settings[key];
+    $(`interaction-${key}-value`).value = settings[key];
+  });
+  $("show-carrier-field").checked = settings.showCarrier !== false;
+  $("show-weave-commands").checked = settings.showCommands !== false;
+  $("show-crossing-markers").checked = Boolean(settings.showMarkers);
+  $("show-interaction-zones").checked = Boolean(settings.showZones);
 }
 function renderFamilies() {
   const family = families.find((item) => item.id === activeFamily);
@@ -212,15 +243,15 @@ function renderLattice() {
     transformed = families.flatMap((family, familyIndex) =>
       selectFamily(paths, family, familyIndex).map((path, pathIndex) => {
         const source = familySourcePath(path, family);
-        if (family.tension >= 100) return source;
-        return deformLinePath(source, fields.map((field) => ({ ...field, strength: field.strength * (1 - family.tension / 100) })), {
+        const d = family.tension >= 100 ? source : deformLinePath(source, fields.map((field) => ({ ...field, strength: field.strength * (1 - family.tension / 100) })), {
           smoothness: family.smoothness,
           irregularity: family.irregularity,
           seed: $("seed").value,
           pathIndex: `${family.id}:${pathIndex}`,
         });
+        return { d, familyId: family.id, pathIndex };
       }),
-    ).filter((path) => typeof path === "string" && path.length > 1),
+    ).filter((path) => typeof path.d === "string" && path.d.length > 1),
     transform = `rotate(${lattice.angle} 410 360)`;
   $("lattice-preview").innerHTML =
     `<g transform="${transform}" fill="none" stroke="#777" stroke-width="1.05">${paths.map((d) => `<path d="${d}"/>`).join("")}</g>`;
@@ -235,11 +266,44 @@ function renderLattice() {
   threadGroup.setAttribute("stroke-width", "1.2");
   threadGroup.setAttribute("stroke-linejoin", "round");
   threadGroup.setAttribute("stroke-linecap", "round");
-  transformed.forEach((d) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", d); threadGroup.append(path); });
+  transformed.forEach((item, index) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", item.d); path.dataset.family = item.familyId; path.dataset.threadId = `${item.familyId}-${item.pathIndex}-${index}`; threadGroup.append(path); });
   $("thread-preview").append(threadGroup);
+  renderInteractionMap();
   renderCandidates();
   $("field-preview").innerHTML =
     `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.id === activeFieldId ? field.radius : 0}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
+}
+function renderInteractionMap() {
+  const settings = interactionSettings();
+  const paths = [...$("thread-preview").querySelectorAll("path")];
+  const familyPaths = paths.map((path, index) => ({
+    id: path.dataset.threadId || `path-${index}`,
+    familyId: path.dataset.family || (index < paths.length / 2 ? "a" : "b"),
+    points: pointsFromSvgPath(path),
+  }));
+  const events = buildInteractionMap(familyPaths, settings, fields);
+  active().interactionMap = events;
+  $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
+  const gap = settings.underpassGap / 2;
+  const line = (event, direction, size) => {
+    const magnitude = Math.hypot(direction.x, direction.y) || 1;
+    const dx = direction.x / magnitude * size, dy = direction.y / magnitude * size;
+    return `M${(event.x - dx).toFixed(2)} ${(event.y - dy).toFixed(2)}L${(event.x + dx).toFixed(2)} ${(event.y + dy).toFixed(2)}`;
+  };
+  const commandPaths = events.map((event) => {
+    if (event.command === "OVER_A") return `<path class="interaction-cut" d="${line(event, event.localDirectionB, gap)}"/><path class="interaction-over" d="${line(event, event.localDirectionA, gap + 2)}"/>`;
+    if (event.command === "OVER_B") return `<path class="interaction-cut" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-over" d="${line(event, event.localDirectionB, gap + 2)}"/>`;
+    if (event.command === "BIND") { const normal = { x: event.localDirectionA.y - event.localDirectionB.y, y: event.localDirectionB.x - event.localDirectionA.x }; return `<path class="interaction-bind" d="${line(event, normal, settings.bindWidth / 2)}"/>`; }
+    if (event.command === "GAP" || event.command === "RELEASE") return `<path class="interaction-cut" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-cut" d="${line(event, event.localDirectionB, gap)}"/>`;
+    if (event.command === "BYPASS") return `<circle class="interaction-bypass" cx="${event.x}" cy="${event.y}" r="${Math.max(3, gap / 2)}"/>`;
+    return "";
+  }).join("");
+  const transform = `rotate(${latticeState().angle} 410 360)`;
+  $("interaction-preview").innerHTML = `<g transform="${transform}">${commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="2.2"/>`).join("")}</g>` : ""}</g>`;
+  $("interaction-preview").style.display = settings.showCommands === false ? "none" : "";
+  $("interaction-zone-preview").innerHTML = settings.showZones ? `<g transform="${transform}">${fields.filter((field) => field.enabled !== false).map((field) => `<circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/>`).join("")}</g>` : "";
+  const summary = interactionSummary(events);
+  $("interaction-summary").textContent = `${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
 }
 function renderCandidates() {
   const layer = $("candidate-preview");
@@ -305,6 +369,7 @@ function render() {
   renderBoards();
   renderFields();
   renderFamilies();
+  renderInteractionControls();
   renderLattice();
   renderPreview();
 }
@@ -358,6 +423,8 @@ function saveWeave() {
       lattice: { ...latticeState(), visible: true },
       threadFamilies: clone(families),
       influenceFields: clone(fields),
+      interactionSettings: clone(interactionSettings()),
+      interactionMap: clone(project.interactionMap || []),
       threads: [],
       provenance: {
         release: "BUILD 03",
@@ -461,6 +528,8 @@ $("project-list").addEventListener("click", (event) => {
       ),
       l = item.lattice || {};
     active().activeWeaveId = item.id;
+    active().interactionSettings = { ...interactionDefaults(), ...(item.interactionSettings || {}) };
+    active().interactionMap = clone(item.interactionMap || []);
     save();
     $("pattern-name").value = item.name;
     $("seed").value = item.seed;
@@ -635,6 +704,20 @@ $("show-grid").addEventListener("change", () => {
 $("show-candidates")?.addEventListener("change", renderCandidates);
 $("preview-polylines")?.addEventListener("click", previewPolylines);
 $("show-original-weave")?.addEventListener("change", () => { renderLattice(); });
+$("interaction-mode")?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
+["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
+  const range = $(`interaction-${key}`), number = $(`interaction-${key}-value`);
+  const apply = (value) => {
+    const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0));
+    range.value = next; number.value = next;
+    setInteractionSettingsFromUi(); save(); renderLattice();
+  };
+  range?.addEventListener("input", () => apply(range.value));
+  number?.addEventListener("change", () => apply(number.value));
+});
+["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones"].forEach((id) => {
+  $(id)?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
+});
 $("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
 document.querySelectorAll("#control-rail details").forEach((section) => { section.open = false; });
 $("show-selected")?.addEventListener("change", renderCandidates);

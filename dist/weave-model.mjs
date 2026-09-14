@@ -62,6 +62,8 @@ export function createWeavePattern(input = {}) {
     ),
     threadFamilies: clone(input.threadFamilies || []),
     influenceFields: clone(input.influenceFields || []),
+    interactionSettings: clone(input.interactionSettings || {}),
+    interactionMap: clone(input.interactionMap || []),
     threads: clone(input.threads || []),
     diagnostics: clone(input.diagnostics || {}),
     locked: Boolean(input.locked),
