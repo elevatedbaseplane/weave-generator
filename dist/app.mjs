@@ -79,6 +79,7 @@ let store = loadStore(),
   ],
   activeFieldId = null,
   draggingField = false,
+  dragRenderPending = false,
   undoHistory = [],
   redoHistory = [],
   fieldEditStart = null,
@@ -248,7 +249,9 @@ function renderLattice() {
       selectFamily(paths, family, familyIndex).map((path, pathIndex) => {
         const source = familySourcePath(path, family);
         const d = family.tension >= 100 ? source : deformLinePath(source, fields.map((field) => ({ ...field, strength: field.strength * (1 - family.tension / 100) })), {
-          smoothness: family.smoothness,
+          // While a field is moving, use a responsive preview resolution.
+          // The full saved geometry is regenerated on release.
+          smoothness: draggingField ? Math.min(family.smoothness, 28) : family.smoothness,
           irregularity: family.irregularity,
           seed: $("seed").value,
           pathIndex: `${family.id}:${pathIndex}`,
@@ -685,13 +688,18 @@ $("canvas").addEventListener("pointermove", (e) => {
   const point = inverseLatticeRotation(canvasPoint(e));
   field.x = Math.max(0, Math.min(820, point.x));
   field.y = Math.max(0, Math.min(720, point.y));
-  renderLattice();
-  renderFields();
+  if (dragRenderPending) return;
+  dragRenderPending = true;
+  requestAnimationFrame(() => {
+    dragRenderPending = false;
+    if (draggingField) renderLattice();
+  });
 });
 $("canvas").addEventListener("pointerup", () => {
   if (draggingField) {
     finishFieldEdit();
     draggingField = false;
+    dragRenderPending = false;
     renderLattice();
     renderFields();
     $("status").textContent = "FIELD UPDATED / EVENT ANALYSIS REFRESHED.";
