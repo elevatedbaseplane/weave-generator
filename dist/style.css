@@ -2317,6 +2317,7 @@ body.mode-neo .field-marker path {
 body.mode-neo .field-marker.active circle:nth-child(2) {
   fill: #2500cc;
 }
+body.mode-neo #candidate-preview circle { fill: #daff33 !important; stroke: #daff33 !important; }
 @media (max-width: 720px) {
   .canvas-left {
     gap: 10px;

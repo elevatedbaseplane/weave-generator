@@ -239,7 +239,7 @@ function renderLattice() {
   $("thread-preview").append(threadGroup);
   renderCandidates();
   $("field-preview").innerHTML =
-    `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
+    `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.id === activeFieldId ? field.radius : 0}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
 }
 function renderCandidates() {
   const layer = $("candidate-preview");
@@ -620,6 +620,9 @@ $("show-grid").addEventListener("change", () => {
   $("lattice-preview").style.display = $("show-grid").checked ? "" : "none";
 });
 $("show-candidates")?.addEventListener("change", renderCandidates);
+$("show-original-weave")?.addEventListener("change", () => { $("lattice-preview").style.display = $("show-original-weave").checked ? "" : "none"; });
+$("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
+document.querySelectorAll("#control-rail details").forEach((section) => { section.open = false; });
 $("show-selected")?.addEventListener("change", renderCandidates);
 [["candidate-spacing", "candidate-spacing-value", "spacing"], ["candidate-limit", "candidate-limit-value", "limit"]].forEach(([rangeId, inputId, key]) => {
   const apply = (value) => { const range = $(rangeId); const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0)); active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; active().candidateState[key] = next; $(rangeId).value = $(inputId).value = next; save(); renderCandidates(); };
