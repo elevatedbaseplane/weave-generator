@@ -1,14 +1,16 @@
 # Sol Medium checkpoint
 
+Current handoff: Phase 1B is user-accepted. Review 07-PHASE-2-CARRIER-PROPOSAL.md. Return to Sol Medium immediately after explicit Phase 2A approval and recording its contracts as settled, before the first implementation edit. Until then this is architectural proposal work. Publication requires explicit authorization. Historical acceptance steps below are retained as completed context.
+
 ## Checkpoint definition
 
 The architectural checkpoint is the verified Phase 1A working foundation: one document model, explicit transforms, validated boundary operations, immutable named revisions, undo/redo, local persistence recovery, portable backup/import, and a tested one-polygon exchange contract. Freeze this before adding carrier features.
 
 The release checkpoint additionally requires an exact pushed source commit, a successful deployment to the rebuild site, and a recorded build identity. If network/approval policy blocks publication, the architectural checkpoint can be reached locally while the release checkpoint remains pending. Do not call that a completed release.
 
-**Current checkpoint outcome:** Phase 1A was accepted by the user. The settled Phase 1B batch is complete at implementation commit `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; 17 tests and local browser checks pass, and private Site version 2 deployed successfully at `https://weave-foundation.notbrandon175.chatgpt.site`. Live readback confirmed build `WF-1B-20260914`, schema 2, storage available, visible import controls, and owner-only access. Phase 1B user acceptance is pending. Do not start Phase 2 automatically.
+**Current checkpoint outcome:** Phase 1A was accepted by the user. The settled Phase 1B batch is complete at implementation commit `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; 17 tests and local browser checks pass, and private Site version 2 deployed successfully at `https://weave-foundation.notbrandon175.chatgpt.site`. Live readback confirmed build `WF-1B-20260914`, schema 2, storage available, visible import controls, and owner-only access. Phase 1B user acceptance passed, as explicitly reported by the user. Do not start Phase 2 automatically.
 
-**Immediate bounded continuation (no new feature code):** perform the exact Phase 1B user acceptance actions against private Site version 2. Keep the deployed provenance fixed at `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; documentation-only record updates are not part of that deployed source. Do not rotate the Site ID or begin carrier implementation.
+**Immediate bounded continuation (no new feature code):** review the Phase 2A architectural proposal; Phase 1B private Site version 2 is user-accepted. Keep the deployed provenance fixed at `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; documentation-only record updates are not part of that deployed source. Do not rotate the Site ID or begin carrier implementation.
 
 Use **GPT-5.6 Sol / Medium** after the checks below are recorded. This is a project-specific judgment based on bounded work, explicit contracts and regression coverage, not a guarantee of model performance. Official documentation confirms Medium support: https://developers.openai.com/api/docs/models/gpt-5.6-sol . Do not switch automatically; the user asked to identify the checkpoint.
 
@@ -64,4 +66,4 @@ Phase 2 must settle explicit A/B path roles, rectangular density semantics, anal
 
 ## Handoff instruction
 
-Read the current state and Phase 1B verification record. Complete pending user acceptance first. Do not implement Phase 2 until its carrier contract has been reviewed and authorized. Preserve the expanded roadmap and all original work; distinguish automated, local, deployed and user-accepted evidence.
+Read the current state and Phase 1B verification record. Phase 1B user acceptance is complete; review the Phase 2A proposal. Do not implement Phase 2 until its carrier contract has been reviewed and authorized. Preserve the expanded roadmap and all original work; distinguish automated, local, deployed and user-accepted evidence.

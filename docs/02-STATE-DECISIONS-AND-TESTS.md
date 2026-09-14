@@ -2,12 +2,14 @@
 
 ## Maintained foundation state — 2026-09-14
 
+Latest user report: Phase 1B live acceptance passed. Current work is documentation-only: the Phase 2 carrier proposal in 07-PHASE-2-CARRIER-PROPOSAL.md is awaiting approval. No Phase 2 implementation or publication is authorized. Future proposals include scope/build/remains/automated checks and 3–5 simple live tests; exhaustive rejection tests stay automated. Existing deployment evidence is retained, not rerun for this records-only update.
+
 This section supersedes the historical starting record below. See [verification](05-VERIFICATION.md) and [Sol checkpoint / next batch](04-SOL-CHECKPOINT.md) for evidence and exact scope.
 
 - Current rebuild checkout: `C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild`, branch `foundation`, derived from baseline `44953adacf6b6a47fb93447be177cbd7710428f5`.
 - Rebuild Site created once: `appgprj_6aa83001d03481918d4a13e46c9612fb`, title Weave Generator — Foundation, slug weave-foundation. It is a separate owner-private destination. The original manifest was moved to reference/legacy-hosting.json; active .openai/hosting.json names only the rebuild.
 - Build label: `WF-1B-20260914`. Phase 1A remains intact. Phase 1B adds staged import of exactly one closed straight SVG boundary, explicit transform/Y conversion, non-destructive rejection/Cancel, one-operation Apply, and optional source metadata preserved through revisions, reload and backup.
-- Verification: 17 automated tests, public module syntax and static output checks pass; local browser checks pass as listed in 06-PHASE-1B-VERIFICATION.md. Phase 1A live acceptance passed by the user. Phase 1B live acceptance is pending.
+- Verification: 17 automated tests, public module syntax and static output checks pass; local browser checks pass as listed in 06-PHASE-1B-VERIFICATION.md. Phase 1A live acceptance passed by the user. Phase 1B live acceptance passed, as explicitly reported by the user.
 - User decisions settled: preserve original site/data; raw legacy backups before migration; versioned named saves/latest pointer; separate owner-private rebuild; browser-local saves + JSON backups. No migration or cloud sync was performed.
 - Raw legacy browser backup remains outstanding. This does not block an isolated rebuild namespace, and must block any future migration of original storage.
 - Original unpublished experiments remain untouched in work/weave-generator and the external preservation package. The current foundation does not apply them.
@@ -15,9 +17,9 @@ This section supersedes the historical starting record below. See [verification]
 - Phase 1B implementation commit: `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`. Working branch remains foundation; rebuild remote targets only the private Foundation Site.
 - Publication **succeeded privately**: Site version 2 records the exact Phase 1B commit; deployment `appgdep_6aa8490eb0b881918d8c202f518b346b` succeeded at `https://weave-foundation.notbrandon175.chatgpt.site`. Live readback confirmed build `WF-1B-20260914`, schema 2, storage available, visible import controls, sole viewer owner and zero groups. The original sites remain untouched.
 - Package prepared and validated: `C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/outputs/weave-foundation-1b.tar.gz`, SHA-256 `1055f9443611a096149ce7281b5e4e00a38b9924b67cee2ba1fd281cd3bc2d93`. Contains ten public files plus the rebuild manifest; all public files match the committed source byte-for-byte.
-- Phase 1 foundation release checkpoint: **reached privately**. Immediate next step is Phase 1B user acceptance. Phase 2 carrier work still needs substantial architectural reasoning and is not a routine continuation.
+- Phase 1 foundation release checkpoint: **reached privately**. Immediate next step is review of the Phase 2A architectural proposal. Phase 2 carrier work still needs substantial architectural reasoning and is not a routine continuation.
 - The private Phase 1B release is available at `https://weave-foundation.notbrandon175.chatgpt.site`. Browser data remains origin-local and requires JSON backup for portability.
-- User acceptance: Phase 1A passed; Phase 1B pending. Use the exact actions in 06-PHASE-1B-VERIFICATION.md.
+- User acceptance: Phase 1A passed; Phase 1B passed. Use the exact actions in 06-PHASE-1B-VERIFICATION.md.
 
 ## Archived starting record — retained for context, not current status
 

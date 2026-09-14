@@ -24,7 +24,7 @@ Build `WF-1B-20260914` implements only staged import of one closed straight SVG 
 
 ## Limits and next boundary
 
-User acceptance of Phase 1B is pending. DXF/DWG import, image underlay, unit conversion, curves, holes, multiple polygons, open traces, carrier generation and later spatial layers remain outside this release. Phase 2 carrier definitions require substantial architectural reasoning before implementation.
+User acceptance of Phase 1B passed, as explicitly reported by the user. DXF/DWG import, image underlay, unit conversion, curves, holes, multiple polygons, open traces, carrier generation and later spatial layers remain outside this release. Phase 2 carrier definitions require substantial architectural reasoning before implementation.
 
 ## Exact live acceptance
 

@@ -10,7 +10,12 @@
   "savedVersionId": "appgprj_6aa83001d03481918d4a13e46c9612fb~appgver_ff9e8c40034c8191a1d273bf5fdabb4c",
   "deploymentId": "appgdep_6aa8490eb0b881918d8c202f518b346b",
   "liveUrl": "https://weave-foundation.notbrandon175.chatgpt.site",
-  "siteReadback": {"latestVersion": 2, "currentLiveUrl": "https://weave-foundation.notbrandon175.chatgpt.site", "soleViewer": "owner", "groups": 0},
+  "siteReadback": {
+    "latestVersion": 2,
+    "currentLiveUrl": "https://weave-foundation.notbrandon175.chatgpt.site",
+    "soleViewer": "owner",
+    "groups": 0
+  },
   "archive": "C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/outputs/weave-foundation-1b.tar.gz",
   "archiveSha256": "1055f9443611a096149ce7281b5e4e00a38b9924b67cee2ba1fd281cd3bc2d93",
   "archiveFiles": 11,
@@ -19,13 +24,13 @@
   "localBrowserChecks": "passed; see 06-PHASE-1B-VERIFICATION.md",
   "liveChecks": "version, source provenance, owner-only access, build identity, schema, storage and visible import controls passed",
   "phase1AAcceptance": "passed by user on private live site",
-  "phase1BAcceptance": "pending",
+  "phase1BAcceptance": "passed by user on private live site",
   "architecturalCheckpoint": "phase-1-foundation-complete",
   "releaseCheckpoint": "reached-private-version-2",
   "recommendedModelForNextBatch": "return to higher architectural reasoning",
-  "nextImmediateBatch": "User acceptance of private Phase 1B release",
+  "nextImmediateBatch": "Review Phase 2A architectural proposal; implementation and publication require explicit approval",
   "nextFeatureBatch": "Phase 2 — define and implement the first bounded carrier contract only after architectural approval",
-  "nextBatchReasoning": "Substantial architectural reasoning is required before routine implementation",
+  "nextBatchReasoning": "Architectural proposal pending approval; after contracts are approved, bounded Phase 2A implementation can return to Sol Medium",
   "legacyBrowserBackups": "outstanding; no legacy migration performed",
   "storageChoice": "Browser-local saves plus portable JSON backups",
   "publicSha256": {
@@ -39,5 +44,8 @@
     "style.css": "7f844002598e29fd80c16086b8dd5652a92a451551ad60482e03826f2b452d0d",
     "svg-import.mjs": "fcd213dc16cb390a6ab496937c03b8f17f78c1a1d102a830f1e0a78b7f1712a2",
     "viewport.mjs": "c0c6864677f85c0e784196d8210fd5929c5c9475b101b4f81d94e79d02fb6036"
-  }
+  },
+  "phase2Proposal": "docs/07-PHASE-2-CARRIER-PROPOSAL.md",
+  "phase2ImplementationAuthorized": false,
+  "nextPublicationAuthorized": false
 }

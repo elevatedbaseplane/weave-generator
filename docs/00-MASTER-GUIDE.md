@@ -1,7 +1,7 @@
 # Weave Generator — Master Guide
 
 **Guide version:** 1.1 · 14 September 2026  
-**Stage:** Phase 0 assessed; Phase 1A accepted; Phase 1B straight-SVG boundary import published privately and awaiting user acceptance. Publication/acceptance status is recorded in 02-STATE-DECISIONS-AND-TESTS.md. Stop before Phase 2 carrier architecture.
+**Stage:** Phase 0 assessed; Phase 1A accepted; Phase 1B straight-SVG boundary import published privately and user-accepted. Publication/acceptance status is recorded in 02-STATE-DECISIONS-AND-TESTS.md. Stop before Phase 2 carrier architecture.
 **Purpose:** One maintained guide for building a cleaner architectural tool, without repeating the history of fragile patches and incomplete handoffs.
 
 ## 1. The decision
@@ -105,6 +105,8 @@ Keep the main workspace stable while panels scroll. Grid/frame, boundary, and so
 
 ## 8. Release and continuity protocol
 
+Current user approval gate: before each future batch, propose scope, what will be built, what remains, automated checks and 3–5 simple live tests. Obtain explicit approval before implementation; publish only with explicit authorization. Exhaustive technical rejection tests remain automated. Phase 1B is accepted; Phase 2 proposal is in 07-PHASE-2-CARRIER-PROPOSAL.md. The sequence below applies only within approved scope.
+
 For each completed implementation batch: implement → validate → record exact source → publish to the designated live site → confirm deployment succeeded → report. Planning and guide updates alone are not website builds. Do not publish a broken or partial batch simply to satisfy cadence.
 
 Every release response contains:
@@ -122,4 +124,4 @@ Deferred: literal textile physics, unlimited thread families, a generic motif sa
 
 Pending decisions do not block reviewing this guide: migration of old browser-saved boards; same-name save semantics; Tangent's exact accepted payload; working units/scale; geometric definitions of advanced stitch operations; first supported interstitial readings; measurable performance budgets; and rebuild deployment destination. Recommendations and decision timing are recorded separately rather than silently treated as user approval.
 
-**Next:** Complete the Phase 1B live acceptance in [06 — Phase 1B verification](06-PHASE-1B-VERIFICATION.md), then return to higher architectural reasoning before defining a bounded Phase 2 carrier batch. Do not begin carrier implementation automatically.
+**Next:** Review [Phase 2 carrier proposal](07-PHASE-2-CARRIER-PROPOSAL.md). Phase 1B is accepted. Implementation and publication await explicit approval.

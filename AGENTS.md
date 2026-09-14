@@ -1,5 +1,7 @@
 # Foundation continuity
 
+User approval gate: Phase 1B is accepted. No later implementation or publication is authorized. Before every future batch, present concise scope, what will be built, what remains, automated verification, and 3–5 simple live tests. Wait for explicit approval before implementation and ensure publication is explicitly authorized. Keep exhaustive rejection/edge-case checks automated unless requested manually. Proposal: docs/07-PHASE-2-CARRIER-PROPOSAL.md. This user rule supersedes automatic publication language elsewhere.
+
 Read docs/00-MASTER-GUIDE.md, docs/02-STATE-DECISIONS-AND-TESTS.md, and docs/04-SOL-CHECKPOINT.md before editing.
 
 Only this rebuild checkout may change. Original Weave and Tangent sites/checkouts and preserved experiments are references. Never publish to their project IDs. This rebuild's only destination is `.openai/hosting.json` (project `appgprj_6aa83001d03481918d4a13e46c9612fb`).
