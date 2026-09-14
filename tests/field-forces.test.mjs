@@ -39,3 +39,10 @@ test("a field bends the part of a long lattice line that passes through it", () 
   ]);
   assert.match(path, /410\.000 432\.000/);
 });
+
+test("seeded irregularity is repeatable and changes with its seed", () => {
+  const options = { irregularity: 40, smoothness: 75, seed: "1042", pathIndex: "a:0" };
+  const first = deformLinePath("M0 360L820 360", [], options);
+  assert.equal(first, deformLinePath("M0 360L820 360", [], options));
+  assert.notEqual(first, deformLinePath("M0 360L820 360", [], { ...options, seed: "1043" }));
+});

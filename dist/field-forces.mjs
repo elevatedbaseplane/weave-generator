@@ -37,20 +37,35 @@ export function displacePoint(point, fields = []) {
     );
 }
 
-export function deformLinePath(path, fields = []) {
-  if (!fields.some((field) => field.enabled !== false)) return path;
+function seededUnit(seed, index) {
+  let value = 2166136261;
+  for (const character of `${seed}:${index}`) value = Math.imul(value ^ character.charCodeAt(0), 16777619);
+  value += value << 13; value ^= value >>> 7; value += value << 3; value ^= value >>> 17; value += value << 5;
+  return ((value >>> 0) / 4294967295) * 2 - 1;
+}
+
+export function deformLinePath(path, fields = [], options = {}) {
+  if (!fields.some((field) => field.enabled !== false) && !Number(options.irregularity)) return path;
   const numbers = (path.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
   if (numbers.length !== 4) return path;
   const [x1, y1, x2, y2] = numbers;
   // The original endpoints live far beyond the work area. Sampling the full
   // line lets a force affect the portion that actually passes through it.
-  const segments = 28;
+  const smoothness = clamp(Number(options.smoothness ?? 100), 0, 100);
+  const segments = Math.round(8 + smoothness * 0.32);
+  const irregularity = clamp(Number(options.irregularity ?? 0), 0, 100);
+  const variation = (irregularity / 100) * 18;
   const points = Array.from({ length: segments + 1 }, (_, index) => {
     const t = index / segments;
-    return displacePoint(
+    const displaced = displacePoint(
       { x: x1 + (x2 - x1) * t, y: y1 + (y2 - y1) * t },
       fields,
     );
+    if (!variation || index === 0 || index === segments) return displaced;
+    const dx = x2 - x1, dy = y2 - y1, length = Math.hypot(dx, dy) || 1;
+    const envelope = Math.sin(Math.PI * t);
+    const amount = seededUnit(options.seed ?? "1042", `${options.pathIndex ?? 0}:${index}`) * variation * envelope;
+    return { x: displaced.x + (-dy / length) * amount, y: displaced.y + (dx / length) * amount };
   });
   if (points.length < 3)
     return `M${points.map((point) => `${point.x.toFixed(3)} ${point.y.toFixed(3)}`).join("L")}`;

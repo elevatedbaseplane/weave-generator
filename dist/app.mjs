@@ -8,7 +8,7 @@ import {
 } from "./weave-model.mjs";
 import { latticePaths } from "./lattice-geometry.mjs";
 import { deformLinePath } from "./field-forces.mjs";
-import { defaults as familyDefaults, select as selectFamily } from "./thread-families.mjs";
+import { defaults as familyDefaults, familySourcePath, normalizeFamilies, select as selectFamily } from "./thread-families.mjs";
 
 const $ = (id) => document.getElementById(id);
 const STORE = "bac-weave-generator-projects-v1";
@@ -53,7 +53,7 @@ function loadStore() {
   return { activeProjectId: project.id, projects: [project] };
 }
 let store = loadStore(),
-  families = familyDefaults(), activeFamily = 'a',
+  families = familyDefaults(), activeFamily = "a",
   mode = localStorage.getItem("bac-weave-display-mode-v1") || "light",
   drawing = false,
   draft = [],
@@ -115,9 +115,17 @@ function latticeState() {
 function activeField() {
   return fields.find((field) => field.id === activeFieldId) || null;
 }
-function renderFamilies(){const f=families.find(x=>x.id===activeFamily);['density','tension'].forEach(k=>{$(`family-${k}`).value=f[k];$(`family-${k}-value`).value=f[k]});$('family-visible').checked=f.visible;['a','b'].forEach(id=>$(`family-${id}`).classList.toggle('active',id===activeFamily))}
+function renderFamilies() {
+  const family = families.find((item) => item.id === activeFamily);
+  ["density", "tension", "direction", "offset", "smoothness", "irregularity"].forEach((key) => {
+    $(`family-${key}`).value = family[key];
+    $(`family-${key}-value`).value = family[key];
+  });
+  $("family-visible").checked = family.visible;
+  ["a", "b"].forEach((id) => $(`family-${id}`).classList.toggle("active", id === activeFamily));
+}
 function fieldSnapshot() {
-  return { fields: clone(fields), activeFieldId };
+  return { fields: clone(fields), activeFieldId, families: clone(families), activeFamily, seed: $("seed").value };
 }
 function beginFieldEdit() {
   if (!fieldEditStart) fieldEditStart = fieldSnapshot();
@@ -135,6 +143,9 @@ function finishFieldEdit() {
 function restoreFieldSnapshot(snapshot, label) {
   fields = clone(snapshot.fields);
   activeFieldId = snapshot.activeFieldId;
+  families = normalizeFamilies(snapshot.families || families);
+  activeFamily = snapshot.activeFamily || activeFamily;
+  $("seed").value = snapshot.seed ?? $("seed").value;
   render();
   $("status").textContent = label;
 }
@@ -197,7 +208,18 @@ function renderFields() {
 function renderLattice() {
   const lattice = latticeState(),
     paths = latticePaths(lattice),
-    transformed = families.flatMap((f,i)=>selectFamily(paths,f,i).map(path=>f.tension>=100?path:deformLinePath(path,fields.map(field=>({...field,strength:field.strength*(1-f.tension/100)}))))),
+    transformed = families.flatMap((family, familyIndex) =>
+      selectFamily(paths, family, familyIndex).map((path, pathIndex) => {
+        const source = familySourcePath(path, family);
+        if (family.tension >= 100) return source;
+        return deformLinePath(source, fields.map((field) => ({ ...field, strength: field.strength * (1 - family.tension / 100) })), {
+          smoothness: family.smoothness,
+          irregularity: family.irregularity,
+          seed: $("seed").value,
+          pathIndex: `${family.id}:${pathIndex}`,
+        });
+      }),
+    ),
     transform = `rotate(${lattice.angle} 410 360)`;
   $("lattice-preview").innerHTML =
     `<g transform="${transform}" fill="none" stroke="#777" stroke-width="1.05">${paths.map((d) => `<path d="${d}"/>`).join("")}</g>`;
@@ -385,7 +407,7 @@ $("project-list").addEventListener("click", (event) => {
       l = item.lattice || {};
     $("pattern-name").value = item.name;
     $("seed").value = item.seed;
-    fields = clone(item.influenceFields?.length ? item.influenceFields : []); families = clone(item.threadFamilies?.length ? item.threadFamilies : familyDefaults()); activeFamily = families[0].id;
+    fields = clone(item.influenceFields?.length ? item.influenceFields : []); families = normalizeFamilies(item.threadFamilies?.length ? item.threadFamilies : familyDefaults()); activeFamily = families[0].id;
     if (!fields.length)
       fields = [
         {
@@ -659,7 +681,30 @@ document.addEventListener("keydown", (event) => {
   if (event.shiftKey) redoFieldEdit();
   else undoFieldEdit();
 });
-['a','b'].forEach(id=>$(`family-${id}`).addEventListener('click',()=>{activeFamily=id;render()}));$('family-visible').addEventListener('change',e=>{families.find(x=>x.id===activeFamily).visible=e.target.checked;renderLattice()});['density','tension'].forEach(key=>{const range=$(`family-${key}`),number=$(`family-${key}-value`);range.addEventListener('input',()=>{families.find(x=>x.id===activeFamily)[key]=+range.value;number.value=range.value;renderLattice()});number.addEventListener('change',()=>{range.value=Math.max(+range.min,Math.min(+range.max,+number.value||0));families.find(x=>x.id===activeFamily)[key]=+range.value;number.value=range.value;renderLattice()})});
+["a", "b"].forEach((id) => $("family-" + id).addEventListener("click", () => { activeFamily = id; renderFamilies(); }));
+$("family-visible").addEventListener("change", (event) => { beginFieldEdit(); families.find((family) => family.id === activeFamily).visible = event.target.checked; renderLattice(); finishFieldEdit(); });
+["density", "tension", "direction", "offset", "smoothness", "irregularity"].forEach((key) => {
+  const range = $(`family-${key}`), number = $(`family-${key}-value`);
+  const apply = (value) => {
+    const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0));
+    beginFieldEdit();
+    families.find((family) => family.id === activeFamily)[key] = next;
+    range.value = next; number.value = next;
+    renderLattice();
+  };
+  range.addEventListener("input", () => apply(range.value));
+  range.addEventListener("change", finishFieldEdit);
+  number.addEventListener("change", () => { apply(number.value); finishFieldEdit(); });
+});
+$("seed").addEventListener("change", () => { beginFieldEdit(); $("seed").value = $("seed").value.trim() || "1042"; renderLattice(); finishFieldEdit(); });
+$("regenerate-variation").addEventListener("click", () => {
+  beginFieldEdit();
+  const current = $("seed").value.trim() || "1042";
+  const numeric = Number(current);
+  $("seed").value = Number.isFinite(numeric) ? String((numeric * 1664525 + 1013904223) >>> 0) : `${current}-VAR`;
+  renderLattice(); finishFieldEdit();
+  $("status").textContent = "REGENERATED DETERMINISTIC VARIATION.";
+});
 document
   .querySelectorAll(".mode-tab")
   .forEach((button) =>
