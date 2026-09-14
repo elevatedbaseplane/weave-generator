@@ -197,7 +197,7 @@ function renderFields() {
 function renderLattice() {
   const lattice = latticeState(),
     paths = latticePaths(lattice),
-    transformed = families.flatMap((f,i)=>selectFamily(paths,f,i).map(path=>deformLinePath(path,fields.map(field=>({...field,strength:field.strength*(1-f.tension/100)}))))),
+    transformed = families.flatMap((f,i)=>selectFamily(paths,f,i).map(path=>f.tension>=100?path:deformLinePath(path,fields.map(field=>({...field,strength:field.strength*(1-f.tension/100)}))))),
     transform = `rotate(${lattice.angle} 410 360)`;
   $("lattice-preview").innerHTML =
     `<g transform="${transform}" fill="none" stroke="#777" stroke-width="1.05">${paths.map((d) => `<path d="${d}"/>`).join("")}</g>`;
