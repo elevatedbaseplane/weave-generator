@@ -64,6 +64,55 @@ function commandFor(eventIndex, event, settings, fields = []) {
   return { command, periodIndex };
 }
 
+// Dense carrier fields can contain many thousands of valid crossings.  The
+// display layer has a deliberate cap, but that cap must describe the whole
+// field rather than whichever paths happened to be inspected first.  Select a
+// deterministic representative from each spatial territory, then only fill
+// remaining capacity after every occupied territory has a voice.
+function balancedEventSample(events, maxEvents) {
+  const ordered = [...events].sort((left, right) => left.y - right.y || left.x - right.x || left.familyAPathId.localeCompare(right.familyAPathId));
+  if (ordered.length <= maxEvents) return ordered;
+  const minX = Math.min(...ordered.map((event) => event.x));
+  const maxX = Math.max(...ordered.map((event) => event.x));
+  const minY = Math.min(...ordered.map((event) => event.y));
+  const maxY = Math.max(...ordered.map((event) => event.y));
+  const width = Math.max(1, maxX - minX), height = Math.max(1, maxY - minY);
+  const aspect = width / height;
+  const columns = Math.max(1, Math.round(Math.sqrt(maxEvents * aspect)));
+  const rows = Math.max(1, Math.ceil(maxEvents / columns));
+  const bucketWidth = width / columns, bucketHeight = height / rows;
+  const buckets = new Map();
+  ordered.forEach((event) => {
+    const column = clamp(Math.floor((event.x - minX) / bucketWidth), 0, columns - 1);
+    const row = clamp(Math.floor((event.y - minY) / bucketHeight), 0, rows - 1);
+    const id = `${row}:${column}`;
+    const bucket = buckets.get(id) || [];
+    bucket.push(event);
+    buckets.set(id, bucket);
+  });
+  const selected = [];
+  const remaining = [];
+  // Selecting the event nearest each territory center gives a stable spatial
+  // reading without pseudo-random flicker while fields are edited.
+  [...buckets.entries()].sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true })).forEach(([id, bucket]) => {
+    const [row, column] = id.split(":").map(Number);
+    const centerX = minX + (column + .5) * bucketWidth;
+    const centerY = minY + (row + .5) * bucketHeight;
+    bucket.sort((left, right) => {
+      const leftDistance = Math.hypot(left.x - centerX, left.y - centerY);
+      const rightDistance = Math.hypot(right.x - centerX, right.y - centerY);
+      return leftDistance - rightDistance || left.y - right.y || left.x - right.x;
+    });
+    selected.push(bucket[0]);
+    remaining.push(...bucket.slice(1));
+  });
+  // At most one selected event per territory is normally enough because the
+  // grid dimensions are derived from the cap. This covers sparse territories
+  // too, while still honoring any lower caller-provided preview cap.
+  if (selected.length < maxEvents) selected.push(...remaining.slice(0, maxEvents - selected.length));
+  return selected.slice(0, maxEvents).sort((left, right) => left.y - right.y || left.x - right.x || left.familyAPathId.localeCompare(right.familyAPathId));
+}
+
 export function buildInteractionMap(familyPaths, settingsInput = {}, fields = []) {
   const settings = { ...interactionDefaults(), ...settingsInput };
   const aPaths = familyPaths.filter((item) => item.familyId === "a");
@@ -99,7 +148,7 @@ export function buildInteractionMap(familyPaths, settingsInput = {}, fields = []
     });
   }));
   const maxEvents = clamp(Number(settings.maxEvents ?? MAX_EVENTS), 1, MAX_EVENTS);
-  const deduped = [...rawByPlace.values()].sort((left, right) => left.x - right.x || left.y - right.y).slice(0, maxEvents);
+  const deduped = balancedEventSample([...rawByPlace.values()], maxEvents);
   return deduped.map((event, index) => {
     const assigned = commandFor(index, event, settings, fields);
     const eligible = ((index * 37 + settings.phase * 17) % 100) < clamp(settings.density, 0, 100);
