@@ -13,7 +13,7 @@ export function displacePoint(point, fields = []) {
     const radius = Math.max(1, Number(field.radius || 150));
     if (distance >= radius) return result;
     const falloff = Math.max(.25, Number(field.falloff || 1));
-    const influence = Math.pow(1 - distance / radius, falloff) * (Number(field.strength || 50) / 100) * 38;
+    const influence = Math.pow(1 - distance / radius, falloff) * (Number(field.strength || 50) / 100) * 72;
     let vx = dx / distance, vy = dy / distance;
     if (field.type === 'attractor') { vx *= -1; vy *= -1; }
     if (field.type === 'deflector') {
@@ -25,9 +25,16 @@ export function displacePoint(point, fields = []) {
 }
 
 export function deformLinePath(path, fields = []) {
+  if (!fields.some(field => field.enabled !== false)) return path;
   const numbers = (path.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
   if (numbers.length !== 4) return path;
-  const start = displacePoint({ x: numbers[0], y: numbers[1] }, fields);
-  const end = displacePoint({ x: numbers[2], y: numbers[3] }, fields);
-  return `M${start.x.toFixed(3)} ${start.y.toFixed(3)}L${end.x.toFixed(3)} ${end.y.toFixed(3)}`;
+  const [x1, y1, x2, y2] = numbers;
+  // The original endpoints live far beyond the work area. Sampling the full
+  // line lets a force affect the portion that actually passes through it.
+  const segments = 28;
+  const points = Array.from({ length: segments + 1 }, (_, index) => {
+    const t = index / segments;
+    return displacePoint({ x: x1 + (x2 - x1) * t, y: y1 + (y2 - y1) * t }, fields);
+  });
+  return `M${points.map(point => `${point.x.toFixed(3)} ${point.y.toFixed(3)}`).join('L')}`;
 }
