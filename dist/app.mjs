@@ -1,5 +1,6 @@
 import {
   addWeavePattern,
+  addPointSet,
   createWeaveProject,
   duplicateWeaveWithVariation,
   hydrateProject,
@@ -358,11 +359,19 @@ function saveWeave() {
   store.projects = store.projects.map((p) =>
     p.id === project.id ? result.project : p,
   );
+  store.projects.find((p) => p.id === project.id).activeWeaveId = result.pattern.id;
   save();
   render();
   $("status").textContent = existing
     ? `REPLACED ${result.pattern.name}.`
     : `ADDED ${result.pattern.name}.`;
+}
+function savePointSet() {
+  const project = active(), sourceWeaveId = project.activeWeaveId;
+  if (!sourceWeaveId) { $("status").textContent = "SELECT A SAVED WEAVE BEFORE SAVING A POINT SET."; return; }
+  const state = project.candidateState || {}, candidates = [...$("candidate-preview").querySelectorAll("[data-candidate]")].map((node) => ({ id: node.dataset.candidate, x: +node.getAttribute("cx"), y: +node.getAttribute("cy") }));
+  const result = addPointSet(project, { name: $("point-set-name").value, sourceWeaveId, extractionSettings: { spacing: state.spacing, limit: state.limit }, candidates, selectedIds: state.selectedIds || [], excludedIds: state.excludedIds || [], pinnedIds: state.pinnedIds || [] });
+  store.projects = store.projects.map((item) => item.id === project.id ? result.project : item); save(); render(); $("status").textContent = `SAVED ${result.pointSet.name} / ${candidates.length} CANDIDATES.`;
 }
 function duplicateWeave() {
   const project = active(),
@@ -470,6 +479,7 @@ $("project-list").addEventListener("click", (event) => {
 });
 $("save-boundary")?.addEventListener("click", saveBoundary);
 $("save-weave")?.addEventListener("click", saveWeave);
+$("save-point-set")?.addEventListener("click", savePointSet);
 $("duplicate-weave")?.addEventListener("click", duplicateWeave);
 $("left-add-boundary").addEventListener("click", saveBoundary);
 $("left-add-weave").addEventListener("click", saveWeave);
