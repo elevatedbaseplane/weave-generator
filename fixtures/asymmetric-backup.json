@@ -1,0 +1,52 @@
+{
+  "format": "weave-foundation",
+  "version": 1,
+  "workspace": {
+    "schemaVersion": 2,
+    "activeProjectId": "fixture-asymmetric-board",
+    "projects": [
+      {
+        "id": "fixture-asymmetric-board",
+        "name": "ASYMMETRIC FIXTURE",
+        "coordinateSystem": {
+          "units": "document-units",
+          "yAxis": "up",
+          "origin": "document"
+        },
+        "working": {
+          "boundary": {
+            "closed": true,
+            "points": [
+              {
+                "x": -40,
+                "y": 10
+              },
+              {
+                "x": 120,
+                "y": 10
+              },
+              {
+                "x": 120,
+                "y": 90
+              },
+              {
+                "x": 30,
+                "y": 90
+              },
+              {
+                "x": 30,
+                "y": 40
+              },
+              {
+                "x": -40,
+                "y": 40
+              }
+            ]
+          },
+          "sourceRevisionId": null
+        },
+        "boundaries": []
+      }
+    ]
+  }
+}

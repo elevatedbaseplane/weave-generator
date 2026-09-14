@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import {createWorkspace,serializeWorkspace} from '../dist/document.mjs';
+import {validateBoundary} from '../dist/boundary.mjs';
+import {boundarySvg,boundaryDxf} from '../dist/exchange.mjs';
+const boundary=validateBoundary([{x:-40,y:10},{x:120,y:10},{x:120,y:90},{x:30,y:90},{x:30,y:40},{x:-40,y:40}]);
+fs.mkdirSync('fixtures',{recursive:true});
+fs.writeFileSync('fixtures/asymmetric-boundary.svg',boundarySvg(boundary));
+fs.writeFileSync('fixtures/asymmetric-boundary.dxf',boundaryDxf(boundary));
+const workspace=createWorkspace();workspace.projects[0].id='fixture-asymmetric-board';workspace.activeProjectId='fixture-asymmetric-board';workspace.projects[0].name='ASYMMETRIC FIXTURE';workspace.projects[0].working.boundary=boundary;
+fs.writeFileSync('fixtures/asymmetric-backup.json',serializeWorkspace(workspace));
+console.log('Three reproducible foundation fixtures written outside dist.');

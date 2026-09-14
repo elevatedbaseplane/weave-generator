@@ -1,985 +1,132 @@
-import {
-  addWeavePattern,
-  addPointSet,
-  createWeaveProject,
-  duplicateWeaveWithVariation,
-  hydrateProject,
-  serializeProject,
-  validateProject,
-} from "./weave-model.mjs";
-import { latticePaths } from "./lattice-geometry.mjs";
-import { deformLinePath } from "./field-forces.mjs";
-import { defaults as familyDefaults, familySourcePath, normalizeFamilies, select as selectFamily } from "./thread-families.mjs";
-import { buildInteractionMap, interactionDefaults, interactionSummary, pointsFromSvgPath } from "./interaction-grammar.mjs";
-
-const $ = (id) => document.getElementById(id);
-const STORE = "bac-weave-generator-projects-v1";
-const clone = (value) => structuredClone(value);
-const makeId = (prefix) =>
-  `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-const defaultBoundary = () => ({
-  id: "boundary-default",
-  name: "DEFAULT SQUARE",
-  type: "rect",
-  points: [
-    { x: -250, y: -250 },
-    { x: 250, y: -250 },
-    { x: 250, y: 250 },
-    { x: -250, y: 250 },
-  ],
-  createdAt: new Date().toISOString(),
-});
-
-function freshProject(name = "WEAVE STUDIES") {
-  const project = createWeaveProject(name);
-  project.boundary = defaultBoundary();
-  project.boundaries = [clone(project.boundary)];
-  project.interactionSettings = interactionDefaults();
-  project.interactionMap = [];
-  return project;
+import {createWorkspace,createProject,activeProject,clone,saveBoundary,restoreBoundary,findRevision,serializeWorkspace,parseBackup,mergeBackup} from './document.mjs';
+import {square,validateBoundary,parseCoordinates,signedArea} from './boundary.mjs';
+import {History} from './history.mjs';
+import {LocalStore} from './storage.mjs';
+import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';
+import {boundarySvg,boundaryDxf} from './exchange.mjs';
+const $=id=>document.getElementById(id),BUILD='WF-1A-20260914';
+const store=new LocalStore(localStorage);
+let workspace,loadError='';
+try{workspace=store.load();}catch(error){workspace=createWorkspace();loadError=error.message;}
+const histories=new Map();
+const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
+let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null;
+let display={theme:'light',boundary:false,grid:false};
+try{const saved=JSON.parse(localStorage.getItem('weave-foundation-view-v1'));if(['light','dark','neo'].includes(saved?.theme))display={theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true};}catch{}
+const project=()=>activeProject(workspace);
+function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
+function attempt(action){try{action();}catch(error){status(error.message,true);}}
+function persist(next){store.save(next);workspace=next;}
+function editWorking(next,label){
+  const before=clone(project().working),changed=clone(workspace);activeProject(changed).working=clone(next);
+  persist(changed);history().record(before,next);render();status(label);
 }
-function loadStore() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORE));
-    if (saved?.projects?.length) {
-      saved.projects = saved.projects
-        .map(hydrateProject)
-        .map((p) => ({
-          ...p,
-      boundaries: p.boundaries?.length
-            ? p.boundaries
-            : [clone(p.boundary || defaultBoundary())],
-          interactionSettings: { ...interactionDefaults(), ...(p.interactionSettings || {}) },
-          interactionMap: p.interactionMap || [],
-        }));
-      return saved;
-    }
-  } catch {}
-  const project = freshProject();
-  return { activeProjectId: project.id, projects: [project] };
-}
-let store = loadStore(),
-  families = familyDefaults(), activeFamily = "a",
-  mode = localStorage.getItem("bac-weave-display-mode-v1") || "light",
-  drawing = false,
-  draft = [],
-  fields = [
-    {
-      id: makeId("field"),
-      name: "FIELD 01",
-      type: "attractor",
-      x: 410,
-      y: 360,
-      strength: 50,
-      radius: 150,
-      falloff: 1,
-      direction: 0,
-      enabled: true,
-    },
-  ],
-  activeFieldId = null,
-  draggingField = false,
-  dragRenderPending = false,
-  lastInteractionPreviewAt = 0,
-  // The interaction calculation and its display are deliberately separate.
-  // Visibility controls must never rebuild the carrier field or alter the
-  // working viewport.
-  renderedInteractionEvents = [],
-  undoHistory = [],
-  redoHistory = [],
-  fieldEditStart = null,
-  collapsedBoards = new Set();
-activeFieldId = fields[0].id;
-function active() {
-  return (
-    store.projects.find((project) => project.id === store.activeProjectId) ||
-    store.projects[0]
-  );
-}
-function save() {
-  localStorage.setItem(STORE, JSON.stringify(store));
-}
-function summary(project = active()) {
-  return `${String(project.weavePatterns.length).padStart(2, "0")} WEAVES · ${String(project.pointSets.length).padStart(2, "0")} POINT SETS · ${String(project.polylineSets.length).padStart(2, "0")} POLYLINE SETS`;
-}
-function renderPreview() {
-  const project = active(),
-    boundary = draft.length
-      ? draft
-      : project.boundary?.points || defaultBoundary().points,
-    toCanvas = (p) => ({ x: 410 + p.x, y: 360 - p.y }),
-    d = boundary.map(toCanvas),
-    closed = d.length > 2 ? [...d, d[0]] : d,
-    path = `M${closed.map((p) => `${p.x} ${p.y}`).join(" L")}`;
-  $("boundary-clip-path").setAttribute("d", path);
-  $("weave-preview").innerHTML =
-    `<path d="${path}" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/><g class="preview-corners">${d.map((p) => `<circle cx="${p.x}" cy="${p.y}" r="3"/>`).join("")}</g>`;
-  $("weave-preview").style.display = $("show-boundary").checked ? "" : "none";
-}
-function latticeState() {
-  return {
-    mode: $("lattice-mode").value,
-    spacing: +$("lattice-spacing").value,
-    angle: +$("lattice-angle").value,
-    offset: +$("lattice-offset").value,
-  };
-}
-function activeField() {
-  return fields.find((field) => field.id === activeFieldId) || null;
-}
-function interactionSettings() {
-  return (active().interactionSettings ||= interactionDefaults());
-}
-function setInteractionSettingsFromUi() {
-  const settings = interactionSettings();
-  settings.mode = $("interaction-mode").value;
-  ["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
-    settings[key] = +($(`interaction-${key}`).value || 0);
-  });
-  settings.showCarrier = $("show-carrier-field").checked;
-  settings.showCommands = $("show-weave-commands").checked;
-  settings.showMarkers = $("show-crossing-markers").checked;
-  settings.showZones = $("show-interaction-zones").checked;
-  settings.showAnalysis = $("show-event-analysis").checked;
-}
-function renderInteractionControls() {
-  const settings = interactionSettings();
-  $("interaction-mode").value = settings.mode;
-  ["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
-    $(`interaction-${key}`).value = settings[key];
-    $(`interaction-${key}-value`).value = settings[key];
-  });
-  $("show-carrier-field").checked = settings.showCarrier !== false;
-  $("show-weave-commands").checked = settings.showCommands !== false;
-  $("show-crossing-markers").checked = Boolean(settings.showMarkers);
-  $("show-interaction-zones").checked = Boolean(settings.showZones);
-  $("show-event-analysis").checked = settings.showAnalysis !== false;
-}
-function renderFamilies() {
-  const family = families.find((item) => item.id === activeFamily);
-  ["density", "tension", "direction", "offset", "smoothness", "irregularity"].forEach((key) => {
-    $(`family-${key}`).value = family[key];
-    $(`family-${key}-value`).value = family[key];
-  });
-  $("family-visible").checked = family.visible;
-  ["a", "b"].forEach((id) => $(`family-${id}`).classList.toggle("active", id === activeFamily));
-}
-function fieldSnapshot() {
-  return { fields: clone(fields), activeFieldId, families: clone(families), activeFamily, seed: $("seed").value };
-}
-function beginFieldEdit() {
-  if (!fieldEditStart) fieldEditStart = fieldSnapshot();
-}
-function finishFieldEdit() {
-  if (!fieldEditStart) return;
-  const after = fieldSnapshot();
-  if (JSON.stringify(fieldEditStart) !== JSON.stringify(after)) {
-    undoHistory.push(fieldEditStart);
-    if (undoHistory.length > 80) undoHistory.shift();
-    redoHistory = [];
+function setBoundary(boundary,label){editWorking({boundary,sourceRevisionId:project().working.sourceRevisionId},label);}
+function saveView(){try{localStorage.setItem('weave-foundation-view-v1',JSON.stringify(display));}catch{}document.body.dataset.theme=display.theme;document.querySelectorAll('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme===display.theme));$('show-boundary').checked=display.boundary;$('show-grid').checked=display.grid;renderCanvas();}
+function element(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
+function renderBoards(){
+  const list=$('board-list');list.replaceChildren();
+  for(const board of workspace.projects){
+    const section=element('section','board'),button=element('button',`board-title${board.id===workspace.activeProjectId?' active':''}`,board.name);
+    button.dataset.board=board.id;button.setAttribute('aria-label',`Open board ${board.name}`);section.append(button);
+    if(board.id===workspace.activeProjectId){
+      const content=element('div','board-content');
+      if(!board.boundaries.length)content.append(element('p','micro','NO SAVED BOUNDARIES.'));
+      for(const entry of board.boundaries){
+        const group=element('div','saved-entry');group.append(element('div','saved-name',entry.name));
+        for(const revision of [...entry.revisions].reverse()){
+          const item=element('button',`revision${revision.id===board.working.sourceRevisionId?' active':''}`,`R${String(revision.number).padStart(2,'0')}${revision.id===entry.latestRevisionId?' · LATEST':''}`);
+          item.dataset.revision=revision.id;item.setAttribute('aria-label',`Restore ${entry.name} revision ${revision.number}`);group.append(item);
+        }content.append(group);
+      }section.append(content);
+    }list.append(section);
   }
-  fieldEditStart = null;
 }
-function restoreFieldSnapshot(snapshot, label) {
-  fields = clone(snapshot.fields);
-  activeFieldId = snapshot.activeFieldId;
-  families = normalizeFamilies(snapshot.families || families);
-  activeFamily = snapshot.activeFamily || activeFamily;
-  $("seed").value = snapshot.seed ?? $("seed").value;
-  render();
-  $("status").textContent = label;
+function render(){
+  renderBoards();const b=project().working.boundary;
+  $('boundary-summary').textContent=`${b.points.length} VERTICES · AREA ${Math.abs(signedArea(b.points)).toLocaleString(undefined,{maximumFractionDigits:3})} U²`;
+  $('coordinates').value=b.points.map(p=>`${p.x}, ${p.y}`).join('\n');
+  $('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;
+  const source=findRevision(project(),project().working.sourceRevisionId);
+  const changed=!source||JSON.stringify(source.revision.boundary)!==JSON.stringify(b);
+  $('drawing-title').textContent=`${project().name}${changed?' · UNSAVED CHANGES':''}`;renderCanvas();
 }
-function undoFieldEdit() {
-  const prior = undoHistory.pop();
-  if (!prior) return;
-  $("status").textContent = "NOTHING TO UNDO.";
-  redoHistory.push(fieldSnapshot());
-  restoreFieldSnapshot(prior, "UNDID FIELD CHANGE.");
-}
-function redoFieldEdit() {
-  const next = redoHistory.pop();
-  if (!next) return;
-  $("status").textContent = "NOTHING TO REDO.";
-  undoHistory.push(fieldSnapshot());
-  restoreFieldSnapshot(next, "REDID FIELD CHANGE.");
-}
-function canvasPoint(event) {
-  const point = $("canvas").createSVGPoint();
-  point.x = event.clientX;
-  point.y = event.clientY;
-  return point.matrixTransform($("canvas").getScreenCTM().inverse());
-}
-function inverseLatticeRotation(point) {
-  const radians = -((latticeState().angle * Math.PI) / 180),
-    dx = point.x - 410,
-    dy = point.y - 360;
-  return {
-    x: 410 + dx * Math.cos(radians) - dy * Math.sin(radians),
-    y: 360 + dx * Math.sin(radians) + dy * Math.cos(radians),
-  };
-}
-function renderFields() {
-  const list = $("field-list"),
-    selected = activeField(),
-    controls = [
-      "field-type",
-      "field-enabled",
-      "field-strength",
-      "field-strength-value",
-      "field-radius",
-      "field-radius-value",
-      "field-falloff",
-      "field-falloff-value",
-      "field-direction",
-      "field-direction-value",
-      "remove-field",
-    ];
-  list.innerHTML = `<option value="">— NO FIELD SELECTED —</option>${fields.map((field, index) => `<option value="${field.id}">${String(index + 1).padStart(2, "0")} / ${field.type.toUpperCase()}</option>`).join("")}`;
-  list.value = selected?.id || "";
-  controls.forEach((id) => ($(id).disabled = !selected));
-  if (!selected) return;
-  for (const key of ["type", "strength", "radius", "falloff", "direction"]) {
-    $(`field-${key}`).value = selected[key];
-    const out = $(`field-${key}-value`);
-    if (out) out.value = selected[key];
+function syncBoundaryName(){const found=findRevision(project(),project().working.sourceRevisionId);$('boundary-name').value=found?.entry.name||'BOUNDARY 01';}
+function svgElement(tag,attributes){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value] of Object.entries(attributes))el.setAttribute(key,String(value));return el;}
+function renderCanvas(){
+  if(!view)return;
+  const geometry=$('geometry'),preview=$('draft-layer');geometry.replaceChildren();preview.replaceChildren();
+  const points=drag?.points||project().working.boundary.points;
+  if(display.boundary){
+    const screen=points.map(p=>toScreen(p,view,width,height));
+    geometry.append(svgElement('polygon',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:'boundary-path'}));
+    if(tool==='select')screen.forEach((p,i)=>{const vertex=svgElement('circle',{cx:p.x,cy:p.y,r:selected===i?6:4,class:`vertex${selected===i?' selected':''}`,'data-vertex':i});geometry.append(vertex);});
   }
-  $("field-enabled").checked = selected.enabled !== false;
+  if(draft.length){const screen=draft.map(p=>toScreen(p,view,width,height));preview.append(svgElement('polyline',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:'draft-path'}));screen.forEach(p=>preview.append(svgElement('circle',{cx:p.x,cy:p.y,r:4,class:'vertex'})));}
+  $('grid-layer').hidden=!display.grid;$('grid-layer').style.display=display.grid?'':'none';
+  $('frame-layer').replaceChildren();if(display.grid)$('frame-layer').append(svgElement('rect',{x:40,y:50,width:Math.max(1,width-80),height:Math.max(1,height-100)}));
+  $('empty-hint').hidden=display.boundary||tool==='draw';$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
 }
-function renderLattice() {
-  const lattice = latticeState(),
-    paths = latticePaths(lattice),
-    transformed = families.flatMap((family, familyIndex) =>
-      selectFamily(paths, family, familyIndex).map((path, pathIndex) => {
-        const source = familySourcePath(path, family);
-        const d = family.tension >= 100 ? source : deformLinePath(source, fields.map((field) => ({ ...field, strength: field.strength * (1 - family.tension / 100) })), {
-          // Carrier deformation stays full-precision while dragging. The
-          // renderer is kept responsive by skipping unaffected paths and
-          // scheduling a single update per screen frame.
-          smoothness: family.smoothness,
-          irregularity: family.irregularity,
-          seed: $("seed").value,
-          pathIndex: `${family.id}:${pathIndex}`,
-        });
-        return { d, familyId: family.id, pathIndex };
-      }),
-    ).filter((path) => typeof path.d === "string" && path.d.length > 1),
-    transform = `rotate(${lattice.angle} 410 360)`;
-  $("lattice-preview").innerHTML =
-    `<g transform="${transform}" fill="none" stroke="#777" stroke-width="1.05">${paths.map((d) => `<path d="${d}"/>`).join("")}</g>`;
-  $("lattice-preview").style.display = $("show-original-weave")?.checked ? "" : "none";
-  // Keep an empty family result as an empty group. Rendering an invalid or
-  // inherited path must never change the SVG viewport when visibility flips.
-  $("thread-preview").replaceChildren();
-  const threadGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  threadGroup.setAttribute("transform", transform);
-  threadGroup.setAttribute("fill", "none");
-  threadGroup.setAttribute("stroke", "currentColor");
-  threadGroup.setAttribute("stroke-width", "1.2");
-  threadGroup.setAttribute("stroke-linejoin", "round");
-  threadGroup.setAttribute("stroke-linecap", "round");
-  transformed.forEach((item, index) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", item.d); path.dataset.family = item.familyId; path.dataset.threadId = `${item.familyId}-${item.pathIndex}-${index}`; threadGroup.append(path); });
-  $("thread-preview").append(threadGroup);
-  const settings = interactionSettings();
-  // During a drag, a reduced interaction map preserves direct visual feedback;
-  // releasing the field immediately restores the complete precise map.
-  const analysisEnabled = settings.showAnalysis !== false;
-  const needsInteractionMap = settings.showCommands !== false || settings.showMarkers;
-  const needsCandidates = $("show-candidates")?.checked !== false;
-  const now = performance.now();
-  const analysisUpdateDue = !draggingField || now - lastInteractionPreviewAt >= 85;
-  if (analysisEnabled && needsInteractionMap && analysisUpdateDue) {
-    renderInteractionMap({ preview: draggingField });
-    lastInteractionPreviewAt = now;
-  } else {
-    if (!needsInteractionMap || !analysisEnabled) {
-      $("interaction-preview").replaceChildren();
-      $("interaction-summary").textContent = "COMMAND ANALYSIS HIDDEN.";
-    }
-  }
-  // Carrier visibility is independent from event analysis. This also keeps a
-  // hidden analysis layer from accidentally deciding whether paths are shown.
-  $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
-  if (analysisEnabled && needsCandidates && analysisUpdateDue) renderCandidates();
-  else if (!analysisEnabled || !needsCandidates) $("candidate-preview").replaceChildren();
-  if (analysisEnabled && settings.showZones) renderInteractionZones();
-  else $("interaction-zone-preview").replaceChildren();
-  $("field-preview").innerHTML =
-    `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.id === activeFieldId ? field.radius : 0}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
-}
-function renderInteractionMap({ preview = false } = {}) {
-  const settings = interactionSettings();
-  const paths = [...$("thread-preview").querySelectorAll("path")];
-  const familyPaths = paths.map((path, index) => ({
-    id: path.dataset.threadId || `path-${index}`,
-    familyId: path.dataset.family || (index < paths.length / 2 ? "a" : "b"),
-    points: pointsFromSvgPath(path, preview ? 28 : 12),
-  }));
-  const events = buildInteractionMap(familyPaths, { ...settings, maxEvents: preview ? 180 : 600 }, fields);
-  active().interactionMap = events;
-  renderedInteractionEvents = events;
-  drawInteractionMap(events, { preview });
-}
-function interactionLine(event, direction, size) {
-  const magnitude = Math.hypot(direction.x, direction.y) || 1;
-  const dx = direction.x / magnitude * size, dy = direction.y / magnitude * size;
-  return `M${(event.x - dx).toFixed(2)} ${(event.y - dy).toFixed(2)}L${(event.x + dx).toFixed(2)} ${(event.y + dy).toFixed(2)}`;
-}
-function drawInteractionMap(events = renderedInteractionEvents, { preview = false } = {}) {
-  const settings = interactionSettings();
-  const gap = settings.underpassGap / 2;
-  const commandPaths = events.map((event) => {
-    const node = `<circle class="interaction-node" cx="${event.x.toFixed(2)}" cy="${event.y.toFixed(2)}" r="2.1"/>`;
-    if (event.command === "OVER_A") return `<path class="interaction-cut" d="${interactionLine(event, event.localDirectionB, gap)}"/><path class="interaction-over" d="${interactionLine(event, event.localDirectionA, gap + 4)}"/>${node}`;
-    if (event.command === "OVER_B") return `<path class="interaction-cut" d="${interactionLine(event, event.localDirectionA, gap)}"/><path class="interaction-over" d="${interactionLine(event, event.localDirectionB, gap + 4)}"/>${node}`;
-    if (event.command === "BIND") { const normal = { x: event.localDirectionA.y - event.localDirectionB.y, y: event.localDirectionB.x - event.localDirectionA.x }; return `<path class="interaction-bind" d="${interactionLine(event, normal, settings.bindWidth / 2)}"/>${node}`; }
-    if (event.command === "GAP" || event.command === "RELEASE") return `<path class="interaction-cut" d="${interactionLine(event, event.localDirectionA, gap)}"/><path class="interaction-cut" d="${interactionLine(event, event.localDirectionB, gap)}"/>${node}`;
-    if (event.command === "BYPASS") return `<circle class="interaction-bypass" cx="${event.x}" cy="${event.y}" r="${Math.max(3, gap / 2)}"/>`;
-    return "";
-  }).join("");
-  const transform = `rotate(${latticeState().angle} 410 360)`;
-  $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : `<g class="interaction-commands">${commandPaths}</g>`}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="4"/>`).join("")}</g>` : ""}</g>`;
-  $("interaction-preview").style.display = settings.showAnalysis === false ? "none" : "";
-  const summary = interactionSummary(events);
-  $("interaction-summary").textContent = `${preview ? "LIVE PREVIEW / " : ""}${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
-}
-function refreshInteractionVisibility() {
-  const settings = interactionSettings();
-  $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
-  $("candidate-preview").style.display = settings.showAnalysis === false || $("show-candidates")?.checked === false ? "none" : "";
-  if (settings.showAnalysis === false) {
-    $("interaction-preview").style.display = "none";
-    $("interaction-zone-preview").style.display = "none";
-    $("interaction-summary").textContent = "COMMAND ANALYSIS HIDDEN.";
-    return;
-  }
-  // Saved boards from before V1 may contain an empty or legacy event array.
-  // Recalculate from the already-rendered carrier instead of trusting it.
-  const validEvents = renderedInteractionEvents.length && renderedInteractionEvents.every((event) =>
-    Number.isFinite(event.x) && Number.isFinite(event.y) && event.localDirectionA && event.localDirectionB,
-  );
-  if (!validEvents) rebuildInteractionOverlay();
-  drawInteractionMap(renderedInteractionEvents);
-  $("interaction-zone-preview").style.display = settings.showZones ? "" : "none";
-  if (settings.showZones && !$("interaction-zone-preview").childElementCount) renderInteractionZones();
-}
-function rebuildInteractionOverlay() {
-  const settings = interactionSettings();
-  if (settings.showAnalysis === false || (settings.showCommands === false && !settings.showMarkers)) return;
-  // This reads the existing paths only. It never regenerates the carrier,
-  // changes the field, or changes the viewport.
-  renderInteractionMap({ preview: false });
-}
-function scheduleInteractionOverlayRebuild() {
-  requestAnimationFrame(() => requestAnimationFrame(rebuildInteractionOverlay));
-}
-function renderInteractionZones() {
-  const transform = `rotate(${latticeState().angle} 410 360)`;
-  $("interaction-zone-preview").innerHTML = `<g transform="${transform}">${fields.filter((field) => field.enabled !== false).map((field) => `<circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/>`).join("")}</g>`;
-}
-function renderCandidates() {
-  const layer = $("candidate-preview");
-  if (!layer) return;
-  const visible = $("show-candidates")?.checked !== false;
-  const state = active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 };
-  $("candidate-spacing").value = $("candidate-spacing-value").value = state.spacing;
-  $("candidate-limit").value = $("candidate-limit-value").value = state.limit;
-  const candidates = [];
-  [...$("thread-preview").querySelectorAll("path")].forEach((path, pathIndex) => {
-    const length = path.getTotalLength();
-    [0, .5, 1].forEach((t, sampleIndex) => { const point = path.getPointAtLength(length * t); candidates.push({ id: `sample-${pathIndex}-${sampleIndex}`, x: point.x, y: point.y, type: sampleIndex === 1 ? "SAMPLED" : "VERTEX" }); });
-  });
-  // Stable, compact intersection approximation: shared sample positions are
-  // merged into one typed event; E2 will add filtering and selection.
-  const unique = new Map();
-  candidates.forEach((item) => { const key = `${Math.round(item.x / 8)}:${Math.round(item.y / 8)}`; if (!unique.has(key)) unique.set(key, item); });
-  const filtered = [];
-  [...unique.values()].forEach((item) => { if (state.excludedIds.includes(item.id)) return; if (filtered.length >= state.limit) return; if (filtered.every((other) => Math.hypot(other.x - item.x, other.y - item.y) >= state.spacing)) filtered.push(item); });
-  layer.innerHTML = `<g>${filtered.map((item) => { const selected = state.selectedIds.includes(item.id), pinned = state.pinnedIds.includes(item.id); const show = !selected || $("show-selected")?.checked !== false; return show ? `<circle data-candidate="${item.id}" cx="${item.x.toFixed(2)}" cy="${item.y.toFixed(2)}" r="${selected ? 4.5 : 3}" fill="${pinned ? '#000' : selected ? '#777' : 'currentColor'}" stroke="${selected ? '#fff' : 'none'}" stroke-width="1.2"/>` : ""; }).join("")}</g>`;
-  layer.style.display = visible ? "" : "none";
-}
-function previewPolylines() {
-  const source = [...$("candidate-preview").querySelectorAll("[data-candidate]")].map((node) => ({ id: node.dataset.candidate, x: +node.getAttribute("cx"), y: +node.getAttribute("cy") }));
-  const selected = active().candidateState?.selectedIds || [];
-  const points = source.filter((point) => selected.includes(point.id));
-  const max = +$("connector-distance").value || 140, loops = [];
-  let rejected = 0;
-  for (let index = 0; index + 2 < points.length; index += 3) { const trio = points.slice(index, index + 3); const area = Math.abs((trio[1].x-trio[0].x)*(trio[2].y-trio[0].y)-(trio[2].x-trio[0].x)*(trio[1].y-trio[0].y))/2; if (trio.every((a, i) => trio.every((b, j) => i === j || Math.hypot(a.x - b.x, a.y - b.y) <= max)) && area > 12) loops.push(trio); else rejected += 1; }
-  $("polyline-preview").innerHTML = `<g fill="none" stroke="currentColor" stroke-width="1.5">${loops.map((loop) => `<path d="M${loop.map((p) => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join("L")}Z"/>`).join("")}</g>`;
-  $("status").textContent = loops.length ? `${loops.length} VALID CLOSED LOOPS / ${rejected} REJECTED AS DEGENERATE OR TOO DISTANT.` : "NO VALID CLOSED LOOPS / SELECT NEARBY, NON-COLLINEAR POINTS.";
-}
-function renderBoards() {
-  const project = active();
-  $("project-list").innerHTML = store.projects
-    .map((p) => {
-      const open = !collapsedBoards.has(p.id);
-      return `<section class="board-node ${p.id === project.id ? "active" : ""}"><div class="board-node-heading"><button class="board-disclosure" data-board-toggle="${p.id}" aria-expanded="${open}">${open ? "−" : "+"}</button><button class="project-item ${p.id === project.id ? "active" : ""}" data-project="${p.id}">${p.name}<span>${String(p.weavePatterns.length).padStart(2, "0")}</span></button></div>${open ? `<div class="board-children"><div class="iteration-heading"><span>BOUNDARIES <small>${String(p.boundaries.length).padStart(2, "0")}</small></span></div>${p.boundaries.map((b, i) => `<div class="weave-row"><span>${String(i + 1).padStart(2, "0")}</span><button data-boundary="${b.id}">${b.name}</button><button class="small" data-delete-boundary="${b.id}">×</button></div>`).join("")}<div class="iteration-heading"><span>WEAVE PATTERN GRIDS <small>${String(p.weavePatterns.length).padStart(2, "0")}</small></span></div>${p.weavePatterns.length ? p.weavePatterns.map((w, i) => `<div class="weave-row ${w.id === p.activeWeaveId ? "active" : ""}"><span>${String(i + 1).padStart(2, "0")}</span><button data-weave="${w.id}">${w.name}</button><button class="small" data-delete-weave="${w.id}">×</button></div>`).join("") : '<p class="iteration-empty">NO SAVED WEAVE PATTERNS.</p>'}<div class="lineage-summary">POINT SETS ${String(p.pointSets.length).padStart(2, "0")}<br>POLYLINE SETS ${String(p.polylineSets.length).padStart(2, "0")}</div></div>` : ""}</section>`;
-    })
-    .join("");
-}
-function render() {
-  const project = active(),
-    pts = project.boundary?.points || defaultBoundary().points,
-    b = {
-      width: Math.round(
-        Math.max(...pts.map((p) => p.x)) - Math.min(...pts.map((p) => p.x)),
-      ),
-      height: Math.round(
-        Math.max(...pts.map((p) => p.y)) - Math.min(...pts.map((p) => p.y)),
-      ),
-    };
-  $("project-label").textContent = project.name;
-  $("project-name").value = project.name;
-  $("boundary-name").value = project.boundary?.name || "UNSAVED BOUNDARY";
-  $("boundary-kind").textContent = drawing
-    ? "DRAWING"
-    : project.boundary?.type?.toUpperCase() || "DEFAULT";
-  $("boundary-size").textContent = `${b.width} × ${b.height}`;
-  $("object-summary").textContent = summary(project);
-  $("lineage-status").textContent =
-    `WEAVE → POINTS → POLYLINES / ${validateProject(project).valid ? "LINEAGE VALID" : "LINEAGE ERROR"}`;
-  renderBoards();
-  renderFields();
-  renderFamilies();
-  renderInteractionControls();
-  renderLattice();
-  renderPreview();
-}
-function setMode(next) {
-  mode = ["light", "dark", "neo"].includes(next) ? next : "light";
-  document.body.classList.toggle("mode-dark", mode === "dark");
-  document.body.classList.toggle("mode-neo", mode === "neo");
-  document
-    .querySelectorAll(".mode-tab")
-    .forEach((button) =>
-      button.classList.toggle("active", button.dataset.mode === mode),
-    );
-  localStorage.setItem("bac-weave-display-mode-v1", mode);
-}
-function saveBoundary() {
-  const project = active(),
-    points =
-      draft.length >= 3
-        ? draft
-        : project.boundary?.points || defaultBoundary().points;
-  project.boundary = {
-    ...defaultBoundary(),
-    id: makeId("boundary"),
-    name: $("boundary-name").value.trim().toUpperCase() || "UNTITLED BOUNDARY",
-    type: draft.length ? "drawn" : project.boundary?.type || "rect",
-    points,
-  };
-  (project.boundaries ??= []).push(clone(project.boundary));
-  draft = [];
-  drawing = false;
-  project.updatedAt = new Date().toISOString();
-  save();
-  render();
-  $("status").textContent =
-    `SAVED ${project.boundary.name} IN ${project.name}.`;
-}
-function saveWeave() {
-  const project = active(),
-    name = ($("pattern-name").value || "WEAVE PATTERN").trim().toUpperCase(),
-    existing = project.weavePatterns.find((item) => item.name === name),
-    base = clone(project);
-  if (existing)
-    base.weavePatterns = base.weavePatterns.filter(
-      (item) => item.id !== existing.id,
-    );
-  const input = {
-      id: existing?.id,
-      name,
-      seed: $("seed").value,
-      boundaryId: project.boundary?.id || null,
-      lattice: { ...latticeState(), visible: true },
-      threadFamilies: clone(families),
-      influenceFields: clone(fields),
-      interactionSettings: clone(interactionSettings()),
-      interactionMap: clone(project.interactionMap || []),
-      threads: [],
-      provenance: {
-        release: "BUILD 03",
-        createdFrom: "field-forces",
-        replaces: existing?.id || null,
-      },
-    },
-    result = addWeavePattern(base, input);
-  store.projects = store.projects.map((p) =>
-    p.id === project.id ? result.project : p,
-  );
-  store.projects.find((p) => p.id === project.id).activeWeaveId = result.pattern.id;
-  save();
-  render();
-  $("status").textContent = existing
-    ? `REPLACED ${result.pattern.name}.`
-    : `ADDED ${result.pattern.name}.`;
-}
-function savePointSet() {
-  const project = active(), sourceWeaveId = project.activeWeaveId;
-  if (!sourceWeaveId) { $("status").textContent = "SELECT A SAVED WEAVE BEFORE SAVING A POINT SET."; return; }
-  const state = project.candidateState || {}, candidates = [...$("candidate-preview").querySelectorAll("[data-candidate]")].map((node) => ({ id: node.dataset.candidate, x: +node.getAttribute("cx"), y: +node.getAttribute("cy") }));
-  const result = addPointSet(project, { name: $("point-set-name").value, sourceWeaveId, extractionSettings: { spacing: state.spacing, limit: state.limit }, candidates, selectedIds: state.selectedIds || [], excludedIds: state.excludedIds || [], pinnedIds: state.pinnedIds || [] });
-  store.projects = store.projects.map((item) => item.id === project.id ? result.project : item); save(); render(); $("status").textContent = `SAVED ${result.pointSet.name} / ${candidates.length} CANDIDATES.`;
-}
-function duplicateWeave() {
-  const project = active(),
-    source = project.weavePatterns.at(-1);
-  if (!source) {
-    $("status").textContent =
-      "SAVE A WEAVE PATTERN BEFORE CREATING A VARIATION.";
-    return;
-  }
-  const result = duplicateWeaveWithVariation(project, source.id, {
-    name: `${source.name} VARIATION`,
-    seed: $("seed").value || source.seed,
-  });
-  store.projects = store.projects.map((p) =>
-    p.id === project.id ? result.project : p,
-  );
-  save();
-  render();
-  $("status").textContent =
-    `DUPLICATED ${source.name} WITH PRESERVED ANCESTRY.`;
-}
-
-$("new-project").addEventListener("click", () => {
-  const name = prompt("Board name", "WEAVE STUDIES");
-  if (name === null) return;
-  const project = freshProject(name);
-  store.projects.push(project);
-  store.activeProjectId = project.id;
-  save();
-  render();
+function fit(){view=fitView(project().working.boundary.points,width,height);renderCanvas();}
+function setTool(next){tool=next;draft=[];selected=null;drag=null;['select','draw','pan'].forEach(name=>$(`${name}-tool`).classList.toggle('active',name===next));$('draw-actions').hidden=next!=='draw';if(next==='draw')$('boundary-section').open=true;renderCanvas();status(next==='draw'?'CLICK VERTICES. FINISH CLOSES THE BOUNDARY. ESC CANCELS.':next==='pan'?'DRAG TO PAN. SCROLL TO ZOOM.':'CLICK A VERTEX TO SELECT. DRAG TO EDIT.');}
+function download(text,name,type='application/json'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('board-list').addEventListener('click',event=>attempt(()=>{
+  const board=event.target.closest('[data-board]'),revision=event.target.closest('[data-revision]');
+  if(board){const next=clone(workspace);next.activeProjectId=board.dataset.board;persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
+  if(revision){const restored=restoreBoundary(project(),revision.dataset.revision);editWorking(restored.working,'BOUNDARY REVISION RESTORED.');const entry=project().boundaries.find(e=>e.revisions.some(r=>r.id===revision.dataset.revision));$('boundary-name').value=entry.name;selected=null;}
+}));
+$('new-board').onclick=()=>$('board-dialog').showModal();
+$('board-form').onsubmit=event=>{event.preventDefault();attempt(()=>{const next=clone(workspace),board=createProject($('board-name').value);next.projects.push(board);next.activeProjectId=board.id;persist(next);$('board-dialog').close();setTool('select');render();fit();status('NEW BOARD CREATED.');});};
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
+$('make-square').onclick=()=>attempt(()=>{setBoundary(square(Number($('square-size').value)),'SQUARE CREATED.');setTool('select');display.boundary=true;saveView();fit();});
+$('apply-coordinates').onclick=()=>attempt(()=>{setBoundary(parseCoordinates($('coordinates').value),'COORDINATES APPLIED.');display.boundary=true;saveView();selected=null;});
+$('save-boundary').onclick=()=>attempt(()=>{const result=saveBoundary(project(),$('boundary-name').value),next=clone(workspace);next.projects=next.projects.map(p=>p.id===result.project.id?result.project:p);persist(next);render();status('REVISION SAVED. OLDER REVISIONS ARE UNCHANGED.');});
+for(const name of ['select','draw','pan'])$(`${name}-tool`).onclick=()=>setTool(name);
+$('cancel-drawing').onclick=()=>setTool('select');
+$('finish-drawing').onclick=()=>attempt(()=>{setBoundary(validateBoundary(draft),'DRAWN BOUNDARY CREATED.');setTool('select');display.boundary=true;saveView();});
+$('fit').onclick=fit;
+for(const action of ['undo','redo'])$(action).onclick=()=>attempt(()=>{
+  const h=history(),oldPast=clone(h.past),oldFuture=clone(h.future),next=clone(workspace);activeProject(next).working=h[action](project().working);
+  try{persist(next);}catch(error){h.past=oldPast;h.future=oldFuture;throw error;}selected=null;render();status(action.toUpperCase()+' WORKING DOCUMENT. SAVED REVISIONS RETAINED.');
 });
-$("rename-project").addEventListener("click", () => {
-  $("project-name").focus();
-  $("project-name").select();
-});
-$("project-name").addEventListener("change", (event) => {
-  active().name = event.target.value.trim().toUpperCase() || active().name;
-  active().updatedAt = new Date().toISOString();
-  save();
-  render();
-});
-$("project-list").addEventListener("click", (event) => {
-  const deleteWeave = event.target.closest("[data-delete-weave]");
-  if (deleteWeave) { const project = active(), id = deleteWeave.dataset.deleteWeave; project.weavePatterns = project.weavePatterns.filter((item) => item.id !== id); project.pointSets = project.pointSets.filter((item) => item.sourceWeaveId !== id); if (project.activeWeaveId === id) project.activeWeaveId = null; save(); render(); return; }
-  const deleteBoundary = event.target.closest("[data-delete-boundary]");
-  if (deleteBoundary) { const project = active(), id = deleteBoundary.dataset.deleteBoundary; if (project.boundaries.length < 2) { $("status").textContent = "KEEP AT LEAST ONE BOUNDARY."; return; } project.boundaries = project.boundaries.filter((item) => item.id !== id); if (project.boundary?.id === id) project.boundary = clone(project.boundaries[0]); save(); render(); return; }
-  const toggle = event.target.closest("[data-board-toggle]");
-  if (toggle) {
-    const id = toggle.dataset.boardToggle;
-    collapsedBoards.has(id)
-      ? collapsedBoards.delete(id)
-      : collapsedBoards.add(id);
-    renderBoards();
-    return;
-  }
-  const board = event.target.closest("[data-project]");
-  if (board) {
-    store.activeProjectId = board.dataset.project;
-    collapsedBoards.delete(board.dataset.project);
-    save();
-    render();
-    return;
-  }
-  const boundary = event.target.closest("[data-boundary]");
-  if (boundary) {
-    active().boundary = clone(
-      active().boundaries.find((b) => b.id === boundary.dataset.boundary),
-    );
-    save();
-    render();
-    return;
-  }
-  const weave = event.target.closest("[data-weave]");
-  if (weave) {
-    const item = active().weavePatterns.find(
-        (w) => w.id === weave.dataset.weave,
-      ),
-      l = item.lattice || {};
-    active().activeWeaveId = item.id;
-    active().interactionSettings = { ...interactionDefaults(), ...(item.interactionSettings || {}) };
-    active().interactionMap = clone(item.interactionMap || []);
-    save();
-    $("pattern-name").value = item.name;
-    $("seed").value = item.seed;
-    fields = clone(item.influenceFields?.length ? item.influenceFields : []); families = normalizeFamilies(item.threadFamilies?.length ? item.threadFamilies : familyDefaults()); activeFamily = families[0].id;
-    if (!fields.length)
-      fields = [
-        {
-          id: makeId("field"),
-          name: "FIELD 01",
-          type: "attractor",
-          x: 410,
-          y: 360,
-          strength: 50,
-          radius: 150,
-          falloff: 1,
-          direction: 0,
-          enabled: true,
-        },
-      ];
-    activeFieldId = fields[0].id;
-    for (const id of ["mode", "spacing", "angle", "offset"]) {
-      $(`lattice-${id}`).value =
-        l[id] ?? { mode: "rectangular", spacing: 40, angle: 0, offset: 0 }[id];
-      if (id !== "mode")
-        $(`lattice-${id}-value`).value = $(`lattice-${id}`).value;
-    }
-    render();
-    // Restore can replace the carrier and its saved interaction metadata in
-    // the same turn. Rebuild the overlay on the settled SVG paths.
-    scheduleInteractionOverlayRebuild();
-    $("status").textContent = `RESTORED ${item.name}.`;
-  }
-});
-$("save-boundary")?.addEventListener("click", saveBoundary);
-$("save-weave")?.addEventListener("click", saveWeave);
-$("save-point-set")?.addEventListener("click", savePointSet);
-$("duplicate-weave")?.addEventListener("click", duplicateWeave);
-$("left-add-boundary").addEventListener("click", saveBoundary);
-$("left-add-weave").addEventListener("click", saveWeave);
-$("left-rename").addEventListener("click", () => {
-  $("project-name").focus();
-  $("project-name").select();
-});
-$("left-duplicate").addEventListener("click", () => {
-  const source = active(),
-    copy = freshProject(`${source.name} COPY`);
-  copy.boundary = clone(source.boundary);
-  copy.boundaries = clone(source.boundaries);
-  copy.weavePatterns = clone(source.weavePatterns);
-  store.projects.push(copy);
-  store.activeProjectId = copy.id;
-  save();
-  render();
-});
-$("left-delete").addEventListener("click", () => {
-  if (store.projects.length === 1) {
-    $("status").textContent = "KEEP AT LEAST ONE BOARD.";
-    return;
-  }
-  if (!confirm(`Delete ${active().name}?`)) return;
-  store.projects = store.projects.filter(
-    (project) => project.id !== active().id,
-  );
-  store.activeProjectId = store.projects[0].id;
-  save();
-  render();
-});
-$("use-square").addEventListener("click", () => {
-  const project = active(),
-    square = {
-      ...defaultBoundary(),
-      id: makeId("boundary"),
-      name: "PERFECT SQUARE",
-      type: "square",
-    };
-  project.boundary = square;
-  (project.boundaries ??= []).push(clone(square));
-  draft = [];
-  drawing = false;
-  save();
-  render();
-  $("status").textContent = "SAVED PERFECT SQUARE AS ACTIVE BOUNDARY.";
-});
-$("import-boundary").addEventListener("click", () =>
-  $("boundary-file").click(),
-);
-$("boundary-file").addEventListener("change", async (e) => {
-  const t = await e.target.files?.[0]?.text(),
-    n = new DOMParser()
-      .parseFromString(t || "", "image/svg+xml")
-      .querySelector("polygon,polyline"),
-    v = (n?.getAttribute("points") || "").trim().split(/[ ,]+/).map(Number);
-  if (v.length < 6) {
-    $("status").textContent = "IMPORT A CLOSED SVG POLYGON OR POLYLINE.";
-    return;
-  }
-  let p = v.reduce(
-      (a, x, i) => (i % 2 ? (a[a.length - 1].y = x) : a.push({ x, y: 0 }), a),
-      [],
-    ),
-    xs = p.map((q) => q.x),
-    ys = p.map((q) => q.y),
-    s =
-      500 /
-      Math.max(
-        Math.max(...xs) - Math.min(...xs),
-        Math.max(...ys) - Math.min(...ys),
-      );
-  draft = p.map((q) => ({
-    x: (q.x - (Math.max(...xs) + Math.min(...xs)) / 2) * s,
-    y: (q.y - (Math.max(...ys) + Math.min(...ys)) / 2) * s,
-  }));
-  drawing = false;
-  render();
-  $("status").textContent = "SVG BOUNDARY FIT TO CANVAS. CLICK SAVE BOUNDARY.";
-});
-$("draw-boundary").addEventListener("click", () => {
-  drawing = true;
-  draft = [];
-  $("status").textContent =
-    "DRAW MODE: CLICK THREE OR MORE POINTS ON THE CANVAS, THEN SAVE BOUNDARY.";
-  render();
-});
-$("clear-boundary").addEventListener("click", () => {
-  draft = [];
-  drawing = false;
-  render();
-});
-$("canvas").addEventListener("pointerdown", (e) => {
-  const marker = e.target.closest?.("[data-field]");
-  if (marker && !drawing) {
-    activeFieldId = marker.dataset.field;
-    beginFieldEdit();
-    draggingField = true;
-    $("canvas").setPointerCapture?.(e.pointerId);
-    render();
-  }
-});
-$("canvas").addEventListener("pointermove", (e) => {
-  if (!draggingField) return;
-  const field = activeField();
-  if (!field) return;
-  const point = inverseLatticeRotation(canvasPoint(e));
-  field.x = Math.max(0, Math.min(820, point.x));
-  field.y = Math.max(0, Math.min(720, point.y));
-  if (dragRenderPending) return;
-  dragRenderPending = true;
-  requestAnimationFrame(() => {
-    dragRenderPending = false;
-    if (draggingField) renderLattice();
-  });
-});
-$("canvas").addEventListener("pointerup", () => {
-  if (draggingField) {
-    finishFieldEdit();
-    draggingField = false;
-    dragRenderPending = false;
-    renderLattice();
-    renderFields();
-    $("status").textContent = "FIELD UPDATED / EVENT ANALYSIS REFRESHED.";
-    return;
-  }
-  draggingField = false;
-});
-$("canvas").addEventListener("click", (e) => {
-  if (drawing) {
-    const point = canvasPoint(e),
-      x = point.x - 410,
-      y = 360 - point.y;
-    draft.push({ x, y });
-    renderPreview();
-    $("status").textContent =
-      `DRAW MODE: ${draft.length} POINTS. ADD MORE OR SAVE BOUNDARY.`;
-    return;
-  }
-  if (!e.target.closest?.("[data-field]") && activeFieldId) {
-    activeFieldId = null;
-    render();
-    $("status").textContent = "FIELD DESELECTED.";
-  }
-});
-$("show-boundary").addEventListener("change", renderPreview);
-$("show-grid").addEventListener("change", () => {
-  $("grid-layer").style.display = $("show-grid").checked ? "" : "none";
-  $("frame-layer").style.display = $("show-grid").checked ? "" : "none";
-});
-$("show-candidates")?.addEventListener("change", () => {
-  $("candidate-preview").style.display = $("show-candidates").checked ? "" : "none";
-});
-$("preview-polylines")?.addEventListener("click", previewPolylines);
-$("show-original-weave")?.addEventListener("change", () => {
-  $("lattice-preview").style.display = $("show-original-weave").checked ? "" : "none";
-});
-$("interaction-mode")?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
-["density", "period", "phase", "underpassGap", "bindWidth", "radius", "fieldResponse"].forEach((key) => {
-  const range = $(`interaction-${key}`), number = $(`interaction-${key}-value`);
-  const apply = (value) => {
-    const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0));
-    range.value = next; number.value = next;
-    setInteractionSettingsFromUi(); save(); renderLattice();
-  };
-  range?.addEventListener("input", () => apply(range.value));
-  number?.addEventListener("change", () => apply(number.value));
-});
-["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones", "show-event-analysis"].forEach((id) => {
-  $(id)?.addEventListener("change", () => {
-    setInteractionSettingsFromUi();
-    save();
-    refreshInteractionVisibility();
-  });
-});
-$("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
-document.querySelectorAll("#control-rail details").forEach((section) => { section.open = false; });
-$("show-selected")?.addEventListener("change", renderCandidates);
-[["candidate-spacing", "candidate-spacing-value", "spacing"], ["candidate-limit", "candidate-limit-value", "limit"]].forEach(([rangeId, inputId, key]) => {
-  const apply = (value) => { const range = $(rangeId); const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0)); active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; active().candidateState[key] = next; $(rangeId).value = $(inputId).value = next; save(); renderCandidates(); };
-  $(rangeId).addEventListener("input", () => apply($(rangeId).value)); $(inputId).addEventListener("change", () => apply($(inputId).value));
-});
-$("candidate-preview")?.addEventListener("click", (event) => { const id = event.target.dataset.candidate; if (!id) return; const state = active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; const toggle = (list) => list.includes(id) ? list.filter((item) => item !== id) : [...list, id]; if (event.altKey) state.excludedIds = toggle(state.excludedIds); else if (event.shiftKey) state.pinnedIds = toggle(state.pinnedIds); else state.selectedIds = toggle(state.selectedIds); save(); renderCandidates(); });
-$("select-all-candidates")?.addEventListener("click", () => { const state = active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; state.selectedIds = [...$("candidate-preview").querySelectorAll("[data-candidate]")].map((node) => node.dataset.candidate); save(); renderCandidates(); });
-$("deselect-all-candidates")?.addEventListener("click", () => { active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; active().candidateState.selectedIds = []; save(); renderCandidates(); });
-for (const id of [
-  "lattice-mode",
-  "lattice-spacing",
-  "lattice-angle",
-  "lattice-offset",
-])
-  $(id).addEventListener("input", () => {
-    if (id !== "lattice-mode") $(`${id}-value`).value = $(id).value;
-    renderLattice();
-  });
-for (const id of [
-  "lattice-spacing-value",
-  "lattice-angle-value",
-  "lattice-offset-value",
-])
-  $(id).addEventListener("change", (e) => {
-    const range = $(e.target.id.replace("-value", ""));
-    const value = Math.max(
-      +range.min,
-      Math.min(+range.max, +e.target.value || 0),
-    );
-    range.value = value;
-    e.target.value = value;
-    renderLattice();
-  });
-$("field-list").addEventListener("change", (e) => {
-  activeFieldId = e.target.value || null;
-  render();
-});
-$("add-field").addEventListener("click", () => {
-  beginFieldEdit();
-  const n = fields.length + 1;
-  const field = {
-    id: makeId("field"),
-    name: `FIELD ${String(n).padStart(2, "0")}`,
-    type: "attractor",
-    x: 410,
-    y: 360,
-    strength: 50,
-    radius: 150,
-    falloff: 1,
-    direction: 0,
-    enabled: true,
-  };
-  fields.push(field);
-  activeFieldId = field.id;
-  finishFieldEdit();
-  render();
-});
-$("remove-field").addEventListener("click", () => {
-  if (!activeField()) return;
-  if (fields.length === 1) {
-    $("status").textContent =
-      "KEEP AT LEAST ONE FIELD; DISABLE IT TO SHOW THE BASE LATTICE.";
-    return;
-  }
-  beginFieldEdit();
-  fields = fields.filter((field) => field.id !== activeFieldId);
-  activeFieldId = fields[0].id;
-  finishFieldEdit();
-  render();
-});
-for (const key of ["type", "strength", "radius", "falloff", "direction"]) {
-  $(`field-${key}`).addEventListener("input", (e) => {
-    const field = activeField();
-    if (!field) return;
-    beginFieldEdit();
-    field[key] = key === "type" ? e.target.value : +e.target.value;
-    const out = $(`field-${key}-value`);
-    if (out) out.value = field[key];
-    renderLattice();
-  });
-  $(`field-${key}`).addEventListener("change", finishFieldEdit);
-  const out = $(`field-${key}-value`);
-  if (out)
-    out.addEventListener("change", (e) => {
-      const range = $(`field-${key}`),
-        field = activeField();
-      if (!field) return;
-      beginFieldEdit();
-      const value = Math.max(
-        +range.min,
-        Math.min(+range.max, +e.target.value || 0),
-      );
-      range.value = value;
-      e.target.value = value;
-      field[key] = value;
-      renderLattice();
-      finishFieldEdit();
-    });
-}
-$("field-enabled").addEventListener("change", (e) => {
-  const field = activeField();
-  if (!field) return;
-  beginFieldEdit();
-  field.enabled = e.target.checked;
-  renderLattice();
-  finishFieldEdit();
-});
-document.addEventListener("keydown", (event) => {
-  if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "z")
-    return;
-  event.preventDefault();
-  if (event.shiftKey) redoFieldEdit();
-  else undoFieldEdit();
-});
-["a", "b"].forEach((id) => $("family-" + id).addEventListener("click", () => { activeFamily = id; renderFamilies(); }));
-$("family-visible").addEventListener("change", (event) => { beginFieldEdit(); families.find((family) => family.id === activeFamily).visible = event.target.checked; renderLattice(); finishFieldEdit(); });
-["density", "tension", "direction", "offset", "smoothness", "irregularity"].forEach((key) => {
-  const range = $(`family-${key}`), number = $(`family-${key}-value`);
-  const apply = (value) => {
-    const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0));
-    beginFieldEdit();
-    families.find((family) => family.id === activeFamily)[key] = next;
-    range.value = next; number.value = next;
-    renderLattice();
-  };
-  range.addEventListener("input", () => apply(range.value));
-  range.addEventListener("change", finishFieldEdit);
-  number.addEventListener("change", () => { apply(number.value); finishFieldEdit(); });
-});
-$("seed").addEventListener("change", () => { beginFieldEdit(); $("seed").value = $("seed").value.trim() || "1042"; renderLattice(); finishFieldEdit(); });
-$("regenerate-variation").addEventListener("click", () => {
-  beginFieldEdit();
-  const current = $("seed").value.trim() || "1042";
-  const numeric = Number(current);
-  $("seed").value = Number.isFinite(numeric) ? String((numeric * 1664525 + 1013904223) >>> 0) : `${current}-VAR`;
-  renderLattice(); finishFieldEdit();
-  $("status").textContent = "REGENERATED DETERMINISTIC VARIATION.";
-});
-document
-  .querySelectorAll(".mode-tab")
-  .forEach((button) =>
-    button.addEventListener("click", () => setMode(button.dataset.mode)),
-  );
-$("toggle-projects").addEventListener("click", () => {
-  const hidden = $("app-shell").classList.toggle("projects-hidden");
-  $("toggle-projects").textContent = hidden ? "BOARDS +" : "BOARDS −";
-});
-$("toggle-controls").addEventListener("click", () => {
-  const hidden = $("app-shell").classList.toggle("controls-hidden");
-  $("toggle-controls").textContent = hidden ? "CONTROLS +" : "CONTROLS −";
-});
-setMode(mode);
-render();
-// A board remembers the saved weave the user was working from. Restore it only
-// after the board list exists, using the same path as an explicit selection.
-const restoredWeave = active().activeWeaveId;
-if (restoredWeave && active().weavePatterns.some((item) => item.id === restoredWeave)) {
-  document.querySelector(`[data-weave="${restoredWeave}"]`)?.click();
-}
-// A live browser can restore a previous board before its SVG geometry is
-// ready. The deferred pass keeps that legacy state from hiding interaction
-// marks, while preserving the field exactly as saved.
-scheduleInteractionOverlayRebuild();
-window.weaveState = {
-  get project() {
-    return clone(active());
-  },
-  serialize: () => serializeProject(active()),
+for(const layer of ['boundary','grid'])$(`show-${layer}`).onchange=event=>{display[layer]=event.target.checked;saveView();};
+$('reveal-boundary').onclick=()=>{display.boundary=true;saveView();$('boundary-section').open=true;};
+document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{display.theme=b.dataset.theme;saveView();});
+for(const rail of ['boards','controls'])$(`toggle-${rail}`).onclick=()=>{const hidden=$('shell').classList.toggle(`${rail}-hidden`);$(`toggle-${rail}`).textContent=`${rail.toUpperCase()} ${hidden?'+':'−'}`;$(`toggle-${rail}`).setAttribute('aria-expanded',String(!hidden));};
+$('backup').onclick=()=>attempt(()=>download(serializeWorkspace(workspace),'weave-foundation-backup.json'));
+$('raw-backup').onclick=()=>download(store.raw(),'weave-foundation-raw-recovery.json','text/plain');
+$('import-backup').onclick=()=>{$('import-message').textContent='';$('backup-dialog').showModal();};
+$('backup-file').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;if(file.size>10*1024*1024){$('import-message').textContent='Use a backup smaller than 10 MB.';return;}$('backup-json').value=await file.text();};
+$('confirm-import').onclick=()=>{try{const incoming=parseBackup($('backup-json').value),next=mergeBackup(workspace,incoming);persist(next);histories.clear();$('backup-dialog').close();setTool('select');render();fit();status('BACKUP IMPORTED. EXISTING BOARDS RETAINED.');}catch(error){$('import-message').textContent=error.message;}};
+$('export-svg').onclick=()=>attempt(()=>download(boundarySvg(project().working.boundary),'weave-boundary.svg','image/svg+xml'));
+$('export-dxf').onclick=()=>attempt(()=>download(boundaryDxf(project().working.boundary),'weave-boundary.dxf','application/dxf'));
+const localPoint=event=>{const rect=$('canvas').getBoundingClientRect();return {x:event.clientX-rect.left,y:event.clientY-rect.top};};
+$('canvas').onpointerdown=event=>{
+  if(event.button!==0&&event.button!==1)return;
+  const p=localPoint(event);
+  if(tool==='draw'&&event.button===0){draft.push(toDocument(p,view,width,height));renderCanvas();return;}
+  if(tool==='pan'||event.button===1){event.preventDefault();drag={type:'pan',start:p,view:clone(view)};}
+  else if(event.target.dataset.vertex!==undefined){selected=Number(event.target.dataset.vertex);drag={type:'vertex',index:selected,points:clone(project().working.boundary.points)};renderCanvas();}
+  else {selected=null;renderCanvas();}
+  if(drag)$('canvas').setPointerCapture(event.pointerId);
 };
+$('canvas').onpointermove=event=>{
+  const p=localPoint(event),doc=toDocument(p,view,width,height);$('pointer').textContent=`X ${doc.x.toFixed(2)} / Y ${doc.y.toFixed(2)}`;
+  if(drag?.type==='pan'){view={...drag.view,cx:drag.view.cx-(p.x-drag.start.x)/drag.view.scale,cy:drag.view.cy+(p.y-drag.start.y)/drag.view.scale};renderCanvas();}
+  else if(drag?.type==='vertex'){drag.points[drag.index]={x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))};renderCanvas();}
+};
+$('canvas').onpointerup=()=>{const completed=drag;drag=null;if(completed?.type==='vertex')attempt(()=>setBoundary(validateBoundary(completed.points),'VERTEX MOVED. ONE UNDO RESTORES THE DRAG.'));renderCanvas();};
+$('canvas').onpointercancel=()=>{drag=null;renderCanvas();};
+$('canvas').addEventListener('wheel',event=>{event.preventDefault();view=zoomAt(view,Math.exp(-event.deltaY*.001),localPoint(event),width,height);renderCanvas();},{passive:false});
+document.addEventListener('keydown',event=>{if(event.target.closest('input,textarea,dialog'))return;if(event.key==='Escape'){setTool('select');return;}if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();$(event.shiftKey?'redo':'undo').click();}if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='y'){event.preventDefault();$('redo').click();}});
+new ResizeObserver(entries=>{const r=entries[0].contentRect;width=r.width;height=r.height;$('canvas').setAttribute('viewBox',`0 0 ${width} ${height}`);if(!view)fit();renderCanvas();}).observe($('drawing'));
+// All sections start closed; geometry remains in the model while hidden.
+document.querySelectorAll('#controls details').forEach(d=>d.open=false);
+if(matchMedia('(max-width:760px)').matches){$('toggle-boards').click();$('toggle-controls').click();}
+syncBoundaryName();render();saveView();status(store.lastRaw?'WORKSPACE RESTORED. SAVED REVISIONS ARE AVAILABLE IN BOARDS.':'SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.');if(loadError){status(loadError,true);$('raw-backup').hidden=false;}
+if(document.modelContext?.registerTool){
+  const lifecycle=new AbortController();
+  const tool={name:'read_weave_foundation',description:'Read the working boundary, immutable saved revisions, display state and build identity without editing.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');return {build:BUILD,workspace:clone(workspace),display:clone(display),view:clone(view),storageBlocked:store.blocked};}};
+  try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
+  window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
+}
