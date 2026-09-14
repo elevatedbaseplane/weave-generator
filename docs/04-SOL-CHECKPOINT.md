@@ -6,9 +6,9 @@ The architectural checkpoint is the verified Phase 1A working foundation: one do
 
 The release checkpoint additionally requires an exact pushed source commit, a successful deployment to the rebuild site, and a recorded build identity. If network/approval policy blocks publication, the architectural checkpoint can be reached locally while the release checkpoint remains pending. Do not call that a completed release.
 
-**Current checkpoint outcome:** architectural and release checkpoints reached at implementation commit `4d4e297dde6f7f88b87821a4ea0c95e6e1a92251`; 12 tests plus local browser checks pass, and private Site version 1 deployed successfully at `https://weave-foundation.notbrandon175.chatgpt.site`. Live read-back confirmed build `WF-1A-20260914`, schema 2, browser-local storage available, boundary/grid initially off, and owner-only access. It is suitable to switch to Sol Medium for the next bounded established-decision batch. Do not start Phase 1B until it is authorized. No model setting was changed by this task.
+**Current checkpoint outcome:** Phase 1A was accepted by the user. The settled Phase 1B batch is complete at implementation commit `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; 17 tests and local browser checks pass, and private Site version 2 deployed successfully at `https://weave-foundation.notbrandon175.chatgpt.site`. Live readback confirmed build `WF-1B-20260914`, schema 2, storage available, visible import controls, and owner-only access. Phase 1B user acceptance is pending. Do not start Phase 2 automatically.
 
-**Immediate bounded continuation (no new feature code):** perform the exact user acceptance actions against private Site version 1. Keep the deployed provenance fixed at `4d4e297dde6f7f88b87821a4ea0c95e6e1a92251`; documentation-only record updates are not part of that deployed source. Do not rotate the Site ID or begin Phase 1B without authorization.
+**Immediate bounded continuation (no new feature code):** perform the exact Phase 1B user acceptance actions against private Site version 2. Keep the deployed provenance fixed at `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; documentation-only record updates are not part of that deployed source. Do not rotate the Site ID or begin carrier implementation.
 
 Use **GPT-5.6 Sol / Medium** after the checks below are recorded. This is a project-specific judgment based on bounded work, explicit contracts and regression coverage, not a guarantee of model performance. Official documentation confirms Medium support: https://developers.openai.com/api/docs/models/gpt-5.6-sol . Do not switch automatically; the user asked to identify the checkpoint.
 
@@ -29,9 +29,9 @@ Use **GPT-5.6 Sol / Medium** after the checks below are recorded. This is a proj
 - Backup import limit is 10 MB / 100 boards. These are protective foundation limits, not architectural workload claims.
 - Boundary SVG negates Y explicitly. Boundary DXF preserves Y-up and declares $INSUNITS=0. One closed polygon per Tangent handoff. SVG UI import into Tangent is verified; DXF parser compatibility is verified, but Tangent display orientation is not certified.
 
-## Next bounded batch: Phase 1B — straight SVG boundary import
+## Completed bounded batch: Phase 1B — straight SVG boundary import
 
-**Classification: follows established decisions. Substantial architectural reasoning is not required for this batch. Sol Medium is appropriate once the current release gate is resolved.**
+**Classification: followed established decisions. Substantial architectural reasoning was not required for this batch.**
 
 Implement only:
 
@@ -58,6 +58,10 @@ Do not silently solve these while doing 1B:
 
 Return to higher architectural reasoning for these decisions or if new evidence invalidates the documented contracts. Later questions must not block preservation or routine 1B implementation.
 
+## Next architectural checkpoint
+
+Phase 2 must settle explicit A/B path roles, rectangular density semantics, analytic concave clipping, stable path identities, determinism and numerical tolerances before routine implementation. This next batch still needs substantial architectural reasoning.
+
 ## Handoff instruction
 
-Read the current state and verification record. Resolve any pending publication step first, without rebuilding or changing verified source unnecessarily. Then implement Phase 1B only if authorized. Preserve the entire expanded roadmap and all original work. Report intended/delivered/remaining/exact user tests, and distinguish local checks, deployed checks and user acceptance.
+Read the current state and Phase 1B verification record. Complete pending user acceptance first. Do not implement Phase 2 until its carrier contract has been reviewed and authorized. Preserve the expanded roadmap and all original work; distinguish automated, local, deployed and user-accepted evidence.

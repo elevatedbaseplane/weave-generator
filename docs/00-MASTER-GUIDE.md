@@ -1,7 +1,7 @@
 # Weave Generator — Master Guide
 
 **Guide version:** 1.1 · 14 September 2026  
-**Stage:** Phase 0 assessed; Phase 1A working foundation implemented under explicit authorization. Publication/acceptance status is recorded in 02-STATE-DECISIONS-AND-TESTS.md. Stop at the checkpoint before routine feature work.  
+**Stage:** Phase 0 assessed; Phase 1A accepted; Phase 1B straight-SVG boundary import published privately and awaiting user acceptance. Publication/acceptance status is recorded in 02-STATE-DECISIONS-AND-TESTS.md. Stop before Phase 2 carrier architecture.
 **Purpose:** One maintained guide for building a cleaner architectural tool, without repeating the history of fragile patches and incomplete handoffs.
 
 ## 1. The decision
@@ -122,4 +122,4 @@ Deferred: literal textile physics, unlimited thread families, a generic motif sa
 
 Pending decisions do not block reviewing this guide: migration of old browser-saved boards; same-name save semantics; Tangent's exact accepted payload; working units/scale; geometric definitions of advanced stitch operations; first supported interstitial readings; measurable performance budgets; and rebuild deployment destination. Recommendations and decision timing are recorded separately rather than silently treated as user approval.
 
-**Next:** Follow [04 — Sol Medium checkpoint](04-SOL-CHECKPOINT.md), after checking current publication and acceptance status. Do not begin Phase 1B automatically; the current task ends at a recorded working-foundation checkpoint.
+**Next:** Complete the Phase 1B live acceptance in [06 — Phase 1B verification](06-PHASE-1B-VERIFICATION.md), then return to higher architectural reasoning before defining a bounded Phase 2 carrier batch. Do not begin carrier implementation automatically.

@@ -47,14 +47,14 @@ Static asset checks passed: entrypoint, relative references, no private guide/bo
 
 ## Limits / remaining acceptance
 
-- User acceptance is pending; browser-pass is not user-accepted.
+- Phase 1A user acceptance passed on the private live site. Phase 1B verification is recorded separately in 06-PHASE-1B-VERIFICATION.md.
 - Tests do not certify extreme coordinate magnitudes, large architectural studies, prolonged interaction memory growth or dense geometry performance.
 - SVG→Tangent import is verified; a complete receiving-tool export/import round trip is not yet certified.
 - DXF parser read-back is verified; Tangent displays imported numeric Y directly, so on-screen orientation parity is not certified. SVG is the tested visual handoff path.
 - Tangent/Overlap whole-polyline-set transfer, open polylines, rich metadata and receiver changes are not implemented.
 - Browser saved data remains device/origin-local; JSON backup is required for transfer. Local QA boards were created only at the new loopback test origin; no original browser studies were edited.
 - Private publication succeeded on 14 September 2026. Site version 1 records source commit `4d4e297dde6f7f88b87821a4ea0c95e6e1a92251`; deployment `appgdep_6aa8428302fc8191a12f1e14043a4be2` reached `succeeded` at `https://weave-foundation.notbrandon175.chatgpt.site`.
-- Live verification confirmed title `Weave Generator — Foundation`, build `WF-1A-20260914`, schema 2, browser-local storage available, boundary/grid initially off, and the owner as the sole viewer with zero groups. User acceptance remains pending.
+- Live verification confirmed title `Weave Generator — Foundation`, build `WF-1A-20260914`, schema 2, browser-local storage available, boundary/grid initially off, and the owner as the sole viewer with zero groups. Phase 1A user acceptance subsequently passed.
 - The final viewport correction fills the available body height; final 1280x800 read-back reports bodyHeight/mainBottom/viewportHeight 800 and scrollWidth/clientWidth 1280. Earlier 390x844 visual and coordinate checks passed. No hidden overflow was observed in those checked layouts.
 
 ## Exact user acceptance actions
