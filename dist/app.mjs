@@ -134,6 +134,8 @@ function setInteractionSettingsFromUi() {
   settings.showCommands = $("show-weave-commands").checked;
   settings.showMarkers = $("show-crossing-markers").checked;
   settings.showZones = $("show-interaction-zones").checked;
+  settings.showAnalysis = $("show-event-analysis").checked;
+  settings.liveAnalysis = $("live-event-analysis").checked;
 }
 function renderInteractionControls() {
   const settings = interactionSettings();
@@ -146,6 +148,8 @@ function renderInteractionControls() {
   $("show-weave-commands").checked = settings.showCommands !== false;
   $("show-crossing-markers").checked = Boolean(settings.showMarkers);
   $("show-interaction-zones").checked = Boolean(settings.showZones);
+  $("show-event-analysis").checked = settings.showAnalysis !== false;
+  $("live-event-analysis").checked = Boolean(settings.liveAnalysis);
 }
 function renderFamilies() {
   const family = families.find((item) => item.id === activeFamily);
@@ -268,8 +272,17 @@ function renderLattice() {
   threadGroup.setAttribute("stroke-linecap", "round");
   transformed.forEach((item, index) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", item.d); path.dataset.family = item.familyId; path.dataset.threadId = `${item.familyId}-${item.pathIndex}-${index}`; threadGroup.append(path); });
   $("thread-preview").append(threadGroup);
-  renderInteractionMap();
-  renderCandidates();
+  const analysisEnabled = interactionSettings().showAnalysis !== false;
+  const updateAnalysis = analysisEnabled && (!draggingField || interactionSettings().liveAnalysis);
+  if (updateAnalysis) {
+    renderInteractionMap();
+    renderCandidates();
+  } else {
+    $("interaction-preview").replaceChildren();
+    $("interaction-zone-preview").replaceChildren();
+    $("candidate-preview").replaceChildren();
+    $("interaction-summary").textContent = draggingField ? "ANALYSIS PAUSED WHILE MOVING FIELD." : "EVENT ANALYSIS HIDDEN.";
+  }
   $("field-preview").innerHTML =
     `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.id === activeFieldId ? field.radius : 0}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
 }
@@ -676,7 +689,14 @@ $("canvas").addEventListener("pointermove", (e) => {
   renderFields();
 });
 $("canvas").addEventListener("pointerup", () => {
-  if (draggingField) finishFieldEdit();
+  if (draggingField) {
+    finishFieldEdit();
+    draggingField = false;
+    renderLattice();
+    renderFields();
+    $("status").textContent = "FIELD UPDATED / EVENT ANALYSIS REFRESHED.";
+    return;
+  }
   draggingField = false;
 });
 $("canvas").addEventListener("click", (e) => {
@@ -715,7 +735,7 @@ $("interaction-mode")?.addEventListener("change", () => { setInteractionSettings
   range?.addEventListener("input", () => apply(range.value));
   number?.addEventListener("change", () => apply(number.value));
 });
-["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones"].forEach((id) => {
+["show-carrier-field", "show-weave-commands", "show-crossing-markers", "show-interaction-zones", "show-event-analysis", "live-event-analysis"].forEach((id) => {
   $(id)?.addEventListener("change", () => { setInteractionSettingsFromUi(); save(); renderLattice(); });
 });
 $("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });

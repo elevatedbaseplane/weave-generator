@@ -18,6 +18,8 @@ export const interactionDefaults = () => ({
   showCommands: true,
   showMarkers: false,
   showZones: false,
+  showAnalysis: true,
+  liveAnalysis: false,
 });
 
 function segmentIntersection(a, b, c, d) {

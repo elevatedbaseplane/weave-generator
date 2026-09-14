@@ -2326,6 +2326,7 @@ body.mode-neo #candidate-preview circle { fill: #daff33 !important; stroke: #daf
 .interaction-markers { fill: currentColor; opacity: .7; }
 #interaction-zone-preview { fill: none; stroke: currentColor; stroke-width: .8; stroke-dasharray: 4 4; opacity: .35; pointer-events: none; }
 body.mode-dark .interaction-cut, body.mode-neo .interaction-cut { stroke: #111; }
+body:not(.mode-dark):not(.mode-neo) .interaction-cut { stroke: #eaeaea; }
 /* The Neo mode applies a page-level inversion; this pre-inversion value renders
    as #daff33 on canvas. Never use a literal blue visual output in Neo. */
 body.mode-neo .interaction-over, body.mode-neo .interaction-bind, body.mode-neo .interaction-bypass { stroke: #2500cc; }
