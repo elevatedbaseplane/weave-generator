@@ -347,7 +347,11 @@
           <div class="point-control-body">
             <p class="hint">
               <label class="outline-toggle"><input id="show-candidates" type="checkbox" checked> SHOW CANDIDATES</label>
-              Temporary detected events: intersections, source vertices, and sampled thread points. Selection and saving begin in E2/E3.
+              <label class="outline-toggle"><input id="show-selected" type="checkbox" checked> SHOW SELECTED</label>
+              <div class="range-label"><label for="candidate-spacing">MIN SPACING</label><input id="candidate-spacing-value" type="number" min="0" max="80" step="10" value="20"></div><input id="candidate-spacing" type="range" min="0" max="80" step="10" value="20">
+              <div class="range-label"><label for="candidate-limit">MAX CANDIDATES</label><input id="candidate-limit-value" type="number" min="10" max="200" step="10" value="80"></div><input id="candidate-limit" type="range" min="10" max="200" step="10" value="80">
+              <div class="segmented"><button id="select-all-candidates">SELECT ALL</button><button id="deselect-all-candidates">DESELECT</button></div>
+              <p class="hint">CLICK A CANDIDATE TO SELECT. ALT/OPTION-CLICK EXCLUDES IT; SHIFT-CLICK PINS IT. Saving begins in E3.</p>
             </p>
           </div>
         </details>

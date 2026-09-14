@@ -244,6 +244,9 @@ function renderCandidates() {
   const layer = $("candidate-preview");
   if (!layer) return;
   const visible = $("show-candidates")?.checked !== false;
+  const state = active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 };
+  $("candidate-spacing").value = $("candidate-spacing-value").value = state.spacing;
+  $("candidate-limit").value = $("candidate-limit-value").value = state.limit;
   const candidates = [];
   [...$("thread-preview").querySelectorAll("path")].forEach((path, pathIndex) => {
     const length = path.getTotalLength();
@@ -253,7 +256,9 @@ function renderCandidates() {
   // merged into one typed event; E2 will add filtering and selection.
   const unique = new Map();
   candidates.forEach((item) => { const key = `${Math.round(item.x / 8)}:${Math.round(item.y / 8)}`; if (!unique.has(key)) unique.set(key, item); });
-  layer.innerHTML = `<g fill="currentColor">${[...unique.values()].map((item) => `<circle data-candidate="${item.id}" cx="${item.x.toFixed(2)}" cy="${item.y.toFixed(2)}" r="3"/>`).join("")}</g>`;
+  const filtered = [];
+  [...unique.values()].forEach((item) => { if (state.excludedIds.includes(item.id)) return; if (filtered.length >= state.limit) return; if (filtered.every((other) => Math.hypot(other.x - item.x, other.y - item.y) >= state.spacing)) filtered.push(item); });
+  layer.innerHTML = `<g>${filtered.map((item) => { const selected = state.selectedIds.includes(item.id), pinned = state.pinnedIds.includes(item.id); const show = !selected || $("show-selected")?.checked !== false; return show ? `<circle data-candidate="${item.id}" cx="${item.x.toFixed(2)}" cy="${item.y.toFixed(2)}" r="${selected ? 4.5 : 3}" fill="${pinned ? '#000' : selected ? '#777' : 'currentColor'}" stroke="${selected ? '#fff' : 'none'}" stroke-width="1.2"/>` : ""; }).join("")}</g>`;
   layer.style.display = visible ? "" : "none";
 }
 function renderBoards() {
@@ -605,6 +610,14 @@ $("show-grid").addEventListener("change", () => {
   $("lattice-preview").style.display = $("show-grid").checked ? "" : "none";
 });
 $("show-candidates")?.addEventListener("change", renderCandidates);
+$("show-selected")?.addEventListener("change", renderCandidates);
+[["candidate-spacing", "candidate-spacing-value", "spacing"], ["candidate-limit", "candidate-limit-value", "limit"]].forEach(([rangeId, inputId, key]) => {
+  const apply = (value) => { const range = $(rangeId); const next = Math.max(+range.min, Math.min(+range.max, Number(value) || 0)); active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; active().candidateState[key] = next; $(rangeId).value = $(inputId).value = next; save(); renderCandidates(); };
+  $(rangeId).addEventListener("input", () => apply($(rangeId).value)); $(inputId).addEventListener("change", () => apply($(inputId).value));
+});
+$("candidate-preview")?.addEventListener("click", (event) => { const id = event.target.dataset.candidate; if (!id) return; const state = active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; const toggle = (list) => list.includes(id) ? list.filter((item) => item !== id) : [...list, id]; if (event.altKey) state.excludedIds = toggle(state.excludedIds); else if (event.shiftKey) state.pinnedIds = toggle(state.pinnedIds); else state.selectedIds = toggle(state.selectedIds); save(); renderCandidates(); });
+$("select-all-candidates")?.addEventListener("click", () => { const state = active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; state.selectedIds = [...$("candidate-preview").querySelectorAll("[data-candidate]")].map((node) => node.dataset.candidate); save(); renderCandidates(); });
+$("deselect-all-candidates")?.addEventListener("click", () => { active().candidateState ||= { selectedIds: [], excludedIds: [], pinnedIds: [], spacing: 20, limit: 80 }; active().candidateState.selectedIds = []; save(); renderCandidates(); });
 for (const id of [
   "lattice-mode",
   "lattice-spacing",
