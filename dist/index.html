@@ -46,7 +46,7 @@
         <div class="workspace-bar">
           <nav class="tool-tabs" aria-label="Workflow stages">
             <button class="active"><span>01</span>Weave Field</button
-            ><button disabled><span>02</span>Point Extraction</button
+            ><button><span>02</span>Point Extraction</button
             ><button disabled><span>03</span>Polyline Composer</button>
           </nav>
           <div class="views">
@@ -93,6 +93,7 @@
             </g>
             <g id="lattice-preview" clip-path="url(#boundary-clip)"></g>
             <g id="thread-preview" clip-path="url(#boundary-clip)"></g>
+            <g id="candidate-preview" clip-path="url(#boundary-clip)"></g>
             <g id="field-preview"></g>
             <g id="weave-preview"></g>
           </svg>
@@ -342,12 +343,11 @@
         </details>
         <details class="control-section" open><summary>THREAD FAMILIES <span>−</span></summary><div class="point-control-body"><div class="segmented"><button id="family-a" class="active">FAMILY A</button><button id="family-b">FAMILY B</button></div><label class="outline-toggle"><input id="family-visible" type="checkbox"> VISIBLE</label><div class="range-label"><label>DENSITY</label><input id="family-density-value" type="number" min="1" max="100"></div><input id="family-density" type="range" min="1" max="100" value="100"><div class="range-label"><label>TENSION</label><input id="family-tension-value" type="number" min="0" max="100"></div><input id="family-tension" type="range" min="0" max="100" step="10" value="40"><div class="range-label"><label>DIRECTION</label><input id="family-direction-value" type="number" min="-180" max="180"></div><input id="family-direction" type="range" min="-180" max="180" step="10" value="0"><div class="range-label"><label>OFFSET</label><input id="family-offset-value" type="number" min="-100" max="100"></div><input id="family-offset" type="range" min="-100" max="100" step="10" value="0"><div class="range-label"><label>SMOOTHNESS</label><input id="family-smoothness-value" type="number" min="0" max="100"></div><input id="family-smoothness" type="range" min="0" max="100" step="10" value="100"><div class="range-label"><label>IRREGULARITY</label><input id="family-irregularity-value" type="number" min="0" max="100"></div><input id="family-irregularity" type="range" min="0" max="100" step="10" value="0"><div class="range-label"><label for="seed">SEED</label><input id="seed" type="text" value="1042"></div><button id="regenerate-variation" class="secondary">REGENERATE VARIATION</button></div></details>
         <details class="control-section">
-          <summary>DERIVED OBJECTS <span>+</span></summary>
+          <summary>POINT EXTRACTION / E1 <span>+</span></summary>
           <div class="point-control-body">
             <p class="hint">
-              Point Sets and Polyline Sets are intentionally inactive until
-              their generators are built. Their source lineage is already
-              protected in the project model.
+              <label class="outline-toggle"><input id="show-candidates" type="checkbox" checked> SHOW CANDIDATES</label>
+              Temporary detected events: intersections, source vertices, and sampled thread points. Selection and saving begin in E2/E3.
             </p>
           </div>
         </details>

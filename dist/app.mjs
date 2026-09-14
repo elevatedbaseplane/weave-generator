@@ -236,8 +236,25 @@ function renderLattice() {
   threadGroup.setAttribute("stroke-linecap", "round");
   transformed.forEach((d) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", d); threadGroup.append(path); });
   $("thread-preview").append(threadGroup);
+  renderCandidates();
   $("field-preview").innerHTML =
     `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
+}
+function renderCandidates() {
+  const layer = $("candidate-preview");
+  if (!layer) return;
+  const visible = $("show-candidates")?.checked !== false;
+  const candidates = [];
+  [...$("thread-preview").querySelectorAll("path")].forEach((path, pathIndex) => {
+    const length = path.getTotalLength();
+    [0, .5, 1].forEach((t, sampleIndex) => { const point = path.getPointAtLength(length * t); candidates.push({ id: `sample-${pathIndex}-${sampleIndex}`, x: point.x, y: point.y, type: sampleIndex === 1 ? "SAMPLED" : "VERTEX" }); });
+  });
+  // Stable, compact intersection approximation: shared sample positions are
+  // merged into one typed event; E2 will add filtering and selection.
+  const unique = new Map();
+  candidates.forEach((item) => { const key = `${Math.round(item.x / 8)}:${Math.round(item.y / 8)}`; if (!unique.has(key)) unique.set(key, item); });
+  layer.innerHTML = `<g fill="currentColor">${[...unique.values()].map((item) => `<circle data-candidate="${item.id}" cx="${item.x.toFixed(2)}" cy="${item.y.toFixed(2)}" r="3"/>`).join("")}</g>`;
+  layer.style.display = visible ? "" : "none";
 }
 function renderBoards() {
   const project = active();
@@ -587,6 +604,7 @@ $("show-grid").addEventListener("change", () => {
   $("frame-layer").style.display = $("show-grid").checked ? "" : "none";
   $("lattice-preview").style.display = $("show-grid").checked ? "" : "none";
 });
+$("show-candidates")?.addEventListener("change", renderCandidates);
 for (const id of [
   "lattice-mode",
   "lattice-spacing",
