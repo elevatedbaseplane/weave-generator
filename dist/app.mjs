@@ -352,10 +352,25 @@ function refreshInteractionVisibility() {
     $("interaction-summary").textContent = "COMMAND ANALYSIS HIDDEN.";
     return;
   }
-  if (!renderedInteractionEvents.length) renderedInteractionEvents = active().interactionMap || [];
+  // Saved boards from before V1 may contain an empty or legacy event array.
+  // Recalculate from the already-rendered carrier instead of trusting it.
+  const validEvents = renderedInteractionEvents.length && renderedInteractionEvents.every((event) =>
+    Number.isFinite(event.x) && Number.isFinite(event.y) && event.localDirectionA && event.localDirectionB,
+  );
+  if (!validEvents) rebuildInteractionOverlay();
   drawInteractionMap(renderedInteractionEvents);
   $("interaction-zone-preview").style.display = settings.showZones ? "" : "none";
   if (settings.showZones && !$("interaction-zone-preview").childElementCount) renderInteractionZones();
+}
+function rebuildInteractionOverlay() {
+  const settings = interactionSettings();
+  if (settings.showAnalysis === false || (settings.showCommands === false && !settings.showMarkers)) return;
+  // This reads the existing paths only. It never regenerates the carrier,
+  // changes the field, or changes the viewport.
+  renderInteractionMap({ preview: false });
+}
+function scheduleInteractionOverlayRebuild() {
+  requestAnimationFrame(() => requestAnimationFrame(rebuildInteractionOverlay));
 }
 function renderInteractionZones() {
   const transform = `rotate(${latticeState().angle} 410 360)`;
@@ -613,6 +628,9 @@ $("project-list").addEventListener("click", (event) => {
         $(`lattice-${id}-value`).value = $(`lattice-${id}`).value;
     }
     render();
+    // Restore can replace the carrier and its saved interaction metadata in
+    // the same turn. Rebuild the overlay on the settled SVG paths.
+    scheduleInteractionOverlayRebuild();
     $("status").textContent = `RESTORED ${item.name}.`;
   }
 });
@@ -955,6 +973,10 @@ const restoredWeave = active().activeWeaveId;
 if (restoredWeave && active().weavePatterns.some((item) => item.id === restoredWeave)) {
   document.querySelector(`[data-weave="${restoredWeave}"]`)?.click();
 }
+// A live browser can restore a previous board before its SVG geometry is
+// ready. The deferred pass keeps that legacy state from hiding interaction
+// marks, while preserving the field exactly as saved.
+scheduleInteractionOverlayRebuild();
 window.weaveState = {
   get project() {
     return clone(active());
