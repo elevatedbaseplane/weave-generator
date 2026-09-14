@@ -219,13 +219,23 @@ function renderLattice() {
           pathIndex: `${family.id}:${pathIndex}`,
         });
       }),
-    ),
+    ).filter((path) => typeof path === "string" && path.length > 1),
     transform = `rotate(${lattice.angle} 410 360)`;
   $("lattice-preview").innerHTML =
     `<g transform="${transform}" fill="none" stroke="#777" stroke-width="1.05">${paths.map((d) => `<path d="${d}"/>`).join("")}</g>`;
   $("lattice-preview").style.display = $("show-grid").checked ? "" : "none";
-  $("thread-preview").innerHTML =
-    `<g transform="${transform}" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">${transformed.map((d) => `<path d="${d}"/>`).join("")}</g>`;
+  // Keep an empty family result as an empty group. Rendering an invalid or
+  // inherited path must never change the SVG viewport when visibility flips.
+  $("thread-preview").replaceChildren();
+  const threadGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  threadGroup.setAttribute("transform", transform);
+  threadGroup.setAttribute("fill", "none");
+  threadGroup.setAttribute("stroke", "currentColor");
+  threadGroup.setAttribute("stroke-width", "1.2");
+  threadGroup.setAttribute("stroke-linejoin", "round");
+  threadGroup.setAttribute("stroke-linecap", "round");
+  transformed.forEach((d) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", d); threadGroup.append(path); });
+  $("thread-preview").append(threadGroup);
   $("field-preview").innerHTML =
     `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.radius}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
 }
@@ -234,7 +244,7 @@ function renderBoards() {
   $("project-list").innerHTML = store.projects
     .map((p) => {
       const open = !collapsedBoards.has(p.id);
-      return `<section class="board-node ${p.id === project.id ? "active" : ""}"><div class="board-node-heading"><button class="board-disclosure" data-board-toggle="${p.id}" aria-expanded="${open}">${open ? "−" : "+"}</button><button class="project-item ${p.id === project.id ? "active" : ""}" data-project="${p.id}">${p.name}<span>${String(p.weavePatterns.length).padStart(2, "0")}</span></button></div>${open ? `<div class="board-children"><div class="iteration-heading"><span>BOUNDARIES <small>${String(p.boundaries.length).padStart(2, "0")}</small></span></div>${p.boundaries.map((b, i) => `<div class="weave-row"><span>${String(i + 1).padStart(2, "0")}</span><button data-boundary="${b.id}">${b.name}</button><small>${b.type.toUpperCase()} · ${b.points.length} POINTS</small></div>`).join("")}<div class="iteration-heading"><span>WEAVE PATTERN GRIDS <small>${String(p.weavePatterns.length).padStart(2, "0")}</small></span></div>${p.weavePatterns.length ? p.weavePatterns.map((w, i) => `<div class="weave-row"><span>${String(i + 1).padStart(2, "0")}</span><button data-weave="${w.id}">${w.name}</button><small>SEED ${w.seed}</small></div>`).join("") : '<p class="iteration-empty">NO SAVED WEAVE PATTERNS.</p>'}<div class="lineage-summary">POINT SETS ${String(p.pointSets.length).padStart(2, "0")}<br>POLYLINE SETS ${String(p.polylineSets.length).padStart(2, "0")}</div></div>` : ""}</section>`;
+      return `<section class="board-node ${p.id === project.id ? "active" : ""}"><div class="board-node-heading"><button class="board-disclosure" data-board-toggle="${p.id}" aria-expanded="${open}">${open ? "−" : "+"}</button><button class="project-item ${p.id === project.id ? "active" : ""}" data-project="${p.id}">${p.name}<span>${String(p.weavePatterns.length).padStart(2, "0")}</span></button></div>${open ? `<div class="board-children"><div class="iteration-heading"><span>BOUNDARIES <small>${String(p.boundaries.length).padStart(2, "0")}</small></span></div>${p.boundaries.map((b, i) => `<div class="weave-row"><span>${String(i + 1).padStart(2, "0")}</span><button data-boundary="${b.id}">${b.name}</button><small>${b.type.toUpperCase()} · ${b.points.length} POINTS</small></div>`).join("")}<div class="iteration-heading"><span>WEAVE PATTERN GRIDS <small>${String(p.weavePatterns.length).padStart(2, "0")}</small></span></div>${p.weavePatterns.length ? p.weavePatterns.map((w, i) => `<div class="weave-row ${w.id === p.activeWeaveId ? "active" : ""}"><span>${String(i + 1).padStart(2, "0")}</span><button data-weave="${w.id}">${w.name}</button><small>SEED ${w.seed}</small></div>`).join("") : '<p class="iteration-empty">NO SAVED WEAVE PATTERNS.</p>'}<div class="lineage-summary">POINT SETS ${String(p.pointSets.length).padStart(2, "0")}<br>POLYLINE SETS ${String(p.polylineSets.length).padStart(2, "0")}</div></div>` : ""}</section>`;
     })
     .join("");
 }
@@ -405,6 +415,8 @@ $("project-list").addEventListener("click", (event) => {
         (w) => w.id === weave.dataset.weave,
       ),
       l = item.lattice || {};
+    active().activeWeaveId = item.id;
+    save();
     $("pattern-name").value = item.name;
     $("seed").value = item.seed;
     fields = clone(item.influenceFields?.length ? item.influenceFields : []); families = normalizeFamilies(item.threadFamilies?.length ? item.threadFamilies : familyDefaults()); activeFamily = families[0].id;
@@ -720,6 +732,12 @@ $("toggle-controls").addEventListener("click", () => {
 });
 setMode(mode);
 render();
+// A board remembers the saved weave the user was working from. Restore it only
+// after the board list exists, using the same path as an explicit selection.
+const restoredWeave = active().activeWeaveId;
+if (restoredWeave && active().weavePatterns.some((item) => item.id === restoredWeave)) {
+  document.querySelector(`[data-weave="${restoredWeave}"]`)?.click();
+}
 window.weaveState = {
   get project() {
     return clone(active());
