@@ -53,8 +53,8 @@ Static asset checks passed: entrypoint, relative references, no private guide/bo
 - DXF parser read-back is verified; Tangent displays imported numeric Y directly, so on-screen orientation parity is not certified. SVG is the tested visual handoff path.
 - Tangent/Overlap whole-polyline-set transfer, open polylines, rich metadata and receiver changes are not implemented.
 - Browser saved data remains device/origin-local; JSON backup is required for transfer. Local QA boards were created only at the new loopback test origin; no original browser studies were edited.
-- Publication may be blocked independently of local correctness. Check the current state record before claiming a release.
-- Actual release attempt: source push failed at the sandbox network proxy. Escalation automatically rejected under the task's granular policy. No save/deploy call followed. Rebuild Site read-back: version 0, no live URL, owner-only. Static package validates against all nine public source files.
+- Private publication succeeded on 14 September 2026. Site version 1 records source commit `4d4e297dde6f7f88b87821a4ea0c95e6e1a92251`; deployment `appgdep_6aa8428302fc8191a12f1e14043a4be2` reached `succeeded` at `https://weave-foundation.notbrandon175.chatgpt.site`.
+- Live verification confirmed title `Weave Generator — Foundation`, build `WF-1A-20260914`, schema 2, browser-local storage available, boundary/grid initially off, and the owner as the sole viewer with zero groups. User acceptance remains pending.
 - The final viewport correction fills the available body height; final 1280x800 read-back reports bodyHeight/mainBottom/viewportHeight 800 and scrollWidth/clientWidth 1280. Earlier 390x844 visual and coordinate checks passed. No hidden overflow was observed in those checked layouts.
 
 ## Exact user acceptance actions
