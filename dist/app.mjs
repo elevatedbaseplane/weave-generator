@@ -80,6 +80,7 @@ let store = loadStore(),
   activeFieldId = null,
   draggingField = false,
   dragRenderPending = false,
+  lastInteractionPreviewAt = 0,
   undoHistory = [],
   redoHistory = [],
   fieldEditStart = null,
@@ -280,14 +281,19 @@ function renderLattice() {
   const analysisEnabled = settings.showAnalysis !== false;
   const needsInteractionMap = settings.showCommands !== false || settings.showMarkers;
   const needsCandidates = $("show-candidates")?.checked !== false;
-  if (analysisEnabled && needsInteractionMap) {
+  const now = performance.now();
+  const analysisUpdateDue = !draggingField || now - lastInteractionPreviewAt >= 85;
+  if (analysisEnabled && needsInteractionMap && analysisUpdateDue) {
     renderInteractionMap({ preview: draggingField });
+    lastInteractionPreviewAt = now;
   } else {
-    $("interaction-preview").replaceChildren();
-    $("interaction-summary").textContent = draggingField ? "ANALYSIS PAUSED WHILE MOVING FIELD." : "COMMAND ANALYSIS HIDDEN.";
+    if (!needsInteractionMap || !analysisEnabled) {
+      $("interaction-preview").replaceChildren();
+      $("interaction-summary").textContent = "COMMAND ANALYSIS HIDDEN.";
+    }
   }
-  if (analysisEnabled && needsCandidates) renderCandidates();
-  else $("candidate-preview").replaceChildren();
+  if (analysisEnabled && needsCandidates && analysisUpdateDue) renderCandidates();
+  else if (!analysisEnabled || !needsCandidates) $("candidate-preview").replaceChildren();
   if (analysisEnabled && settings.showZones) renderInteractionZones();
   else $("interaction-zone-preview").replaceChildren();
   $("field-preview").innerHTML =
@@ -311,9 +317,9 @@ function renderInteractionMap({ preview = false } = {}) {
     return `M${(event.x - dx).toFixed(2)} ${(event.y - dy).toFixed(2)}L${(event.x + dx).toFixed(2)} ${(event.y + dy).toFixed(2)}`;
   };
   const commandPaths = events.map((event) => {
-    if (event.command === "OVER_A") return `<path class="interaction-cut" d="${line(event, event.localDirectionB, gap)}"/><path class="interaction-over" d="${line(event, event.localDirectionA, gap + 2)}"/>`;
-    if (event.command === "OVER_B") return `<path class="interaction-cut" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-over" d="${line(event, event.localDirectionB, gap + 2)}"/>`;
-    if (event.command === "BIND") { const normal = { x: event.localDirectionA.y - event.localDirectionB.y, y: event.localDirectionB.x - event.localDirectionA.x }; return `<path class="interaction-bind" d="${line(event, normal, settings.bindWidth / 2)}"/>`; }
+    if (event.command === "OVER_A") return `<path class="interaction-cut" stroke="#fff" d="${line(event, event.localDirectionB, gap)}"/><path class="interaction-over" stroke="#000" d="${line(event, event.localDirectionA, gap + 3)}"/>`;
+    if (event.command === "OVER_B") return `<path class="interaction-cut" stroke="#fff" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-over" stroke="#000" d="${line(event, event.localDirectionB, gap + 3)}"/>`;
+    if (event.command === "BIND") { const normal = { x: event.localDirectionA.y - event.localDirectionB.y, y: event.localDirectionB.x - event.localDirectionA.x }; return `<path class="interaction-bind" stroke="#000" d="${line(event, normal, settings.bindWidth / 2)}"/>`; }
     if (event.command === "GAP" || event.command === "RELEASE") return `<path class="interaction-cut" d="${line(event, event.localDirectionA, gap)}"/><path class="interaction-cut" d="${line(event, event.localDirectionB, gap)}"/>`;
     if (event.command === "BYPASS") return `<circle class="interaction-bypass" cx="${event.x}" cy="${event.y}" r="${Math.max(3, gap / 2)}"/>`;
     return "";
