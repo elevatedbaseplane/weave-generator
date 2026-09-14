@@ -274,13 +274,13 @@ function renderLattice() {
   transformed.forEach((item, index) => { const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", item.d); path.dataset.family = item.familyId; path.dataset.threadId = `${item.familyId}-${item.pathIndex}-${index}`; threadGroup.append(path); });
   $("thread-preview").append(threadGroup);
   const settings = interactionSettings();
-  // Analysis is deliberately never part of the field-drag loop. It is a
-  // separate read of the carrier field, rebuilt after the field is released.
-  const analysisEnabled = settings.showAnalysis !== false && !draggingField;
+  // During a drag, a reduced interaction map preserves direct visual feedback;
+  // releasing the field immediately restores the complete precise map.
+  const analysisEnabled = settings.showAnalysis !== false;
   const needsInteractionMap = settings.showCommands !== false || settings.showMarkers;
   const needsCandidates = $("show-candidates")?.checked !== false;
   if (analysisEnabled && needsInteractionMap) {
-    renderInteractionMap();
+    renderInteractionMap({ preview: draggingField });
   } else {
     $("interaction-preview").replaceChildren();
     $("interaction-summary").textContent = draggingField ? "ANALYSIS PAUSED WHILE MOVING FIELD." : "COMMAND ANALYSIS HIDDEN.";
@@ -292,15 +292,15 @@ function renderLattice() {
   $("field-preview").innerHTML =
     `<g transform="${transform}">${fields.map((field) => `<g class="field-marker ${field.id === activeFieldId ? "active" : ""}" data-field="${field.id}"><circle cx="${field.x}" cy="${field.y}" r="${field.id === activeFieldId ? field.radius : 0}"/><circle cx="${field.x}" cy="${field.y}" r="6"/><path d="M${field.x - 10} ${field.y}H${field.x + 10}M${field.x} ${field.y - 10}V${field.y + 10}"/></g>`).join("")}</g>`;
 }
-function renderInteractionMap() {
+function renderInteractionMap({ preview = false } = {}) {
   const settings = interactionSettings();
   const paths = [...$("thread-preview").querySelectorAll("path")];
   const familyPaths = paths.map((path, index) => ({
     id: path.dataset.threadId || `path-${index}`,
     familyId: path.dataset.family || (index < paths.length / 2 ? "a" : "b"),
-    points: pointsFromSvgPath(path),
+    points: pointsFromSvgPath(path, preview ? 28 : 12),
   }));
-  const events = buildInteractionMap(familyPaths, settings, fields);
+  const events = buildInteractionMap(familyPaths, { ...settings, maxEvents: preview ? 180 : 600 }, fields);
   active().interactionMap = events;
   $("thread-preview").style.display = settings.showCarrier === false ? "none" : "";
   const gap = settings.underpassGap / 2;
@@ -321,7 +321,7 @@ function renderInteractionMap() {
   $("interaction-preview").innerHTML = `<g transform="${transform}">${settings.showCommands === false ? "" : commandPaths}${settings.showMarkers ? `<g class="interaction-markers">${events.map((event) => `<circle cx="${event.x}" cy="${event.y}" r="2.2"/>`).join("")}</g>` : ""}</g>`;
   $("interaction-preview").style.display = "";
   const summary = interactionSummary(events);
-  $("interaction-summary").textContent = `${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
+  $("interaction-summary").textContent = `${preview ? "LIVE PREVIEW / " : ""}${String(summary.total).padStart(3, "0")} EVENTS / A:${String(summary.OVER_A || 0).padStart(2, "0")} B:${String(summary.OVER_B || 0).padStart(2, "0")} BIND:${String(summary.BIND || 0).padStart(2, "0")} GAP:${String((summary.GAP || 0) + (summary.RELEASE || 0)).padStart(2, "0")} BYPASS:${String(summary.BYPASS || 0).padStart(2, "0")}`;
 }
 function renderInteractionZones() {
   const transform = `rotate(${latticeState().angle} 410 360)`;

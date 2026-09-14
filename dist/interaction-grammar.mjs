@@ -98,7 +98,8 @@ export function buildInteractionMap(familyPaths, settingsInput = {}, fields = []
       if (!rawByPlace.has(place)) rawByPlace.set(place, item);
     });
   }));
-  const deduped = [...rawByPlace.values()].sort((left, right) => left.x - right.x || left.y - right.y).slice(0, MAX_EVENTS);
+  const maxEvents = clamp(Number(settings.maxEvents ?? MAX_EVENTS), 1, MAX_EVENTS);
+  const deduped = [...rawByPlace.values()].sort((left, right) => left.x - right.x || left.y - right.y).slice(0, maxEvents);
   return deduped.map((event, index) => {
     const assigned = commandFor(index, event, settings, fields);
     const eligible = ((index * 37 + settings.phase * 17) % 100) < clamp(settings.density, 0, 100);
