@@ -27,10 +27,10 @@
   "phase1BAcceptance": "passed by user on private live site",
   "architecturalCheckpoint": "phase-1-foundation-complete",
   "releaseCheckpoint": "reached-private-version-2",
-  "recommendedModelForNextBatch": "return to higher architectural reasoning",
-  "nextImmediateBatch": "Review Phase 2A architectural proposal; implementation and publication require explicit approval",
-  "nextFeatureBatch": "Phase 2 — define and implement the first bounded carrier contract only after architectural approval",
-  "nextBatchReasoning": "Architectural proposal pending approval; after contracts are approved, bounded Phase 2A implementation can return to Sol Medium",
+  "recommendedModelForNextBatch": "gpt-5.6-sol",
+  "nextImmediateBatch": "Switch to Sol Medium; await user instruction lifting implementation hold",
+  "nextFeatureBatch": "Phase 2A — implement approved rectangular carrier contract only after user start instruction",
+  "nextBatchReasoning": "Established decisions; substantial architectural reasoning not required for bounded Phase 2A unless verification contradicts approved contracts",
   "legacyBrowserBackups": "outstanding; no legacy migration performed",
   "storageChoice": "Browser-local saves plus portable JSON backups",
   "publicSha256": {
@@ -47,5 +47,8 @@
   },
   "phase2Proposal": "docs/07-PHASE-2-CARRIER-PROPOSAL.md",
   "phase2ImplementationAuthorized": false,
-  "nextPublicationAuthorized": false
+  "nextPublicationAuthorized": false,
+  "phase2AContractStatus": "approved-as-proposed; decisions settled",
+  "solMediumCheckpoint": "reached-before-implementation",
+  "recommendedReasoningForNextBatch": "medium"
 }

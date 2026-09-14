@@ -1,6 +1,6 @@
 # Sol Medium checkpoint
 
-Current handoff: Phase 1B is user-accepted. Review 07-PHASE-2-CARRIER-PROPOSAL.md. Return to Sol Medium immediately after explicit Phase 2A approval and recording its contracts as settled, before the first implementation edit. Until then this is architectural proposal work. Publication requires explicit authorization. Historical acceptance steps below are retained as completed context.
+Current handoff: Phase 1B is user-accepted and the Phase 2A contract in 07-PHASE-2-CARRIER-PROPOSAL.md is approved as proposed and settled. The Sol Medium checkpoint is reached: switch now, before implementation. The user explicitly keeps implementation on hold; wait for a start instruction. Publication is not authorized. Historical acceptance steps below are retained as completed context.
 
 ## Checkpoint definition
 
@@ -10,7 +10,7 @@ The release checkpoint additionally requires an exact pushed source commit, a su
 
 **Current checkpoint outcome:** Phase 1A was accepted by the user. The settled Phase 1B batch is complete at implementation commit `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; 17 tests and local browser checks pass, and private Site version 2 deployed successfully at `https://weave-foundation.notbrandon175.chatgpt.site`. Live readback confirmed build `WF-1B-20260914`, schema 2, storage available, visible import controls, and owner-only access. Phase 1B user acceptance passed, as explicitly reported by the user. Do not start Phase 2 automatically.
 
-**Immediate bounded continuation (no new feature code):** review the Phase 2A architectural proposal; Phase 1B private Site version 2 is user-accepted. Keep the deployed provenance fixed at `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; documentation-only record updates are not part of that deployed source. Do not rotate the Site ID or begin carrier implementation.
+**Immediate bounded continuation (no new feature code):** switch to Sol Medium and await explicit permission to start the approved Phase 2A contract; Phase 1B private Site version 2 is user-accepted. Keep the deployed provenance fixed at `e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d`; documentation-only record updates are not part of that deployed source. Do not rotate the Site ID or begin carrier implementation.
 
 Use **GPT-5.6 Sol / Medium** after the checks below are recorded. This is a project-specific judgment based on bounded work, explicit contracts and regression coverage, not a guarantee of model performance. Official documentation confirms Medium support: https://developers.openai.com/api/docs/models/gpt-5.6-sol . Do not switch automatically; the user asked to identify the checkpoint.
 
@@ -52,7 +52,7 @@ Excluded: DXF/DWG boundary import, reference-image underlay, physical unit conve
 
 Do not silently solve these while doing 1B:
 
-- Phase 2: explicit A/B path roles (especially triangular/radial), density semantics, analytic concave clipping, stable path IDs and numerical tolerances.
+- Later Phase 2: triangular/radial roles and deferred controls. Rectangular Phase 2A roles, density, clipping, identities and tolerances are settled in the approved contract.
 - Phases 3/4: field zero/tension semantics, measured workloads, sampling tolerance, complete event identity, connectivity vs precedence, analysis/display separation and invalidation.
 - Phases 5/6: topology, interstitial readings, advanced stitch behavior and field combination rules.
 - Later: event/pin regeneration and orphans, relation scoring, polyline constraints, rich Tangent/Overlap semantics, physical units and native DWG.
@@ -62,8 +62,8 @@ Return to higher architectural reasoning for these decisions or if new evidence 
 
 ## Next architectural checkpoint
 
-Phase 2 must settle explicit A/B path roles, rectangular density semantics, analytic concave clipping, stable path identities, determinism and numerical tolerances before routine implementation. This next batch still needs substantial architectural reasoning.
+Phase 2A rectangular roles, density, clipping, identities, determinism, tolerances, migration and verification are approved. Bounded Phase 2A implementation follows established decisions and is ready for Sol Medium once the user lifts the implementation hold. Return to architectural reasoning for later modes or evidence requiring contract changes.
 
 ## Handoff instruction
 
-Read the current state and Phase 1B verification record. Phase 1B user acceptance is complete; review the Phase 2A proposal. Do not implement Phase 2 until its carrier contract has been reviewed and authorized. Preserve the expanded roadmap and all original work; distinguish automated, local, deployed and user-accepted evidence.
+Read the current state and Phase 1B verification record. Phase 1B acceptance and Phase 2A contract approval are complete. Switch to Sol Medium; do not begin implementation until the user explicitly lifts the hold. Do not publish without explicit authorization. Preserve the expanded roadmap and all original work; distinguish automated, local, deployed and user-accepted evidence.

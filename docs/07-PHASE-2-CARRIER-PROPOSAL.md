@@ -1,10 +1,10 @@
-# Phase 2 carrier architecture — proposal for approval
+# Phase 2A carrier architecture — approved contract
 
-Status: proposal only. Phase 1B version 2 (build WF-1B-20260914, source e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d) is user-accepted. No Phase 2 application code, tests, migration or deployment is authorized by this document.
+Status: Phase 2A contract approved as proposed by the user; decisions settled. Implementation is explicitly on hold and publication is not authorized. Phase 1B version 2 (build WF-1B-20260914, source e2bb9f844207a403b2fe7e52bbc7c9c1b69a018d) is user-accepted. No Phase 2 application code, tests, migration or deployment is authorized by this document.
 
 ## Scope and sequence
 
-Recommend Phase 2A: rectangular straight carriers with explicit A/B families, analytical boundary clipping, spacing/rotation/offset/density controls, separate visibility, immutable saved carrier studies, undo, reload and JSON backup. This completes the first usable carrier batch, not the entire Phase 2 roadmap.
+Approved Phase 2A scope: rectangular straight carriers with explicit A/B families, analytical boundary clipping, spacing/rotation/offset/density controls, separate visibility, immutable saved carrier studies, undo, reload and JSON backup. This completes the first usable carrier batch, not the entire Phase 2 roadmap.
 
 Later Phase 2 batches retain triangular/radial modes, independent family directions, seeded irregularity and regenerate. Tension/smoothness become active controls only with a defined deformation operation. Fields, stitches, interactions, cells/interstices and their exports remain subsequent layers. Boundary-only SVG/DXF exports keep their current meaning; carrier interchange is a separate future batch.
 
@@ -12,7 +12,7 @@ Current source evidence: working state contains boundary plus boundary ancestry;
 
 ## 1. Authored data and derivation
 
-Propose workspace schema 3 because older schema-2 clients can accept and later discard new fields. Preserve existing board IDs, boundaries, source metadata, revision IDs and ancestry. Add:
+Use workspace schema 3 because older schema-2 clients can accept and later discard new fields. Preserve existing board IDs, boundaries, source metadata, revision IDs and ancestry. Add:
 
 - working.carrier: null until explicitly created; otherwise {id, kind: rectangular, generatorVersion: rect-v1, clipVersion: polygon-line-v1, selectionVersion: density-v1, origin: {x:0,y:0}, angleDegrees:0, families:{A:{spacing:50,offset:0,density:100},B:{spacing:50,offset:0,density:100}}}.
 - working.carrierSourceRevisionId: null or a saved carrier-study revision ID, independent of the existing boundary sourceRevisionId.
@@ -37,7 +37,7 @@ A fragment's key includes inputFingerprint, path key and sorted interval index. 
 
 ## 3. Density contract
 
-Spacing controls the full lattice; density selects a repeatable subset. 100 retains all candidate paths intersecting the boundary. Density is integer 1–100 per family. Proposed density-v1 rule: r=((37*((k%100+100)%100))%100); retain k when r<density. It retains exactly d slots per 100 consecutive indices, is nested as density increases, is deterministic for negative indices, and needs no seed.
+Spacing controls the full lattice; density selects a repeatable subset. 100 retains all candidate paths intersecting the boundary. Density is integer 1–100 per family. Approved density-v1 rule: r=((37*((k%100+100)%100))%100); retain k when r<density. It retains exactly d slots per 100 consecutive indices, is nested as density increases, is deterministic for negative indices, and needs no seed.
 
 On small boundaries the displayed fraction can differ from d percent and can be zero. Show retained/available source counts; do not force one path or change spacing to match a target count. Explain density as percent of lattice slots over the repeating selection pattern. This deliberately regular pattern is not seeded irregularity. A future seeded selector gets its own version and controls.
 
@@ -50,11 +50,11 @@ Use analytic line/polygon intersection on the complete valid closed polygon, the
 - Shared-vertex hits are deduplicated; reversal of polygon winding must not alter the geometric interval set.
 - No SVG mask defines the model. Rendering, future analysis and future exports consume the same complete clipped geometry.
 - Do calculations in a boundary-centered local frame to reduce cancellation, then return document coordinates. Keep the existing boundary validator unchanged.
-- Proposed clipping length tolerance tau=max(1e-8,64*Number.EPSILON*max(1,maxAbsCoordinate,boundaryExtent)). Use normalized signed distances for on-line tests and a separate dimensionless angular threshold of 64*Number.EPSILON for parallelism. Do not compare areas to a length epsilon.
+- Approved clipping length tolerance tau=max(1e-8,64*Number.EPSILON*max(1,maxAbsCoordinate,boundaryExtent)). Use normalized signed distances for on-line tests and a separate dimensionless angular threshold of 64*Number.EPSILON for parallelism. Do not compare areas to a length epsilon.
 - Merge cuts only within tau; omit intervals of length <=tau and report their count. Ambiguous geometry near the threshold yields an explicit precision diagnostic, not silently fabricated fragments. tau and all numerical choices belong to clipVersion.
 - Reject carrier generation if spacing <=100*tau or if numeric/index limits are exceeded. Existing boundary data still opens, saves and exports. Such rejection concerns carrier derivation only.
 
-Initial bounded workload: max 2,000 candidate source lines total before density selection, 20,000 clipped intervals, and 2,000,000 line/edge tests. Preflight candidate/edge work; enforce interval bound during derivation. Reject a proposed edit before persistence if limits fail; keep previous working state and undo stacks unchanged. These are proposed protective limits, not measured speed promises. Profile representative cases during implementation; do not silently enlarge limits or truncate analysis.
+Initial bounded workload: max 2,000 candidate source lines total before density selection, 20,000 clipped intervals, and 2,000,000 line/edge tests. Preflight candidate/edge work; enforce interval bound during derivation. Reject a proposed edit before persistence if limits fail; keep previous working state and undo stacks unchanged. These are approved protective limits, not measured speed promises. Profile representative cases during implementation; do not silently enlarge limits or truncate analysis.
 
 ## 5. Controls and editing
 
@@ -82,7 +82,7 @@ Interaction records will need source revision/fingerprint, A/B path keys, source
 
 Interstice analysis will consume a complete planar arrangement of clipped/derived edges plus the enclosing boundary. Concave fragments, boundary endpoints and collinear contact diagnostics are provided now; region graph, snapping policy across multiple carriers, cell adjacency, over/under connectivity and spatial classification are later contracts. No polygon regions or stitch events are manufactured in 2A.
 
-## 8. Automated verification and proposed release gate
+## 8. Approved automated verification and release gate
 
 Retain all accepted Phase 1 regression evidence; run affected regression tests during implementation. New automated coverage must include:
 
@@ -92,7 +92,7 @@ Retain all accepted Phase 1 regression evidence; run affected regression tests d
 - Save two study revisions, change boundary, restore each exact snapshot; undo/redo including ancestry; old schema-2 boundary library preservation; cross-browser JSON round-trip and ID fork behavior.
 - Migration backup failure, corrupt input, unsupported versions, quota failure, concurrent old/new tabs, limits and cancellation never overwrite committed work.
 - View toggles perform zero derivations and preserve geometry; local browser controls match model; repeated changes do not accumulate paths/listeners.
-- Performance report for sparse and dense square/concave fixtures: candidate/fragment counts, line-edge work, committed calculation time and gesture responsiveness on this host. Proposed goal: p95 committed derivation <=100 ms for 400 candidate lines and 100 edges over 30 warm runs. Failure requires a bounded optimization or a return to architecture for a changed limit/worker plan, not hiding analytical paths.
+- Performance report for sparse and dense square/concave fixtures: candidate/fragment counts, line-edge work, committed calculation time and gesture responsiveness on this host. Approved verification goal: p95 committed derivation <=100 ms for 400 candidate lines and 100 edges over 30 warm runs. Failure requires a bounded optimization or a return to architecture for a changed limit/worker plan, not hiding analytical paths.
 
 All planned tests above remain unimplemented and unrun in this proposal. Local verification must precede any separately approved publication, followed by live version/build/access checks.
 
@@ -108,10 +108,10 @@ All exhaustive rejection, precision and migration tests stay automated unless th
 
 ## 10. Approval and model checkpoint
 
-This is the Astra-stage architectural proposal requested by the user; it does not certify a UI reasoning setting or change model settings. The next action is user review, not implementation.
+The user approved this Phase 2A contract as proposed and requested that these decisions be recorded as settled. Approval covers the rectangular A/B model, identities, clipping, controls, immutable studies, migration/backup compatibility, automated verification and five live tests. Shared rotation and perpendicular families remain as specified; independent family directions remain deferred. The user explicitly instructed: do not begin implementation yet.
 
-Exact return to Sol Medium: after explicit user approval of Phase 2A and recording this document's geometry/identity, density, clipping/tolerance/limits, schema migration and saved-study contracts as approved, with no unresolved architectural blockers. At that moment, before the first implementation edit, the bounded Phase 2A batch follows established decisions and Sol Medium can implement and verify it. Tests need not already exist to switch; their expected outcomes must be settled here.
+Sol Medium checkpoint: REACHED. The approved contracts and verification expectations are recorded, with no outstanding architectural decision blocking bounded Phase 2A. The user should switch to Sol Medium now, before the first implementation edit. Switching models does not authorize starting work: wait for the user to explicitly lift the implementation hold. Once started, Phase 2A implementation follows established decisions; substantial architectural reasoning is not required unless new evidence contradicts the contract.
 
 A model change is user-controlled; no automatic task transfer or setting change is performed. If verification contradicts a contract, or requires new numerical topology, workers, revised persistence, or changed scope, pause that decision and return to Astra architectural reasoning. Triangular/radial semantics are not silently delegated to routine implementation.
 
-Approval to prepare this proposal is not approval to implement or publish. For each future batch first present scope, delivered behavior, what remains, automated verification and 3–5 simple live tests. Record implementation and publication authorization explicitly; no further release is authorized at present.
+Contract approval is recorded separately from permission to start: implementation remains on hold and publication is not authorized. For each future batch first present scope, delivered behavior, what remains, automated verification and 3–5 simple live tests. Record implementation and publication authorization explicitly; no further release is authorized at present.

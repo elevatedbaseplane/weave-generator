@@ -1,6 +1,6 @@
 # Foundation continuity
 
-User approval gate: Phase 1B is accepted. No later implementation or publication is authorized. Before every future batch, present concise scope, what will be built, what remains, automated verification, and 3–5 simple live tests. Wait for explicit approval before implementation and ensure publication is explicitly authorized. Keep exhaustive rejection/edge-case checks automated unless requested manually. Proposal: docs/07-PHASE-2-CARRIER-PROPOSAL.md. This user rule supersedes automatic publication language elsewhere.
+User approval gate: Phase 1B is accepted. No later implementation or publication is authorized. Before every future batch, present concise scope, what will be built, what remains, automated verification, and 3–5 simple live tests. Wait for explicit approval before implementation and ensure publication is explicitly authorized. Keep exhaustive rejection/edge-case checks automated unless requested manually. Phase 2A contract is approved as proposed and settled: docs/07-PHASE-2-CARRIER-PROPOSAL.md. Sol Medium checkpoint reached. Contract approval does not lift the explicit implementation hold: wait for a user start instruction; publication remains unauthorized. This user rule supersedes automatic publication language elsewhere.
 
 Read docs/00-MASTER-GUIDE.md, docs/02-STATE-DECISIONS-AND-TESTS.md, and docs/04-SOL-CHECKPOINT.md before editing.
 
