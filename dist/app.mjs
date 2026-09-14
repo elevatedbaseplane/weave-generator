@@ -1,16 +1,17 @@
 import {createWorkspace,createProject,activeProject,clone,saveBoundary,restoreBoundary,findRevision,serializeWorkspace,parseBackup,mergeBackup} from './document.mjs';
-import {square,validateBoundary,parseCoordinates,signedArea} from './boundary.mjs';
+import {square,validateBoundary,parseCoordinates,signedArea,bounds} from './boundary.mjs';
 import {History} from './history.mjs';
 import {LocalStore} from './storage.mjs';
 import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';
 import {boundarySvg,boundaryDxf} from './exchange.mjs';
-const $=id=>document.getElementById(id),BUILD='WF-1A-20260914';
+import {parseSvgBoundary,svgImportSummary} from './svg-import.mjs';
+const $=id=>document.getElementById(id),BUILD='WF-1B-20260914';
 const store=new LocalStore(localStorage);
 let workspace,loadError='';
 try{workspace=store.load();}catch(error){workspace=createWorkspace();loadError=error.message;}
 const histories=new Map();
 const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
-let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null;
+let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,stagedSvg=null;
 let display={theme:'light',boundary:false,grid:false};
 try{const saved=JSON.parse(localStorage.getItem('weave-foundation-view-v1'));if(['light','dark','neo'].includes(saved?.theme))display={theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true};}catch{}
 const project=()=>activeProject(workspace);
@@ -45,6 +46,7 @@ function renderBoards(){
 function render(){
   renderBoards();const b=project().working.boundary;
   $('boundary-summary').textContent=`${b.points.length} VERTICES · AREA ${Math.abs(signedArea(b.points)).toLocaleString(undefined,{maximumFractionDigits:3})} U²`;
+  $('boundary-source').hidden=!b.source;$('boundary-source').textContent=b.source?`SOURCE ${b.source.filename} · SVG · Y NEGATED${b.source.viewBox?` · VIEWBOX ${b.source.viewBox}`:''}`:'';
   $('coordinates').value=b.points.map(p=>`${p.x}, ${p.y}`).join('\n');
   $('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;
   const source=findRevision(project(),project().working.sourceRevisionId);
@@ -70,6 +72,18 @@ function renderCanvas(){
 function fit(){view=fitView(project().working.boundary.points,width,height);renderCanvas();}
 function setTool(next){tool=next;draft=[];selected=null;drag=null;['select','draw','pan'].forEach(name=>$(`${name}-tool`).classList.toggle('active',name===next));$('draw-actions').hidden=next!=='draw';if(next==='draw')$('boundary-section').open=true;renderCanvas();status(next==='draw'?'CLICK VERTICES. FINISH CLOSES THE BOUNDARY. ESC CANCELS.':next==='pan'?'DRAG TO PAN. SCROLL TO ZOOM.':'CLICK A VERTEX TO SELECT. DRAG TO EDIT.');}
 function download(text,name,type='application/json'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function clearSvgStage(){stagedSvg=null;$('import-svg').value='';$('svg-import-stage').hidden=true;$('svg-import-preview').hidden=false;$('svg-import-preview').replaceChildren();$('svg-import-facts').replaceChildren();$('svg-import-message').textContent='';}
+function stageFact(label,value){const term=element('dt','',label),detail=element('dd','',value);$('svg-import-facts').append(term,detail);}
+function showSvgStage(file,boundary,error=''){
+  const stage=$('svg-import-stage'),preview=$('svg-import-preview');stage.hidden=false;preview.replaceChildren();$('svg-import-facts').replaceChildren();$('svg-import-name').textContent=file.name;$('svg-import-message').textContent=error;
+  $('svg-import-result').textContent=error?'REJECTED':'VALID';$('svg-import-result').classList.toggle('error',Boolean(error));$('apply-svg-import').disabled=Boolean(error);preview.hidden=Boolean(error);
+  if(error){stagedSvg=null;stageFact('FILE',file.name);return;}
+  const summary=svgImportSummary(boundary),b=bounds(boundary.points),pad=Math.max(summary.width,summary.height)*.08||10;
+  preview.setAttribute('viewBox',`${b.minX-pad} ${-b.maxY-pad} ${summary.width+pad*2} ${summary.height+pad*2}`);
+  preview.append(svgElement('polygon',{points:boundary.points.map(point=>`${point.x},${-point.y}`).join(' '),class:'import-preview-path'}));
+  stageFact('VERTICES',String(summary.vertices));stageFact('BOUNDARY SIZE',`${summary.width} × ${summary.height}`);stageFact('SVG WIDTH',boundary.source.width??'UNSPECIFIED');stageFact('SVG HEIGHT',boundary.source.height??'UNSPECIFIED');stageFact('VIEWBOX',boundary.source.viewBox??'UNSPECIFIED');
+  stagedSvg={boundary:clone(boundary),filename:file.name};
+}
 $('board-list').addEventListener('click',event=>attempt(()=>{
   const board=event.target.closest('[data-board]'),revision=event.target.closest('[data-revision]');
   if(board){const next=clone(workspace);next.activeProjectId=board.dataset.board;persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
@@ -98,6 +112,9 @@ $('raw-backup').onclick=()=>download(store.raw(),'weave-foundation-raw-recovery.
 $('import-backup').onclick=()=>{$('import-message').textContent='';$('backup-dialog').showModal();};
 $('backup-file').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;if(file.size>10*1024*1024){$('import-message').textContent='Use a backup smaller than 10 MB.';return;}$('backup-json').value=await file.text();};
 $('confirm-import').onclick=()=>{try{const incoming=parseBackup($('backup-json').value),next=mergeBackup(workspace,incoming);persist(next);histories.clear();$('backup-dialog').close();setTool('select');render();fit();status('BACKUP IMPORTED. EXISTING BOARDS RETAINED.');}catch(error){$('import-message').textContent=error.message;}};
+$('import-svg').onchange=async event=>{const file=event.target.files?.[0];if(!file){clearSvgStage();return;}try{const boundary=parseSvgBoundary(await file.text(),file.name);showSvgStage(file,boundary);status('SVG VALIDATED. REVIEW THE STAGED BOUNDARY BEFORE APPLY.');}catch(error){showSvgStage(file,null,error.message);status(error.message,true);}};
+$('cancel-svg-import').onclick=()=>{clearSvgStage();status('SVG IMPORT CANCELLED. THE WORKING BOUNDARY IS UNCHANGED.');};
+$('apply-svg-import').onclick=()=>attempt(()=>{if(!stagedSvg)throw new Error('Choose and validate an SVG boundary first.');const filename=stagedSvg.filename;setBoundary(stagedSvg.boundary,`SVG BOUNDARY APPLIED FROM ${filename}. ONE UNDO RESTORES THE PRIOR BOUNDARY.`);clearSvgStage();display.boundary=true;saveView();selected=null;fit();});
 $('export-svg').onclick=()=>attempt(()=>download(boundarySvg(project().working.boundary),'weave-boundary.svg','image/svg+xml'));
 $('export-dxf').onclick=()=>attempt(()=>download(boundaryDxf(project().working.boundary),'weave-boundary.dxf','application/dxf'));
 const localPoint=event=>{const rect=$('canvas').getBoundingClientRect();return {x:event.clientX-rect.left,y:event.clientY-rect.top};};

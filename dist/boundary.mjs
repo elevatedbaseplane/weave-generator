@@ -32,6 +32,22 @@ export function validateBoundary(input) {
   if(Math.abs(signedArea(points))<=EPSILON) throw new Error('A boundary must enclose a nonzero area.');
   return {closed:true,points};
 }
+export function validateBoundarySource(source) {
+  if(source===undefined)return undefined;
+  if(!source||typeof source!=='object'||Array.isArray(source))throw new Error('Invalid boundary source metadata.');
+  const allowed=new Set(['filename','format','axisConversion','width','height','viewBox']);
+  if(Object.keys(source).some(key=>!allowed.has(key)))throw new Error('Unsupported boundary source metadata.');
+  if(typeof source.filename!=='string'||!source.filename||source.filename.length>255||source.format!=='svg'||source.axisConversion!=='negate-y')throw new Error('Invalid boundary source metadata.');
+  const result={filename:source.filename,format:'svg',axisConversion:'negate-y'};
+  for(const key of ['width','height','viewBox'])if(source[key]!==undefined){if(typeof source[key]!=='string'||source[key].length>255)throw new Error('Invalid boundary source metadata.');result[key]=source[key];}
+  return result;
+}
+export function validateBoundaryRecord(boundary) {
+  if(!boundary||boundary.closed!==true)throw new Error('The boundary must be closed.');
+  const result=validateBoundary(boundary.points),source=validateBoundarySource(boundary.source);
+  if(source)result.source=source;
+  return result;
+}
 export function square(size=500) {
   if(!Number.isFinite(size)||size<=0||size>1e9) throw new Error('Square side must be greater than zero and at most 1,000,000,000.');
   const h=size/2;

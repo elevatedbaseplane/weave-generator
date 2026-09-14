@@ -1,4 +1,4 @@
-import {square,validateBoundary} from './boundary.mjs';
+import {square,validateBoundaryRecord} from './boundary.mjs';
 export const SCHEMA_VERSION=2;
 export const COORDINATES=Object.freeze({units:'document-units',yAxis:'up',origin:'document'});
 export const clone=value=>structuredClone(value);
@@ -19,7 +19,7 @@ export function findRevision(project,revisionId) {
 export function saveBoundary(project,name) {
   name=cleanName(name);
   if(!name) throw new Error('Give this boundary a name.');
-  const boundary=validateBoundary(project.working.boundary.points),draft=clone(project);
+  const boundary=validateBoundaryRecord(project.working.boundary),draft=clone(project);
   let entry=draft.boundaries.find(e=>e.name===name);
   if(!entry){entry={id:id('boundary'),name,latestRevisionId:null,revisions:[]};draft.boundaries.push(entry);}
   const revision={id:id('revision'),number:entry.revisions.length+1,createdAt:new Date().toISOString(),parentRevisionId:entry.latestRevisionId,geometryVersion:'boundary-v1',boundary};
@@ -46,7 +46,7 @@ function validateProject(project) {
     if(c?.units!==COORDINATES.units||c?.yAxis!=='up'||c?.origin!=='document')throw new Error('Unsupported coordinate system; no automatic rescaling is performed.');
   }
   if(project.working?.boundary?.closed!==true)throw new Error('The working boundary must be closed.');
-  validateBoundary(project.working.boundary.points);
+  validateBoundaryRecord(project.working.boundary);
   unique(project.boundaries,'boundary');
   const names=new Set(),revisionIds=new Set();
   for(const entry of project.boundaries) {
@@ -56,7 +56,7 @@ function validateProject(project) {
     for(let i=0;i<entry.revisions.length;i++) {
       const r=entry.revisions[i];
       if(revisionIds.has(r.id)||r.number!==i+1||r.parentRevisionId!==(i?entry.revisions[i-1].id:null)||r.geometryVersion!=='boundary-v1'||!Number.isFinite(Date.parse(r.createdAt))||r.boundary?.closed!==true)throw new Error('Invalid boundary revision chain.');
-      validateBoundary(r.boundary.points);revisionIds.add(r.id);
+      validateBoundaryRecord(r.boundary);revisionIds.add(r.id);
     }
     if(entry.latestRevisionId!==entry.revisions.at(-1).id)throw new Error('The latest pointer must reference the newest revision.');
   }

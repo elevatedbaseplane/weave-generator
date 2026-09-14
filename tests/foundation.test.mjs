@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {square,validateBoundary,parseCoordinates,signedArea} from '../dist/boundary.mjs';
+import fs from 'node:fs';
+import {square,validateBoundary,validateBoundaryRecord,parseCoordinates,signedArea} from '../dist/boundary.mjs';
 import {createWorkspace,createProject,activeProject,saveBoundary,restoreBoundary,findRevision,validateWorkspace,serializeWorkspace,parseBackup,mergeBackup,clone} from '../dist/document.mjs';
 import {History} from '../dist/history.mjs';
 import {fitView,toScreen,toDocument,zoomAt} from '../dist/viewport.mjs';
@@ -8,7 +9,9 @@ import {LocalStore,STORE_KEY,RECOVERY_KEY} from '../dist/storage.mjs';
 import {boundarySvg,boundaryDxf} from '../dist/exchange.mjs';
 import {parseDxfText} from '../reference/legacy-dist/dxf-io.mjs';
 import {parsePointList} from '../reference/legacy-dist/svg-io.mjs';
+import {parseSvgBoundary,parseTransform} from '../dist/svg-import.mjs';
 const asymmetric=[{x:-40,y:10},{x:120,y:10},{x:120,y:90},{x:30,y:90},{x:30,y:40},{x:-40,y:40}];
+const fixture=name=>fs.readFileSync(new URL(`fixtures/${name}.svg`,import.meta.url),'utf8');
 test('square is exact, explicit closure and concave polygon preserve vertex order',()=>{
   assert.equal(signedArea(square(500).points),250000);
   assert.deepEqual(validateBoundary([...asymmetric,asymmetric[0]]),{closed:true,points:asymmetric});
@@ -70,4 +73,40 @@ test('Tangent baseline DXF parser preserves declared unit code, order, closure a
 test('SVG exchange explicitly negates Y and preserves asymmetric order and scale',()=>{
   const svg=boundarySvg(validateBoundary(asymmetric)),coords=svg.match(/points="([^"]+)"/)[1],parsed=parsePointList(coords);
   assert.deepEqual(parsed.map(p=>({x:p.x,y:-p.y})),asymmetric);assert.ok(svg.includes('svg-y-negated'));assert.equal(Math.abs(signedArea(parsed)),Math.abs(signedArea(asymmetric)));
+});
+test('SVG import preserves asymmetric order, scale, metadata and one explicit Y conversion',()=>{
+  const boundary=parseSvgBoundary(fixture('asymmetric'),'asymmetric.svg');
+  assert.deepEqual(boundary.points,asymmetric);
+  assert.deepEqual(boundary.source,{filename:'asymmetric.svg',format:'svg',axisConversion:'negate-y',width:'160',height:'80',viewBox:'-40 -90 160 80'});
+});
+test('SVG import composes numeric group transforms before converting to Y-up',()=>{
+  const boundary=parseSvgBoundary(fixture('transformed'),'transformed.svg');
+  assert.deepEqual(boundary.points,[{x:100,y:-20},{x:100,y:-60},{x:80,y:-20}]);
+  assert.deepEqual(parseTransform('translate(10 20) scale(2)'),[2,0,0,2,10,20]);
+});
+test('SVG import accepts straight rect, explicitly closed polyline and M/L/H/V/Z path forms',()=>{
+  const wrap=content=>`<svg xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
+  assert.deepEqual(parseSvgBoundary(wrap('<rect x="1" y="2" width="10" height="20"/>')).points,[{x:1,y:-2},{x:11,y:-2},{x:11,y:-22},{x:1,y:-22}]);
+  assert.equal(parseSvgBoundary(wrap('<polyline points="0,0 10,0 0,10 0,0"/>')).points.length,3);
+  assert.deepEqual(parseSvgBoundary(wrap('<path d="M0 0 H20 V10 L0 10 Z"/>')).points,[{x:0,y:0},{x:20,y:0},{x:20,y:-10},{x:0,y:-10}]);
+  assert.equal(parseSvgBoundary('<svg><title>Boundary preview</title><polygon points="0,0 20,0 0,20"/></svg>').points.length,3);
+});
+test('invalid SVG fixtures reject explicitly without changing an existing workspace',()=>{
+  const original=createWorkspace(),before=clone(original);
+  for(const [name,message] of [['open-path','Open SVG paths'],['curve','Only straight'],['multiple','exactly one'],['malformed','not valid XML'],['zero-area','double back|nonzero area'],['crossing','cross or touch']])assert.throws(()=>parseSvgBoundary(fixture(name),`${name}.svg`),new RegExp(message,'i'));
+  assert.throws(()=>parseSvgBoundary('<svg transform="scale(2)"><polygon points="0,0 10,0 0,10"/></svg>'),/root SVG/);
+  assert.throws(()=>parseSvgBoundary('<svg><circle cx="0" cy="0" r="2"/></svg>'),/Unsupported SVG geometry/);
+  assert.throws(()=>parseSvgBoundary('<svg><rect width="10" height="10" rx="2"/></svg>'),/Rounded rectangles/);
+  assert.throws(()=>parseSvgBoundary('<svg><polygon points="0,0 NaN,0 0,10"/></svg>'),/Invalid point list/);
+  assert.throws(()=>parseSvgBoundary('<svg><g transform="perspective(2)"><polygon points="0,0 10,0 0,10"/></g></svg>'),/Unsupported SVG transform/);
+  assert.throws(()=>parseSvgBoundary('<svg><path d="M0 0 L10 0 L0 10 Z M20 0 L30 0 L20 10 Z"/></svg>'),/exactly one/);
+  assert.throws(()=>parseSvgBoundary('<svg></svg><polygon points="0,0 10,0 0,10"/>'),/not valid XML/);
+  assert.deepEqual(original,before);
+});
+test('SVG source metadata survives revision save and schema-2 portable backup',()=>{
+  let workspace=createWorkspace();activeProject(workspace).working.boundary=parseSvgBoundary(fixture('asymmetric'),'source-file.svg');workspace.projects[0]=saveBoundary(activeProject(workspace),'IMPORTED').project;
+  const restored=parseBackup(serializeWorkspace(workspace));assert.deepEqual(restored,workspace);assert.deepEqual(restored.projects[0].boundaries[0].revisions[0].boundary.source,workspace.projects[0].working.boundary.source);
+  const withoutSource=createWorkspace();assert.doesNotThrow(()=>validateWorkspace(withoutSource));
+  const invalid=clone(workspace);invalid.projects[0].working.boundary.source.extra='markup';assert.throws(()=>validateWorkspace(invalid),/Unsupported boundary source/);
+  assert.deepEqual(validateBoundaryRecord(workspace.projects[0].working.boundary),workspace.projects[0].working.boundary);
 });
