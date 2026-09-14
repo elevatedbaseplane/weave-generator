@@ -1,50 +1,362 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Weave Generator</title>
-  <meta name="description" content="An architectural weave field, point, and polyline generator.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Cpath d='M7 7H25V25H7Z M7 16H25 M16 7V25' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header>
-  <div class="brand"><span>B.A.C: WEAVE GENERATOR..... V01</span></div>
-  <span class="build">BUILD 01 <span>/ PROJECT LINEAGE</span></span>
-  <div class="history-actions"><button id="toggle-projects" class="quiet">BOARDS −</button><button id="new-project" class="quiet">NEW BOARD</button><button id="toggle-controls" class="quiet">CONTROLS −</button></div>
-</header>
-<main id="app-shell">
-  <aside id="project-rail" class="project-rail" aria-label="Boards">
-    <div class="project-heading"><span>BOARDS</span><button id="rename-project" class="rail-add" title="Rename board">↗</button></div><div class="library-actions"><button id="left-add-boundary">ADD BOUNDARY</button><button id="left-add-weave">ADD WEAVE</button><button id="left-rename">RENAME BOARD</button><button id="left-duplicate">DUPLICATE BOARD</button><button id="left-delete">DELETE BOARD</button></div>
-    <div id="project-list" class="board-tree"></div>
-    <p class="project-note">SAVED LOCALLY IN THIS BROWSER.</p>
-  </aside>
-  <section class="workspace" aria-label="Weave workspace">
-    <div class="workspace-bar">
-      <nav class="tool-tabs" aria-label="Workflow stages"><button class="active"><span>01</span>Weave Field</button><button disabled><span>02</span>Point Extraction</button><button disabled><span>03</span>Polyline Composer</button></nav>
-      <div class="views"><button class="active">BOUNDARY CONTEXT</button></div>
-    </div>
-    <div class="drawing" id="drawing">
-      <div class="drawing-label"><span>WEAVE STUDY / <b id="project-label">UNTITLED</b></span><span id="object-summary">00 WEAVES · 00 POINT SETS · 00 POLYLINE SETS</span></div>
-      <svg id="canvas" viewBox="0 0 820 720" role="img" aria-label="Weave field workspace">
-        <defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0V60" fill="none" stroke="#eaeaea" stroke-width="1"/><circle cx="0" cy="0" r="1.5" fill="#eaeaea"/></pattern><clipPath id="boundary-clip"><path id="boundary-clip-path"/></clipPath></defs>
-        <rect width="820" height="720" fill="url(#grid)" id="grid-layer"/>
-        <g id="frame-layer" fill="none" stroke="#888" stroke-width="1"><path d="M100 135V110H125 M695 110H720V135 M720 585V610H695 M125 610H100V585"/></g>
-        <g id="lattice-preview" clip-path="url(#boundary-clip)"></g><g id="thread-preview" clip-path="url(#boundary-clip)"></g><g id="field-preview"></g><g id="weave-preview"></g>
-      </svg>
-      <div class="canvas-bottom"><div class="canvas-left"><span id="canvas-legend"><i class="legend-line"></i>Working boundary <i class="legend-circle"></i>Saved object</span><div class="mode-tabs"><button class="mode-tab active" data-mode="light">LIGHT</button><button class="mode-tab" data-mode="dark">DARK</button><button class="mode-tab" data-mode="neo">NEO</button></div></div><div class="global-controls"><label><input id="show-grid" type="checkbox" checked> Canvas grid + frame</label><label><input id="show-boundary" type="checkbox" checked> Boundary</label></div></div>
-    </div>
-    <div class="statusbar"><span id="status" role="status">PROJECT FOUNDATION READY</span><span id="lineage-status">WEAVE → POINTS → POLYLINES</span></div>
-  </section>
-  <aside id="control-rail" aria-label="Weave controls">
-    <section class="control-section selected-section"><div class="section-heading"><h2>Project context</h2><span class="unit">V1</span></div><div class="range-label"><label for="project-name">Board name</label><input id="project-name" type="text" maxlength="36"></div><p class="hint">A board holds its boundary, saved weave patterns, derived point sets, and derived polylines.</p></section>
-    <details class="control-section" open><summary>BOUNDARY <span>−</span></summary><div class="point-control-body"><div class="range-label"><label for="boundary-name">Working boundary</label><input id="boundary-name" type="text" value="DEFAULT SQUARE"></div><div class="boundary-readout"><span id="boundary-kind">DEFAULT</span><strong id="boundary-size">500 × 500</strong></div><input id="boundary-file" type="file" accept=".svg,image/svg+xml" hidden><button id="use-square" class="secondary">USE PERFECT SQUARE</button><button id="import-boundary" class="secondary">IMPORT CLOSED SVG</button><button id="draw-boundary" class="secondary">DRAW BOUNDARY</button><button id="clear-boundary" class="secondary">CLEAR DRAWING</button><button id="save-boundary" class="primary">SAVE BOUNDARY <span>↗</span></button><p class="hint">Import one closed SVG path or use DRAW BOUNDARY, then click at least three points on the canvas and save.</p></div></details>
-    <details class="control-section" open><summary>WEAVE PATTERN GRID <span>−</span></summary><div class="point-control-body"><div class="range-label"><label for="lattice-mode">Lattice</label><select id="lattice-mode"><option value="rectangular">RECTANGULAR</option><option value="triangular">TRIANGULAR</option><option value="radial">RADIAL</option></select></div><div class="range-label"><label for="lattice-spacing">Spacing</label><input id="lattice-spacing-value" type="number" min="20" max="100" step="10" value="40"></div><input id="lattice-spacing" type="range" min="20" max="100" step="10" value="40"><div class="range-label"><label for="lattice-angle">Angle</label><input id="lattice-angle-value" type="number" min="0" max="180" step="10" value="0"></div><input id="lattice-angle" type="range" min="0" max="180" step="10" value="0"><div class="range-label"><label for="lattice-offset">Offset</label><input id="lattice-offset-value" type="number" min="0" max="100" step="10" value="0"></div><input id="lattice-offset" type="range" min="0" max="100" step="10" value="0"><div class="range-label"><label for="seed">Seed</label><input id="seed" type="text" value="1042"></div><div class="range-label"><label for="pattern-name">Pattern name</label><input id="pattern-name" type="text" value="WEAVE 01"></div><button id="save-weave" class="primary">SAVE WEAVE PATTERN <span>↗</span></button><button id="duplicate-weave" class="secondary">DUPLICATE + VARY</button></div></details>
-    <details class="control-section" open><summary>FIELD FORCES <span>−</span></summary><div class="point-control-body"><div class="range-label"><label for="field-list">Active field</label><select id="field-list"></select></div><button id="add-field" class="secondary">ADD FIELD</button><button id="remove-field" class="secondary">REMOVE ACTIVE FIELD</button><div class="range-label"><label for="field-type">Behavior</label><select id="field-type"><option value="attractor">ATTRACTOR</option><option value="repeller">REPELLER</option><option value="deflector">DEFLECTOR</option></select></div><label class="outline-toggle"><input id="field-enabled" type="checkbox" checked> ENABLED</label><div class="range-label"><label for="field-strength">Strength</label><input id="field-strength-value" type="number" min="0" max="100" step="10"></div><input id="field-strength" type="range" min="0" max="100" step="10"><div class="range-label"><label for="field-radius">Radius</label><input id="field-radius-value" type="number" min="50" max="350" step="10"></div><input id="field-radius" type="range" min="50" max="350" step="10"><div class="range-label"><label for="field-falloff">Falloff</label><input id="field-falloff-value" type="number" min="1" max="4" step="1"></div><input id="field-falloff" type="range" min="1" max="4" step="1"><div class="range-label"><label for="field-direction">Direction</label><input id="field-direction-value" type="number" min="0" max="180" step="10"></div><input id="field-direction" type="range" min="0" max="180" step="10"><p class="hint">CLICK OR DRAG THE FIELD MARKER IN THE CANVAS. THE GREY LATTICE STAYS AS REFERENCE; THE DARK THREADS SHOW THE ALTERED FIELD.</p></div></details>
-    <details class="control-section"><summary>DERIVED OBJECTS <span>+</span></summary><div class="point-control-body"><p class="hint">Point Sets and Polyline Sets are intentionally inactive until their generators are built. Their source lineage is already protected in the project model.</p></div></details>
-  </aside>
-</main>
-<script type="module" src="app.mjs"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Weave Generator</title>
+    <meta
+      name="description"
+      content="An architectural weave field, point, and polyline generator."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Cpath d='M7 7H25V25H7Z M7 16H25 M16 7V25' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand"><span>B.A.C: WEAVE GENERATOR..... V01</span></div>
+      <span class="build">BUILD 01 <span>/ PROJECT LINEAGE</span></span>
+      <div class="history-actions">
+        <button id="toggle-projects" class="quiet">BOARDS −</button
+        ><button id="new-project" class="quiet">NEW BOARD</button
+        ><button id="toggle-controls" class="quiet">CONTROLS −</button>
+      </div>
+    </header>
+    <main id="app-shell">
+      <aside id="project-rail" class="project-rail" aria-label="Boards">
+        <div class="project-heading">
+          <span>BOARDS</span
+          ><button id="rename-project" class="rail-add" title="Rename board">
+            ↗
+          </button>
+        </div>
+        <div class="library-actions">
+          <button id="left-add-boundary">ADD BOUNDARY</button
+          ><button id="left-add-weave">ADD WEAVE</button
+          ><button id="left-rename">RENAME BOARD</button
+          ><button id="left-duplicate">DUPLICATE BOARD</button
+          ><button id="left-delete">DELETE BOARD</button>
+        </div>
+        <div id="project-list" class="board-tree"></div>
+        <p class="project-note">SAVED LOCALLY IN THIS BROWSER.</p>
+      </aside>
+      <section class="workspace" aria-label="Weave workspace">
+        <div class="workspace-bar">
+          <nav class="tool-tabs" aria-label="Workflow stages">
+            <button class="active"><span>01</span>Weave Field</button
+            ><button disabled><span>02</span>Point Extraction</button
+            ><button disabled><span>03</span>Polyline Composer</button>
+          </nav>
+          <div class="views">
+            <button class="active">BOUNDARY CONTEXT</button>
+          </div>
+        </div>
+        <div class="drawing" id="drawing">
+          <div class="drawing-label">
+            <span>WEAVE STUDY / <b id="project-label">UNTITLED</b></span
+            ><span id="object-summary"
+              >00 WEAVES · 00 POINT SETS · 00 POLYLINE SETS</span
+            >
+          </div>
+          <svg
+            id="canvas"
+            viewBox="0 0 820 720"
+            role="img"
+            aria-label="Weave field workspace"
+          >
+            <defs>
+              <pattern
+                id="grid"
+                width="60"
+                height="60"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M60 0H0V60"
+                  fill="none"
+                  stroke="#eaeaea"
+                  stroke-width="1"
+                />
+                <circle cx="0" cy="0" r="1.5" fill="#eaeaea" />
+              </pattern>
+              <clipPath id="boundary-clip">
+                <path id="boundary-clip-path" />
+              </clipPath>
+            </defs>
+            <rect width="820" height="720" fill="url(#grid)" id="grid-layer" />
+            <g id="frame-layer" fill="none" stroke="#888" stroke-width="1">
+              <path
+                d="M100 135V110H125 M695 110H720V135 M720 585V610H695 M125 610H100V585"
+              />
+            </g>
+            <g id="lattice-preview" clip-path="url(#boundary-clip)"></g>
+            <g id="thread-preview" clip-path="url(#boundary-clip)"></g>
+            <g id="field-preview"></g>
+            <g id="weave-preview"></g>
+          </svg>
+          <div class="canvas-bottom">
+            <div class="canvas-left">
+              <span id="canvas-legend"
+                ><i class="legend-line"></i>Working boundary
+                <i class="legend-circle"></i>Saved object</span
+              >
+              <div class="mode-tabs">
+                <button class="mode-tab active" data-mode="light">LIGHT</button
+                ><button class="mode-tab" data-mode="dark">DARK</button
+                ><button class="mode-tab" data-mode="neo">NEO</button>
+              </div>
+            </div>
+            <div class="global-controls">
+              <label
+                ><input id="show-grid" type="checkbox" checked /> Canvas grid +
+                frame</label
+              ><label
+                ><input id="show-boundary" type="checkbox" checked />
+                Boundary</label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="statusbar">
+          <span id="status" role="status">PROJECT FOUNDATION READY</span
+          ><span id="lineage-status">WEAVE → POINTS → POLYLINES</span>
+        </div>
+      </section>
+      <aside id="control-rail" aria-label="Weave controls">
+        <section class="control-section selected-section">
+          <div class="section-heading">
+            <h2>Project context</h2>
+            <span class="unit">V1</span>
+          </div>
+          <div class="range-label">
+            <label for="project-name">Board name</label
+            ><input id="project-name" type="text" maxlength="36" />
+          </div>
+          <p class="hint">
+            A board holds its boundary, saved weave patterns, derived point
+            sets, and derived polylines.
+          </p>
+        </section>
+        <details class="control-section" open>
+          <summary>BOUNDARY <span>−</span></summary>
+          <div class="point-control-body">
+            <div class="range-label">
+              <label for="boundary-name">Working boundary</label
+              ><input id="boundary-name" type="text" value="DEFAULT SQUARE" />
+            </div>
+            <div class="boundary-readout">
+              <span id="boundary-kind">DEFAULT</span
+              ><strong id="boundary-size">500 × 500</strong>
+            </div>
+            <input
+              id="boundary-file"
+              type="file"
+              accept=".svg,image/svg+xml"
+              hidden
+            /><button id="use-square" class="secondary">
+              USE PERFECT SQUARE</button
+            ><button id="import-boundary" class="secondary">
+              IMPORT CLOSED SVG</button
+            ><button id="draw-boundary" class="secondary">DRAW BOUNDARY</button
+            ><button id="clear-boundary" class="secondary">CLEAR DRAWING</button
+            ><button id="save-boundary" class="primary">
+              SAVE BOUNDARY <span>↗</span>
+            </button>
+            <p class="hint">
+              Import one closed SVG path or use DRAW BOUNDARY, then click at
+              least three points on the canvas and save.
+            </p>
+          </div>
+        </details>
+        <details class="control-section" open>
+          <summary>WEAVE PATTERN GRID <span>−</span></summary>
+          <div class="point-control-body">
+            <div class="range-label">
+              <label for="lattice-mode">Lattice</label
+              ><select id="lattice-mode">
+                <option value="rectangular">RECTANGULAR</option>
+                <option value="triangular">TRIANGULAR</option>
+                <option value="radial">RADIAL</option>
+              </select>
+            </div>
+            <div class="range-label">
+              <label for="lattice-spacing">Spacing</label
+              ><input
+                id="lattice-spacing-value"
+                type="number"
+                min="20"
+                max="100"
+                step="10"
+                value="40"
+              />
+            </div>
+            <input
+              id="lattice-spacing"
+              type="range"
+              min="20"
+              max="100"
+              step="10"
+              value="40"
+            />
+            <div class="range-label">
+              <label for="lattice-angle">Angle</label
+              ><input
+                id="lattice-angle-value"
+                type="number"
+                min="0"
+                max="180"
+                step="10"
+                value="0"
+              />
+            </div>
+            <input
+              id="lattice-angle"
+              type="range"
+              min="0"
+              max="180"
+              step="10"
+              value="0"
+            />
+            <div class="range-label">
+              <label for="lattice-offset">Offset</label
+              ><input
+                id="lattice-offset-value"
+                type="number"
+                min="0"
+                max="100"
+                step="10"
+                value="0"
+              />
+            </div>
+            <input
+              id="lattice-offset"
+              type="range"
+              min="0"
+              max="100"
+              step="10"
+              value="0"
+            />
+            <div class="range-label">
+              <label for="seed">Seed</label
+              ><input id="seed" type="text" value="1042" />
+            </div>
+            <div class="range-label">
+              <label for="pattern-name">Pattern name</label
+              ><input id="pattern-name" type="text" value="WEAVE 01" />
+            </div>
+            <button id="save-weave" class="primary">
+              SAVE WEAVE PATTERN <span>↗</span></button
+            ><button id="duplicate-weave" class="secondary">
+              DUPLICATE + VARY
+            </button>
+          </div>
+        </details>
+        <details class="control-section" open>
+          <summary>FIELD FORCES <span>−</span></summary>
+          <div class="point-control-body">
+            <div class="range-label">
+              <label for="field-list">Active field</label
+              ><select id="field-list"></select>
+            </div>
+            <button id="add-field" class="secondary">ADD FIELD</button
+            ><button id="remove-field" class="secondary">
+              REMOVE ACTIVE FIELD
+            </button>
+            <div class="range-label">
+              <label for="field-type">Behavior</label
+              ><select id="field-type">
+                <option value="attractor">ATTRACTOR</option>
+                <option value="repeller">REPELLER</option>
+                <option value="deflector">DEFLECTOR</option>
+              </select>
+            </div>
+            <label class="outline-toggle"
+              ><input id="field-enabled" type="checkbox" checked />
+              ENABLED</label
+            >
+            <div class="range-label">
+              <label for="field-strength">Strength</label
+              ><input
+                id="field-strength-value"
+                type="number"
+                min="0"
+                max="100"
+                step="10"
+              />
+            </div>
+            <input
+              id="field-strength"
+              type="range"
+              min="0"
+              max="100"
+              step="10"
+            />
+            <div class="range-label">
+              <label for="field-radius">Radius</label
+              ><input
+                id="field-radius-value"
+                type="number"
+                min="50"
+                max="350"
+                step="10"
+              />
+            </div>
+            <input
+              id="field-radius"
+              type="range"
+              min="50"
+              max="350"
+              step="10"
+            />
+            <div class="range-label">
+              <label for="field-falloff">Falloff</label
+              ><input
+                id="field-falloff-value"
+                type="number"
+                min="1"
+                max="4"
+                step="1"
+              />
+            </div>
+            <input id="field-falloff" type="range" min="1" max="4" step="1" />
+            <div class="range-label">
+              <label for="field-direction">Direction</label
+              ><input
+                id="field-direction-value"
+                type="number"
+                min="0"
+                max="180"
+                step="10"
+              />
+            </div>
+            <input
+              id="field-direction"
+              type="range"
+              min="0"
+              max="180"
+              step="10"
+            />
+            <p class="hint">
+              CLICK OR DRAG THE FIELD MARKER IN THE CANVAS. THE GREY LATTICE
+              STAYS AS REFERENCE; THE DARK THREADS SHOW THE ALTERED FIELD.
+            </p>
+          </div>
+        </details>
+        <details class="control-section" open><summary>THREAD FAMILIES <span>−</span></summary><div class="point-control-body"><div class="segmented"><button id="family-a" class="active">FAMILY A</button><button id="family-b">FAMILY B</button></div><label class="outline-toggle"><input id="family-visible" type="checkbox"> VISIBLE</label><div class="range-label"><label>DENSITY</label><input id="family-density-value" type="number" min="1" max="10"></div><input id="family-density" type="range" min="1" max="10" value="10"><div class="range-label"><label>TENSION</label><input id="family-tension-value" type="number" min="0" max="100"></div><input id="family-tension" type="range" min="0" max="100" step="10" value="40"></div></details>
+        <details class="control-section">
+          <summary>DERIVED OBJECTS <span>+</span></summary>
+          <div class="point-control-body">
+            <p class="hint">
+              Point Sets and Polyline Sets are intentionally inactive until
+              their generators are built. Their source lineage is already
+              protected in the project model.
+            </p>
+          </div>
+        </details>
+      </aside>
+    </main>
+    <script type="module" src="app.mjs"></script>
+  </body>
 </html>
