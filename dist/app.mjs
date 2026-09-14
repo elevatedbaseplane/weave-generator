@@ -262,6 +262,15 @@ function renderCandidates() {
   layer.innerHTML = `<g>${filtered.map((item) => { const selected = state.selectedIds.includes(item.id), pinned = state.pinnedIds.includes(item.id); const show = !selected || $("show-selected")?.checked !== false; return show ? `<circle data-candidate="${item.id}" cx="${item.x.toFixed(2)}" cy="${item.y.toFixed(2)}" r="${selected ? 4.5 : 3}" fill="${pinned ? '#000' : selected ? '#777' : 'currentColor'}" stroke="${selected ? '#fff' : 'none'}" stroke-width="1.2"/>` : ""; }).join("")}</g>`;
   layer.style.display = visible ? "" : "none";
 }
+function previewPolylines() {
+  const source = [...$("candidate-preview").querySelectorAll("[data-candidate]")].map((node) => ({ id: node.dataset.candidate, x: +node.getAttribute("cx"), y: +node.getAttribute("cy") }));
+  const selected = active().candidateState?.selectedIds || [];
+  const points = source.filter((point) => selected.includes(point.id));
+  const max = +$("connector-distance").value || 140, loops = [];
+  for (let index = 0; index + 2 < points.length; index += 3) { const trio = points.slice(index, index + 3); if (trio.every((a, i) => trio.every((b, j) => i === j || Math.hypot(a.x - b.x, a.y - b.y) <= max))) loops.push(trio); }
+  $("polyline-preview").innerHTML = `<g fill="none" stroke="currentColor" stroke-width="1.5">${loops.map((loop) => `<path d="M${loop.map((p) => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join("L")}Z"/>`).join("")}</g>`;
+  $("status").textContent = loops.length ? `${loops.length} VALID CLOSED CANDIDATE LOOPS.` : "NO VALID CLOSED LOOPS / SELECT NEARBY POINTS.";
+}
 function renderBoards() {
   const project = active();
   $("project-list").innerHTML = store.projects
@@ -623,6 +632,7 @@ $("show-grid").addEventListener("change", () => {
   $("frame-layer").style.display = $("show-grid").checked ? "" : "none";
 });
 $("show-candidates")?.addEventListener("change", renderCandidates);
+$("preview-polylines")?.addEventListener("click", previewPolylines);
 $("show-original-weave")?.addEventListener("change", () => { renderLattice(); });
 $("canvas")?.addEventListener("click", (event) => { if (event.target.closest("[data-candidate], .field-marker")) return; const state = active().candidateState; if (state?.selectedIds?.length) { state.selectedIds = []; save(); renderCandidates(); } });
 document.querySelectorAll("#control-rail details").forEach((section) => { section.open = false; });

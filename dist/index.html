@@ -47,7 +47,7 @@
           <nav class="tool-tabs" aria-label="Workflow stages">
             <button class="active"><span>01</span>Weave Field</button
             ><button><span>02</span>Point Extraction</button
-            ><button disabled><span>03</span>Polyline Composer</button>
+            ><button><span>03</span>Polyline Composer</button>
           </nav>
           <div class="views">
             <button class="active">BOUNDARY CONTEXT</button>
@@ -94,6 +94,7 @@
             <g id="lattice-preview" clip-path="url(#boundary-clip)"></g>
             <g id="thread-preview" clip-path="url(#boundary-clip)"></g>
             <g id="candidate-preview" clip-path="url(#boundary-clip)"></g>
+            <g id="polyline-preview" clip-path="url(#boundary-clip)"></g>
             <g id="field-preview"></g>
             <g id="weave-preview"></g>
           </svg>
@@ -357,6 +358,7 @@
             </p>
           </div>
         </details>
+        <details class="control-section"><summary>SHAPE CONNECTOR / F1 <span>+</span></summary><div class="point-control-body"><div class="range-label"><label for="connector-distance">PROXIMITY</label><input id="connector-distance" type="number" min="40" max="300" step="10" value="140"></div><button id="preview-polylines" class="secondary">PREVIEW CONNECTIONS</button><p class="hint">Temporary closed candidate loops only. Saving follows after validation.</p></div></details>
       </aside>
     </main>
     <script type="module" src="app.mjs"></script>
