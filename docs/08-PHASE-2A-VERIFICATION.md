@@ -28,12 +28,12 @@ The deployment and production source identity are verified. Live storage migrati
 
 Stop for Phase 2A live acceptance. Do not begin Phase 2B or another publication without a separately approved proposal and explicit implementation instruction.
 
-The five live acceptance tests remain:
+Live acceptance status:
 
-1. On a 500 square, create the carrier and show A and B. Confirm nine horizontal A paths and nine vertical B paths, then change spacing and rotation.
-2. Apply the documented concave U coordinates and confirm a crossing line appears as separate arm fragments with no bridge across the notch.
-3. Lower and restore A density. Confirm B is unchanged, and toggling visibility or resizing the browser does not move the paths.
-4. Save two revisions under one Carrier Study name, restore the older revision, then Undo and Redo. Confirm boundary and carrier return together.
-5. Reload, download a JSON backup, and import it in another owner-authenticated browser. Confirm the working carrier and immutable study revisions survive.
+1. **Pending:** On a 500 square, create the carrier and show A and B. Confirm nine horizontal A paths and nine vertical B paths, then change spacing and rotation.
+2. **Passed by the user on the private live Site:** Apply the documented concave U coordinates and confirm a crossing line appears as separate arm fragments with no bridge across the notch.
+3. **Pending:** Lower and restore A density. Confirm B is unchanged, and toggling visibility or resizing the browser does not move the paths.
+4. **Pending:** Save two revisions under one Carrier Study name, restore the older revision, then Undo and Redo. Confirm boundary and carrier return together.
+5. **Pending:** Reload, download a JSON backup, and import it in another owner-authenticated browser. Confirm the working carrier and immutable study revisions survive.
 
 Exhaustive invalid-geometry, tolerance, quota, conflict, migration-failure, and limit rejection checks remain automated.

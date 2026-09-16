@@ -22,7 +22,7 @@
   "publicFileCount": 11,
   "automatedTestsPassed": 28,
   "localBrowserChecks": "passed; see 08-PHASE-2A-VERIFICATION.md",
-  "liveChecks": "deployment succeeded; version 3 source is exact; owner is sole viewer; feature acceptance pending",
+  "liveChecks": "deployment succeeded; version 3 source is exact; owner is sole viewer; acceptance test 2 passed; tests 1, 3, 4, and 5 pending",
   "phase1AAcceptance": "passed by user on private live site",
   "phase1BAcceptance": "passed by user on private live site",
   "architecturalCheckpoint": "phase-1-foundation-complete",
@@ -57,5 +57,18 @@
     "owner-browser backup transfer",
     "responsive production rendering",
     "production asset identity"
-  ]
+  ],
+  "phase2ALiveAcceptance": {
+    "overall": "pending",
+    "passed": [
+      2
+    ],
+    "pending": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "test2": "passed by user on private live Site — concave arm fragments remain separated with no notch bridge"
+  }
 }
