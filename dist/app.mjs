@@ -1,33 +1,34 @@
-import {createWorkspace,createProject,activeProject,clone,saveBoundary,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,serializeWorkspace,parseBackup,mergeBackup} from './document.mjs';
-import {createRectangularCarrier,deriveCarrier,carrierInputFingerprint} from './carrier.mjs';
+import {createWorkspace,createProject,activeProject,clone,saveBoundary,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,createWeaveStudy,saveWeaveStudy,restoreWeaveStudy,findWeaveRevision,serializeWorkspace,parseBackup,mergeBackup} from './document.mjs';
+import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,canonical} from './weave.mjs';
+import {createRectangularCarrier,carrierInputFingerprint} from './carrier.mjs';
 import {square,validateBoundary,parseCoordinates,signedArea,bounds} from './boundary.mjs';
 import {History} from './history.mjs';
 import {LocalStore} from './storage.mjs';
 import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';
 import {boundarySvg,boundaryDxf} from './exchange.mjs';
 import {parseSvgBoundary,svgImportSummary} from './svg-import.mjs';
-const $=id=>document.getElementById(id),BUILD='WF-2A-20260914';
+const $=id=>document.getElementById(id),BUILD='WF-R1A-20260916';
 const store=new LocalStore(localStorage);
 let workspace,loadError='';
 try{workspace=store.load();}catch(error){workspace=createWorkspace();loadError=error.message;}
 const histories=new Map();
 const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
-let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,stagedSvg=null,carrierPreview=null,carrierDerivationCount=0;
+let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,stagedSvg=null,carrierPreview=null,carrierDerivationCount=0,weaveDerivationCount=0;
 const carrierCache=new Map();
-let display={theme:'light',boundary:false,grid:false,sourceLattice:false,familyA:false,familyB:false};
-try{const saved=JSON.parse(localStorage.getItem('weave-foundation-view-v1'));if(['light','dark','neo'].includes(saved?.theme))display={...display,theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true,sourceLattice:saved.sourceLattice===true,familyA:saved.familyA===true,familyB:saved.familyB===true};}catch{}
+let display={theme:'light',boundary:false,grid:false,sourceLattice:false,familyA:false,familyB:false,weaveSource:false,weaveDerived:false};
+try{const saved=JSON.parse(localStorage.getItem('weave-foundation-view-v1'));if(['light','dark','neo'].includes(saved?.theme))display={...display,theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true,sourceLattice:saved.sourceLattice===true,familyA:saved.familyA===true,familyB:saved.familyB===true,weaveSource:saved.weaveSource===true,weaveDerived:saved.weaveDerived===true};}catch{}
 const project=()=>activeProject(workspace);
 function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
 function attempt(action){try{action();}catch(error){status(error.message,true);}}
 function persist(next){store.save(next);workspace=next;}
-function deriveWorking(working=project().working,boardId=project().id){if(!working.carrier)return null;const fingerprint=carrierInputFingerprint(working.boundary,working.carrier),cached=carrierCache.get(boardId);if(cached?.inputFingerprint===fingerprint)return cached;const derived=deriveCarrier(working.boundary,working.carrier,boardId);carrierCache.set(boardId,derived);carrierDerivationCount++;return derived;}
+function deriveWorking(working=project().working,boardId=project().id){if(!working.carrier)return null;const fingerprint=carrierInputFingerprint(working.boundary,working.carrier),cacheKey=boardId+':'+working.carrier.id+':'+fingerprint,cached=carrierCache.get(cacheKey);if(cached?.inputFingerprint===fingerprint)return cached;const derived=deriveCarrier(working.boundary,working.carrier,boardId);carrierCache.set(cacheKey,derived);if(carrierCache.size>12)carrierCache.delete(carrierCache.keys().next().value);carrierDerivationCount++;return derived;}
 function editWorking(next,label){
-  carrierPreview=null;if(next.carrier)deriveWorking(next);
+  carrierPreview=null;if(next.carrier)deriveWorking(next);if(next.weave){next=refreshWeave(next,project().id);weaveDerivationCount++;}
   const before=clone(project().working),changed=clone(workspace);activeProject(changed).working=clone(next);
   persist(changed);history().record(before,next);render();status(label);
 }
 function setBoundary(boundary,label){editWorking({...clone(project().working),boundary,sourceRevisionId:project().working.sourceRevisionId},label);}
-function saveView(){try{localStorage.setItem('weave-foundation-view-v1',JSON.stringify(display));}catch{}document.body.dataset.theme=display.theme;document.querySelectorAll('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme===display.theme));for(const [id,key] of [['show-boundary','boundary'],['show-grid','grid'],['show-source-lattice','sourceLattice'],['show-family-a','familyA'],['show-family-b','familyB']])$(id).checked=display[key];renderCanvas();}
+function saveView(){try{localStorage.setItem('weave-foundation-view-v1',JSON.stringify(display));}catch{}document.body.dataset.theme=display.theme;document.querySelectorAll('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme===display.theme));for(const [id,key] of [['show-boundary','boundary'],['show-grid','grid'],['show-source-lattice','sourceLattice'],['show-family-a','familyA'],['show-family-b','familyB'],['show-weave-source','weaveSource'],['show-weave-derived','weaveDerived']])$(id).checked=display[key];renderCanvas();}
 function element(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
 function renderBoards(){
   const list=$('board-list');list.replaceChildren();
@@ -46,11 +47,12 @@ function renderBoards(){
       }section.append(content);
       if(board.carrierStudies.length)content.append(element('p','micro','CARRIER STUDIES'));
       for(const entry of board.carrierStudies){const group=element('div','saved-entry');group.append(element('div','saved-name',entry.name));for(const revision of [...entry.revisions].reverse()){const item=element('button',`revision${revision.id===board.working.carrierSourceRevisionId?' active':''}`,`C${String(revision.number).padStart(2,'0')}${revision.id===entry.latestRevisionId?' · LATEST':''}`);item.dataset.carrierRevision=revision.id;item.setAttribute('aria-label',`Restore ${entry.name} carrier revision ${revision.number}`);group.append(item);}content.append(group);}
+    if(board.weaveStudies.length)content.append(element('p','micro','WEAVE STUDIES'));for(const entry of board.weaveStudies){const group=element('div','saved-entry');group.append(element('div','saved-name',entry.name));for(const revision of [...entry.revisions].reverse()){const item=element('button','revision',`W${String(revision.number).padStart(2,'0')}${revision.id===entry.latestRevisionId?' · LATEST':''}`);item.dataset.weaveRevision=revision.id;item.setAttribute('aria-label',`Restore ${entry.name} weave revision ${revision.number}`);group.append(item);}content.append(group);}
     }list.append(section);
   }
 }
 function render(){
-  renderBoards();const b=project().working.boundary;
+  renderBoards();renderWeaveControls();const b=project().working.boundary;
   $('boundary-summary').textContent=`${b.points.length} VERTICES · AREA ${Math.abs(signedArea(b.points)).toLocaleString(undefined,{maximumFractionDigits:3})} U²`;
   $('boundary-source').hidden=!b.source;$('boundary-source').textContent=b.source?`SOURCE ${b.source.filename} · SVG · Y NEGATED${b.source.viewBox?` · VIEWBOX ${b.source.viewBox}`:''}`:'';
   $('coordinates').value=b.points.map(p=>`${p.x}, ${p.y}`).join('\n');
@@ -61,15 +63,42 @@ function render(){
   const carrier=project().working.carrier;$('create-carrier').hidden=Boolean(carrier);$('carrier-controls').hidden=!carrier;
   if(carrier){for(const [id,value] of [['a-spacing',carrier.families.A.spacing],['b-spacing',carrier.families.B.spacing],['carrier-angle',carrier.angleDegrees],['a-offset',carrier.families.A.offset],['b-offset',carrier.families.B.offset],['a-density',carrier.families.A.density],['b-density',carrier.families.B.density]]){if(document.activeElement!==$(id))$(id).value=value;const range=$(`${id}-range`);if(document.activeElement!==range)range.value=value;}const d=deriveWorking();$('carrier-counts').textContent=`A ${d.diagnostics.counts.A.retained}/${d.diagnostics.counts.A.available} RETAINED · B ${d.diagnostics.counts.B.retained}/${d.diagnostics.counts.B.available} RETAINED`;}
 }
+
+function renderWeaveControls(){
+ const p=project(),w=p.working.weave,select=$('weave-source-revision'),selectedSource=select.value;
+ select.replaceChildren();
+ const placeholder=element('option','','CHOOSE SAVED CARRIER REVISION');placeholder.value='';select.append(placeholder);
+ for(const entry of p.carrierStudies)for(const r of entry.revisions){const option=element('option','',entry.name+' · C'+r.number);option.value=r.id;select.append(option);}
+ if(findCarrierRevision(p,selectedSource))select.value=selectedSource;else if(p.working.carrierSourceRevisionId)select.value=p.working.carrierSourceRevisionId;
+ $('create-weave').disabled=!select.value;
+ $('weave-controls').hidden=!w;
+ if(w){
+  const source=w.sourceContext.snapshot;
+  const changed=canonical({boundary:source.boundary,carrier:source.carrier})!==canonical({boundary:p.working.boundary,carrier:p.working.carrier});
+  $('weave-summary').textContent='SOURCE '+w.sourceName+' · C'+source.number+(changed?' · MODIFIED INPUT':' · ORIGINAL INPUT')+' · A '+w.derived.diagnostics.counts.A+' / B '+w.derived.diagnostics.counts.B;
+  const entry=p.weaveStudies.find(e=>e.id===w.studyId);if(entry)$('weave-name').value=entry.name;
+  deriveWorking(source,p.id); // Prime source display data independently of visibility.
+ }
+}
+function drawWeaveLayer(id,paths,source=false){
+ const layer=$(id);
+ for(const p of paths)for(const f of (p.fragments||p.intervals)){
+  const points=f.points||[f.start,f.end],a=toScreen(points[0],view,width,height),b=toScreen(points[1],view,width,height);
+  layer.append(svgElement('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:source?'weave-source':('carrier-family family-'+p.family.toLowerCase())}));
+ }
+}
+
 function syncBoundaryName(){const found=findRevision(project(),project().working.sourceRevisionId);$('boundary-name').value=found?.entry.name||'BOUNDARY 01';}
 function syncCarrierName(){const found=findCarrierRevision(project(),project().working.carrierSourceRevisionId);$('carrier-name').value=found?.entry.name||'CARRIER STUDY 01';}
 function svgElement(tag,attributes){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value] of Object.entries(attributes))el.setAttribute(key,String(value));return el;}
 function renderCanvas(){
   if(!view)return;
   const geometry=$('geometry'),preview=$('draft-layer');geometry.replaceChildren();preview.replaceChildren();
-  for(const id of ['source-lattice-layer','family-a-layer','family-b-layer'])$(id).replaceChildren();
+  for(const id of ['source-lattice-layer','family-a-layer','family-b-layer','weave-source-layer','weave-derived-layer'])$(id).replaceChildren();
   const working=carrierPreview||project().working,derived=working.carrier?deriveWorking(working):null;
   if(derived){for(const path of derived.paths){for(const interval of path.intervals){const a=toScreen(interval.start,view,width,height),b=toScreen(interval.end,view,width,height),attrs={x1:a.x,y1:a.y,x2:b.x,y2:b.y};if(display.sourceLattice)$('source-lattice-layer').append(svgElement('line',{...attrs,class:'carrier-source'}));if(path.selected&&display[path.family==='A'?'familyA':'familyB'])$(path.family==='A'?'family-a-layer':'family-b-layer').append(svgElement('line',{...attrs,class:`carrier-family family-${path.family.toLowerCase()}`}));}}}
+  const weave=working.weave;
+  if(weave){if(display.weaveSource)drawWeaveLayer('weave-source-layer',deriveWorking(weave.sourceContext.snapshot).paths.filter(p=>p.selected),true);if(display.weaveDerived)drawWeaveLayer('weave-derived-layer',weave.derived.strands);}
   const points=drag?.points||project().working.boundary.points;
   if(display.boundary){
     const screen=points.map(p=>toScreen(p,view,width,height));
@@ -79,7 +108,7 @@ function renderCanvas(){
   if(draft.length){const screen=draft.map(p=>toScreen(p,view,width,height));preview.append(svgElement('polyline',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:'draft-path'}));screen.forEach(p=>preview.append(svgElement('circle',{cx:p.x,cy:p.y,r:4,class:'vertex'})));}
   $('grid-layer').hidden=!display.grid;$('grid-layer').style.display=display.grid?'':'none';
   $('frame-layer').replaceChildren();if(display.grid)$('frame-layer').append(svgElement('rect',{x:40,y:50,width:Math.max(1,width-80),height:Math.max(1,height-100)}));
-  $('empty-hint').hidden=display.boundary||display.sourceLattice||display.familyA||display.familyB||tool==='draw';$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
+  $('empty-hint').hidden=display.boundary||display.sourceLattice||display.familyA||display.familyB||(weave&&(display.weaveSource||display.weaveDerived))||tool==='draw';$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
 }
 function fit(){view=fitView(project().working.boundary.points,width,height);renderCanvas();}
 function setTool(next){tool=next;draft=[];selected=null;drag=null;['select','draw','pan'].forEach(name=>$(`${name}-tool`).classList.toggle('active',name===next));$('draw-actions').hidden=next!=='draw';if(next==='draw')$('boundary-section').open=true;renderCanvas();status(next==='draw'?'CLICK VERTICES. FINISH CLOSES THE BOUNDARY. ESC CANCELS.':next==='pan'?'DRAG TO PAN. SCROLL TO ZOOM.':'CLICK A VERTEX TO SELECT. DRAG TO EDIT.');}
@@ -97,9 +126,10 @@ function showSvgStage(file,boundary,error=''){
   stagedSvg={boundary:clone(boundary),filename:file.name};
 }
 $('board-list').addEventListener('click',event=>attempt(()=>{
-  const board=event.target.closest('[data-board]'),revision=event.target.closest('[data-revision]'),carrierRevision=event.target.closest('[data-carrier-revision]');
+  const board=event.target.closest('[data-board]'),revision=event.target.closest('[data-revision]'),carrierRevision=event.target.closest('[data-carrier-revision]'),weaveRevision=event.target.closest('[data-weave-revision]');
   if(board){const next=clone(workspace);next.activeProjectId=board.dataset.board;persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
   if(revision){const restored=restoreBoundary(project(),revision.dataset.revision);editWorking(restored.working,'BOUNDARY REVISION RESTORED.');const entry=project().boundaries.find(e=>e.revisions.some(r=>r.id===revision.dataset.revision));$('boundary-name').value=entry.name;selected=null;}
+  if(weaveRevision){const restored=restoreWeaveStudy(project(),weaveRevision.dataset.weaveRevision);editWorking(restored.working,'WEAVE REVISION RESTORED. SAVED HISTORY RETAINED.');$('weave-name').value=findWeaveRevision(project(),weaveRevision.dataset.weaveRevision).entry.name;selected=null;}
   if(carrierRevision){const restored=restoreCarrierStudy(project(),carrierRevision.dataset.carrierRevision);editWorking(restored.working,'CARRIER STUDY RESTORED. ONE UNDO RESTORES THE PRIOR WORKING DOCUMENT.');syncBoundaryName();syncCarrierName();selected=null;fit();}
 }));
 $('new-board').onclick=()=>$('board-dialog').showModal();
@@ -110,8 +140,22 @@ $('apply-coordinates').onclick=()=>attempt(()=>{setBoundary(parseCoordinates($('
 $('save-boundary').onclick=()=>attempt(()=>{const result=saveBoundary(project(),$('boundary-name').value),next=clone(workspace);next.projects=next.projects.map(p=>p.id===result.project.id?result.project:p);persist(next);render();status('REVISION SAVED. OLDER REVISIONS ARE UNCHANGED.');});
 $('create-carrier').onclick=()=>attempt(()=>{editWorking({...clone(project().working),carrier:createRectangularCarrier(),carrierSourceRevisionId:null},'RECTANGULAR A/B CARRIER CREATED. TURN ON A OR B IN DISPLAY.');$('carrier-section').open=true;});
 $('save-carrier').onclick=()=>attempt(()=>{const result=saveCarrierStudy(project(),$('carrier-name').value),next=clone(workspace);next.projects=next.projects.map(p=>p.id===result.project.id?result.project:p);persist(next);render();status('CARRIER STUDY REVISION SAVED. OLDER REVISIONS ARE UNCHANGED.');});
+
+$('weave-source-revision').onchange=()=>{$('create-weave').disabled=!$('weave-source-revision').value;};
+$('create-weave').onclick=()=>attempt(()=>{
+ const selectedRevision=$('weave-source-revision').value,source=findCarrierRevision(project(),selectedRevision);
+ if(!source)throw new Error('Choose a saved Carrier Study revision.');
+ const current=project().working;
+ if(!current.weave&&current.carrier&&canonical({boundary:current.boundary,carrier:current.carrier})!==canonical({boundary:source.revision.boundary,carrier:source.revision.carrier}))throw new Error('Save current carrier edits, or restore the selected carrier revision first.');
+ const created=createWeaveStudy(project(),selectedRevision);
+ $('weave-name').value='WEAVE STUDY '+String(project().weaveStudies.length+1).padStart(2,'0');
+ editWorking(created.working,'WEAVE CREATED FROM THE SELECTED SAVED CARRIER.');
+ display.weaveDerived=true;saveView();
+});
+$('save-weave').onclick=()=>attempt(()=>{const result=saveWeaveStudy(project(),$('weave-name').value),next=clone(workspace);next.projects=next.projects.map(p=>p.id===result.project.id?result.project:p);persist(next);render();status('WEAVE REVISION SAVED. EARLIER REVISIONS RETAINED.');});
+$('export-derived-svg').onclick=()=>attempt(()=>download(derivedSvg(project().working,project().id),'weave-derived.svg','image/svg+xml'));
 function recipeFromControls(){const carrier=clone(project().working.carrier);carrier.families.A.spacing=Number($('a-spacing').value);carrier.families.B.spacing=Number($('b-spacing').value);carrier.angleDegrees=Number($('carrier-angle').value);carrier.families.A.offset=Number($('a-offset').value);carrier.families.B.offset=Number($('b-offset').value);carrier.families.A.density=Number($('a-density').value);carrier.families.B.density=Number($('b-density').value);return carrier;}
-for(const id of ['a-spacing','b-spacing','carrier-angle','a-offset','b-offset','a-density','b-density']){const number=$(id),range=$(`${id}-range`);for(const input of [number,range]){input.addEventListener('input',()=>attempt(()=>{const other=input===number?range:number;other.value=input.value;const carrier=recipeFromControls();if(input===range)number.value=input.value;const previewWorking={...clone(project().working),carrier};try{deriveWorking(previewWorking);carrierPreview=previewWorking;renderCanvas();}catch(error){carrierPreview=null;renderCanvas();throw error;}}));input.addEventListener('change',()=>attempt(()=>{const carrier=recipeFromControls();editWorking({...clone(project().working),carrier,carrierSourceRevisionId:null},'CARRIER UPDATED. ONE UNDO RESTORES THE PRIOR SETTINGS.');}));}}
+for(const id of ['a-spacing','b-spacing','carrier-angle','a-offset','b-offset','a-density','b-density']){const number=$(id),range=$(`${id}-range`);for(const input of [number,range]){input.addEventListener('input',()=>attempt(()=>{const other=input===number?range:number;other.value=input.value;const carrier=recipeFromControls();if(input===range)number.value=input.value;const previewWorking={...clone(project().working),carrier};try{deriveWorking(previewWorking);carrierPreview=previewWorking.weave?refreshWeave(previewWorking,project().id):previewWorking;renderCanvas();}catch(error){carrierPreview=null;renderCanvas();throw error;}}));input.addEventListener('change',()=>attempt(()=>{const carrier=recipeFromControls();editWorking({...clone(project().working),carrier,carrierSourceRevisionId:null},'CARRIER UPDATED. ONE UNDO RESTORES THE PRIOR SETTINGS.');}));}}
 for(const name of ['select','draw','pan'])$(`${name}-tool`).onclick=()=>setTool(name);
 $('cancel-drawing').onclick=()=>setTool('select');
 $('finish-drawing').onclick=()=>attempt(()=>{setBoundary(validateBoundary(draft),'DRAWN BOUNDARY CREATED.');setTool('select');display.boundary=true;saveView();});
@@ -120,14 +164,14 @@ for(const action of ['undo','redo'])$(action).onclick=()=>attempt(()=>{
   const h=history(),oldPast=clone(h.past),oldFuture=clone(h.future),next=clone(workspace);activeProject(next).working=h[action](project().working);
   try{persist(next);}catch(error){h.past=oldPast;h.future=oldFuture;throw error;}selected=null;render();status(action.toUpperCase()+' WORKING DOCUMENT. SAVED REVISIONS RETAINED.');
 });
-for(const [id,key] of [['boundary','boundary'],['grid','grid'],['source-lattice','sourceLattice'],['family-a','familyA'],['family-b','familyB']])$(`show-${id}`).onchange=event=>{display[key]=event.target.checked;saveView();};
+for(const [id,key] of [['boundary','boundary'],['grid','grid'],['source-lattice','sourceLattice'],['family-a','familyA'],['family-b','familyB'],['weave-source','weaveSource'],['weave-derived','weaveDerived']])$(`show-${id}`).onchange=event=>{display[key]=event.target.checked;saveView();};
 $('reveal-boundary').onclick=()=>{display.boundary=true;saveView();$('boundary-section').open=true;};
 document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{display.theme=b.dataset.theme;saveView();});
 for(const rail of ['boards','controls'])$(`toggle-${rail}`).onclick=()=>{const hidden=$('shell').classList.toggle(`${rail}-hidden`);$(`toggle-${rail}`).textContent=`${rail.toUpperCase()} ${hidden?'+':'−'}`;$(`toggle-${rail}`).setAttribute('aria-expanded',String(!hidden));};
 $('backup').onclick=()=>attempt(()=>download(serializeWorkspace(workspace),'weave-foundation-backup.json'));
 $('raw-backup').onclick=()=>download(store.raw(),'weave-foundation-raw-recovery.json','text/plain');
 $('import-backup').onclick=()=>{$('import-message').textContent='';$('backup-dialog').showModal();};
-$('backup-file').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;if(file.size>10*1024*1024){$('import-message').textContent='Use a backup smaller than 10 MB.';return;}$('backup-json').value=await file.text();};
+$('backup-file').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;$('backup-json').value=await file.text();};
 $('confirm-import').onclick=()=>{try{const incoming=parseBackup($('backup-json').value),next=mergeBackup(workspace,incoming);persist(next);histories.clear();$('backup-dialog').close();setTool('select');render();fit();status('BACKUP IMPORTED. EXISTING BOARDS RETAINED.');}catch(error){$('import-message').textContent=error.message;}};
 $('import-svg').onchange=async event=>{const file=event.target.files?.[0];if(!file){clearSvgStage();return;}try{const boundary=parseSvgBoundary(await file.text(),file.name);showSvgStage(file,boundary);status('SVG VALIDATED. REVIEW THE STAGED BOUNDARY BEFORE APPLY.');}catch(error){showSvgStage(file,null,error.message);status(error.message,true);}};
 $('cancel-svg-import').onclick=()=>{clearSvgStage();status('SVG IMPORT CANCELLED. THE WORKING BOUNDARY IS UNCHANGED.');};
@@ -160,7 +204,7 @@ if(matchMedia('(max-width:760px)').matches){$('toggle-boards').click();$('toggle
 syncBoundaryName();render();saveView();status(store.lastRaw?'WORKSPACE RESTORED. SAVED REVISIONS ARE AVAILABLE IN BOARDS.':'SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.');if(loadError){status(loadError,true);$('raw-backup').hidden=false;}
 if(document.modelContext?.registerTool){
   const lifecycle=new AbortController();
-  const tool={name:'read_weave_foundation',description:'Read the working boundary and carrier, immutable saved revisions, display state and build identity without editing.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');const derived=deriveWorking();return {build:BUILD,workspace:clone(workspace),display:clone(display),view:clone(view),carrier:derived?{inputFingerprint:derived.inputFingerprint,counts:clone(derived.diagnostics.counts),paths:clone(derived.paths),complete:derived.complete}:null,carrierDerivationCount,storageBlocked:store.blocked};}};
+  const tool={name:'read_weave_foundation',description:'Read the working boundary and carrier, immutable saved revisions, display state and build identity without editing.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');const derived=deriveWorking();return {build:BUILD,workspace:clone(workspace),display:clone(display),view:clone(view),carrier:derived?{inputFingerprint:derived.inputFingerprint,counts:clone(derived.diagnostics.counts),paths:clone(derived.paths),complete:derived.complete}:null,carrierDerivationCount,weaveDerivationCount,storageBlocked:store.blocked};}};
   try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
   window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
 }
