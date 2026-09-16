@@ -4,7 +4,7 @@
   "implementationCommit": "002ae94dacade531deb6c88a1414fbe6367b8356",
   "branch": "foundation",
   "projectId": "appgprj_6aa83001d03481918d4a13e46c9612fb",
-  "publicationStatus": "published-private; Phase 2A acceptance pending",
+  "publicationStatus": "published-private; Phase 2A accepted and frozen",
   "blocker": null,
   "savedVersion": 3,
   "savedVersionId": "appgprj_6aa83001d03481918d4a13e46c9612fb~appgver_b08e9d0223d081918d9550640885fc72",
@@ -22,15 +22,15 @@
   "publicFileCount": 11,
   "automatedTestsPassed": 28,
   "localBrowserChecks": "passed; see 08-PHASE-2A-VERIFICATION.md",
-  "liveChecks": "deployment succeeded; version 3 source is exact; owner is sole viewer; acceptance test 2 passed; tests 1, 3, 4, and 5 pending",
+  "liveChecks": "deployment, exact version, owner-only access, and all five Phase 2A live acceptance tests passed",
   "phase1AAcceptance": "passed by user on private live site",
   "phase1BAcceptance": "passed by user on private live site",
   "architecturalCheckpoint": "phase-1-foundation-complete",
-  "releaseCheckpoint": "reached-private-version-3",
+  "releaseCheckpoint": "frozen-private-version-3",
   "recommendedModelForNextBatch": "gpt-5.6-sol",
-  "nextImmediateBatch": "Stop for Phase 2A live acceptance",
-  "nextFeatureBatch": "No Phase 2B implementation authorized",
-  "nextBatchReasoning": "Established decisions; the bounded Phase 2A private release needs routine release reasoning, not substantial architectural reasoning",
+  "nextImmediateBatch": "Planning review only; no implementation or Site changes authorized",
+  "nextFeatureBatch": "Frozen — Phase 2B, interactions, point extraction, polylines, and exports are not authorized",
+  "nextBatchReasoning": "No next implementation batch is authorized during the planning review",
   "legacyBrowserBackups": "outstanding; no legacy migration performed",
   "storageChoice": "Browser-local saves plus portable JSON backups",
   "publicSha256": {
@@ -48,27 +48,37 @@
   "phase2Proposal": "docs/07-PHASE-2-CARRIER-PROPOSAL.md",
   "phase2ImplementationAuthorized": true,
   "nextPublicationAuthorized": false,
-  "phase2AContractStatus": "approved, settled, implemented, locally verified, and published privately; acceptance pending",
+  "phase2AContractStatus": "approved, settled, implemented, published privately, accepted, and frozen",
   "solMediumCheckpoint": "completed-before-phase-2a-implementation",
   "recommendedReasoningForNextBatch": "medium",
   "phase2AVerification": "docs/08-PHASE-2A-VERIFICATION.md",
-  "remainingUncertainties": [
-    "hosted-origin storage migration",
-    "owner-browser backup transfer",
-    "responsive production rendering",
-    "production asset identity"
-  ],
+  "remainingUncertainties": [],
   "phase2ALiveAcceptance": {
-    "overall": "pending",
+    "overall": "passed",
     "passed": [
-      2
-    ],
-    "pending": [
       1,
+      2,
       3,
       4,
       5
     ],
-    "test2": "passed by user on private live Site — concave arm fragments remain separated with no notch bridge"
+    "pending": [],
+    "recordedFrom": "user report on private live Site"
+  },
+  "frozenCheckpoint": {
+    "siteVersion": 3,
+    "build": "WF-2A-20260914",
+    "implementationCommit": "002ae94dacade531deb6c88a1414fbe6367b8356",
+    "scope": "Phase 2A rectangular A/B carrier foundation",
+    "status": "frozen during planning review",
+    "prohibitedUntilExplicitApproval": [
+      "Phase 2B",
+      "interactions",
+      "point extraction",
+      "polylines",
+      "exports",
+      "further implementation",
+      "further Site changes"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 # Phase 2A local verification
 
-Build `WF-2A-20260914` implements the approved rectangular A/B carrier contract at source commit `002ae94dacade531deb6c88a1414fbe6367b8356`. It was published as private Site version 3 after explicit user approval. Deployment `appgdep_6aa85eb18cd0819184d522c5acb5c64b` succeeded at `https://weave-foundation.notbrandon175.chatgpt.site`; Phase 2A live acceptance remains pending.
+Build `WF-2A-20260914` implements the approved rectangular A/B carrier contract at source commit `002ae94dacade531deb6c88a1414fbe6367b8356`. It was published as private Site version 3 after explicit user approval. Deployment `appgdep_6aa85eb18cd0819184d522c5acb5c64b` succeeded at `https://weave-foundation.notbrandon175.chatgpt.site`; the user reported all Phase 2A live acceptance tests passed. This is the frozen implementation baseline during the planning review.
 
 ## Settled implementation
 
@@ -22,18 +22,18 @@ Build `WF-2A-20260914` implements the approved rectangular A/B carrier contract 
 
 ## Remaining uncertainties and boundary
 
-The deployment and production source identity are verified. Live storage migration, owner-browser backup transfer, responsive behavior, and feature acceptance remain for the user's five live tests. Phase 2B, fields, interactions, stitches, interstices, exports, non-rectangular carriers, independent family directions, and irregular or seeded selection remain outside this batch.
+The deployment, production source identity, and live acceptance are verified. Phase 2B, fields, interactions, point extraction, stitches, interstices, polylines, exports, non-rectangular carriers, independent family directions, and irregular or seeded selection remain outside the frozen baseline.
 
 ## Next bounded batch
 
 Stop for Phase 2A live acceptance. Do not begin Phase 2B or another publication without a separately approved proposal and explicit implementation instruction.
 
-Live acceptance status:
+Live acceptance status: **all five tests passed by the user on the private live Site.**
 
-1. **Pending:** On a 500 square, create the carrier and show A and B. Confirm nine horizontal A paths and nine vertical B paths, then change spacing and rotation.
-2. **Passed by the user on the private live Site:** Apply the documented concave U coordinates and confirm a crossing line appears as separate arm fragments with no bridge across the notch.
-3. **Pending:** Lower and restore A density. Confirm B is unchanged, and toggling visibility or resizing the browser does not move the paths.
-4. **Pending:** Save two revisions under one Carrier Study name, restore the older revision, then Undo and Redo. Confirm boundary and carrier return together.
-5. **Pending:** Reload, download a JSON backup, and import it in another owner-authenticated browser. Confirm the working carrier and immutable study revisions survive.
+1. **Passed:** Default 500-square A/B counts, spacing changes, and shared rotation.
+2. **Passed:** Concave U clipping with separate arm fragments and no notch bridge.
+3. **Passed:** Independent density, visibility, and resize stability.
+4. **Passed:** Immutable Carrier Study restore with Undo and Redo.
+5. **Passed:** Reload persistence and portable JSON backup transfer.
 
 Exhaustive invalid-geometry, tolerance, quota, conflict, migration-failure, and limit rejection checks remain automated.
