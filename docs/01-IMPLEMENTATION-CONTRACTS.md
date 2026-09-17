@@ -1,5 +1,7 @@
 # Implementation contracts and feature dictionary
 
+**Compatibility notice — 2026-09-16:** Read the current [master guide](00-MASTER-GUIDE.md) and [R0–R12 phased plan](12-PHASED-DEVELOPMENT-PLAN.md) first. This older engineering reference remains useful where compatible, but its sequencing and pending-foundation language are historical. Analytical stitch markings are distinct from weave operations; significance is distinct from intensity; polylines synthesize relationships and need not be traces. General cell topology is not a prerequisite for first point extraction. New intensity, manual-edit, synthesis and exchange contracts must be settled at the plan's specified gates, not inferred from this reference. Phase 2A is accepted and frozen.
+
 Companion to the master guide. This is a proposed engineering design grounded in the user's requirements and the observed failures. It is not a fixed framework mandate or a claim that the existing source already meets it.
 
 **2026-09-14 foundation settlement:** The implemented Phase 1A contracts and explicit local-storage decision are in [04-SOL-CHECKPOINT.md](04-SOL-CHECKPOINT.md). These supersede proposal/confirmation language below for the implemented foundation. Remaining layers stay in dependency order. Saved revision libraries are append-only; working-document edits are undoable. Current user instruction authorizes the first working foundation and its records, not advanced carrier work.
@@ -39,7 +41,7 @@ Controls: density 1–100 with 100 meaning the maximum available paths; lattice 
 
 ## C. Fields and interaction rules
 
-Local fields first: attractor pulls inward; repeller pushes outward; deflector applies directional influence. Radius, strength, falloff, direction, position, and enablement are explicit. Evaluate along paths through the field, not only at far-away endpoints. Deformation and smoothing need a measurable tolerance; smoothness must not hide an inaccurate shape.
+Local fields first: attractor pulls inward; repeller pushes outward; deflector applies directional influence. Radius, falloff, direction, position, and enablement are explicit and shared by the active influence. Strength and tension can be set independently for Family A and Family B. Evaluate along paths through the field, not only at far-away endpoints. Deformation and smoothing need a measurable tolerance; smoothness must not hide an inaccurate shape.
 
 Later fields: compression, void and alignment. Specify what each changes independently in carrier geometry and interaction rules. Field links can describe bridge, tension, exclusion, alignment or gradient relationships. Nearest/strongest/blend/override/mask are candidate combination policies, not interchangeable labels. Make priority and blending deterministic and inspectable.
 

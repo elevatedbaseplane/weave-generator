@@ -1,127 +1,180 @@
+## R1 checkpoint selection verifier repaired — 2026-09-17
+
+Document 61 diagnoses the selected-attractor timeout as a verifier ordering defect: selecting then clicking Fit triggers intentional workspace deselection. Board restore was also not awaited correctly. Production UI and source are unchanged. A dedicated helper waits for board restore, shows guides, fits, then selects and asserts identity/visibility. Four focused tests pass using the actual production deselection handler in a VM; verifier syntax checks pass. This is not a live browser pass. Original 14-check/17-cycle evidence retains SHA-256 3A881397AA06E5DF7168F95D0E98B38631524FEB864D9730CC50A65F54568E76. The single host wrapper now uses --resume-dense, guarded by evidence and production hashes, to finish only the unexecuted dense workload and aggregate gates. One bundled major-phase host run remains; no unrelated proof or full browser suite reran. R1 remains uncertified, SP1 and publication remain on hold. Ordinary feature batches require internal checks plus local preview, not routine PowerShell runs.
+## Standing verification workflow — user decision, 2026-09-17
+
+Ordinary feature batches: run all applicable checks available inside Codex, provide a usable local preview and a short visual acceptance checklist. Do not require the user to run PowerShell as routine batch acceptance. External host-browser execution is reserved for major phase checkpoints, pre-publication verification, or defects demonstrably reproducible only outside the managed environment. Bundle every required host check for that checkpoint into one command; preserve completed evidence and rerun only affected checks when justified. A managed-browser limitation alone does not turn every feature batch into a host-run requirement. Distinguish local visual acceptance from outstanding formal certification; do not silently waive numerical, integrity or performance gates. Publication still requires separate authorization.
+
+Current R1 checkpoint host evidence is preserved unchanged at docs/evidence/r1-checkpoint-20260917/browser-2026-09-17T18-17-46-862Z.json, SHA-256 3A881397AA06E5DF7168F95D0E98B38631524FEB864D9730CC50A65F54568E76. Fourteen functional/storage/recovery/multi-tab checks are listed as completed and 17 cycles are recorded. The run then timed out locating .attractor-center.active before the dense loop; overall passed=false. The recorded stage remains authoritative tab edit and is stale relative to dense setup. Treat this as an unresolved verifier/selection setup failure, not proof of a geometry failure or a complete checkpoint pass. No rerun requested or performed in response to this workflow correction. Review and repair the verifier internally before any justified, bundled checkpoint rerun.
+## SP0 reference verification / R1 checkpoint — 2026-09-17
+
+User authorized finishing stitch references, updating test controls, R1 certification and the SP1 approval proposal. Document 59 closes the construction-image comparison gate for the two idealized foundations after actual source-image review. Automated checkpoint: 117/117 tests, exact equivalence, generated/maximum capacity and static checks pass; historical worker p95/max 184.919/191.137 ms, current dense 239.678/245.987 ms, eight mixed influences 94.119/96.447 ms pass. Invalid-direction test-fixture rejection is preserved separately; only the corrected eight-field case reran. New current-control browser verifier is syntax-checked but its attempted launch was blocked by spawn EPERM before any browser test. One browser-only host run remains via scripts/verify-r1-checkpoint-browser-only.ps1; do not claim R1 certified. Documents 57–58 and 60 define the pending SP1 scope. No production files changed (checked against saved hashes), no feature implementation or publication. Preserve all checkpoint evidence in docs/evidence/r1-checkpoint-20260917. Next: obtain and review browser-only host result; stop on authoritative failure, otherwise present SP1 approval/handoff.
+## SP0 continuation checkpoint — 2026-09-17
+
+Document 58 (`docs/58-SP0-CAPACITY-AND-CHECKPOINT-REVIEW.md`) records PASS for the independent finite-source storage-layout proof: two worst-case payload bounds plus 256 KiB metadata reserve total 10,249,232 bytes, below the unchanged 10 MiB ceiling; exact threshold and seven rejection checks pass. This is not a production codec, migration, browser-quota or performance pass. It also defines v3 table bounds and corrects finite-source support parameterization, role validation, search margin and square thread termination. Source-illustration comparison is still unavailable; current R1 browser verifiers have stale build/control expectations. R1 certification is not claimed. No production code/verifier/site changed; baseline WF-R1D-ANCESTRY-REPAIR-20260917 remains. Next evidence work: verify source illustrations and prepare a bounded current-build R1 checkpoint verifier; SP1 and publication remain unauthorized.
+
+## SP0 planning checkpoint — 2026-09-17
+
+User authorized starting SP0 only. Document 57 (`docs/57-SP0-STITCH-SOURCE-CONTRACT.md`) defines the proposed finite-run source, first two foundation recipes, identities, deformation/clipping, versioned persistence, crossing dependencies, SP1 scope and acceptance tests. Original diagrams and 24 passing normalized reference checks are in `docs/evidence/sp0/`. These checks do not certify production geometry, capacity, performance or historical authenticity. Source illustration comparison and bounded v3 codec/capacity proof remain open SP0 evidence gates. Broader R1 checkpoint certification is also outstanding. Do not describe SP1 as ready for implementation until these gates and contract approval are recorded. Baseline remains WF-R1D-ANCESTRY-REPAIR-20260917; no application changes or publication. Next work is architectural/evidence completion, not routine Sol implementation.
 # Weave Generator — Master Guide
 
-**Guide version:** 1.1 · 14 September 2026  
-**Stage:** Phase 0 assessed; Phase 1A accepted; Phase 1B straight-SVG boundary import published privately and user-accepted. Publication/acceptance status is recorded in 02-STATE-DECISIONS-AND-TESTS.md. Phase 2A architecture is approved and settled; implementation remains on hold.
-**Purpose:** One maintained guide for building a cleaner architectural tool, without repeating the history of fragile patches and incomplete handoffs.
+Proposed stitch-library direction — 2026-09-17: see [56 — Stitch preset research and development plan](56-STITCH-PRESET-RESEARCH-AND-PLAN.md). It covers the requested construction methods, evidence gaps, finite-path and lace geometry, and suggested insertions around R2A/R2B. Planning only; the existing schedule is not superseded until this proposal is accepted. R1D repair functionality is user-confirmed; broader R1 checkpoint verification remains.
 
-## 1. The decision
+Current R1D field-edit correction — 2026-09-17: build `WF-R1D-EDIT-CLARITY-20260917` preserves Derived line styling while fields move, makes influence selection and deselection explicit, and keeps the complete influenced result coherent when Pattern spacing changes. See document 54. R2A and publication remain closed.
 
-Rebuild the foundation deliberately. Preserve the existing site and source history as references; retain useful modules when their behavior passes the new tests. Do not assume a complete rewrite or continue accumulating patches on the current interface.
+Current R1D compatibility correction — 2026-09-17: build `WF-R1D-LEGACY-CERT-20260917` restores exact cubic interval-certificate behavior for omitted/default Falloff 3, allowing existing schema-5 IndexedDB roots to validate without clearing or rewriting data. See document 53. R2A and publication remain closed.
 
-The user's current direction is to build simple, dependable base layers first, then add complexity in dependency order. Each layer should have clear inputs and outputs. Plan for later capabilities without implementing speculative infrastructure. Change internal data structures, algorithms, or backend choices when evidence warrants it; preserve agreed behavior and saved work through explicit versioning and migration.
+Current R1D commit correction — 2026-09-17: build `WF-R1D-BOUNDARY-COMMIT-20260917` safely retries the additive Make Square command once after refreshing a stale multi-tab IndexedDB head, retains atomic conflict rejection, and reports its result inline. See document 52. R2A and publication remain closed.
 
-All expanded spatial goals remain in scope. A small first batch is a construction sequence, not a reduction of the final ambition.
+Current R1D correction — 2026-09-16: build `WF-R1D-FLOW-RESTORE-20260916` makes automatic creation visible, restores a Pattern with its latest saved influence state, removes redundant Boundary save controls, and adds certified per-influence Falloff 1–5 with exact default compatibility. See document 51. R2A and publication remain closed.
 
-**Authority:** Current user instructions → this reviewed guide and its decision log → verified source/tests → historical reports. Historical reports describe different dates and contain both user decisions and assistant claims. A feature appearing in code or a successful deployment does not establish that its behavior is correct.
+## Current settled R1 product hierarchy — 2026-09-16
 
-**Maintained rebuild records:** [settled contracts and Sol Medium checkpoint](04-SOL-CHECKPOINT.md), [verification](05-VERIFICATION.md), and [current state](02-STATE-DECISIONS-AND-TESTS.md). Current decisions supersede the pending language in the original package: preserve the original; raw legacy backups before any migration; immutable named revisions plus latest pointers; separate owner-private rebuild; browser-local saves with JSON backups (explicit user selection). Later architectural questions do not block source protection.
+The saved product hierarchy is `Board → Boundary → Weave Pattern → Influenced Grid`. A Weave Pattern embeds two through eight line-family definitions; families are edited through right-rail tabs and do not appear as saved child nodes. Adding the first Field Force transparently creates the Influenced Grid, so there is no separate setup stage. The tree exposes one current version per named object; immutable revision history remains internal for lineage, recovery, migration, and backups. Creating objects and completing control gestures saves automatically. Same-name Boundary updates reclip attached Patterns, and opening an influenced alternative refreshes it to its Pattern's current source through the certified worker. Parent duplication still copies the full descendant subtree under new stable identities. See documents 47 and 50.
 
-The complete original guide package, historical reports and supplied book remain outside this checkout at `C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/outputs/Weave-Generator-Guide`. Original reference links below refer to that package. Do not copy it into public output. `reference/` here contains original code only.
+Version 3.2 · 2026-09-16 · Consolidated conceptual framework, simple creation workflow, and build plan.
+R1D is implemented locally and awaiting visual acceptance plus the broader R1 checkpoint. Publication is not authorized.
 
-## 2. What the tool is for
+This is the project's current master entry point. It incorporates the user's relational-field framework, practical workflow and reviewed build-batch breakdown. Use the linked detailed checklists to prepare each build; do not treat historical seam-first plans as current instructions.
 
-Weave Generator is an authored, deterministic 2D spatial exploration tool. It turns carrier lines and fields into explicit stitch interactions, reads the spaces and relationships they produce, and develops curated points and polylines for Tangent Generator. Tangent develops forms; Overlap supports interpretation of their relationships and residual spaces.
+## 1. Purpose
 
-The architectural intentions include multimodal stitching, calibrated permeability, atrium-fed diffusion, activated interstice, depth-buffered privacy, ambient co-presence, perceptual recomposition, and productive fracture. They motivate what to investigate; they are not claims that the software can automatically judge architecture or infer program.
+Weave Generator is the first analytical and generative field in the B.A.C. workflow. It is a relational field generator and analytical synthesis tool: controlled systems of lines produce relationships; the tool measures and visually encodes those relationships; the designer selects significant conditions and synthesizes them into geometry and metadata that influence later design.
 
-The complete workflow is:
+The recurring logic is **field of interactions → legible relationships → selected significance → synthesized part → another field**. Lines are actors; relationships and collective organization are the subject. Generation is not designed toward a predetermined final outline.
 
-**Boundary + reference + lattice + two families + fields → carrier field → stitch interaction grammar → event map and derived weave geometry → interstitial/cell analysis → curated point set → relation graph → polyline set → Tangent → Overlap.**
+The designer authors forces and constraints; the system reveals their consequences through controlled emergence. Analytical stitching gives those consequences a visible language. Point selection expresses design priorities, and closed-polyline synthesis compresses selected relationships into a geometric part. Tangent and Overlap develop that part without erasing its relational history. Later, a deliberately designed spatial boundary can host an internal weave using the same logic at another scale.
 
-A conceptual feedback loop allows the designer to compare the resulting forms with the original seam, void, bridge, and permeability intentions. Automatic synchronization between tools is not required.
+The computer measures and proposes; the designer selects, rejects, overrides and interprets. The same weave can produce several valid syntheses under different relationship weights. Reproducibility and designer agency are complementary requirements.
 
-## 3. Essential distinctions
+## 2. Current baseline and authority
 
-| Term | Meaning for this project |
-| --- | --- |
-| Carrier field | Boundary, lattice, Family A/B paths, and deformation. The support for weaving, not the finished weave. |
-| Two families | Two explicit source systems. Carrier emphasizes continuity; counter-thread can support secondary grain and enclosure. Derived ties do not introduce unlimited source families. |
-| Stitch | An operation affecting derived geometry or relationships, with a corresponding visible notation. A symbol alone is insufficient. |
-| Weave | Negotiated crossing, binding, release, routing, rhythm, and edge relationships. Two passively overlapping deformed grids are insufficient. |
-| Influence | A condition that may change carrier curvature and, later, interaction type, density, phase, and hierarchy. |
-| Field link / territory | A relationship or influence region that guides behavior; not automatically a final polyline. |
-| Interstice | A measurable cell, pocket, corridor, seam, void, bridge, or threshold candidate produced by the weave. Spatial labels are explainable readings. |
-| Point | A curated event or spatial reading with provenance, not a generic sampled location. |
-| Relation graph | Candidate connections justified by shared threads, fields, cells, corridors, or explicit constraints. |
-| Polyline | A selected, validated trace through meaningful relations; not an arbitrary group of three nearby points. |
+Phase 1A, Phase 1B and Phase 2A are user-accepted. The frozen private baseline is Site version 3, build WF-2A-20260914, source 002ae94dacade531deb6c88a1414fbe6367b8356. It contains versioned boundaries, straight SVG boundary import, rectangular A/B carriers, analytical clipping, Carrier Studies, undo, browser-local saves and JSON backups. Fields, actual weaving, analysis, markings, point extraction and synthesis are future work. See [Phase 2A evidence](08-PHASE-2A-VERIFICATION.md).
 
-Natalie Chanin's *The Geometry of Hand-Sewing* is a structural reference for anchors, stitch operations, repetition, variation, grid manipulation, and edge behavior. The architectural translation is this project's interpretation, not a claim made by the book. See [reference notes](references/06-BOOK-AND-SOURCE-NOTES.md).
+Authority: current user instructions → this guide and [phased development plan](12-PHASED-DEVELOPMENT-PLAN.md) → [relational framework](11-RELATIONAL-FIELD-DIRECTION.md) → compatible supporting contracts → historical plans. The new practical guide is incorporated here and in the plan. No listed future feature is a delivered capability.
 
-## 4. Complete capability scope
+The seam-first plan in 09 and compressed-seam contract in 10 are historical/provisional examples, not the next build. Historical release evidence remains valid for its stated version. The former master and model checkpoint are retained under docs/archive/.
 
-| Layer | Capabilities to develop |
-| --- | --- |
-| Workspace | Tangent-derived shell; stable canvas; Boards; saved boundaries; perfect square; drawn/imported boundary; reference-image underlay; explicit scale/orientation. |
-| Carrier | Rectangular, triangular, radial lattice; spacing/angle/offset; two explicit families; visibility, density 1–100, direction, tension, offset, smoothness, seeded irregularity and regeneration. Tension 100 preserves straight source paths. |
-| Fields | Attractor, repeller, deflector; later compression, void, alignment. Position, radius, strength, falloff, direction where meaningful, enabled state, live editing and undo/redo. |
-| Interaction | Over/under, bind, gap/release, bypass; expanded RUN, CROSS, LOOP, BRIDGE, WRAP, EDGE TIE. Rhythm, interval, repeat, alternation, single/double, reversal, skip, accent, phase, density gradient, edge behavior. |
-| Linked influences | Bridge, tension, exclusion, alignment, gradient links; nearest, strongest, blend, override, mask combination rules. Exact semantics and sequence require prototypes. |
-| Spatial analysis | Cells, pockets, corridors, seams, voids, bridges, thresholds; measured properties, classifications, source relationships, and an optional construction/reading view. |
-| Point curation | Crossing/near-crossing events, binds, gaps, interstice centers, transitions, curvature and boundary events as justified; score/type/field/family/region filters; lasso; pin/exclude/add/delete-manual/invert/select-visible/deselect/isolate. |
-| Relations and polylines | Explainable relation scoring, thread-following, seam/corridor tracing, field bridging and other justified modes; seeded variation; keep/delete/lock; diagnostics; valid open/closed output as supported downstream. |
-| Saving and outputs | Saved boundaries, Weaves, Point Sets and Polyline Sets; provenance and active-state restoration; portable project backup; separate weave, point, and polyline exports; polylines usable in Tangent. |
-| Richer downstream reading | Preserve roles, event references, interstices, and spatial tags in an extensible exchange format. Tangent/Overlap interpretation and a Reading Sheet remain roadmap items, not already working integrations. |
+## 3. User workflow
 
-Specific algorithms, defaults, and preset names are proposals until tested. Preserve the scope while revising its implementation. Do not expose controls that have no complete behavior.
-
-## 5. Build in this order
-
-These phases replace the conflicting historical batch labels. Split a phase into smaller releases where necessary; do not jump over its exit criteria.
-
-| Phase | Deliverable | Exit gate |
+| Workspace | Question | Output |
 | --- | --- | --- |
-| 0 — Protect and establish | Verify source access, preserve baseline and experiments, identify deployment destination, review contracts and pending decisions. | Source, live baseline, and experiments are distinguishable; no original work is overwritten. |
-| 1 — Foundation | One project model; document coordinates; stable viewport; boundary drawing/square/save/restore; theme/display separation; project backup; undoable editing foundation. | Save two boundaries, switch, refresh, restore, undo/redo and resize without geometry drift. |
-| 2 — Carrier | Start with rectangular lattice and explicit A/B families, then triangular/radial definitions; family controls and deterministic generation. | Every exposed parameter changes actual geometry and survives save/restore. Clipping and source identity are correct. |
-| 3 — Local fields | Attractor/repeller/deflector on the carrier; smooth deformation; correct rotated editing; responsive drag. | Field marker and effect align; tension 100 and zero-strength behavior hold; repeated edits remain stable. |
-| 4 — Actual interaction | Full event model, over/under, bind, release, bypass, rhythm/phase and local field response; separate display budget. | Known small fixtures produce correct relationships and geometry; toggles never affect analysis; final results are stable after release/reload. |
-| 5 — Interstitial foundation | Detect bounded regions/openings and adjacency; derive a small set of explicit spatial readings. | A controlled bind/release change produces an explainable change in a measured region or relation. |
-| 6 — Expanded spatial grammar | Add RUN/CROSS/LOOP/BRIDGE/WRAP/EDGE TIE as distinct operations; linked fields, territories, compression/void/alignment and combination rules. | Each operation has observable model consequences and updates the existing analysis correctly. |
-| 7 — Curated points | Event/cell-based extraction, provenance, scores, filters and manual authorship; independent saved Point Sets. | Every automated point has a reason; pins/exclusions and source identity survive regeneration under defined rules. |
-| 8 — Relations and polylines | Relation graph, constrained traces, diagnostics, keep/lock and saved Polyline Sets. | No arbitrary triangle grouping; valid traces retain their source points and relationship explanations. |
-| 9 — Complete export/handoff | Separate weave/point/polyline exports; Tangent import round trip; metadata package and optional Reading Sheet. | Actual receiving tool preserves intended scale, orientation, closure and point order. |
+| FIELD | What constraints and influences exist? | Boundary, carrier recipe and authored influence field |
+| WEAVE | How do strands respond and interact? | Versioned derived strands, authored edits and interaction relationships |
+| ANALYZE | What happened, and how strongly? | Measurements, typed conditions and relational intensity components |
+| INTERPRET | How is it made visible and read spatially? | Stitch markings, legend and editable interpretations |
+| EXTRACT | Which conditions matter for this study? | Weighted significance, candidates and curated Point Sets |
+| SYNTHESIZE | How can selected relationships become a part? | Alternative validated closed polylines and recorded connection reasons |
+| EXPORT | What should subsequent tools inherit? | Selected geometry, relational metadata and lineage |
 
-Define export contracts in Phase 1 and exercise minimal round trips as geometry becomes available. Do not discover coordinate incompatibility only in Phase 9. Interstitial analysis in Phase 5 is deliberately small; expand it with Phase 6 rather than pretending all spatial classifications are solved immediately.
+These are connected views of one document, not separate applications or a rigid wizard. Introduce each view when usable. Users can inspect earlier stages and revise them; working descendants become stale until recomputed. Saved descendants retain their original source snapshots.
 
-## 6. Rules that protect the foundation
+## 4. Goals and boundaries
 
-- One authoritative document model. The DOM displays state; it does not store geometry or define saved output.
-- Separate source paths, derived paths, events, regions, points, relations, polylines, and display state. Every derived object records its source revision.
-- One document coordinate system. View transforms never change model/export coordinates. Import fit is an explicit operation, not hidden rescaling.
-- Complete analysis is separate from preview/display simplification. A marker cap must never silently reduce analysis or export content.
-- Determinism includes stable identity and versioned algorithms. Do not tie event IDs or stitch phase solely to arbitrary iteration order.
-- Visibility and theme changes only affect display. No camera shift, full carrier rebuild, hidden state changes, or duplicate SVG accumulation.
-- During drag, keep the carrier responsive; default proposal is to defer expensive final analysis until release and clearly handle stale layers.
-- Saved work preserves ancestry. Same-name save behavior needs the versioning decision in the [decision register](02-STATE-DECISIONS-AND-TESTS.md).
-- Evolve the code through small, readable modules and explicit migrations. Introduce workers, storage engines, or services only for a demonstrated need.
+- Generate reproducible variation using two source families, spacing, direction, density, seeded irregularity, deformation and authored influences. Preserve existing Phase 2A parameter meanings.
+- Develop explicit over/under rhythm, binding, release and routing. Strand-to-strand response is planned; define same-family versus cross-family behavior before enabling avoidance or attraction.
+- Retain recognizable source organization. Start with deformation of identifiable carriers; progressive strand growth is a separately evaluated later generator, not an implicit replacement.
+- Support strand authorship through persistent exclusions, locks and manual geometry. Never silently discard edits during regeneration.
+- Measure proximity, crossing angle, alignment, curvature, spacing change, density, repetition, convergence/divergence, clustering, isolation, interruption and continuity in bounded, progressively expanded sets.
+- Represent condition strength through inspectable relational intensity components and gradients. Keep authored influence fields separate from derived analytical fields.
+- Use analytical stitch markings as a coherent visual vocabulary. Type, orientation, size, repetition and extent may encode measured conditions; overrides change representation, not evidence. Markings are independently visible/exportable.
+- Extract significant points through explicit rules and designer weighting. Significance is not intensity or confidence. Sparse/isolated conditions may matter as much as concentrated activity.
+- Compose alternative closed polylines that synthesize selected relationships, not merely trace a seam. Retain open traces as useful optional outputs. Every automated connection needs a declared rationale.
+- Preserve source ancestry and enable visual lineage from vertex to point, conditions, strands and authored context, and in the reverse direction.
+- Export geometry plus versioned metadata. Develop intended radius behavior from relational evidence and designer interpretation, resolved against actual corners and receiving-tool feasibility.
+- Support saved iterations and comparison of both field changes and changed design priorities on the same field.
+- Later reuse a designed spatial boundary for a secondary/internal weave exploring internal organization. Architectural roles require authored context; they are not inferred from anonymous lines.
 
-Detailed contracts and edge cases are in [01 — Implementation Contracts](01-IMPLEMENTATION-CONTRACTS.md).
+Tangent develops formal character; Overlap arranges/tests forms and residual spaces. Neither rich receiver metadata nor automatic radius interpretation currently exists as a verified integration.
 
-## 7. Preserve the established experience
+## 5. Essential distinctions
 
-Use the real Tangent-derived design language: OCR-B-style uppercase, white/black/#eaeaea, sharp controls, roughly 250px Boards and 350px Controls rails, collapsible rails, closed control sections on opening, drafting-style checkboxes, linked numeric fields and ticked sliders. Retain actual font/assets where available; do not invent a generic replacement UI.
+A weave operation changes geometry or relationships; an analysis stitch describes them. A crossing is not automatically a junction. A visual underpass gap is not an opening. A measured condition is not its architectural interpretation.
 
-Keep the main workspace stable while panels scroll. Grid/frame, boundary, and source lattice have distinct explicit controls and initially stay off. Selecting a field must not reveal an unrelated hidden layer. Empty canvas deselects; field extents appear only when relevant. Light uses a gray carrier and legible dark commands. Neo appears green (#daff33), never accidentally blue. Modes preserve geometry, line weights, and interaction behavior.
+Intensity describes expressed relational activity. Significance records study priorities. Confidence, if introduced, must describe justified measurement reliability rather than borrowing the significance score. Units and reference scales must be declared; unspecified document units are not millimeters.
 
-## 8. Release and continuity protocol
+A polyline is an authored synthesis with geometry constraints and relational reasons. It need not follow the weave literally. It must not become an arbitrary triangle group, nearest-point chain or unexamined convex hull.
 
-Current user approval gate: before each future batch, propose scope, what will be built, what remains, automated checks and 3–5 simple live tests. Obtain explicit approval before implementation; publish only with explicit authorization. Exhaustive technical rejection tests remain automated. Phase 1B is accepted; Approved Phase 2A contract is in 07-PHASE-2-CARRIER-PROPOSAL.md. The sequence below applies only within approved scope.
+## 6. Principles protecting later development
 
-For each completed implementation batch: implement → validate → record exact source → publish to the designated live site → confirm deployment succeeded → report. Planning and guide updates alone are not website builds. Do not publish a broken or partial batch simply to satisfy cadence.
+Keep authored inputs, derived geometry, interactions, measurements, markings, point selections, connection relations, output snapshots and view state separate. Renderers consume the model; they do not define it. Use common coordinate/geometry conventions and small tested contracts, not speculative infrastructure for every future feature.
 
-Every release response contains:
+Keep generators and detector versions explicit; preserve source identities, immutable saved ancestry and recoverable migrations. Future generator types consume/produce agreed geometry and provenance; they must not reinterpret old studies.
 
-1. **Batch intended:** the agreed deliverables.
-2. **Delivered:** actual behavior, live URL, and verified build identity.
-3. **Remaining:** incomplete items in this batch/phase, plus the next dependency.
-4. **Test exactly:** actions and expected visible outcomes; distinguish automated checks from user acceptance.
+Use a one-way derivation dependency chain with selective invalidation. Changing notation does not regenerate strands; changing significance weights does not recompute geometry; moving a field invalidates downstream working results. Preview limits never truncate committed analysis invisibly.
 
-Update the current-state record and decision register after every release. Keep this master guide concise; put detailed troubleshooting in supporting reports. At a handoff, record the exact repository, commit, deployment, dirty files, failed tests, and next action. Never rely on the memory of a previous chat or assume a Linux path exists in a Windows task.
+Define exchange metadata early and test a minimal receiving-tool fixture before a full synthesis implementation. Add richer capabilities only after measurement and compatibility evidence. Do not replace storage or introduce workers solely in anticipation of hypothetical scale.
 
-## 9. Exclusions and unresolved choices
+These rules reduce avoidable rework; they do not guarantee zero future changes. New evidence may require versioned migrations or revised contracts.
 
-Deferred: literal textile physics, unlimited thread families, a generic motif sampler, automatic architectural judgment, AI floor-plan recognition as a dependency, automatic building/3D generation, and live bidirectional synchronization. A visual reference underlay is retained. Spatial intent does not require prematurely turning the tool into a 3D simulator.
+## 7. Development and delivery
 
-Pending decisions do not block reviewing this guide: migration of old browser-saved boards; same-name save semantics; Tangent's exact accepted payload; working units/scale; geometric definitions of advanced stitch operations; first supported interstitial readings; measurable performance budgets; and rebuild deployment destination. Recommendations and decision timing are recorded separately rather than silently treated as user approval.
+### Local build review workflow
 
-**Next:** Switch to Sol Medium. The [Phase 2A contract](07-PHASE-2-CARRIER-PROPOSAL.md) is approved and settled. Implementation remains on explicit hold pending a start instruction; publication is not authorized.
+After every local build version or meaningful feature update, stop and provide one concise review report with:
+
+1. build/version identifier and current phase/batch;
+2. visible changes plus material behavior, saving, layer, export, reliability or future-development changes;
+3. completed and remaining work in the current batch, later batches in the phase and whether the phase is complete;
+4. exact numbered local-preview tests naming each control, expected result, relevant edge cases and known deferred limitations;
+5. the exact next scheduled implementation action if approved.
+
+Visible work always includes a usable local preview and discoverable prerequisites. A correction stays within the current batch: implement it, run focused affected checks, refresh the preview and issue another review report.
+
+“Approved, keep working” authorizes development to finish the current batch, then begin the next scheduled batch, then the next phase when the current phase is complete. Use Sol Medium for behavior already settled by contract. Pause only for a material unresolved product decision, geometry contract, data-integrity risk or required user choice. This phrase never authorizes publication, deployment, private-site changes or release; those always require separate explicit authorization.
+
+Build vertical feature slices. Each feature includes functional controls, visible output, relevant layers, save/reset/Undo behavior, focused automated checks and visual acceptance scenarios. Preserve the stable UI foundation. Defer final visual polish and major panel reorganization to phase checkpoints. During ordinary feature batches use development-mode focused verification; reserve exhaustive performance, capacity, migration, recovery and full-regression certification for changes affecting those systems and meaningful phase checkpoints.
+
+The authoritative phase checklist, milestones, architecture decisions and tests are in [12 — Phased development plan](12-PHASED-DEVELOPMENT-PLAN.md). [13 — Manageable build batches](13-BUILD-BATCHES.md) breaks every phase into bounded additions, dependencies and exits. Its batch IDs supersede earlier informal batch suggestions. New phases use R0–R12, preserving historical Phase 1A/1B/2A labels.
+
+[14 — Builder execution checklists](14-BUILDER-CHECKLISTS.md) provides each batch's exact scope tasks, decision gates, data obligations and verification scenarios. Size deliveries around complete testable behavior, not a fixed feature count; combine small related entries only through an explicit combined scope. Complex algorithms still require their own settled contracts.
+
+### Build sequence at a glance
+
+| Phase | Batch breakdown | Completion outcome |
+| --- | --- | --- |
+| R0 — Contracts | A: geometry/identity; B: editing/dependencies; C: fixtures/exchange/first brief | Shared rules and the first build scope are ready for review; planning only. |
+| R1 — Fields | A: derived studies; B: attractor; C: repeller/deflector; D: combined influences/variation | Reproducible authored deformation with saved ancestry. |
+| R2 — Weave | A: crossings; B: over/under rhythm; C: selection/exclusions/locks; D: manual geometry | An editable basic weave. |
+| R3 — Analysis | A: measurements; B: proximity/alignment; C: convergence/divergence; D: density/rhythm/isolation | Conditions with inspectable evidence. |
+| R4 — Interpreter | A: vocabulary; B: evidence/overrides; C: marking exports | An independently usable analytical drawing. |
+| R5 — Intensity | A: components; B: explicit composites; C: display/comparison | Measured condition strength on comparable scales. |
+| R6 — Points | A: condition candidates; B: intensity/isolation candidates; C: significance/filtering; D: curation | Meaningful, designer-curated Point Sets. |
+| R7 — Synthesis | A: candidate relations; B: manual closed composition; C: automatic alternatives; D: curation/lineage | Validated geometric parts with explained relationships. |
+| R8 — Exchange | A: relational package; B: Tangent geometry verification; C: portable comparison; D: optional DXF | First complete field-to-part workflow at R8C. |
+| R9 — Radius behavior | A: curvature intentions; B: feasibility/units; C: separately authorized receiver integration | Verified inherited radius behavior, not just exported suggestions. |
+| R10 — Advanced generation | A–Q: separately scoped mutual response, fields/zones, operations, editing, carrier modes, growth and conditional optimization | Selectable extensions using the same downstream contracts. |
+| R11 — Spatial analysis | A: cells; B: openings/adjacency; C: readings; D: interfaces; E: regional synthesis; F: Atlas/context; G: Overlap exchange | Richer regional relationships and geometric synthesis. |
+| R12 — Internal weave | A: new boundary/parent lineage; B: one internal reading; C: alternatives/export | A second application inside a deliberately authored spatial boundary. |
+
+The schedule contains 63 tracking entries: three planning batches and 60 future implementation/integration entries, including optional and conditional work. This is not a requirement for 63 releases. R10–R12 are later branches, not prerequisites for the first complete workflow. Their precise dependencies are recorded in document 13; do not assume every earlier letter or phase must be built before an independent branch.
+
+### Builder handoff and completion rules
+
+Before editing, inspect current code and prerequisite evidence, settle the selected entry's outstanding formulas/thresholds and geometry rules, then present the bounded scope and acceptance tests. Do not implement an unresolved detector or synthesis rule merely because a checklist names it.
+
+Every delivery includes its applicable data validation, saving/restoring, undo, source lineage, failure behavior, automated checks, 3–5 visual acceptance steps and updated records. Later phases extend those capabilities rather than repairing deliberately incomplete early persistence. Keep numerical geometry work and receiver integration bounded even when they expose few controls.
+
+The first implementation is R1A only after R0A–R0C contracts and explicit authorization. Geometry plus metadata export in R8 does not establish that Tangent interprets the metadata; that is a separate R9C integration gate.
+
+Astra Medium resolves geometry, semantics, contracts and conflicting evidence. Sol Medium implements bounded batches whose contracts are settled. No automatic model switching or delegation. Every implementation batch requires a scope proposal and explicit authorization, automated checks, 3–5 visual acceptance tests and updated source/verification records. Publication requires separate explicit authorization.
+
+After R1B, ordinary feature batches use development-mode verification: focused automated checks for behavior changed by the batch, several representative visual acceptance scenarios, and a usable local preview after every batch. Exhaustive migration, capacity, recovery and performance certification runs at meaningful phase checkpoints and whenever a batch changes those systems or their contracts. A prior certified result remains applicable when the relevant source and deployment have not changed. This workflow does not relax geometry correctness, atomic failure or saved-state requirements; it avoids rerunning unrelated certification for an isolated feature change. Publication always requires separate explicit authorization.
+
+Keep the established Tangent-derived shell, stable canvas, independent display controls, collapsed panels, and Light/Dark/Neo design language. Do not redesign the interface gratuitously or expose inert controls. Original sites, source, experiments and browser data remain untouched. Only dist/ is public; guides and raw source references remain outside it.
+
+## 8. Deferred scope
+
+Advanced linked-field simulation, complete cell topology, all Atlas patterns, triangular/radial and progressive-growth generators, rich receiver editing and secondary/internal weave belong to later bounded phases. Native DWG is a separate compatibility question.
+
+Literal textile physics, automatic architectural judgment, AI interpretation as a dependency, automatic 3D/building generation, unlimited unrelated source families and live cross-tool synchronization are not initial goals.
+
+## 9. Next action and reading order
+
+Next: **R0A — source and geometry contracts**, then R0B and R0C. A combined R0 planning engagement is possible; it does not authorize implementation. Phase 2A remains unchanged.
+
+1. This master guide — conceptual goals, boundaries and sequence.
+2. [12 — Phased plan](12-PHASED-DEVELOPMENT-PLAN.md) — complete capability checklist and phase gates.
+3. [13 — Build batches](13-BUILD-BATCHES.md) — individual scopes, dependencies and exits.
+4. [14 — Builder checklists](14-BUILDER-CHECKLISTS.md) — execution to-dos, decision gates, data obligations and verification scenarios.
+5. [02 — Current state](02-STATE-DECISIONS-AND-TESTS.md), [04 — Model handoff](04-SOL-CHECKPOINT.md), and the selected batch's settled contract — actual readiness and authorization.

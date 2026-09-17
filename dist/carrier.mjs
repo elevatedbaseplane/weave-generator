@@ -1,6 +1,7 @@
 import {validateBoundaryRecord} from './boundary.mjs';
 
 export const CARRIER_LIMITS=Object.freeze({candidateLines:2000,intervals:20000,lineEdgeTests:2000000});
+export const FAMILY_LIMIT=8;
 const clone=value=>structuredClone(value);
 const cross=(a,b)=>a.x*b.y-a.y*b.x;
 const sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y});
@@ -12,12 +13,22 @@ export function createRectangularCarrier(carrierId=`carrier-${crypto.randomUUID(
   return {id:carrierId,kind:'rectangular',generatorVersion:'rect-v1',clipVersion:'polygon-line-v1',selectionVersion:'density-v1',origin:{x:0,y:0},angleDegrees:0,families:{A:{spacing:50,offset:0,density:100},B:{spacing:50,offset:0,density:100}}};
 }
 
+export const familyNames=carrier=>Object.keys(carrier?.families||{}).sort();
+export function familyAxes(carrier,family){
+  const names=familyNames(carrier);if(!names.includes(family))throw new Error('Unknown weave family.');
+  const angle=(carrier.generatorVersion==='rect-v1'?(carrier.angleDegrees+(family==='B'?90:0)):carrier.families[family].angleDegrees)*Math.PI/180,clean=n=>Math.abs(n)<1e-15?0:n;
+  const direction={x:clean(Math.cos(angle)),y:clean(Math.sin(angle))};return{direction,normal:{x:clean(-direction.y),y:clean(direction.x)}};
+}
+export function nextFamilyName(carrier){for(let i=0;i<FAMILY_LIMIT;i++){const name=String.fromCharCode(65+i);if(!(name in carrier.families))return name;}throw new Error(`Use no more than ${FAMILY_LIMIT} families per Weave Pattern.`);}
+
 export function validateCarrierRecipe(value){
-  if(!value||typeof value.id!=='string'||!value.id||value.id.length>120||value.kind!=='rectangular'||value.generatorVersion!=='rect-v1'||value.clipVersion!=='polygon-line-v1'||value.selectionVersion!=='density-v1')throw new Error('Invalid rectangular carrier recipe.');
+  if(!value||typeof value.id!=='string'||!value.id||value.id.length>120||value.kind!=='rectangular'||!['rect-v1','rect-v2'].includes(value.generatorVersion)||value.clipVersion!=='polygon-line-v1'||value.selectionVersion!=='density-v1')throw new Error('Invalid rectangular carrier recipe.');
   if(!Number.isFinite(value.origin?.x)||!Number.isFinite(value.origin?.y)||Math.abs(value.origin.x)>1e9||Math.abs(value.origin.y)>1e9)throw new Error('Invalid carrier origin.');
-  if(!Number.isFinite(value.angleDegrees)||value.angleDegrees < -180||value.angleDegrees > 180)throw new Error('Carrier rotation must be between −180° and 180°.');
-  for(const family of ['A','B']){
+  const names=familyNames(value);if(value.generatorVersion==='rect-v1'){if(!Number.isFinite(value.angleDegrees)||value.angleDegrees < -180||value.angleDegrees > 180||names.join(',')!=='A,B')throw new Error('Carrier rotation must be between −180° and 180°.');}
+  else if(names.length<2||names.length>FAMILY_LIMIT||names.some((name,i)=>name!==String.fromCharCode(65+i)))throw new Error(`A Weave Pattern needs 2–${FAMILY_LIMIT} consecutively named families.`);
+  for(const family of names){
     const f=value.families?.[family];
+    if(value.generatorVersion==='rect-v2'&&(!Number.isFinite(f?.angleDegrees)||f.angleDegrees< -180||f.angleDegrees>180))throw new Error(`${family} angle must be between −180° and 180°.`);
     if(!Number.isFinite(f?.spacing)||f.spacing<=0||f.spacing>1e9)throw new Error(`${family} spacing must be greater than zero.`);
     if(!Number.isFinite(f.offset)||Math.abs(f.offset)>1e9)throw new Error(`${family} offset is outside the supported range.`);
     if(!Number.isInteger(f.density)||f.density<1||f.density>100)throw new Error(`${family} density must be an integer from 1 to 100.`);
@@ -41,7 +52,7 @@ function canonical(value){
 function fnv64(text){let h=14695981039346656037n;for(let i=0;i<text.length;i++){h^=BigInt(text.charCodeAt(i));h=BigInt.asUintN(64,h*1099511628211n);}return h.toString(16).padStart(16,'0');}
 export function carrierInputFingerprint(boundary,carrier){
   validateBoundaryRecord(boundary);validateCarrierRecipe(carrier);
-  return `carrier-${fnv64(canonical({points:boundary.points,closed:true,carrier:{kind:carrier.kind,generatorVersion:carrier.generatorVersion,clipVersion:carrier.clipVersion,selectionVersion:carrier.selectionVersion,origin:carrier.origin,angleDegrees:carrier.angleDegrees,families:carrier.families}}))}`;
+  return `carrier-${fnv64(canonical({points:boundary.points,closed:true,carrier:{kind:carrier.kind,generatorVersion:carrier.generatorVersion,clipVersion:carrier.clipVersion,selectionVersion:carrier.selectionVersion,origin:carrier.origin,...(carrier.generatorVersion==='rect-v1'?{angleDegrees:carrier.angleDegrees}:{}),families:carrier.families}}))}`;
 }
 
 function onSegment(p,a,b,tau){
@@ -86,12 +97,10 @@ export function deriveCarrier(boundary,carrier,boardId){
   boundary=validateBoundaryRecord(boundary);carrier=validateCarrierRecipe(carrier);
   if(typeof boardId!=='string'||!boardId)throw new Error('A board identity is required for carrier paths.');
   const tau=carrierTolerance(boundary),documentPoints=boundary.points,xs=documentPoints.map(p=>p.x),ys=documentPoints.map(p=>p.y),center={x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2},points=documentPoints.map(p=>sub(p,center)),localOrigin=sub(carrier.origin,center);
-  for(const family of ['A','B'])if(carrier.families[family].spacing<=100*tau)throw new Error(`${family} spacing is too small for this boundary scale.`);
-  const rad=carrier.angleDegrees*Math.PI/180,u={x:Math.cos(rad),y:Math.sin(rad)},v={x:-Math.sin(rad),y:Math.cos(rad)};
-  const defs={A:{direction:u,normal:v},B:{direction:v,normal:{x:-u.x,y:-u.y}}};
-  const specs=[],candidateCounts={A:0,B:0};
-  for(const family of ['A','B']){
-    const {direction,normal}=defs[family],f=carrier.families[family];
+  const names=familyNames(carrier);for(const family of names)if(carrier.families[family].spacing<=100*tau)throw new Error(`${family} spacing is too small for this boundary scale.`);
+  const specs=[],candidateCounts=Object.fromEntries(names.map(name=>[name,0]));
+  for(const family of names){
+    const {direction,normal}=familyAxes(carrier,family),f=carrier.families[family];
     const projections=points.map(p=>dot(sub(p,localOrigin),normal)),min=Math.min(...projections),max=Math.max(...projections),indexTolerance=tau/f.spacing;
     const k0=Math.ceil((min-f.offset)/f.spacing-indexTolerance),k1=Math.floor((max-f.offset)/f.spacing+indexTolerance);candidateCounts[family]=Math.max(0,k1-k0+1);
     for(let k=k0;k<=k1;k++){const signed=k*f.spacing+f.offset;specs.push({family,k,direction,normal,p0:{x:localOrigin.x+normal.x*signed,y:localOrigin.y+normal.y*signed}});}
@@ -108,6 +117,6 @@ export function deriveCarrier(boundary,carrier,boardId){
     paths.push({id,pathKey:key,family:spec.family,k:spec.k,origin:{x:spec.p0.x+center.x,y:spec.p0.y+center.y},direction:clone(spec.direction),selected:densityRetains(spec.k,carrier.families[spec.family].density),intervals});
   }
   paths.sort((a,b)=>a.family.localeCompare(b.family)||a.k-b.k);
-  const counts={};for(const family of ['A','B']){const available=paths.filter(p=>p.family===family).length,retained=paths.filter(p=>p.family===family&&p.selected).length;counts[family]={retained,available,candidates:candidateCounts[family]};}
+  const counts={};for(const family of names){const available=paths.filter(p=>p.family===family).length,retained=paths.filter(p=>p.family===family&&p.selected).length;counts[family]={retained,available,candidates:candidateCounts[family]};}
   return {inputFingerprint:fingerprint,versions:{generator:carrier.generatorVersion,clip:carrier.clipVersion,selection:carrier.selectionVersion},paths,diagnostics:{tau,counts,candidateLines:specs.length,intervals:intervalCount,lineEdgeTests:specs.length*points.length,contacts,complete:true},complete:true};
 }

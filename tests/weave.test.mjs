@@ -3,15 +3,15 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {square,validateBoundary} from '../dist/boundary.mjs';
 import {createRectangularCarrier,deriveCarrier} from '../dist/carrier.mjs';
-import {sha256,canonical,deriveIdentity,refreshWeave,derivedSvg,safeDeriveCarrier,validateWeave} from '../dist/weave.mjs';
+import {sha256,sha256Async,canonical,deriveIdentity,refreshWeave,derivedSvg,safeDeriveCarrier,validateWeave} from '../dist/weave.mjs';
 import {createWorkspace,clone,createWeaveStudy,saveCarrierStudy,saveWeaveStudy,restoreWeaveStudy,restoreCarrierStudy,restoreBoundary,saveBoundary,serializeWorkspace,parseBackup,mergeBackup,validateWorkspace,BACKUP_LIMIT} from '../dist/document.mjs';
 import {LocalStore,STORE_KEY,SCHEMA3_RECOVERY_KEY,SCHEMA2_RECOVERY_KEY} from '../dist/storage.mjs';
 import {History} from '../dist/history.mjs';
 export function setup(){const w=createWorkspace();w.projects[0].working.carrier=createRectangularCarrier('carrier-fixture');w.projects[0]=saveCarrierStudy(w.projects[0],'SOURCE').project;w.projects[0]=createWeaveStudy(w.projects[0],w.projects[0].carrierStudies[0].latestRevisionId);return w;}
 const u=validateBoundary([{x:-150,y:-150},{x:150,y:-150},{x:150,y:150},{x:50,y:150},{x:50,y:-50},{x:-50,y:-50},{x:-50,y:150},{x:-150,y:150}]);
 function storage(raw){const map=new Map(raw?[[STORE_KEY,raw]]:[]);return {map,getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v)};}
-test('SHA-256 matches independent runtime for empty, Unicode, multiblock and canonical geometry',()=>{
- for(const input of ['', 'abc','A'.repeat(300),'é🙂','x'.repeat(10000),canonical({b:[1,-0],a:'test'})])assert.equal(sha256(input),createHash('sha256').update(input).digest('hex'));
+test('synchronous and native asynchronous SHA-256 match independent runtime exactly',async()=>{
+ for(const input of ['', 'abc','A'.repeat(300),'é🙂','x'.repeat(10000),canonical({b:[1,-0],a:'test'})]){const expected=createHash('sha256').update(input).digest('hex');assert.equal(sha256(input),expected);assert.equal(await sha256Async(input),expected);}
 });
 test('identity geometry exactly matches default, rotated, translated, concave and reversed carriers',()=>{
  for(const boundary of [square(),u,{...u,points:[...u.points].reverse()},validateBoundary(square().points.map(p=>({x:p.x+1e8,y:p.y+1e8})))]){
@@ -84,7 +84,7 @@ test('schema 2/3 migration preserves raw originals and refuses recovery failure'
  for(const version of [2,3]){
   const legacy=createWorkspace();legacy.schemaVersion=version;
   for(const p of legacy.projects){delete p.weaveStudies;delete p.working.weave;if(version===2){delete p.carrierStudies;delete p.working.carrier;delete p.working.carrierSourceRevisionId;}}
-  const raw=JSON.stringify(legacy,null,1),memory=storage(raw),s=new LocalStore(memory),w=s.load();assert.equal(w.schemaVersion,4);s.save(w);
+  const raw=JSON.stringify(legacy,null,1),memory=storage(raw),s=new LocalStore(memory),w=s.load();assert.equal(w.schemaVersion,5);s.save(w);
   const key=version===2?SCHEMA2_RECOVERY_KEY:SCHEMA3_RECOVERY_KEY;assert.equal(memory.getItem(key),raw);
   const blocked=storage(raw),write=blocked.setItem;blocked.setItem=(k,v)=>{if(k===key)throw Error('quota');write(k,v);};const b=new LocalStore(blocked),next=b.load();assert.throws(()=>b.save(next),/unavailable or full/);assert.equal(blocked.getItem(STORE_KEY),raw);
  }
