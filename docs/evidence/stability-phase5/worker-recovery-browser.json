@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-STABILITY-P5-WORKER-RECOVERY-20260921",
+  "reportedProduction": {
+    "influences": 5,
+    "families": 5,
+    "moveFailureMs": [754, 760.4],
+    "warmWorkerMs": [103.4, 114.3],
+    "storageBlocked": true,
+    "loadError": "Saved study validation exceeded 750 ms"
+  },
+  "localCorrectedRoute": {
+    "influences": 5,
+    "fifthInfluenceWorkerMs": 28.3,
+    "directCenterMoveWorkerMs": 50.3,
+    "reloadedInfluences": 5,
+    "storageBlockedAfterReload": false,
+    "autosaveFailedAfterReload": false
+  },
+  "limitsChanged": false,
+  "result": "pass"
+}

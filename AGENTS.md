@@ -1,3 +1,7 @@
+## Stability Foundation Phase 5 influence/storage correction — 2026-09-21
+
+Document 108 records build `WF-STABILITY-P5-WORKER-RECOVERY-20260921`. Pointer release now promotes an identical in-flight influence preview instead of restarting the final calculation on a cold worker; genuinely obsolete jobs immediately prime a replacement. Reload/import validation uses one private persistent worker across all current and saved revisions, preventing older multi-influence weaves from pausing storage because of repeated worker startup. The 750 ms limit and all geometry/storage contracts are unchanged. The affected suite passes 75/75 plus all eight frozen Phase 0 checks. A five-influence browser route moved and saved an influence in 50.3 ms, then reloaded with storage unblocked. Phase 5 remains complete; Phase 6 has not started.
+
 ## Stability Foundation Phase 5 — 2026-09-21
 
 Document 107 records build `WF-STABILITY-P5-WORKFLOW-20260921`. The workspace now distinguishes Projects, Boundaries, Applied Weaves on the current boundary, and reusable project-wide Weave Library definitions. Current Project / Boundary / Weave are labeled independently. Reuse applies the newest saved revision through the existing canonical adaptation pipeline. The full empty-project route through preset, influence, family edit, second boundary, reuse, autosave, and reload passes. The focused suite passes 43/43 and all eight preserved Phase 0 fixtures pass. Phase 5 is complete and ready for publication and user review; Phase 6 has not started.
