@@ -1,8 +1,11 @@
 # Build 1 overlap-mask correction
 
-Date: 2026-09-21  
-Build: `WF-B1-OVERLAP-MASK-CORRECTION-20260921`  
-Published application commit: `0260c8bb944e2c844066f34cbb47676943a82eab`  
+Date: 2026-09-21
+
+Build: `WF-B1-OVERLAP-MASK-CORRECTION-20260921`
+
+Published application commit: `0260c8bb944e2c844066f34cbb47676943a82eab`
+
 Public Site version: 19
 
 ## Reported defect
