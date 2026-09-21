@@ -39,6 +39,8 @@ The full historical suite was also sampled. Its remaining failures are the alrea
 
 The preserved three-family Phase 6 fixture restored with 31 source paths, 31 derived paths, three fields, and storage unblocked. At Fit, the derived layer contained 31 woven body paths and three family-grouped boundary-continuation paths, with zero closed visible paths, no boundary clip, and no pending fallback. After zooming to 131.3%, the weave remained visible with no browser warning or error.
 
+The corrected private Site version 14 then restored the dense five-family fixture that rejected the initial publication. It rendered all 82 woven body paths plus five family-grouped continuation paths at 78.6% and 131.3%, with zero closed visible paths, no boundary clip, no pending fallback, no completion warning, and no browser warning or error. The view was returned to Fit after verification.
+
 Evidence is recorded in `docs/evidence/build1-edge-refinement/browser-verification.json`.
 
 ## Review
