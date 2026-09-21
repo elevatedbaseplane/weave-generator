@@ -174,7 +174,7 @@ Do not begin Build 1B feature expansion before the Stability Foundation is accep
 
 ## 11. Current phase and historical baseline instructions
 
-Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; document 110 records completed Phase 1D seeded structured variation. Phase 1E precedence display/checkpoint is next and has not begun. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
+Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; documents 110 and 111 record completed Phase 1D seeded structured variation and Phase 1E effective-precedence display. Build 1 is complete. Contact constraints and adaptive tension remain a separate later build and have not begun. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
 
 Begin Phase 0 only:
 

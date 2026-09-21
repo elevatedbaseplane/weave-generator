@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-B1-P1E-PRECEDENCE-20260921",
+  "fixture": {
+    "families": 3,
+    "derivedPaths": 31,
+    "crossingsAssigned": 181,
+    "crossingsUnresolved": 0,
+    "retainedWovenMasks": 31,
+    "retainedManualOverrides": 1
+  },
+  "effectiveRules": {
+    "manual": "CONTROLLING RULE · MANUAL CROSSING OVERRIDE",
+    "global": "CONTROLLING RULE · WHOLE WEAVE · ALTERNATING 1 / 1",
+    "pair": "CONTROLLING RULE · FAMILY-PAIR RULE · FAMILY A WITH FAMILY B · REPEAT 2 OVER / 1 UNDER"
+  },
+  "restoration": {
+    "temporaryPairRuleRemoved": true,
+    "restoredRule": "whole-weave alternating 1 / 1",
+    "storageBlocked": false
+  },
+  "result": "pass"
+}

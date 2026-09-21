@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {defaultRule,resolveWeaveRules,validateRule,namedRuleMode,applyNamedRuleMode,repeatSequence,seededVariationSequence,withStructuredVariation,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from '../dist/weave-rules.mjs';
+import {defaultRule,resolveWeaveRules,effectiveWeaveRule,validateRule,namedRuleMode,applyNamedRuleMode,repeatSequence,seededVariationSequence,withStructuredVariation,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from '../dist/weave-rules.mjs';
 import {defaultInterlacing,validateInterlacing,findCrossings} from '../dist/interlacing.mjs';
 import {createStitchSource,stitchCell} from '../dist/stitch-source.mjs';
 const settings=recipe=>({...defaultInterlacing(),version:'interlacing-v2',enabled:true,rule:defaultRule(recipe)});
@@ -28,6 +28,14 @@ test('seeded assignments ignore event order and preserve pair and manual precede
  const first=resolveWeaveRules(strands,{events},v,'source'),reordered=resolveWeaveRules(strands,{events:[...events].reverse()},v,'source');assert.deepEqual([...first].sort(),[...reordered].sort());
  v.rule=applyPairNamedRule(v.rule,'A','B','alternating');assert.deepEqual([...resolveWeaveRules(strands,{events},v,'source').values()],[true,false,true,false]);
  v.source='source';v.overrides=[['2',true]];assert.equal(resolveWeaveRules(strands,{events},v,'source').get('2'),true);
+});
+test('effective rule explanation follows the exact renderer precedence',()=>{
+ const strands=[line('A',0),line('B',1)],result={events:[event(1,0,1)]},rule=withStructuredVariation(applyNamedRuleMode(defaultRule(''),'seeded'),{seed:9,balance:60,maxRun:2}),v={...settings(''),version:'interlacing-v3',rule},assigned=resolveWeaveRules(strands,result,v,'source');
+ assert.deepEqual(effectiveWeaveRule(strands,result,v,'source',result.events[0],assigned),{kind:'global',mode:'seeded',relationship:null,assigned:true,upper:assigned.get('1'),inverted:false});
+ v.rule=applyPairNamedRule(v.rule,'A','B','two-over-one');let detail=effectiveWeaveRule(strands,result,v,'source',result.events[0]);assert.equal(detail.kind,'pair');assert.equal(detail.mode,'two-over-one');assert.deepEqual(detail.relationship,{first:'A',second:'B',over:2,under:1,phase:0});
+ v.rule.inverted=true;detail=effectiveWeaveRule(strands,result,v,'source',result.events[0]);assert.equal(detail.inverted,true);
+ v.source='source';v.overrides=[['1',false]];detail=effectiveWeaveRule(strands,result,v,'source',result.events[0]);assert.deepEqual([detail.kind,detail.mode,detail.upper,detail.inverted],['manual','manual',false,false]);
+ v.source='other';assert.equal(effectiveWeaveRule(strands,result,v,'source',result.events[0]).kind,'pair');
 });
 test('named crossing settings preserve their exact v2 representation through portable JSON',()=>{
  for(const mode of ['preset','alternating','two-over-one','grouped','priority']){

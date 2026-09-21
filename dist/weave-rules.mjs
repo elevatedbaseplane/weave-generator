@@ -99,3 +99,11 @@ export function resolveWeaveRules(strands,result,settings,source){
  }
  return assignments;
 }
+export function effectiveWeaveRule(strands,result,settings,source,event,assignments=resolveWeaveRules(strands,result,settings,source)){
+ const r=settings.rule,a=strands[event.a.si],b=strands[event.b.si],fa=familyOf(a),fb=familyOf(b),pair=r?.pairs?.find(p=>p.first===[fa,fb].sort()[0]&&p.second===[fa,fb].sort()[1]),override=settings.source===source?settings.overrides.find(([id])=>id===event.id):null;
+ let kind='global',mode=!r||r.mode==='priority'?'priority':namedRuleMode(r),relationship=null;
+ if(r?.mode==='preset'&&r.recipe){kind='preset';mode='preset';}
+ if(pair){kind='pair';mode=pair.over===1&&pair.under===1?'alternating':pair.over===2&&pair.under===1?'two-over-one':'grouped';relationship={first:pair.first,second:pair.second,over:pair.over,under:pair.under,phase:pair.phase};}
+ if(override){kind='manual';mode='manual';relationship=null;}
+ return{kind,mode,relationship,assigned:assignments.has(event.id),upper:assignments.get(event.id),inverted:kind!=='manual'&&r?.inverted===true};
+}
