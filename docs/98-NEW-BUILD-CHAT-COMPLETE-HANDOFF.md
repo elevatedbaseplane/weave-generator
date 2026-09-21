@@ -57,7 +57,7 @@ There should be no Create Weave Pattern button after selecting a preset. Woven o
 - Checkout: `work/weave-rebuild`
 - Branch: `foundation`
 - Current local build identity: `WF-GENERATOR-SCOPE-20260921`
-- Local preview path: `http://127.0.0.1:43831/?stability-s4c=20260918`
+- Local preview path: `http://127.0.0.1:43831/?generator-scope=20260921`
 - The local server is ephemeral; restart `node scripts/serve.mjs 43831` when the URL refuses the connection.
 - Public output is `dist/`.
 - Hosting manifest: `.openai/hosting.json`.

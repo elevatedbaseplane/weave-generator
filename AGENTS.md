@@ -1,6 +1,6 @@
 ## Generator scope cleanup — 2026-09-21
 
-The user moved Point Extraction and Polyline Composer to another tool. Build `WF-GENERATOR-SCOPE-20260921` removes both stages from the generator's visible workflow and active roadmap without changing weave documents, geometry, crossings, persistence, or exports. Rule-based binding is deferred and is not an active generator milestone. Historical documents and fixtures remain evidence rather than current implementation instructions. The active generator path is field and weave construction, authored analysis/interpretation work when scheduled, and stable family/strand export.
+The user moved Point Extraction and Polyline Composer to another tool. Build `WF-GENERATOR-SCOPE-20260921` removes both stages from the generator's visible workflow and active roadmap without changing weave documents, geometry, crossings, persistence, or exports. Rule-based binding is deferred and is not an active generator milestone. Historical documents and fixtures remain evidence rather than current implementation instructions. The active generator path is field and weave construction, authored analysis/interpretation work when scheduled, and stable family/strand export. The current-contract matrix passes 262/262, the focused scope checks pass 3/3, and all eight preserved Phase 0 checks pass. Public Site version 24 was published from application commit `6183bf4f004ccb54ec9702eb9b071d15e212eb6d`.
 
 ## Build 1 clean crossing cells — 2026-09-21
 
