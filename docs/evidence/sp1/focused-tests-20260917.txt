@@ -1,0 +1,46 @@
+✔ dynamic families preserve the accepted A/B variation sequence exactly (3.7158ms)
+✔ a Weave Pattern embeds two through eight independently directed families (43.0097ms)
+✔ dynamic family influence response, variation, compact storage and restore remain exact (189.9021ms)
+✔ nested duplication copies pattern families and influenced children with new identities (160.3469ms)
+✔ rename and cascading delete act on the visible saved hierarchy (77.7883ms)
+✔ same-name Boundary save advances one visible object and reclips attached Pattern (146.0617ms)
+✔ family edits preserve an active influence and synchronize its family settings (72.9815ms)
+✔ spacing changes after influences preserve fields and save a coherent updated result (224.7596ms)
+✔ incremental field commits persist pattern ancestry and saved field revisions together (250.6164ms)
+✔ ancestry recovery uses retained transaction snapshots for missing intermediate revisions (102.1432ms)
+✔ combined fields add from one base point and exact opposing fields cancel independent of order (73.7941ms)
+✔ mixed overlapping fields remain complete and family settings are independent (27.6863ms)
+✔ seeded per-strand variation is repeatable, family independent and bounded (12.6224ms)
+✔ zero variation and disabled fields route to exact identity geometry (4.0381ms)
+✔ add duplicate remove and eight-field limit preserve stable identities atomically (83.7929ms)
+✔ invalid combined records reject duplicate IDs seed and variation without mutation (3.2256ms)
+✔ falloff is adjustable from one through five while legacy omitted falloff remains exact (123.5926ms)
+✔ legacy schema-5 omitted falloff preserves its exact cubic certificate fixture (21.9794ms)
+✔ editing a v4 working study promotes it to v5 without rewriting identity or values (3.6312ms)
+✔ v5 immutable revisions compact storage and portable backup round trip exactly (124.6111ms)
+✔ persistent worker accepts R1D protocol and returns certified compact geometry (236.0913ms)
+✔ reviewed finite foundations carry directed source runs without backside joins (2.3266ms)
+✔ retained source IDs survive parameter changes and duplicates isolate identity (1.7064ms)
+✔ finite support equations enclose unequal-length entry and exit roots (1.604ms)
+✔ expanded search retains outside runs and rejects candidate overflow atomically (7.7664ms)
+✔ double-herringbone identity and influence preserve exact compact geometry (1268.8075ms)
+✔ herringbone-square identity and influence preserve exact compact geometry (711.7912ms)
+✔ v1 identity working geometry packs and unpacks without certificates or fingerprint changes (22.2024ms)
+✔ v1 identity saved revision packs and unpacks exactly (27.5867ms)
+✔ mixed v1 and v2 working and saved geometry pack and unpack exactly (134.8373ms)
+✔ codec rejects certificate fields mixed across v1 and v2 fragment schemas (881.913ms)
+✔ exact Float64 payload round trip preserves certificate bits and negative zero (782.9737ms)
+✔ payload rejects truncated, extra, overlapping and corrupt data (1492.6003ms)
+R1B storage codec dense evidence {"backupBytes":1140394,"encodeAndAdmissionMs":951.4802999999993}
+✔ dense immutable revision backup deduplicates without losing logical copies (3214.382ms)
+✔ portable backup rejects missing references, changed values and aggregate overflow (1530.8677ms)
+✔ incremental payload commit is exact, additive and reuses immutable content (3170.4006ms)
+✔ incremental saved revision adds one record and reuses certified payload (2365.6861ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17732.9833

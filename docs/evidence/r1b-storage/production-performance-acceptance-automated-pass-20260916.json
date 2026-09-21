@@ -1,0 +1,50 @@
+{
+  "recordedAt": "2026-09-16",
+  "candidate": "WF-R1B-DELTA-20260916",
+  "decision": "docs/33-R1B-PRODUCTION-PERFORMANCE-ACCEPTANCE.md",
+  "passed": true,
+  "functional": {
+    "tests": 65,
+    "passed": 65,
+    "failed": 0
+  },
+  "synchronousDiagnostic": {
+    "governsAcceptance": false,
+    "runs": 30,
+    "p50Ms": 179.1195,
+    "p95Ms": 231.3812,
+    "maximumMs": 250.0773
+  },
+  "equivalence": {
+    "passed": true,
+    "baselineSha256": "a2376509a5478d7cf2af6b9d7b2c9833633930d8882046cb4c262cfd12123984",
+    "fixtures": ["v1", "v2", "negative", "maximum"],
+    "portable": ["v1", "v2", "saved", "mixed", "maximum"],
+    "rejections": ["v1Certificate", "v2MissingCertificate", "corruptLength", "oversize"]
+  },
+  "persistentWorker": {
+    "contract": "r1b-persistent-worker-375-400",
+    "runs": 30,
+    "p50Ms": 160.1306,
+    "p95Ms": 172.3893,
+    "maximumMs": 186.1556,
+    "p95LimitMs": 375,
+    "maximumLimitMs": 400,
+    "passed": true
+  },
+  "capacity": {
+    "portableLimitBytes": 10485760,
+    "highFragmentationBackupBytes": 3391217,
+    "twoMaximumBackupBytes": 9937492,
+    "ledgerExact": true,
+    "thirdSnapshotRejected": true,
+    "passed": true
+  },
+  "static": {
+    "entrypointAndReferences": true,
+    "privateOutputExclusion": true,
+    "rebuildOnlyTarget": true,
+    "browserScriptSyntax": true
+  },
+  "nextStep": "One browser-only normal-host rerun using scripts/verify-r1b-browser-only.ps1."
+}

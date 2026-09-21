@@ -1,0 +1,13 @@
+{
+  "build": "WF-W2-CONTINUOUS-20260917",
+  "source": "managed browser visible status",
+  "renderMs": 72.1,
+  "completionMs": 345.1,
+  "renderLimitMs": 50,
+  "passed": false,
+  "geometryCommit": {
+    "workerMs": 319.5,
+    "totalMs": 635.1
+  },
+  "action": "Preserved. Replace many live SVG DOM appends with a single detached document-space SVG group; preserve masks and thresholds."
+}

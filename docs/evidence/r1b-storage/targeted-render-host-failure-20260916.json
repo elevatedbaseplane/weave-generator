@@ -1,0 +1,286 @@
+{
+  "build": "WF-R1B-DELTA-20260916",
+  "passed": false,
+  "stage": "dense spacing #a-spacing",
+  "iteration": null,
+  "error": {
+    "name": "AssertionError",
+    "message": "render 74.90000000596046",
+    "stack": "AssertionError [ERR_ASSERTION]: render 74.90000000596046\n    at runCycle (C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1b-browser.cjs:24:638)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9)\n    at async C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1b-browser.cjs:35:46"
+  },
+  "terminal": null,
+  "finalStatus": "CERTIFIED ATTRACTOR COMMITTED · 94.1 MS WORKER · 205.9 MS TOTAL.",
+  "finalStatusError": false,
+  "pendingWorker": null,
+  "activeWorker": null,
+  "workerEvents": [
+    {
+      "type": "queued",
+      "at": 480.40000000596046,
+      "input": "sha256-v1:57f84367d3d975162c06ded9b70b2a5c08d1893293a6f8c7bced5e2ea4726eb3",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 484.5,
+      "seq": 1,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:1",
+      "input": "sha256-v1:57f84367d3d975162c06ded9b70b2a5c08d1893293a6f8c7bced5e2ea4726eb3",
+      "attempt": 0,
+      "requestStarted": 480.40000000596046
+    },
+    {
+      "type": "committed",
+      "at": 519.6000000089407,
+      "seq": 1,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:1",
+      "workerMs": 13.900000005960464,
+      "totalMs": 39.20000000298023,
+      "storageGeneration": 5,
+      "phases": {
+        "dispatchMs": 17.699951171875,
+        "deriveMs": 11.5,
+        "encodeMs": 1.5,
+        "transferMs": 0.699951171875,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 1,
+        "historyMs": 0,
+        "renderMs": 5.200000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 615.7000000029802,
+      "input": "sha256-v1:4c1b49207366d8c75e1e34388cf80179e7f505ed14b999d900e00c72393dc7fa",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 625.7000000029802,
+      "input": "sha256-v1:40b5d180e5b71d0d17cacecc0173c909fdc789aed41cc1b77178810f1600dac3",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 639.1000000089407,
+      "input": "sha256-v1:3de671d85ad9f5fe868232f1eb7062fd910032a743a6d7262158504680b3ba41",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 651.8000000119209,
+      "input": "sha256-v1:3de671d85ad9f5fe868232f1eb7062fd910032a743a6d7262158504680b3ba41",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 658.3000000119209,
+      "seq": 2,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:2",
+      "input": "sha256-v1:3de671d85ad9f5fe868232f1eb7062fd910032a743a6d7262158504680b3ba41",
+      "attempt": 0,
+      "requestStarted": 651.8000000119209
+    },
+    {
+      "type": "committed",
+      "at": 698,
+      "seq": 2,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:2",
+      "workerMs": 13.700000002980232,
+      "totalMs": 46.19999998807907,
+      "storageGeneration": 6,
+      "phases": {
+        "dispatchMs": 24.699951171875,
+        "deriveMs": 11.299999997019768,
+        "encodeMs": 1.4000000059604645,
+        "transferMs": 0.900146484375,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.09999999403953552,
+        "transactionMs": 0.9000000059604645,
+        "historyMs": 0,
+        "renderMs": 5.5999999940395355
+      }
+    },
+    {
+      "type": "queued",
+      "at": 764.9000000059605,
+      "input": "sha256-v1:ec85f924a77f020a563a762d430d7ae7e46e7e6918bafe5a4c1eb9721e867e2d",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 791.7000000029802,
+      "input": "sha256-v1:ec85f924a77f020a563a762d430d7ae7e46e7e6918bafe5a4c1eb9721e867e2d",
+      "immediate": true
+    },
+    {
+      "type": "queued",
+      "at": 940.7000000029802,
+      "input": "sha256-v1:24cdfeb5dd7cf7a5dbcad5a3cd02258b6bea4f50757abf9bdd5c8a40c872307b",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 948.9000000059605,
+      "seq": 3,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:3",
+      "input": "sha256-v1:24cdfeb5dd7cf7a5dbcad5a3cd02258b6bea4f50757abf9bdd5c8a40c872307b",
+      "attempt": 0,
+      "requestStarted": 940.7000000029802
+    },
+    {
+      "type": "committed",
+      "at": 996.3000000119209,
+      "seq": 3,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:3",
+      "workerMs": 17.399999991059303,
+      "totalMs": 55.6000000089407,
+      "storageGeneration": 7,
+      "phases": {
+        "dispatchMs": 27.5,
+        "deriveMs": 12.5,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.60009765625,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 2.5,
+        "historyMs": 0,
+        "renderMs": 6.800000011920929
+      }
+    },
+    {
+      "type": "queued",
+      "at": 1080.2000000029802,
+      "input": "sha256-v1:304f8c41a864c50bdab6b1960d13a34ff4c237e49889aa9e2c8ac7741ce553f6",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 1088.2000000029802,
+      "seq": 4,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:4",
+      "input": "sha256-v1:304f8c41a864c50bdab6b1960d13a34ff4c237e49889aa9e2c8ac7741ce553f6",
+      "attempt": 0,
+      "requestStarted": 1080.2000000029802
+    },
+    {
+      "type": "committed",
+      "at": 1286.1000000089407,
+      "seq": 4,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:4",
+      "workerMs": 94.1000000089407,
+      "totalMs": 205.90000000596046,
+      "storageGeneration": 8,
+      "phases": {
+        "dispatchMs": 26.89990234375,
+        "deriveMs": 73.40000000596046,
+        "encodeMs": 18,
+        "transferMs": 5.300048828125,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 4,
+        "historyMs": 0,
+        "renderMs": 74.90000000596046
+      }
+    }
+  ],
+  "cycles": [
+    {
+      "label": "cold add attractor",
+      "iteration": null,
+      "requestSequence": 1,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:1",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 13.900000005960464,
+      "totalMs": 39.20000000298023,
+      "phases": {
+        "dispatchMs": 17.699951171875,
+        "deriveMs": 11.5,
+        "encodeMs": 1.5,
+        "transferMs": 0.699951171875,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 1,
+        "historyMs": 0,
+        "renderMs": 5.200000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 13.9 MS WORKER · 39.2 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "coalesced numeric edit",
+      "iteration": null,
+      "requestSequence": 2,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:2",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 13.700000002980232,
+      "totalMs": 46.19999998807907,
+      "phases": {
+        "dispatchMs": 24.699951171875,
+        "deriveMs": 11.299999997019768,
+        "encodeMs": 1.4000000059604645,
+        "transferMs": 0.900146484375,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.09999999403953552,
+        "transactionMs": 0.9000000059604645,
+        "historyMs": 0,
+        "renderMs": 5.5999999940395355
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 13.7 MS WORKER · 46.2 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense boundary",
+      "iteration": null,
+      "requestSequence": 3,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:3",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 17.399999991059303,
+      "totalMs": 55.6000000089407,
+      "phases": {
+        "dispatchMs": 27.5,
+        "deriveMs": 12.5,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.60009765625,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 2.5,
+        "historyMs": 0,
+        "renderMs": 6.800000011920929
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 17.4 MS WORKER · 55.6 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense spacing #a-spacing",
+      "iteration": null,
+      "requestSequence": 4,
+      "requestId": "6d5b8b06-aa7b-49ae-b60c-bf7ece43a631:4",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 94.1000000089407,
+      "totalMs": 205.90000000596046,
+      "phases": {
+        "dispatchMs": 26.89990234375,
+        "deriveMs": 73.40000000596046,
+        "encodeMs": 18,
+        "transferMs": 5.300048828125,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 4,
+        "historyMs": 0,
+        "renderMs": 74.90000000596046
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 94.1 MS WORKER · 205.9 MS TOTAL.",
+      "statusError": false
+    }
+  ]
+}

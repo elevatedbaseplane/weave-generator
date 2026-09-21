@@ -1,0 +1,1 @@
+PASS: static entrypoint, local references, private-output exclusion, rebuild-only target. Run node --check on each module separately.

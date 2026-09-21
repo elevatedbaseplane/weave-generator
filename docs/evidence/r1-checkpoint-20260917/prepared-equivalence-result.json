@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "fixtures": 17,
+  "failureChecks": 24,
+  "baselineSha256": "703d00ee84e844b903436b993f373cbd8567dab29bc4f80fd636901f75a4f57d",
+  "beforeSourceSha256": "6f15b9685d1a7c4c4563d8bbb60b9a8da879931dc2e42fcf06253905933b124e",
+  "afterSourceSha256": "0f13d6f3284fa713f81e150167ea4ad2d1e8c4c7d667c0813ed28d251a35b3a6",
+  "checks": "Deep/canonical equality, fingerprints, four compact buffers, portable JSON, sync/async and public rejection equivalence"
+}

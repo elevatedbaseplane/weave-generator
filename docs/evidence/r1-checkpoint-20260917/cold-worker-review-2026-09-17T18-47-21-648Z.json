@@ -1,0 +1,605 @@
+{
+  "sourceSha256": "c7510e738d9caad585b73c61b800274a41cee40d58fde44db43fc7e9c5ec28cf",
+  "candidateFingerprint": "sha256-v1:ed3b270fa3a9b44f67057d781e2e6cf1646f33ada369bf78db9e4e6b8f84c64e",
+  "node": "v24.19.0",
+  "host": {
+    "workerMs": 447.8,
+    "deriveMs": 389.8,
+    "encodeMs": 54,
+    "totalMs": 726.3
+  },
+  "protocol": "r1d-worker-v1",
+  "warmup": [
+    {
+      "workerMs": 292.99479999999994,
+      "deriveMs": 248.4686,
+      "encodeMs": 41.30790000000002,
+      "roundTripMs": 336.0834,
+      "outsideWorkerMs": 43.08860000000004,
+      "parentCpu": {
+        "user": 546000,
+        "system": 156000
+      },
+      "heapBefore": 34323096,
+      "heapAfter": 65773600
+    },
+    {
+      "workerMs": 264.76829999999995,
+      "deriveMs": 224.16520000000003,
+      "encodeMs": 37.17669999999998,
+      "roundTripMs": 278.7959000000001,
+      "outsideWorkerMs": 14.02760000000012,
+      "parentCpu": {
+        "user": 391000,
+        "system": 16000
+      },
+      "heapBefore": 65779336,
+      "heapAfter": 45639584
+    },
+    {
+      "workerMs": 228.0372000000001,
+      "deriveMs": 195.53300000000013,
+      "encodeMs": 31.944799999999987,
+      "roundTripMs": 241.63800000000003,
+      "outsideWorkerMs": 13.600799999999936,
+      "parentCpu": {
+        "user": 250000,
+        "system": 62000
+      },
+      "heapBefore": 45644728,
+      "heapAfter": 70792008
+    },
+    {
+      "workerMs": 247.85989999999993,
+      "deriveMs": 191.17020000000002,
+      "encodeMs": 56.02350000000001,
+      "roundTripMs": 261.6600000000001,
+      "outsideWorkerMs": 13.800100000000157,
+      "parentCpu": {
+        "user": 297000,
+        "system": 94000
+      },
+      "heapBefore": 70796944,
+      "heapAfter": 40397592
+    },
+    {
+      "workerMs": 216.03510000000006,
+      "deriveMs": 182.8666999999998,
+      "encodeMs": 32.32310000000007,
+      "roundTripMs": 229.9004,
+      "outsideWorkerMs": 13.865299999999934,
+      "parentCpu": {
+        "user": 234000,
+        "system": 47000
+      },
+      "heapBefore": 40404088,
+      "heapAfter": 60561560
+    }
+  ],
+  "persistent": [
+    {
+      "workerMs": 213.33500000000004,
+      "deriveMs": 178.76819999999998,
+      "encodeMs": 34.00279999999998,
+      "roundTripMs": 226.35950000000003,
+      "outsideWorkerMs": 13.024499999999989,
+      "parentCpu": {
+        "user": 250000,
+        "system": 62000
+      },
+      "heapBefore": 60574168,
+      "heapAfter": 75421136
+    },
+    {
+      "workerMs": 214.90260000000012,
+      "deriveMs": 181.2737000000002,
+      "encodeMs": 33.11369999999988,
+      "roundTripMs": 227.6481000000001,
+      "outsideWorkerMs": 12.745499999999993,
+      "parentCpu": {
+        "user": 235000,
+        "system": 32000
+      },
+      "heapBefore": 75427360,
+      "heapAfter": 89719136
+    },
+    {
+      "workerMs": 215.87980000000016,
+      "deriveMs": 181.06410000000005,
+      "encodeMs": 34.10269999999991,
+      "roundTripMs": 228.73019999999997,
+      "outsideWorkerMs": 12.850399999999809,
+      "parentCpu": {
+        "user": 250000,
+        "system": 0
+      },
+      "heapBefore": 89725432,
+      "heapAfter": 45279992
+    },
+    {
+      "workerMs": 219.82470000000012,
+      "deriveMs": 185.10650000000032,
+      "encodeMs": 34.158100000000104,
+      "roundTripMs": 233.35220000000027,
+      "outsideWorkerMs": 13.527500000000146,
+      "parentCpu": {
+        "user": 281000,
+        "system": 31000
+      },
+      "heapBefore": 45286632,
+      "heapAfter": 65482736
+    },
+    {
+      "workerMs": 212.54939999999988,
+      "deriveMs": 179.0550000000003,
+      "encodeMs": 31.43190000000004,
+      "roundTripMs": 225.80369999999994,
+      "outsideWorkerMs": 13.254300000000057,
+      "parentCpu": {
+        "user": 250000,
+        "system": 31000
+      },
+      "heapBefore": 65506984,
+      "heapAfter": 80368904
+    },
+    {
+      "workerMs": 302.22180000000026,
+      "deriveMs": 262.10239999999976,
+      "encodeMs": 39.68340000000035,
+      "roundTripMs": 319.3433,
+      "outsideWorkerMs": 17.12149999999974,
+      "parentCpu": {
+        "user": 359000,
+        "system": 16000
+      },
+      "heapBefore": 80376248,
+      "heapAfter": 94612928
+    },
+    {
+      "workerMs": 306.95859999999993,
+      "deriveMs": 263.95809999999983,
+      "encodeMs": 42.464600000000246,
+      "roundTripMs": 327.16889999999967,
+      "outsideWorkerMs": 20.210299999999734,
+      "parentCpu": {
+        "user": 360000,
+        "system": 31000
+      },
+      "heapBefore": 94620608,
+      "heapAfter": 49451656
+    },
+    {
+      "workerMs": 313.36590000000024,
+      "deriveMs": 267.1410000000001,
+      "encodeMs": 45.71199999999999,
+      "roundTripMs": 335.68190000000004,
+      "outsideWorkerMs": 22.315999999999804,
+      "parentCpu": {
+        "user": 375000,
+        "system": 94000
+      },
+      "heapBefore": 49459680,
+      "heapAfter": 69548488
+    },
+    {
+      "workerMs": 297.1786000000002,
+      "deriveMs": 255.86260000000038,
+      "encodeMs": 40.77399999999943,
+      "roundTripMs": 315.78670000000056,
+      "outsideWorkerMs": 18.608100000000377,
+      "parentCpu": {
+        "user": 406000,
+        "system": 15000
+      },
+      "heapBefore": 69556864,
+      "heapAfter": 84458632
+    },
+    {
+      "workerMs": 267.09189999999944,
+      "deriveMs": 228.82480000000032,
+      "encodeMs": 37.702400000000125,
+      "roundTripMs": 288.91899999999987,
+      "outsideWorkerMs": 21.827100000000428,
+      "parentCpu": {
+        "user": 344000,
+        "system": 16000
+      },
+      "heapBefore": 84467352,
+      "heapAfter": 98765912
+    },
+    {
+      "workerMs": 309.9865,
+      "deriveMs": 249.29320000000007,
+      "encodeMs": 59.80330000000049,
+      "roundTripMs": 332.9471000000003,
+      "outsideWorkerMs": 22.96060000000034,
+      "parentCpu": {
+        "user": 422000,
+        "system": 16000
+      },
+      "heapBefore": 98774984,
+      "heapAfter": 53952432
+    },
+    {
+      "workerMs": 286.39330000000064,
+      "deriveMs": 249.5034999999998,
+      "encodeMs": 36.46529999999984,
+      "roundTripMs": 301.8611000000001,
+      "outsideWorkerMs": 15.467799999999443,
+      "parentCpu": {
+        "user": 343000,
+        "system": 47000
+      },
+      "heapBefore": 53961840,
+      "heapAfter": 74086232
+    },
+    {
+      "workerMs": 311.14260000000013,
+      "deriveMs": 252.23590000000058,
+      "encodeMs": 58.517399999999725,
+      "roundTripMs": 334.08110000000033,
+      "outsideWorkerMs": 22.938500000000204,
+      "parentCpu": {
+        "user": 391000,
+        "system": 31000
+      },
+      "heapBefore": 74095984,
+      "heapAfter": 88950688
+    },
+    {
+      "workerMs": 270.45910000000003,
+      "deriveMs": 227.83700000000044,
+      "encodeMs": 42.23660000000018,
+      "roundTripMs": 290.8205000000007,
+      "outsideWorkerMs": 20.361400000000685,
+      "parentCpu": {
+        "user": 375000,
+        "system": 0
+      },
+      "heapBefore": 88960792,
+      "heapAfter": 103234152
+    },
+    {
+      "workerMs": 271.60419999999976,
+      "deriveMs": 229.66210000000046,
+      "encodeMs": 41.14570000000003,
+      "roundTripMs": 289.0668999999998,
+      "outsideWorkerMs": 17.46270000000004,
+      "parentCpu": {
+        "user": 359000,
+        "system": 31000
+      },
+      "heapBefore": 103244600,
+      "heapAfter": 58631680
+    },
+    {
+      "workerMs": 323.2359000000006,
+      "deriveMs": 280.35059999999976,
+      "encodeMs": 42.48860000000059,
+      "roundTripMs": 340.03269999999975,
+      "outsideWorkerMs": 16.796799999999166,
+      "parentCpu": {
+        "user": 422000,
+        "system": 0
+      },
+      "heapBefore": 58642992,
+      "heapAfter": 78761776
+    },
+    {
+      "workerMs": 269.97419999999966,
+      "deriveMs": 233.04920000000038,
+      "encodeMs": 36.55029999999988,
+      "roundTripMs": 287.9435000000003,
+      "outsideWorkerMs": 17.969300000000658,
+      "parentCpu": {
+        "user": 312000,
+        "system": 63000
+      },
+      "heapBefore": 78772928,
+      "heapAfter": 93703768
+    },
+    {
+      "workerMs": 296.8677000000007,
+      "deriveMs": 245.8703000000005,
+      "encodeMs": 50.609699999999975,
+      "roundTripMs": 316.183,
+      "outsideWorkerMs": 19.315299999999297,
+      "parentCpu": {
+        "user": 391000,
+        "system": 46000
+      },
+      "heapBefore": 93715376,
+      "heapAfter": 108023288
+    },
+    {
+      "workerMs": 289.58380000000034,
+      "deriveMs": 248.72059999999965,
+      "encodeMs": 39.70380000000023,
+      "roundTripMs": 305.52550000000065,
+      "outsideWorkerMs": 15.94170000000031,
+      "parentCpu": {
+        "user": 406000,
+        "system": 47000
+      },
+      "heapBefore": 108035480,
+      "heapAfter": 63291944
+    },
+    {
+      "workerMs": 270.04439999999977,
+      "deriveMs": 229.27879999999914,
+      "encodeMs": 40.38770000000022,
+      "roundTripMs": 285.5729000000001,
+      "outsideWorkerMs": 15.52850000000035,
+      "parentCpu": {
+        "user": 313000,
+        "system": 32000
+      },
+      "heapBefore": 63304128,
+      "heapAfter": 83418304
+    },
+    {
+      "workerMs": 268.78489999999874,
+      "deriveMs": 227.46860000000015,
+      "encodeMs": 40.20509999999922,
+      "roundTripMs": 285.58549999999923,
+      "outsideWorkerMs": 16.800600000000486,
+      "parentCpu": {
+        "user": 343000,
+        "system": 0
+      },
+      "heapBefore": 83430832,
+      "heapAfter": 98273624
+    },
+    {
+      "workerMs": 286.8029999999999,
+      "deriveMs": 244.9266000000007,
+      "encodeMs": 41.46320000000014,
+      "roundTripMs": 302.13920000000144,
+      "outsideWorkerMs": 15.336200000001554,
+      "parentCpu": {
+        "user": 329000,
+        "system": 15000
+      },
+      "heapBefore": 98294704,
+      "heapAfter": 112624920
+    },
+    {
+      "workerMs": 275.97170000000006,
+      "deriveMs": 228.07370000000083,
+      "encodeMs": 47.28850000000057,
+      "roundTripMs": 292.7522000000008,
+      "outsideWorkerMs": 16.780500000000757,
+      "parentCpu": {
+        "user": 359000,
+        "system": 31000
+      },
+      "heapBefore": 112638136,
+      "heapAfter": 67792912
+    },
+    {
+      "workerMs": 260.6414999999997,
+      "deriveMs": 218.71949999999924,
+      "encodeMs": 41.49040000000059,
+      "roundTripMs": 277.6391999999996,
+      "outsideWorkerMs": 16.997699999999895,
+      "parentCpu": {
+        "user": 250000,
+        "system": 32000
+      },
+      "heapBefore": 67806480,
+      "heapAfter": 87987488
+    },
+    {
+      "workerMs": 267.09270000000106,
+      "deriveMs": 220.53650000000016,
+      "encodeMs": 46.191500000000815,
+      "roundTripMs": 283.22440000000097,
+      "outsideWorkerMs": 16.13169999999991,
+      "parentCpu": {
+        "user": 281000,
+        "system": 15000
+      },
+      "heapBefore": 88001400,
+      "heapAfter": 102795400
+    },
+    {
+      "workerMs": 284.21839999999975,
+      "deriveMs": 240.1769000000004,
+      "encodeMs": 43.57330000000002,
+      "roundTripMs": 300.65570000000116,
+      "outsideWorkerMs": 16.437300000001414,
+      "parentCpu": {
+        "user": 453000,
+        "system": 16000
+      },
+      "heapBefore": 102809664,
+      "heapAfter": 117162224
+    },
+    {
+      "workerMs": 295.22519999999895,
+      "deriveMs": 257.28470000000016,
+      "encodeMs": 37.36629999999968,
+      "roundTripMs": 311.3261999999995,
+      "outsideWorkerMs": 16.101000000000568,
+      "parentCpu": {
+        "user": 344000,
+        "system": 16000
+      },
+      "heapBefore": 117176832,
+      "heapAfter": 72348136
+    },
+    {
+      "workerMs": 276.04039999999986,
+      "deriveMs": 222.53839999999946,
+      "encodeMs": 53.12410000000091,
+      "roundTripMs": 294.83480000000054,
+      "outsideWorkerMs": 18.794400000000678,
+      "parentCpu": {
+        "user": 313000,
+        "system": 15000
+      },
+      "heapBefore": 72363096,
+      "heapAfter": 92469968
+    },
+    {
+      "workerMs": 305.1166000000012,
+      "deriveMs": 261.1712000000007,
+      "encodeMs": 43.548500000000786,
+      "roundTripMs": 322.09820000000036,
+      "outsideWorkerMs": 16.981599999999162,
+      "parentCpu": {
+        "user": 359000,
+        "system": 16000
+      },
+      "heapBefore": 92493480,
+      "heapAfter": 107345888
+    },
+    {
+      "workerMs": 270.4374000000007,
+      "deriveMs": 231.6176000000014,
+      "encodeMs": 38.26640000000043,
+      "roundTripMs": 286.32700000000114,
+      "outsideWorkerMs": 15.889600000000428,
+      "parentCpu": {
+        "user": 328000,
+        "system": 0
+      },
+      "heapBefore": 107361544,
+      "heapAfter": 121621072
+    }
+  ],
+  "fresh": [
+    {
+      "workerMs": 361.6171999999988,
+      "deriveMs": 302.9608999999982,
+      "encodeMs": 54.86229999999887,
+      "roundTripMs": 410.53329999999914,
+      "outsideWorkerMs": 48.91610000000037,
+      "parentCpu": {
+        "user": 640000,
+        "system": 31000
+      },
+      "heapBefore": 53645960,
+      "heapAfter": 77384760
+    },
+    {
+      "workerMs": 347.79039999999986,
+      "deriveMs": 294.6046000000006,
+      "encodeMs": 49.45259999999871,
+      "roundTripMs": 396.22259999999915,
+      "outsideWorkerMs": 48.432199999999284,
+      "parentCpu": {
+        "user": 594000,
+        "system": 31000
+      },
+      "heapBefore": 77464792,
+      "heapAfter": 93102912
+    },
+    {
+      "workerMs": 341.7575000000015,
+      "deriveMs": 288.5212999999985,
+      "encodeMs": 49.1275999999998,
+      "roundTripMs": 392.4179000000004,
+      "outsideWorkerMs": 50.660399999998845,
+      "parentCpu": {
+        "user": 625000,
+        "system": 63000
+      },
+      "heapBefore": 93177288,
+      "heapAfter": 107996920
+    },
+    {
+      "workerMs": 329.9817000000003,
+      "deriveMs": 274.54269999999997,
+      "encodeMs": 51.71560000000136,
+      "roundTripMs": 380.5561999999991,
+      "outsideWorkerMs": 50.57449999999881,
+      "parentCpu": {
+        "user": 625000,
+        "system": 62000
+      },
+      "heapBefore": 108081856,
+      "heapAfter": 122389920
+    },
+    {
+      "workerMs": 337.10549999999967,
+      "deriveMs": 276.6054000000004,
+      "encodeMs": 56.02680000000146,
+      "roundTripMs": 390.5970000000016,
+      "outsideWorkerMs": 53.491500000001906,
+      "parentCpu": {
+        "user": 578000,
+        "system": 78000
+      },
+      "heapBefore": 53264656,
+      "heapAfter": 77071392
+    }
+  ],
+  "equivalenceChecks": 40,
+  "scope": "Node diagnostic only; cannot replace actual host browser failure",
+  "stopped": null,
+  "persistentSummary": {
+    "workerMs": {
+      "samples": 30,
+      "p50": 276.04039999999986,
+      "p95": 313.36590000000024,
+      "max": 323.2359000000006
+    },
+    "deriveMs": {
+      "samples": 30,
+      "p50": 233.04920000000038,
+      "p95": 267.1410000000001,
+      "max": 280.35059999999976
+    },
+    "encodeMs": {
+      "samples": 30,
+      "p50": 41.14570000000003,
+      "p95": 58.517399999999725,
+      "max": 59.80330000000049
+    },
+    "roundTripMs": {
+      "samples": 30,
+      "p50": 294.83480000000054,
+      "p95": 335.68190000000004,
+      "max": 340.03269999999975
+    },
+    "outsideWorkerMs": {
+      "samples": 30,
+      "p50": 16.800600000000486,
+      "p95": 22.938500000000204,
+      "max": 22.96060000000034
+    }
+  },
+  "freshSummary": {
+    "workerMs": {
+      "samples": 5,
+      "p50": 341.7575000000015,
+      "p95": 361.6171999999988,
+      "max": 361.6171999999988
+    },
+    "deriveMs": {
+      "samples": 5,
+      "p50": 288.5212999999985,
+      "p95": 302.9608999999982,
+      "max": 302.9608999999982
+    },
+    "encodeMs": {
+      "samples": 5,
+      "p50": 51.71560000000136,
+      "p95": 56.02680000000146,
+      "max": 56.02680000000146
+    },
+    "roundTripMs": {
+      "samples": 5,
+      "p50": 392.4179000000004,
+      "p95": 410.53329999999914,
+      "max": 410.53329999999914
+    },
+    "outsideWorkerMs": {
+      "samples": 5,
+      "p50": 50.57449999999881,
+      "p95": 53.491500000001906,
+      "max": 53.491500000001906
+    }
+  }
+}

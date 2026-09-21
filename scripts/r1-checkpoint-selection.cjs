@@ -1,16 +1,19 @@
 const assert=require('node:assert/strict');
 // Finish all workspace actions before selecting. Fit intentionally deselects.
-async function prepareDenseSelection(page,boardId,{read,open}){
+async function prepareDenseSelection(page,boardId,{read,open,step=()=>{}}){
+ step('board restore');
  await page.locator(`[data-board="${boardId}"]`).click();
- await page.waitForFunction(()=>document.querySelector('#status').textContent==='BOARD RESTORED.');
+ await page.waitForFunction(()=>document.querySelector('#status').textContent==='BOARD RESTORED.',null,{timeout:10000});
  const restored=await read(page);
  assert.equal(restored.workspace.activeProjectId,boardId,'Dense board restore did not finish');
  const board=restored.workspace.projects.find(p=>p.id===boardId),g=board?.working.weave?.generation;
  const field=g?.influences?.[0]||g?.attractor||g?.influence;
  assert.ok(field?.id,'Dense fixture has no influence');
+ step('show guides and Fit');
  await open(page,'#field-section');
  await page.locator('#show-attractor').check();
  await page.locator('#fit').click();
+ step('select influence and verify guide');
  const item=page.locator('#influence-list button');
  // Attribute comparison avoids putting an imported ID into selector syntax.
  const items=await item.all();let selected=null;

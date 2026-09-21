@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "scope": "Focused verifier integration with actual production handlers in VM, not a new live-browser performance run",
+  "rawEvidence": "browser-2026-09-17T19-44-59-213Z.json",
+  "rawSha256": "16b4d6615434aeb5fe58c637ea9977fb6542bc24ae9e5e82ba44adfbb9ae3eed",
+  "diagnosis": {
+    "selectionCompleted": {
+      "fieldId": "field-574451b9-b39e-4207-9a79-cafec99d04b5",
+      "boardId": "project-694dd7a8-a90d-44c1-b159-17efb99df547",
+      "box": {
+        "x": 691.5,
+        "y": 556,
+        "width": 17,
+        "height": 17
+      }
+    },
+    "status": "ACTIVE ATTRACTOR SELECTED.",
+    "failedHelper": "prepareDenseViewport",
+    "scale": 2.000000028858911,
+    "center": {
+      "scale": 2.000000028858911,
+      "cx": 0,
+      "cy": 0.12037037397773415
+    },
+    "rootCause": "Native wheel delta float32 rounding made1.35*exp(-delta*.001)=2.000000028858911, outside verifier1e-12 wait; native anchor also moved cy. Original stage label stale."
+  },
+  "tests": {
+    "passed": 13,
+    "failed": 0
+  },
+  "syntaxChecks": true,
+  "sourceGuard": true,
+  "preservedChecks": 14,
+  "applicationChanges": 0,
+  "setupScripts": {
+    "scripts/r1-checkpoint-browser.cjs": "0e373ccea5acc0e09085a896822dca00b90eca1885bdbe0d12cef0faac7ee052",
+    "scripts/r1-checkpoint-selection.cjs": "8da12dd7b18574d65e414a86a81e340d9926f5114a8ab0a95db1d7fd294b5f86",
+    "scripts/r1-dense-pointer.cjs": "7fd6d6a8a68580d0b079e87e3aca7cd51522bc74a6689668816c80f22df0cd5d",
+    "tests/r1-dense-setup.test.mjs": "f43ca9f93c56de1278f4069164287b96c44458ce9b82835cc8bfa8b8d35dca46"
+  }
+}

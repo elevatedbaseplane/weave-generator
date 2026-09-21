@@ -1,0 +1,54 @@
+[
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\double-complete-reference.png",
+    "Hash": "6E99CDC13601B7D8F7F05FC64F03549F065924B06483FD9E116F48D159735387"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\double-reference-review.png",
+    "Hash": "35FED12E4F96C9794C89A9CFA2712C9C61159FA4C3846AD1B3836AD3C5EB31B9"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\square-complete-reference.jpg",
+    "Hash": "2BAE5839E4F7BF394B4796E52EE312C36E60B1BEBAE38F9430D09688E1F16189"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\square-reference-review.jpg",
+    "Hash": "DDD934215B983139E24B84E0D7EF26FC3E1DA1BCADB42B9B3E9454BDA12AFC45"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\square-start-reference.jpg",
+    "Hash": "AFD44BA7A261F249CD53FE0193602A319C17D9C00B3CFF4416F2FED76AFAB787"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\browser-2026-09-17T17-58-13-585Z.json",
+    "Hash": "3C3C611540F3EB7D2DF7F0797E1E284A3BC1DDEA9EDB26A01C6E534E233EF2D1"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\current-worker-results.json",
+    "Hash": "5E95583B4017EACD436170169608E71EFBF4B28C182B86F51E6FBD0F7D9B2F7F"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\equivalence.json",
+    "Hash": "2C87093BD2E6494A6C6D406BA6CE6360DE6EB20D9E1EF95D7BB3E18BDDE147FB"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\generated-capacity.json",
+    "Hash": "AB27DFA62FE886D5EF5D10E3179304B6F706AC3CD1DE2B83BA2D3216CA3477C2"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\maximum-capacity.json",
+    "Hash": "A24E7E6B8DDC518FBF0AA77BF5CEA4DDE8320F62D7E1DD887D8D3D26884C8B2B"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\worker-fixture-invalid-direction.json",
+    "Hash": "3F1C81B172A7D879C51C022E160916D1772672B885995D2B3E82E1093CBE8665"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1-checkpoint-browser.cjs",
+    "Hash": "E8549D7084F83AEAE08D09C5581003CC1A3AF944513CD31924F94997143C304A"
+  },
+  {
+    "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1-checkpoint-worker.mjs",
+    "Hash": "5B2CF3077A3083B8F5E7F7D8E5CC9DB13E80A063E5917BE860461313F95BA065"
+  }
+]

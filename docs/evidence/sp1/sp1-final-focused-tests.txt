@@ -1,0 +1,39 @@
+✔ square-grid: editable independent pattern, clipped influence and exact backup (51.3242ms)
+✔ diamond-grid: editable independent pattern, clipped influence and exact backup (27.9353ms)
+✔ triangular-grid: editable independent pattern, clipped influence and exact backup (30.6864ms)
+✔ unknown preset rejects rather than creating a misleading fallback (0.3867ms)
+✔ production finite codec admits all approved table maxima without source trace bytes (1011.445ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=false (12.5563ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=true (23.0394ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=false (4.9999ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=true (9.5886ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=false (24.3513ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=true (29.2525ms)
+✔ actual control handlers display percentages and commit exact source ratios (1.2021ms)
+✔ field adaptation overlaps row extents without adding backside connectors; bands stay exact (1.0077ms)
+✔ field candidates include every cell intersecting the test boundary and still enforce workload (4.1566ms)
+✔ field identity and active influence compact round trip preserve coordinates, certificates and references (52.5141ms)
+✔ double-herringbone embedded intent matches its local source intersections and round trips (35.1168ms)
+✔ double-herringbone-field embedded intent matches its local source intersections and round trips (60.6864ms)
+✔ herringbone-square embedded intent matches its local source intersections and round trips (15.9636ms)
+✔ schema5 migration reuses exact legacy buffers; mixed foundation backup retains immutable revisions (89.5975ms)
+✔ over-capacity migration rejects before mutating its source snapshot (361.5005ms)
+✔ concave clipping retains separate source intervals and sampled deformed points respect certificates (38.6725ms)
+✔ double-herringbone: trace preserves geometry/bytes and reconstructs every interior source parameter (95.9745ms)
+✔ double-herringbone-field: trace preserves geometry/bytes and reconstructs every interior source parameter (164.9155ms)
+✔ herringbone-square: trace preserves geometry/bytes and reconstructs every interior source parameter (49.2886ms)
+✔ persistent production worker binds successive source traces to exact results (91.4733ms)
+✔ reviewed finite foundations carry directed source runs without backside joins (0.2091ms)
+✔ retained source IDs survive parameter changes and duplicates isolate identity (0.2918ms)
+✔ finite support equations enclose unequal-length entry and exit roots (0.2163ms)
+✔ expanded search retains outside runs and rejects candidate overflow atomically (1.7505ms)
+✔ double-herringbone identity and influence preserve exact compact geometry (208.2464ms)
+✔ herringbone-square identity and influence preserve exact compact geometry (140.792ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2690.4575

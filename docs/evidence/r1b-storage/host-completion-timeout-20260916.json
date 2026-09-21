@@ -1,0 +1,39 @@
+{
+  "build": "WF-R1B-IDB-20260916B",
+  "result": "failed",
+  "sourceEvidence": "verification/local-r1b/browser-failure-latest.json",
+  "sourceSha256": "D9BD3C89E5FC108885C2F1BF831CB2D9EE92CE3BE4B3E05FCEAAF4E5DF34CFC6",
+  "stage": "dense spacing #b-spacing",
+  "requestSequence": 5,
+  "requestId": "ba1d0d13-da75-4938-9cb2-b56cab1ae6ce:5",
+  "typedError": {
+    "code": "completion-timeout",
+    "message": "Storage preparation exceeded the completion deadline."
+  },
+  "timingMs": {
+    "worker": 278.79999999701977,
+    "totalAtFailure": 765.2999999970198,
+    "contractMaximum": 750
+  },
+  "precedingDenseACommit": {
+    "workerMs": 143.29999999701977,
+    "totalMs": 362.19999998807907,
+    "storageGeneration": 8
+  },
+  "atomicOutcome": {
+    "commitEventForFailedRequest": false,
+    "pendingWorkerAfterFailure": null,
+    "activeWorkerAfterFailure": null
+  },
+  "automatedChecks": {
+    "testsPassed": 60,
+    "testsFailed": 0,
+    "workerKernelP50Ms": 188.5012999999999,
+    "workerKernelP95Ms": 227.51230000000032,
+    "workerKernelMaxMs": 241.18629999999985,
+    "actualCapacityProof": true,
+    "syntheticCapacityProof": true,
+    "staticChecks": true
+  },
+  "requiredDisposition": "architectural-review"
+}

@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+const d='docs/evidence/stability-phase0/';
+const before=JSON.parse(fs.readFileSync(d+'production-before.json','utf8').replace(/^\uFEFF/,''));
+const raw=fs.readFileSync('dist/app.mjs','utf8');
+const without=raw.split(/(?<=\n)/).filter(l=>!l.includes('compatibilityBaselineTool')&&!l.includes('registerTool(baselineTool,')).join('');
+const expected=before.find(x=>x.path==='dist/app.mjs').sha256;
+const sha=s=>createHash('sha256').update(s).digest('hex');
+const variants=[without,...['\n','\r\n','\r\r\n'].map(ending=>without.replace(/([^\r\n]*registerTool\(storageTool[^\r\n]*)[\r]*\n/,'$1'+ending))];
+const preserved=variants.some(s=>sha(s)===expected);
+const result={originalAppPreservedExcludingDiagnosticRegistration:preserved,registrationLineEndingMayDiffer:true,otherExistingDistributionFilesUnchanged:before.filter(x=>x.path!=='dist/app.mjs').every(x=>sha(fs.readFileSync(x.path))===x.sha256)};
+fs.writeFileSync(d+'preserved-source-check.json',JSON.stringify(result,null,2));console.log(result);
+if(!preserved||!result.otherExistingDistributionFilesUnchanged)process.exitCode=1;

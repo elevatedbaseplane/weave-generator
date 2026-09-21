@@ -1,0 +1,17 @@
+✔ hash reuse preserves every compact byte: double-herringbone active=false (26.1605ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=true (25.3498ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=false (5.7589ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=true (10.8361ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=false (18.5808ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=true (30.9685ms)
+✔ double-herringbone: trace preserves geometry/bytes and reconstructs every interior source parameter (114.2165ms)
+✔ double-herringbone-field: trace preserves geometry/bytes and reconstructs every interior source parameter (176.0169ms)
+✔ herringbone-square: trace preserves geometry/bytes and reconstructs every interior source parameter (51.0721ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 503.7816

@@ -1,0 +1,206 @@
+{
+  "build": "WF-STABILITY-S4-BOUNDED-AUTOSAVE-20260918",
+  "capacity": {
+    "backupBytes": 67065,
+    "limit": 10485760,
+    "manifestBytes": 61545,
+    "payloads": {
+      "largest": [
+        {
+          "binary": 91342,
+          "codec": "derived-buffer-v3",
+          "counts": {
+            "certificates": 1944,
+            "edgeRefs": 115,
+            "fragments": 278,
+            "points": 2222,
+            "strands": 236
+          },
+          "id": "sha256-v1:9a68aa60719ad13cf1f9ac0b3291e5cddef96bf13379954ed6eb87e2a39af926",
+          "portable": 123351,
+          "referenced": true
+        },
+        {
+          "binary": 50828,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 1910,
+            "edgeRefs": 58,
+            "fragments": 29,
+            "points": 1939,
+            "strands": 29
+          },
+          "id": "sha256-v1:6527e48f712956ce3058fcf4bdcb7465145d53d66f5f563ddcaedd556163f9bd",
+          "portable": 69119,
+          "referenced": true
+        },
+        {
+          "binary": 39384,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 1512,
+            "edgeRefs": 36,
+            "fragments": 18,
+            "points": 1530,
+            "strands": 18
+          },
+          "id": "sha256-v1:dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+          "portable": 53830,
+          "referenced": true
+        },
+        {
+          "binary": 29044,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 988,
+            "edgeRefs": 62,
+            "fragments": 31,
+            "points": 1019,
+            "strands": 31
+          },
+          "id": "sha256-v1:7b3c0247ce7aab6e4d7ce13888432451d976a228fea198427b5d7ecc251c0f5d",
+          "portable": 40066,
+          "referenced": true
+        },
+        {
+          "binary": 24504,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 892,
+            "edgeRefs": 36,
+            "fragments": 18,
+            "points": 910,
+            "strands": 18
+          },
+          "id": "sha256-v1:1cac1759e2c85e861d4f8dd9eb035d9ab18341d92e9330c52bf3b4fd6309db9a",
+          "portable": 33983,
+          "referenced": true
+        },
+        {
+          "binary": 24264,
+          "codec": "derived-buffer-v3",
+          "counts": {
+            "certificates": 551,
+            "edgeRefs": 14,
+            "fragments": 71,
+            "points": 622,
+            "strands": 56
+          },
+          "id": "sha256-v1:c00e036c5c1f637389a69c7f21f95637204fbdd26bd60e1e8a1bca438b078fb1",
+          "portable": 33895,
+          "referenced": true
+        },
+        {
+          "binary": 23784,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 862,
+            "edgeRefs": 36,
+            "fragments": 18,
+            "points": 880,
+            "strands": 18
+          },
+          "id": "sha256-v1:93de28c4b41d502f9e73f14fd436e9c7b43eedaf0289dd5fbd0fcbc146c3db0b",
+          "portable": 33026,
+          "referenced": true
+        },
+        {
+          "binary": 20184,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 712,
+            "edgeRefs": 36,
+            "fragments": 18,
+            "points": 730,
+            "strands": 18
+          },
+          "id": "sha256-v1:7e326b6502f83b6ef100e662247fd25db734b224229f3731627097822c3593d1",
+          "portable": 28223,
+          "referenced": true
+        },
+        {
+          "binary": 20184,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 712,
+            "edgeRefs": 36,
+            "fragments": 18,
+            "points": 730,
+            "strands": 18
+          },
+          "id": "sha256-v1:4f48c7ea8f0bd735e53b43889ca07ce3e3ee5a02b1b1bae031ab527003c18c52",
+          "portable": 28223,
+          "referenced": true
+        },
+        {
+          "binary": 14392,
+          "codec": "derived-buffer-v2",
+          "counts": {
+            "certificates": 528,
+            "edgeRefs": 20,
+            "fragments": 10,
+            "points": 538,
+            "strands": 10
+          },
+          "id": "sha256-v1:d782df8826f84adcfc4d2c887b76368253397a0fb7d74f9895360b076e2844b8",
+          "portable": 20509,
+          "referenced": true
+        },
+        {
+          "binary": 11004,
+          "codec": "derived-buffer-v3",
+          "counts": {
+            "certificates": 56,
+            "edgeRefs": 14,
+            "fragments": 56,
+            "points": 112,
+            "strands": 56
+          },
+          "id": "sha256-v1:7ed64525c5d9f92127e5e58e21f650eb8abb884b5ceaee9af261d905022b6969",
+          "portable": 16177,
+          "referenced": true
+        }
+      ],
+      "portableBytes": 480402,
+      "referenced": 11,
+      "total": 11,
+      "unreferencedBytes": 0
+    },
+    "projects": [
+      {
+        "boundaries": 2,
+        "grids": 6,
+        "name": "WEAVE STUDIES",
+        "patterns": 7,
+        "portableBytes": 375973,
+        "revisions": 6
+      },
+      {
+        "boundaries": 1,
+        "grids": 1,
+        "name": "CONTROL DIAGNOSTIC",
+        "patterns": 2,
+        "portableBytes": 138810,
+        "revisions": 4
+      },
+      {
+        "boundaries": 2,
+        "grids": 1,
+        "name": "STABILITY PHASE 0 BASELINE",
+        "patterns": 1,
+        "portableBytes": 67065,
+        "revisions": 1
+      }
+    ],
+    "records": {
+      "bytes": 39103,
+      "referenced": 11,
+      "total": 11,
+      "unreferencedBytes": 0
+    },
+    "remaining": 10418695,
+    "scope": "active-project",
+    "workspaceBytes": 581266
+  },
+  "storageBlocked": false
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "name": "working",
+    "study": "weave-study-c3747324-eac9-4a99-a41f-a882bc566b40",
+    "difference": {
+      "path": ".strands.6.fragments.0.segmentErrorBounds.0",
+      "actual": 2.842170943040402e-13,
+      "expected": 2.8421709430404023e-13
+    }
+  },
+  {
+    "name": "FOUNDATION 01",
+    "study": "weave-study-d84caca1-fab6-4b64-9609-5a50a2fabe4d",
+    "difference": {
+      "path": ".strands.16.fragments.0.u1",
+      "actual": 0.9333333333333333,
+      "expected": 0.9333333333333332
+    }
+  },
+  {
+    "name": "FOUNDATION 01",
+    "study": "weave-study-d84caca1-fab6-4b64-9609-5a50a2fabe4d",
+    "difference": {
+      "path": ".strands.1.fragments.0.segmentErrorBounds.0",
+      "actual": 3.126388037344442e-13,
+      "expected": 3.1263880373444423e-13
+    }
+  },
+  {
+    "name": "FOUNDATION 01",
+    "study": "weave-study-d84caca1-fab6-4b64-9609-5a50a2fabe4d",
+    "difference": {
+      "path": ".strands.1.fragments.0.segmentErrorBounds.0",
+      "actual": 3.126388037344442e-13,
+      "expected": 3.1263880373444423e-13
+    }
+  },
+  {
+    "name": "INFLUENCED GRID 02",
+    "study": "weave-study-5905c5f7-4108-4afb-94c2-8122e57aa063",
+    "difference": {
+      "path": ".strands.2.fragments.0.points.3.y",
+      "actual": -119.99030675713037,
+      "expected": -119.99030675713036
+    }
+  },
+  {
+    "name": "FOUNDATION 03",
+    "study": "weave-study-c3747324-eac9-4a99-a41f-a882bc566b40",
+    "difference": {
+      "path": ".strands.6.fragments.0.segmentErrorBounds.0",
+      "actual": 2.842170943040402e-13,
+      "expected": 2.8421709430404023e-13
+    }
+  },
+  {
+    "name": "FOUNDATION 03",
+    "study": "weave-study-c3747324-eac9-4a99-a41f-a882bc566b40",
+    "difference": {
+      "path": ".strands.6.fragments.0.segmentErrorBounds.0",
+      "actual": 2.842170943040402e-13,
+      "expected": 2.8421709430404023e-13
+    }
+  }
+]

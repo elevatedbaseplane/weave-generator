@@ -1,0 +1,23 @@
+✔ actual workspace handler reproduces the former select-then-Fit loss (1.7253ms)
+✔ dense preparation waits for restoration, reveals guides, fits then selects (1.5548ms)
+✔ missing visible influence reports fixture error instead of locator timeout (1.3745ms)
+✔ wrong selected canvas identity fails before dragging (1.314ms)
+✔ combined fields add from one base point and exact opposing fields cancel independent of order (50.1862ms)
+✔ mixed overlapping fields remain complete and family settings are independent (9.1114ms)
+✔ seeded per-strand variation is repeatable, family independent and bounded (5.3063ms)
+✔ zero variation and disabled fields route to exact identity geometry (1.6077ms)
+✔ add duplicate remove and eight-field limit preserve stable identities atomically (24.6272ms)
+✔ invalid combined records reject duplicate IDs seed and variation without mutation (1.9761ms)
+✔ falloff is adjustable from one through five while legacy omitted falloff remains exact (44.6617ms)
+✔ legacy schema-5 omitted falloff preserves its exact cubic certificate fixture (8.0977ms)
+✔ editing a v4 working study promotes it to v5 without rewriting identity or values (1.4638ms)
+✔ v5 immutable revisions compact storage and portable backup round trip exactly (37.8573ms)
+✔ persistent worker accepts R1D protocol and returns certified compact geometry (62.7931ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 278.4983

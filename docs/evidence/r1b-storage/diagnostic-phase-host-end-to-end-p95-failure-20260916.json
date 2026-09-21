@@ -1,0 +1,2329 @@
+{
+  "build": "WF-R1B-DELTA-20260916",
+  "passed": false,
+  "stage": "dense worker loop",
+  "iteration": 29,
+  "error": {
+    "name": "AssertionError",
+    "message": "{\"pendingMs\":1.5,\"coldTotalMs\":33,\"workerP95\":335.59999999403954,\"workerMax\":353.5,\"completeP95\":568.5,\"completeMax\":593.2000000029802}",
+    "stack": "AssertionError [ERR_ASSERTION]: {\"pendingMs\":1.5,\"coldTotalMs\":33,\"workerP95\":335.59999999403954,\"workerMax\":353.5,\"completeP95\":568.5,\"completeMax\":593.2000000029802}\n    at C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1b-browser.cjs:39:312"
+  },
+  "terminal": null,
+  "finalStatus": "CERTIFIED ATTRACTOR COMMITTED · 319.8 MS WORKER · 503.0 MS TOTAL.",
+  "finalStatusError": false,
+  "pendingWorker": null,
+  "activeWorker": null,
+  "workerEvents": [
+    {
+      "type": "queued",
+      "at": 463.70000000298023,
+      "input": "sha256-v1:1f8d45f42b949a05d916ffb62d47371e454e7059915ae762892f5f463985a920",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 466.70000000298023,
+      "seq": 1,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:1",
+      "input": "sha256-v1:1f8d45f42b949a05d916ffb62d47371e454e7059915ae762892f5f463985a920",
+      "attempt": 0,
+      "requestStarted": 463.70000000298023
+    },
+    {
+      "type": "committed",
+      "at": 496.70000000298023,
+      "seq": 1,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:1",
+      "workerMs": 12.899999991059303,
+      "totalMs": 33,
+      "storageGeneration": 5,
+      "phases": {
+        "dispatchMs": 15.900146484375,
+        "deriveMs": 10.299999997019768,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.60009765625,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 0.9000000059604645,
+        "historyMs": 0,
+        "renderMs": 2
+      }
+    },
+    {
+      "type": "queued",
+      "at": 599,
+      "input": "sha256-v1:d74b0a4d4d4599af7b0a35a68a1dcaa24109bda0b8c8ce9101e3ebd2b5763c13",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 606,
+      "input": "sha256-v1:3a6115b57499a27f8a2a450d4c95852daf7b986bc9a6ae65882f7f0abdc00eb8",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 612.7999999970198,
+      "input": "sha256-v1:63781e5fcbb9599a33d7aed8c3f092a24ff4ccb28e81df1a05032eac127f97e0",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 620.1000000089407,
+      "input": "sha256-v1:63781e5fcbb9599a33d7aed8c3f092a24ff4ccb28e81df1a05032eac127f97e0",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 622.7999999970198,
+      "seq": 2,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:2",
+      "input": "sha256-v1:63781e5fcbb9599a33d7aed8c3f092a24ff4ccb28e81df1a05032eac127f97e0",
+      "attempt": 0,
+      "requestStarted": 620.1000000089407
+    },
+    {
+      "type": "committed",
+      "at": 654.2999999970198,
+      "seq": 2,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:2",
+      "workerMs": 13.299999997019768,
+      "totalMs": 34.19999998807907,
+      "storageGeneration": 6,
+      "phases": {
+        "dispatchMs": 15.89990234375,
+        "deriveMs": 10.899999991059303,
+        "encodeMs": 1.4000000059604645,
+        "transferMs": 0.300048828125,
+        "validationMs": 0.09999999403953552,
+        "admissionMs": 0.20000000298023224,
+        "transactionMs": 0.5999999940395355,
+        "historyMs": 0,
+        "renderMs": 3.7999999970197678
+      }
+    },
+    {
+      "type": "queued",
+      "at": 718.9000000059605,
+      "input": "sha256-v1:4cf3670f6a093cd1aea92b8ce8415ab86c479e22d1b1313feadf328f851f922f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 736.2999999970198,
+      "input": "sha256-v1:4cf3670f6a093cd1aea92b8ce8415ab86c479e22d1b1313feadf328f851f922f",
+      "immediate": true
+    },
+    {
+      "type": "queued",
+      "at": 878.7999999970198,
+      "input": "sha256-v1:3413f7854d3d00f67d1ebdce67268abac36c3923241a912a72b9b84cbfd5774a",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 881.4000000059605,
+      "seq": 3,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:3",
+      "input": "sha256-v1:3413f7854d3d00f67d1ebdce67268abac36c3923241a912a72b9b84cbfd5774a",
+      "attempt": 0,
+      "requestStarted": 878.7999999970198
+    },
+    {
+      "type": "committed",
+      "at": 921.1000000089407,
+      "seq": 3,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:3",
+      "workerMs": 16.899999991059303,
+      "totalMs": 42.30000001192093,
+      "storageGeneration": 7,
+      "phases": {
+        "dispatchMs": 16.800048828125,
+        "deriveMs": 12.700000002980232,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.5,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 2.1000000089406967,
+        "historyMs": 0,
+        "renderMs": 5.100000008940697
+      }
+    },
+    {
+      "type": "queued",
+      "at": 1004.7000000029802,
+      "input": "sha256-v1:10c121d66e142f4429960c8a7985c00db11d018f3825c753efb1b1b2c87cc754",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 1015.2999999970198,
+      "seq": 4,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:4",
+      "input": "sha256-v1:10c121d66e142f4429960c8a7985c00db11d018f3825c753efb1b1b2c87cc754",
+      "attempt": 0,
+      "requestStarted": 1004.7000000029802
+    },
+    {
+      "type": "committed",
+      "at": 1147,
+      "seq": 4,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:4",
+      "workerMs": 93.30000001192093,
+      "totalMs": 142.29999999701977,
+      "storageGeneration": 8,
+      "phases": {
+        "dispatchMs": 26.10009765625,
+        "deriveMs": 72.20000000298023,
+        "encodeMs": 18.400000005960464,
+        "transferMs": 5.2998046875,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.5,
+        "transactionMs": 3.699999988079071,
+        "historyMs": 0,
+        "renderMs": 13.099999994039536
+      }
+    },
+    {
+      "type": "queued",
+      "at": 1999.4000000059605,
+      "input": "sha256-v1:1c3654650f850ff36616d469a9877465f496d16163ed00f223ebacd05dde485c",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 2001.9000000059605,
+      "seq": 5,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:5",
+      "input": "sha256-v1:1c3654650f850ff36616d469a9877465f496d16163ed00f223ebacd05dde485c",
+      "attempt": 0,
+      "requestStarted": 1999.4000000059605
+    },
+    {
+      "type": "committed",
+      "at": 2259.7000000029802,
+      "seq": 5,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:5",
+      "workerMs": 166.80000001192093,
+      "totalMs": 260.29999999701977,
+      "storageGeneration": 9,
+      "phases": {
+        "dispatchMs": 23.80029296875,
+        "deriveMs": 131.20000000298023,
+        "encodeMs": 33.1000000089407,
+        "transferMs": 11.69970703125,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 34.400000005960464,
+        "historyMs": 0,
+        "renderMs": 22.799999997019768
+      }
+    },
+    {
+      "type": "queued",
+      "at": 3839.6000000089407,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 3898,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 3900.7999999970198,
+      "seq": 6,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:6",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 3898
+    },
+    {
+      "type": "committed",
+      "at": 4203,
+      "seq": 6,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:6",
+      "workerMs": 160.3999999910593,
+      "totalMs": 305,
+      "storageGeneration": 10,
+      "phases": {
+        "dispatchMs": 29.300048828125,
+        "deriveMs": 128.20000000298023,
+        "encodeMs": 29.599999994039536,
+        "transferMs": 30.10009765625,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.5,
+        "transactionMs": 62.20000000298023,
+        "historyMs": 0,
+        "renderMs": 22
+      }
+    },
+    {
+      "type": "queued",
+      "at": 5772.5,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 5829.9000000059605,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 5832.29999999702,
+      "seq": 7,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:7",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 5829.9000000059605
+    },
+    {
+      "type": "committed",
+      "at": 6123.4000000059605,
+      "seq": 7,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:7",
+      "workerMs": 170.20000000298023,
+      "totalMs": 293.5,
+      "storageGeneration": 11,
+      "phases": {
+        "dispatchMs": 27.900146484375,
+        "deriveMs": 133.6000000089407,
+        "encodeMs": 34.099999994039536,
+        "transferMs": 24.199951171875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 48,
+        "historyMs": 0,
+        "renderMs": 22.400000005960464
+      }
+    },
+    {
+      "type": "queued",
+      "at": 7692.20000000298,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 7747.79999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 7750.4000000059605,
+      "seq": 8,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:8",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 7747.79999999702
+    },
+    {
+      "type": "committed",
+      "at": 8053.9000000059605,
+      "seq": 8,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:8",
+      "workerMs": 156.90000000596046,
+      "totalMs": 306.1000000089407,
+      "storageGeneration": 12,
+      "phases": {
+        "dispatchMs": 39.60009765625,
+        "deriveMs": 126.5,
+        "encodeMs": 27.799999997019768,
+        "transferMs": 22.199951171875,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 63.6000000089407,
+        "historyMs": 0,
+        "renderMs": 23
+      }
+    },
+    {
+      "type": "queued",
+      "at": 9592.29999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 9650,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 9652.60000000894,
+      "seq": 9,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:9",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 9650
+    },
+    {
+      "type": "committed",
+      "at": 9948.5,
+      "seq": 9,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:9",
+      "workerMs": 165.5,
+      "totalMs": 298.5,
+      "storageGeneration": 13,
+      "phases": {
+        "dispatchMs": 29.5,
+        "deriveMs": 132.90000000596046,
+        "encodeMs": 29.799999997019768,
+        "transferMs": 17.199951171875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 64.1000000089407,
+        "historyMs": 0,
+        "renderMs": 21.399999991059303
+      }
+    },
+    {
+      "type": "queued",
+      "at": 11515.70000000298,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 11574,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 11576.5,
+      "seq": 10,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:10",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 11574
+    },
+    {
+      "type": "committed",
+      "at": 11859.70000000298,
+      "seq": 10,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:10",
+      "workerMs": 158.6000000089407,
+      "totalMs": 285.70000000298023,
+      "storageGeneration": 14,
+      "phases": {
+        "dispatchMs": 28.000244140625,
+        "deriveMs": 126.8999999910593,
+        "encodeMs": 29.100000008940697,
+        "transferMs": 10.5,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.5,
+        "transactionMs": 66.20000000298023,
+        "historyMs": 0,
+        "renderMs": 21.700000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 13393.40000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 13452.5,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 13454.90000000596,
+      "seq": 11,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:11",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 13452.5
+    },
+    {
+      "type": "committed",
+      "at": 13761.10000000894,
+      "seq": 11,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:11",
+      "workerMs": 166.3999999910593,
+      "totalMs": 308.5,
+      "storageGeneration": 15,
+      "phases": {
+        "dispatchMs": 29.10009765625,
+        "deriveMs": 129.70000000298023,
+        "encodeMs": 33.8999999910593,
+        "transferMs": 17.199951171875,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.5,
+        "transactionMs": 68,
+        "historyMs": 0,
+        "renderMs": 27.099999994039536
+      }
+    },
+    {
+      "type": "queued",
+      "at": 15322.90000000596,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 15381,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 15383.5,
+      "seq": 12,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:12",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 15380.90000000596
+    },
+    {
+      "type": "committed",
+      "at": 15682.70000000298,
+      "seq": 12,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:12",
+      "workerMs": 164.3999999910593,
+      "totalMs": 301.79999999701977,
+      "storageGeneration": 16,
+      "phases": {
+        "dispatchMs": 28.2001953125,
+        "deriveMs": 126.09999999403954,
+        "encodeMs": 35.5,
+        "transferMs": 22.899658203125,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 64.79999999701977,
+        "historyMs": 0,
+        "renderMs": 20.700000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 17214.20000000298,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 17272.70000000298,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 17275.29999999702,
+      "seq": 13,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:13",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 17272.70000000298
+    },
+    {
+      "type": "committed",
+      "at": 17576.5,
+      "seq": 13,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:13",
+      "workerMs": 171.5,
+      "totalMs": 303.79999999701977,
+      "storageGeneration": 17,
+      "phases": {
+        "dispatchMs": 29.300048828125,
+        "deriveMs": 135,
+        "encodeMs": 33.79999999701977,
+        "transferMs": 16.800048828125,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 64.19999998807907,
+        "historyMs": 0,
+        "renderMs": 21.200000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 19101.79999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 19159.79999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 19162.60000000894,
+      "seq": 14,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:14",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 19159.79999999702
+    },
+    {
+      "type": "committed",
+      "at": 19443.90000000596,
+      "seq": 14,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:14",
+      "workerMs": 157.5,
+      "totalMs": 284.1000000089407,
+      "storageGeneration": 18,
+      "phases": {
+        "dispatchMs": 28.900146484375,
+        "deriveMs": 124.70000000298023,
+        "encodeMs": 30.099999994039536,
+        "transferMs": 9.39990234375,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 64.80000001192093,
+        "historyMs": 0,
+        "renderMs": 22.799999997019768
+      }
+    },
+    {
+      "type": "queued",
+      "at": 20975.29999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 21031.29999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 21033.90000000596,
+      "seq": 15,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:15",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 21031.29999999702
+    },
+    {
+      "type": "committed",
+      "at": 21344,
+      "seq": 15,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:15",
+      "workerMs": 164.5,
+      "totalMs": 312.70000000298023,
+      "storageGeneration": 19,
+      "phases": {
+        "dispatchMs": 37.699951171875,
+        "deriveMs": 132.5,
+        "encodeMs": 29,
+        "transferMs": 24.300048828125,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.5,
+        "transactionMs": 62.3999999910593,
+        "historyMs": 0,
+        "renderMs": 23
+      }
+    },
+    {
+      "type": "queued",
+      "at": 22878.40000000596,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 22934.40000000596,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 22937.10000000894,
+      "seq": 16,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:16",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 22934.40000000596
+    },
+    {
+      "type": "committed",
+      "at": 23230.5,
+      "seq": 16,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:16",
+      "workerMs": 156.5,
+      "totalMs": 296.09999999403954,
+      "storageGeneration": 20,
+      "phases": {
+        "dispatchMs": 29.7001953125,
+        "deriveMs": 125.30000001192093,
+        "encodeMs": 28.5,
+        "transferMs": 23,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 64.79999999701977,
+        "historyMs": 0,
+        "renderMs": 21.299999997019768
+      }
+    },
+    {
+      "type": "queued",
+      "at": 24788.29999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 24851.40000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 24853.79999999702,
+      "seq": 17,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:17",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 24851.40000000596
+    },
+    {
+      "type": "committed",
+      "at": 25133.5,
+      "seq": 17,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:17",
+      "workerMs": 162.59999999403954,
+      "totalMs": 282.09999999403954,
+      "storageGeneration": 21,
+      "phases": {
+        "dispatchMs": 27.7001953125,
+        "deriveMs": 130.29999999701977,
+        "encodeMs": 29.5,
+        "transferMs": 19,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.6000000089406967,
+        "transactionMs": 49.3999999910593,
+        "historyMs": 0,
+        "renderMs": 22.5
+      }
+    },
+    {
+      "type": "queued",
+      "at": 26662.40000000596,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 26721.5,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 26724.10000000894,
+      "seq": 18,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:18",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 26721.5
+    },
+    {
+      "type": "committed",
+      "at": 27025.40000000596,
+      "seq": 18,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:18",
+      "workerMs": 160.80000001192093,
+      "totalMs": 303.90000000596046,
+      "storageGeneration": 22,
+      "phases": {
+        "dispatchMs": 41.800048828125,
+        "deriveMs": 130,
+        "encodeMs": 27.5,
+        "transferMs": 13.800048828125,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 62.70000000298023,
+        "historyMs": 0,
+        "renderMs": 24.200000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 28563.90000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 28622.10000000894,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 28624.40000000596,
+      "seq": 19,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:19",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 28622.10000000894
+    },
+    {
+      "type": "committed",
+      "at": 28902.20000000298,
+      "seq": 19,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:19",
+      "workerMs": 159.19999998807907,
+      "totalMs": 280.09999999403954,
+      "storageGeneration": 23,
+      "phases": {
+        "dispatchMs": 28.599853515625,
+        "deriveMs": 127.5,
+        "encodeMs": 29.099999994039536,
+        "transferMs": 22.5,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 48.69999998807907,
+        "historyMs": 0,
+        "renderMs": 20.400000005960464
+      }
+    },
+    {
+      "type": "queued",
+      "at": 30437.20000000298,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 30496,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 30498.40000000596,
+      "seq": 20,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:20",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 30496
+    },
+    {
+      "type": "committed",
+      "at": 30792.40000000596,
+      "seq": 20,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:20",
+      "workerMs": 161,
+      "totalMs": 296.40000000596046,
+      "storageGeneration": 24,
+      "phases": {
+        "dispatchMs": 29,
+        "deriveMs": 128.79999999701977,
+        "encodeMs": 29.600000008940697,
+        "transferMs": 20,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.30000001192092896,
+        "transactionMs": 63.599999994039536,
+        "historyMs": 0,
+        "renderMs": 22.200000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 32322.10000000894,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 32379.90000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 32382.40000000596,
+      "seq": 21,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:21",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 32379.90000000596
+    },
+    {
+      "type": "committed",
+      "at": 32685.40000000596,
+      "seq": 21,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:21",
+      "workerMs": 168.20000000298023,
+      "totalMs": 305.5,
+      "storageGeneration": 25,
+      "phases": {
+        "dispatchMs": 27.800048828125,
+        "deriveMs": 131.29999999701977,
+        "encodeMs": 34,
+        "transferMs": 18.7998046875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.29999999701976776,
+        "transactionMs": 57.3999999910593,
+        "historyMs": 0,
+        "renderMs": 32.6000000089407
+      }
+    },
+    {
+      "type": "queued",
+      "at": 34240.5,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 34299.60000000894,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 34302,
+      "seq": 22,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:22",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 34299.60000000894
+    },
+    {
+      "type": "committed",
+      "at": 34591.29999999702,
+      "seq": 22,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:22",
+      "workerMs": 156.70000000298023,
+      "totalMs": 291.69999998807907,
+      "storageGeneration": 26,
+      "phases": {
+        "dispatchMs": 28.2998046875,
+        "deriveMs": 126.5,
+        "encodeMs": 27.5,
+        "transferMs": 19.400146484375,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.9000000059604645,
+        "transactionMs": 64.3999999910593,
+        "historyMs": 0,
+        "renderMs": 21.69999998807907
+      }
+    },
+    {
+      "type": "queued",
+      "at": 36138.60000000894,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 36195,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 36197.29999999702,
+      "seq": 23,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:23",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 36195
+    },
+    {
+      "type": "committed",
+      "at": 36489.20000000298,
+      "seq": 23,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:23",
+      "workerMs": 167.29999999701977,
+      "totalMs": 294.20000000298023,
+      "storageGeneration": 27,
+      "phases": {
+        "dispatchMs": 29.400146484375,
+        "deriveMs": 132.09999999403954,
+        "encodeMs": 32.5,
+        "transferMs": 11.400146484375,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.5,
+        "transactionMs": 64,
+        "historyMs": 0,
+        "renderMs": 21.400000005960464
+      }
+    },
+    {
+      "type": "queued",
+      "at": 38042,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 38099.40000000596,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 38101.90000000596,
+      "seq": 24,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:24",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 38099.40000000596
+    },
+    {
+      "type": "committed",
+      "at": 38381,
+      "seq": 24,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:24",
+      "workerMs": 158.09999999403954,
+      "totalMs": 281.59999999403954,
+      "storageGeneration": 28,
+      "phases": {
+        "dispatchMs": 27.60009765625,
+        "deriveMs": 127.79999999701977,
+        "encodeMs": 27.700000002980232,
+        "transferMs": 24.7998046875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5999999940395355,
+        "transactionMs": 47.5,
+        "historyMs": 0,
+        "renderMs": 22.700000002980232
+      }
+    },
+    {
+      "type": "queued",
+      "at": 39916.40000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 39973,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 39975.5,
+      "seq": 25,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:25",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 39973
+    },
+    {
+      "type": "committed",
+      "at": 40276.20000000298,
+      "seq": 25,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:25",
+      "workerMs": 167.29999999701977,
+      "totalMs": 303.20000000298023,
+      "storageGeneration": 29,
+      "phases": {
+        "dispatchMs": 22.7001953125,
+        "deriveMs": 134.5,
+        "encodeMs": 30.099999994039536,
+        "transferMs": 23.5,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.30000001192092896,
+        "transactionMs": 67.69999998807907,
+        "historyMs": 0,
+        "renderMs": 21.400000005960464
+      }
+    },
+    {
+      "type": "queued",
+      "at": 41870.29999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 41926.10000000894,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 41928.40000000596,
+      "seq": 26,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:26",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 41926.10000000894
+    },
+    {
+      "type": "committed",
+      "at": 42247.5,
+      "seq": 26,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:26",
+      "workerMs": 164.3999999910593,
+      "totalMs": 321.3999999910593,
+      "storageGeneration": 30,
+      "phases": {
+        "dispatchMs": 43.89990234375,
+        "deriveMs": 130.3999999910593,
+        "encodeMs": 28.5,
+        "transferMs": 24.900146484375,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.5,
+        "transactionMs": 63.79999999701977,
+        "historyMs": 0,
+        "renderMs": 23.599999994039536
+      }
+    },
+    {
+      "type": "queued",
+      "at": 43935.60000000894,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 43997.70000000298,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 43999.90000000596,
+      "seq": 27,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:27",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 43997.70000000298
+    },
+    {
+      "type": "committed",
+      "at": 44590.90000000596,
+      "seq": 27,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:27",
+      "workerMs": 353.5,
+      "totalMs": 593.2000000029802,
+      "storageGeneration": 31,
+      "phases": {
+        "dispatchMs": 29.300048828125,
+        "deriveMs": 293.29999999701977,
+        "encodeMs": 57.5,
+        "transferMs": 29.89990234375,
+        "validationMs": 0.7000000029802322,
+        "admissionMs": 1.199999988079071,
+        "transactionMs": 131.20000000298023,
+        "historyMs": 0,
+        "renderMs": 47.29999999701977
+      }
+    },
+    {
+      "type": "queued",
+      "at": 47162.60000000894,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 47249.79999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 47253.29999999702,
+      "seq": 28,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:28",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 47249.79999999702
+    },
+    {
+      "type": "committed",
+      "at": 47734.90000000596,
+      "seq": 28,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:28",
+      "workerMs": 309.09999999403954,
+      "totalMs": 485.1000000089407,
+      "storageGeneration": 32,
+      "phases": {
+        "dispatchMs": 38.699951171875,
+        "deriveMs": 250.19999998807907,
+        "encodeMs": 54.20000000298023,
+        "transferMs": 31.199951171875,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.7000000029802322,
+        "transactionMs": 74.59999999403954,
+        "historyMs": 0,
+        "renderMs": 30.400000005960464
+      }
+    },
+    {
+      "type": "queued",
+      "at": 50274.79999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 50338.79999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 50341.20000000298,
+      "seq": 29,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:29",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 50338.79999999702
+    },
+    {
+      "type": "committed",
+      "at": 50857.5,
+      "seq": 29,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:29",
+      "workerMs": 282.09999999403954,
+      "totalMs": 518.7000000029802,
+      "storageGeneration": 33,
+      "phases": {
+        "dispatchMs": 52.10009765625,
+        "deriveMs": 242.5,
+        "encodeMs": 36.70000000298023,
+        "transferMs": 53.19970703125,
+        "validationMs": 0.5999999940395355,
+        "admissionMs": 1,
+        "transactionMs": 94.8999999910593,
+        "historyMs": 0.10000000894069672,
+        "renderMs": 34.599999994039536
+      }
+    },
+    {
+      "type": "queued",
+      "at": 53365.5,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 53432.29999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 53435,
+      "seq": 30,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:30",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 53432.29999999702
+    },
+    {
+      "type": "committed",
+      "at": 53905.29999999702,
+      "seq": 30,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:30",
+      "workerMs": 237.59999999403954,
+      "totalMs": 472.90000000596046,
+      "storageGeneration": 34,
+      "phases": {
+        "dispatchMs": 69.39990234375,
+        "deriveMs": 187.3999999910593,
+        "encodeMs": 47.20000000298023,
+        "transferMs": 20.199951171875,
+        "validationMs": 0.7000000029802322,
+        "admissionMs": 1.4000000059604645,
+        "transactionMs": 109.70000000298023,
+        "historyMs": 0,
+        "renderMs": 33.79999999701977
+      }
+    },
+    {
+      "type": "queued",
+      "at": 56352.29999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 56423.90000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 56426.20000000298,
+      "seq": 31,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:31",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 56423.90000000596
+    },
+    {
+      "type": "committed",
+      "at": 56850.79999999702,
+      "seq": 31,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:31",
+      "workerMs": 242.70000000298023,
+      "totalMs": 426.8999999910593,
+      "storageGeneration": 35,
+      "phases": {
+        "dispatchMs": 51.7001953125,
+        "deriveMs": 197.70000000298023,
+        "encodeMs": 41.79999999701977,
+        "transferMs": 17.89990234375,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 76.3999999910593,
+        "historyMs": 0,
+        "renderMs": 37.29999999701977
+      }
+    },
+    {
+      "type": "queued",
+      "at": 59331.29999999702,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 59407.20000000298,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 59409.79999999702,
+      "seq": 32,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:32",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 59407.20000000298
+    },
+    {
+      "type": "committed",
+      "at": 59975.70000000298,
+      "seq": 32,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:32",
+      "workerMs": 335.59999999403954,
+      "totalMs": 568.5,
+      "storageGeneration": 36,
+      "phases": {
+        "dispatchMs": 64.60009765625,
+        "deriveMs": 279.30000001192093,
+        "encodeMs": 53.19999998807907,
+        "transferMs": 38.800048828125,
+        "validationMs": 0.7000000029802322,
+        "admissionMs": 1.1000000089406967,
+        "transactionMs": 84.69999998807907,
+        "historyMs": 0,
+        "renderMs": 42.900000005960464
+      }
+    },
+    {
+      "type": "queued",
+      "at": 62411.5,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 62507.40000000596,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 62510.10000000894,
+      "seq": 33,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:33",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 62507.40000000596
+    },
+    {
+      "type": "committed",
+      "at": 63047.5,
+      "seq": 33,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:33",
+      "workerMs": 316.5,
+      "totalMs": 540,
+      "storageGeneration": 37,
+      "phases": {
+        "dispatchMs": 84.300048828125,
+        "deriveMs": 274.5,
+        "encodeMs": 36,
+        "transferMs": 29.10009765625,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.5999999940395355,
+        "transactionMs": 69.09999999403954,
+        "historyMs": 0,
+        "renderMs": 40
+      }
+    },
+    {
+      "type": "queued",
+      "at": 65456.40000000596,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 65537.20000000298,
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 65539.70000000298,
+      "seq": 34,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:34",
+      "input": "sha256-v1:1b16f7c985f5250127fb66bac363392da34972ba02167d9066fe181bce4c878f",
+      "attempt": 0,
+      "requestStarted": 65537.20000000298
+    },
+    {
+      "type": "committed",
+      "at": 66090.79999999702,
+      "seq": 34,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:34",
+      "workerMs": 309.6000000089407,
+      "totalMs": 553.5999999940395,
+      "storageGeneration": 38,
+      "phases": {
+        "dispatchMs": 71.300048828125,
+        "deriveMs": 260.5,
+        "encodeMs": 45.70000000298023,
+        "transferMs": 15.89990234375,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.6000000089406967,
+        "transactionMs": 117.8999999910593,
+        "historyMs": 0,
+        "renderMs": 38
+      }
+    },
+    {
+      "type": "queued",
+      "at": 68547.60000000894,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 68618.29999999702,
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 68622.20000000298,
+      "seq": 35,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:35",
+      "input": "sha256-v1:e443225f7f258531d6cd5439c2830d47e0214e16dda1cf434d3e893b40984ab7",
+      "attempt": 0,
+      "requestStarted": 68618.29999999702
+    },
+    {
+      "type": "committed",
+      "at": 69121.29999999702,
+      "seq": 35,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:35",
+      "workerMs": 319.79999999701977,
+      "totalMs": 503,
+      "storageGeneration": 39,
+      "phases": {
+        "dispatchMs": 33,
+        "deriveMs": 270.80000001192093,
+        "encodeMs": 45.3999999910593,
+        "transferMs": 20.199951171875,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.5999999940395355,
+        "transactionMs": 102,
+        "historyMs": 0,
+        "renderMs": 27
+      }
+    }
+  ],
+  "phaseDiagnostics": [
+    {
+      "label": "dense worker loop",
+      "iteration": 21,
+      "requestSequence": 27,
+      "phase": "transactionMs",
+      "valueMs": 131.20000000298023,
+      "diagnosticTargetMs": 100
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 24,
+      "requestSequence": 30,
+      "phase": "transactionMs",
+      "valueMs": 109.70000000298023,
+      "diagnosticTargetMs": 100
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 28,
+      "requestSequence": 34,
+      "phase": "transactionMs",
+      "valueMs": 117.8999999910593,
+      "diagnosticTargetMs": 100
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 29,
+      "requestSequence": 35,
+      "phase": "transactionMs",
+      "valueMs": 102,
+      "diagnosticTargetMs": 100
+    }
+  ],
+  "cycles": [
+    {
+      "label": "cold add attractor",
+      "iteration": null,
+      "requestSequence": 1,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:1",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 12.899999991059303,
+      "totalMs": 33,
+      "phases": {
+        "dispatchMs": 15.900146484375,
+        "deriveMs": 10.299999997019768,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.60009765625,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 0.9000000059604645,
+        "historyMs": 0,
+        "renderMs": 2
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 12.9 MS WORKER · 33.0 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "coalesced numeric edit",
+      "iteration": null,
+      "requestSequence": 2,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:2",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 13.299999997019768,
+      "totalMs": 34.19999998807907,
+      "phases": {
+        "dispatchMs": 15.89990234375,
+        "deriveMs": 10.899999991059303,
+        "encodeMs": 1.4000000059604645,
+        "transferMs": 0.300048828125,
+        "validationMs": 0.09999999403953552,
+        "admissionMs": 0.20000000298023224,
+        "transactionMs": 0.5999999940395355,
+        "historyMs": 0,
+        "renderMs": 3.7999999970197678
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 13.3 MS WORKER · 34.2 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense boundary",
+      "iteration": null,
+      "requestSequence": 3,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:3",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 16.899999991059303,
+      "totalMs": 42.30000001192093,
+      "phases": {
+        "dispatchMs": 16.800048828125,
+        "deriveMs": 12.700000002980232,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.5,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 2.1000000089406967,
+        "historyMs": 0,
+        "renderMs": 5.100000008940697
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 16.9 MS WORKER · 42.3 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense spacing #a-spacing",
+      "iteration": null,
+      "requestSequence": 4,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:4",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 93.30000001192093,
+      "totalMs": 142.29999999701977,
+      "phases": {
+        "dispatchMs": 26.10009765625,
+        "deriveMs": 72.20000000298023,
+        "encodeMs": 18.400000005960464,
+        "transferMs": 5.2998046875,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.5,
+        "transactionMs": 3.699999988079071,
+        "historyMs": 0,
+        "renderMs": 13.099999994039536
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 93.3 MS WORKER · 142.3 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense spacing #b-spacing",
+      "iteration": null,
+      "requestSequence": 5,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:5",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 166.80000001192093,
+      "totalMs": 260.29999999701977,
+      "phases": {
+        "dispatchMs": 23.80029296875,
+        "deriveMs": 131.20000000298023,
+        "encodeMs": 33.1000000089407,
+        "transferMs": 11.69970703125,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 34.400000005960464,
+        "historyMs": 0,
+        "renderMs": 22.799999997019768
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 166.8 MS WORKER · 260.3 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 0,
+      "requestSequence": 6,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:6",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 160.3999999910593,
+      "totalMs": 305,
+      "phases": {
+        "dispatchMs": 29.300048828125,
+        "deriveMs": 128.20000000298023,
+        "encodeMs": 29.599999994039536,
+        "transferMs": 30.10009765625,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.5,
+        "transactionMs": 62.20000000298023,
+        "historyMs": 0,
+        "renderMs": 22
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 160.4 MS WORKER · 305.0 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 1,
+      "requestSequence": 7,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:7",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 170.20000000298023,
+      "totalMs": 293.5,
+      "phases": {
+        "dispatchMs": 27.900146484375,
+        "deriveMs": 133.6000000089407,
+        "encodeMs": 34.099999994039536,
+        "transferMs": 24.199951171875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 48,
+        "historyMs": 0,
+        "renderMs": 22.400000005960464
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 170.2 MS WORKER · 293.5 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 2,
+      "requestSequence": 8,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:8",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 156.90000000596046,
+      "totalMs": 306.1000000089407,
+      "phases": {
+        "dispatchMs": 39.60009765625,
+        "deriveMs": 126.5,
+        "encodeMs": 27.799999997019768,
+        "transferMs": 22.199951171875,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 63.6000000089407,
+        "historyMs": 0,
+        "renderMs": 23
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 156.9 MS WORKER · 306.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 3,
+      "requestSequence": 9,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:9",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 165.5,
+      "totalMs": 298.5,
+      "phases": {
+        "dispatchMs": 29.5,
+        "deriveMs": 132.90000000596046,
+        "encodeMs": 29.799999997019768,
+        "transferMs": 17.199951171875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 64.1000000089407,
+        "historyMs": 0,
+        "renderMs": 21.399999991059303
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 165.5 MS WORKER · 298.5 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 4,
+      "requestSequence": 10,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:10",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 158.6000000089407,
+      "totalMs": 285.70000000298023,
+      "phases": {
+        "dispatchMs": 28.000244140625,
+        "deriveMs": 126.8999999910593,
+        "encodeMs": 29.100000008940697,
+        "transferMs": 10.5,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.5,
+        "transactionMs": 66.20000000298023,
+        "historyMs": 0,
+        "renderMs": 21.700000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 158.6 MS WORKER · 285.7 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 5,
+      "requestSequence": 11,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:11",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 166.3999999910593,
+      "totalMs": 308.5,
+      "phases": {
+        "dispatchMs": 29.10009765625,
+        "deriveMs": 129.70000000298023,
+        "encodeMs": 33.8999999910593,
+        "transferMs": 17.199951171875,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.5,
+        "transactionMs": 68,
+        "historyMs": 0,
+        "renderMs": 27.099999994039536
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 166.4 MS WORKER · 308.5 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 6,
+      "requestSequence": 12,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:12",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 164.3999999910593,
+      "totalMs": 301.79999999701977,
+      "phases": {
+        "dispatchMs": 28.2001953125,
+        "deriveMs": 126.09999999403954,
+        "encodeMs": 35.5,
+        "transferMs": 22.899658203125,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 64.79999999701977,
+        "historyMs": 0,
+        "renderMs": 20.700000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 164.4 MS WORKER · 301.8 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 7,
+      "requestSequence": 13,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:13",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 171.5,
+      "totalMs": 303.79999999701977,
+      "phases": {
+        "dispatchMs": 29.300048828125,
+        "deriveMs": 135,
+        "encodeMs": 33.79999999701977,
+        "transferMs": 16.800048828125,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 64.19999998807907,
+        "historyMs": 0,
+        "renderMs": 21.200000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 171.5 MS WORKER · 303.8 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 8,
+      "requestSequence": 14,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:14",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 157.5,
+      "totalMs": 284.1000000089407,
+      "phases": {
+        "dispatchMs": 28.900146484375,
+        "deriveMs": 124.70000000298023,
+        "encodeMs": 30.099999994039536,
+        "transferMs": 9.39990234375,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 64.80000001192093,
+        "historyMs": 0,
+        "renderMs": 22.799999997019768
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 157.5 MS WORKER · 284.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 9,
+      "requestSequence": 15,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:15",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 164.5,
+      "totalMs": 312.70000000298023,
+      "phases": {
+        "dispatchMs": 37.699951171875,
+        "deriveMs": 132.5,
+        "encodeMs": 29,
+        "transferMs": 24.300048828125,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.5,
+        "transactionMs": 62.3999999910593,
+        "historyMs": 0,
+        "renderMs": 23
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 164.5 MS WORKER · 312.7 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 10,
+      "requestSequence": 16,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:16",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 156.5,
+      "totalMs": 296.09999999403954,
+      "phases": {
+        "dispatchMs": 29.7001953125,
+        "deriveMs": 125.30000001192093,
+        "encodeMs": 28.5,
+        "transferMs": 23,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 64.79999999701977,
+        "historyMs": 0,
+        "renderMs": 21.299999997019768
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 156.5 MS WORKER · 296.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 11,
+      "requestSequence": 17,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:17",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 162.59999999403954,
+      "totalMs": 282.09999999403954,
+      "phases": {
+        "dispatchMs": 27.7001953125,
+        "deriveMs": 130.29999999701977,
+        "encodeMs": 29.5,
+        "transferMs": 19,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.6000000089406967,
+        "transactionMs": 49.3999999910593,
+        "historyMs": 0,
+        "renderMs": 22.5
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 162.6 MS WORKER · 282.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 12,
+      "requestSequence": 18,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:18",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 160.80000001192093,
+      "totalMs": 303.90000000596046,
+      "phases": {
+        "dispatchMs": 41.800048828125,
+        "deriveMs": 130,
+        "encodeMs": 27.5,
+        "transferMs": 13.800048828125,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.3999999910593033,
+        "transactionMs": 62.70000000298023,
+        "historyMs": 0,
+        "renderMs": 24.200000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 160.8 MS WORKER · 303.9 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 13,
+      "requestSequence": 19,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:19",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 159.19999998807907,
+      "totalMs": 280.09999999403954,
+      "phases": {
+        "dispatchMs": 28.599853515625,
+        "deriveMs": 127.5,
+        "encodeMs": 29.099999994039536,
+        "transferMs": 22.5,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.4000000059604645,
+        "transactionMs": 48.69999998807907,
+        "historyMs": 0,
+        "renderMs": 20.400000005960464
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 159.2 MS WORKER · 280.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 14,
+      "requestSequence": 20,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:20",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 161,
+      "totalMs": 296.40000000596046,
+      "phases": {
+        "dispatchMs": 29,
+        "deriveMs": 128.79999999701977,
+        "encodeMs": 29.600000008940697,
+        "transferMs": 20,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.30000001192092896,
+        "transactionMs": 63.599999994039536,
+        "historyMs": 0,
+        "renderMs": 22.200000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 161.0 MS WORKER · 296.4 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 15,
+      "requestSequence": 21,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:21",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 168.20000000298023,
+      "totalMs": 305.5,
+      "phases": {
+        "dispatchMs": 27.800048828125,
+        "deriveMs": 131.29999999701977,
+        "encodeMs": 34,
+        "transferMs": 18.7998046875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.29999999701976776,
+        "transactionMs": 57.3999999910593,
+        "historyMs": 0,
+        "renderMs": 32.6000000089407
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 168.2 MS WORKER · 305.5 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 16,
+      "requestSequence": 22,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:22",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 156.70000000298023,
+      "totalMs": 291.69999998807907,
+      "phases": {
+        "dispatchMs": 28.2998046875,
+        "deriveMs": 126.5,
+        "encodeMs": 27.5,
+        "transferMs": 19.400146484375,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.9000000059604645,
+        "transactionMs": 64.3999999910593,
+        "historyMs": 0,
+        "renderMs": 21.69999998807907
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 156.7 MS WORKER · 291.7 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 17,
+      "requestSequence": 23,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:23",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 167.29999999701977,
+      "totalMs": 294.20000000298023,
+      "phases": {
+        "dispatchMs": 29.400146484375,
+        "deriveMs": 132.09999999403954,
+        "encodeMs": 32.5,
+        "transferMs": 11.400146484375,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.5,
+        "transactionMs": 64,
+        "historyMs": 0,
+        "renderMs": 21.400000005960464
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 167.3 MS WORKER · 294.2 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 18,
+      "requestSequence": 24,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:24",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 158.09999999403954,
+      "totalMs": 281.59999999403954,
+      "phases": {
+        "dispatchMs": 27.60009765625,
+        "deriveMs": 127.79999999701977,
+        "encodeMs": 27.700000002980232,
+        "transferMs": 24.7998046875,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5999999940395355,
+        "transactionMs": 47.5,
+        "historyMs": 0,
+        "renderMs": 22.700000002980232
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 158.1 MS WORKER · 281.6 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 19,
+      "requestSequence": 25,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:25",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 167.29999999701977,
+      "totalMs": 303.20000000298023,
+      "phases": {
+        "dispatchMs": 22.7001953125,
+        "deriveMs": 134.5,
+        "encodeMs": 30.099999994039536,
+        "transferMs": 23.5,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.30000001192092896,
+        "transactionMs": 67.69999998807907,
+        "historyMs": 0,
+        "renderMs": 21.400000005960464
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 167.3 MS WORKER · 303.2 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 20,
+      "requestSequence": 26,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:26",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 164.3999999910593,
+      "totalMs": 321.3999999910593,
+      "phases": {
+        "dispatchMs": 43.89990234375,
+        "deriveMs": 130.3999999910593,
+        "encodeMs": 28.5,
+        "transferMs": 24.900146484375,
+        "validationMs": 0.20000000298023224,
+        "admissionMs": 0.5,
+        "transactionMs": 63.79999999701977,
+        "historyMs": 0,
+        "renderMs": 23.599999994039536
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 164.4 MS WORKER · 321.4 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 21,
+      "requestSequence": 27,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:27",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 353.5,
+      "totalMs": 593.2000000029802,
+      "phases": {
+        "dispatchMs": 29.300048828125,
+        "deriveMs": 293.29999999701977,
+        "encodeMs": 57.5,
+        "transferMs": 29.89990234375,
+        "validationMs": 0.7000000029802322,
+        "admissionMs": 1.199999988079071,
+        "transactionMs": 131.20000000298023,
+        "historyMs": 0,
+        "renderMs": 47.29999999701977
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 353.5 MS WORKER · 593.2 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 22,
+      "requestSequence": 28,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:28",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 309.09999999403954,
+      "totalMs": 485.1000000089407,
+      "phases": {
+        "dispatchMs": 38.699951171875,
+        "deriveMs": 250.19999998807907,
+        "encodeMs": 54.20000000298023,
+        "transferMs": 31.199951171875,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.7000000029802322,
+        "transactionMs": 74.59999999403954,
+        "historyMs": 0,
+        "renderMs": 30.400000005960464
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 309.1 MS WORKER · 485.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 23,
+      "requestSequence": 29,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:29",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 282.09999999403954,
+      "totalMs": 518.7000000029802,
+      "phases": {
+        "dispatchMs": 52.10009765625,
+        "deriveMs": 242.5,
+        "encodeMs": 36.70000000298023,
+        "transferMs": 53.19970703125,
+        "validationMs": 0.5999999940395355,
+        "admissionMs": 1,
+        "transactionMs": 94.8999999910593,
+        "historyMs": 0.10000000894069672,
+        "renderMs": 34.599999994039536
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 282.1 MS WORKER · 518.7 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 24,
+      "requestSequence": 30,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:30",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 237.59999999403954,
+      "totalMs": 472.90000000596046,
+      "phases": {
+        "dispatchMs": 69.39990234375,
+        "deriveMs": 187.3999999910593,
+        "encodeMs": 47.20000000298023,
+        "transferMs": 20.199951171875,
+        "validationMs": 0.7000000029802322,
+        "admissionMs": 1.4000000059604645,
+        "transactionMs": 109.70000000298023,
+        "historyMs": 0,
+        "renderMs": 33.79999999701977
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 237.6 MS WORKER · 472.9 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 25,
+      "requestSequence": 31,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:31",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 242.70000000298023,
+      "totalMs": 426.8999999910593,
+      "phases": {
+        "dispatchMs": 51.7001953125,
+        "deriveMs": 197.70000000298023,
+        "encodeMs": 41.79999999701977,
+        "transferMs": 17.89990234375,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.5,
+        "transactionMs": 76.3999999910593,
+        "historyMs": 0,
+        "renderMs": 37.29999999701977
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 242.7 MS WORKER · 426.9 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 26,
+      "requestSequence": 32,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:32",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 335.59999999403954,
+      "totalMs": 568.5,
+      "phases": {
+        "dispatchMs": 64.60009765625,
+        "deriveMs": 279.30000001192093,
+        "encodeMs": 53.19999998807907,
+        "transferMs": 38.800048828125,
+        "validationMs": 0.7000000029802322,
+        "admissionMs": 1.1000000089406967,
+        "transactionMs": 84.69999998807907,
+        "historyMs": 0,
+        "renderMs": 42.900000005960464
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 335.6 MS WORKER · 568.5 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 27,
+      "requestSequence": 33,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:33",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 316.5,
+      "totalMs": 540,
+      "phases": {
+        "dispatchMs": 84.300048828125,
+        "deriveMs": 274.5,
+        "encodeMs": 36,
+        "transferMs": 29.10009765625,
+        "validationMs": 0.30000001192092896,
+        "admissionMs": 0.5999999940395355,
+        "transactionMs": 69.09999999403954,
+        "historyMs": 0,
+        "renderMs": 40
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 316.5 MS WORKER · 540.0 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 28,
+      "requestSequence": 34,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:34",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 309.6000000089407,
+      "totalMs": 553.5999999940395,
+      "phases": {
+        "dispatchMs": 71.300048828125,
+        "deriveMs": 260.5,
+        "encodeMs": 45.70000000298023,
+        "transferMs": 15.89990234375,
+        "validationMs": 0.29999999701976776,
+        "admissionMs": 0.6000000089406967,
+        "transactionMs": 117.8999999910593,
+        "historyMs": 0,
+        "renderMs": 38
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 309.6 MS WORKER · 553.6 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 29,
+      "requestSequence": 35,
+      "requestId": "3776d058-8578-49b3-b2a8-d5f9b87692ee:35",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 319.79999999701977,
+      "totalMs": 503,
+      "phases": {
+        "dispatchMs": 33,
+        "deriveMs": 270.80000001192093,
+        "encodeMs": 45.3999999910593,
+        "transferMs": 20.199951171875,
+        "validationMs": 0.4000000059604645,
+        "admissionMs": 0.5999999940395355,
+        "transactionMs": 102,
+        "historyMs": 0,
+        "renderMs": 27
+      },
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 319.8 MS WORKER · 503.0 MS TOTAL.",
+      "statusError": false
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+✔ square-grid: editable independent pattern, clipped influence and exact backup (53.5374ms)
+✔ diamond-grid: editable independent pattern, clipped influence and exact backup (28.539ms)
+✔ triangular-grid: editable independent pattern, clipped influence and exact backup (31.7193ms)
+✔ unknown preset rejects rather than creating a misleading fallback (0.4756ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.7548

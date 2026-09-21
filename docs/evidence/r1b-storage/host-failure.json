@@ -1,0 +1,341 @@
+{
+  "build": "WF-R1B-20260916",
+  "passed": false,
+  "stage": "dense worker loop",
+  "iteration": 0,
+  "error": {
+    "name": "Error",
+    "message": "Worker commit at dense worker loop iteration 0: Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.",
+    "stack": "Error: Worker commit at dense worker loop iteration 0: Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.\n    at runCycle (C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1b-browser.cjs:22:52)\n    at async C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1b-browser.cjs:34:65"
+  },
+  "terminal": {
+    "type": "failed",
+    "at": 6277.20000000298,
+    "seq": 7,
+    "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:7",
+    "code": "commit",
+    "message": "Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.",
+    "totalMs": 909,
+    "attempt": 0
+  },
+  "finalStatus": "R1B COMMIT: Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.",
+  "finalStatusError": true,
+  "pendingWorker": null,
+  "activeWorker": null,
+  "workerEvents": [
+    {
+      "type": "queued",
+      "at": 504.40000000596046,
+      "input": "sha256-v1:9cd2a4c4c91c48efec8a004f995f62e0e11e384ff23e88a156c1fb2a901a6775",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 517.2000000029802,
+      "seq": 1,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:1",
+      "input": "sha256-v1:9cd2a4c4c91c48efec8a004f995f62e0e11e384ff23e88a156c1fb2a901a6775",
+      "attempt": 0,
+      "requestStarted": 504.29999999701977
+    },
+    {
+      "type": "saving",
+      "at": 556.1000000089407,
+      "seq": 1,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:1",
+      "workerMs": 21.099999994039536
+    },
+    {
+      "type": "committed",
+      "at": 559,
+      "seq": 1,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:1",
+      "workerMs": 21.099999994039536,
+      "totalMs": 54.70000000298023
+    },
+    {
+      "type": "queued",
+      "at": 663.2000000029802,
+      "input": "sha256-v1:6307899d1786bb15052fa063d739d7be484ef648fd61012250b5b25ac85e16f3",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 678.7000000029802,
+      "input": "sha256-v1:6fbed748bb0e2323466cc7d90ba40914804f0e32e467f59703b5c78f01549e07",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 695.1000000089407,
+      "input": "sha256-v1:0d4eea798464e93882c3234fd5e76602dcc31cf0ded8630daa95679d5bba9e67",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 710.4000000059605,
+      "input": "sha256-v1:0d4eea798464e93882c3234fd5e76602dcc31cf0ded8630daa95679d5bba9e67",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 718.5,
+      "seq": 2,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:2",
+      "input": "sha256-v1:0d4eea798464e93882c3234fd5e76602dcc31cf0ded8630daa95679d5bba9e67",
+      "attempt": 0,
+      "requestStarted": 710.4000000059605
+    },
+    {
+      "type": "saving",
+      "at": 759.7999999970198,
+      "seq": 2,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:2",
+      "workerMs": 20.100000008940697
+    },
+    {
+      "type": "committed",
+      "at": 764.4000000059605,
+      "seq": 2,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:2",
+      "workerMs": 20.100000008940697,
+      "totalMs": 54
+    },
+    {
+      "type": "queued",
+      "at": 836.7999999970198,
+      "input": "sha256-v1:018d8069f10a909c6a057446bb8fd65955240c99123ae2fc4b9d3d066d688ae2",
+      "immediate": false
+    },
+    {
+      "type": "queued",
+      "at": 873.5,
+      "input": "sha256-v1:018d8069f10a909c6a057446bb8fd65955240c99123ae2fc4b9d3d066d688ae2",
+      "immediate": true
+    },
+    {
+      "type": "queued",
+      "at": 1059.1000000089407,
+      "input": "sha256-v1:2ed5a6b78ff41092469ba9fd6a876a3b347d3e3da8bc98711ee42cfad2c06e9e",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 1067.1000000089407,
+      "seq": 3,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:3",
+      "input": "sha256-v1:2ed5a6b78ff41092469ba9fd6a876a3b347d3e3da8bc98711ee42cfad2c06e9e",
+      "attempt": 0,
+      "requestStarted": 1059
+    },
+    {
+      "type": "saving",
+      "at": 1109.5,
+      "seq": 3,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:3",
+      "workerMs": 23.399999991059303
+    },
+    {
+      "type": "committed",
+      "at": 1115.5,
+      "seq": 3,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:3",
+      "workerMs": 23.399999991059303,
+      "totalMs": 56.5
+    },
+    {
+      "type": "queued",
+      "at": 1213.9000000059605,
+      "input": "sha256-v1:d2a204eee0230beb06acb6fc2a77ee05bc7c53be3e979f8e47581ed5d2796279",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 1234.2999999970198,
+      "seq": 4,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:4",
+      "input": "sha256-v1:d2a204eee0230beb06acb6fc2a77ee05bc7c53be3e979f8e47581ed5d2796279",
+      "attempt": 0,
+      "requestStarted": 1213.7999999970198
+    },
+    {
+      "type": "saving",
+      "at": 1437.9000000059605,
+      "seq": 4,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:4",
+      "workerMs": 140.3999999910593
+    },
+    {
+      "type": "committed",
+      "at": 1478.7000000029802,
+      "seq": 4,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:4",
+      "workerMs": 140.3999999910593,
+      "totalMs": 264.90000000596046
+    },
+    {
+      "type": "queued",
+      "at": 2533.2999999970198,
+      "input": "sha256-v1:1de697789b31e382c095b9aaa7fc34808189f04db06d65b59a423f61219fefbc",
+      "immediate": true
+    },
+    {
+      "type": "dispatched",
+      "at": 2605.7999999970198,
+      "seq": 5,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:5",
+      "input": "sha256-v1:1de697789b31e382c095b9aaa7fc34808189f04db06d65b59a423f61219fefbc",
+      "attempt": 0,
+      "requestStarted": 2533.2999999970198
+    },
+    {
+      "type": "saving",
+      "at": 3063,
+      "seq": 5,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:5",
+      "workerMs": 263.29999999701977
+    },
+    {
+      "type": "committed",
+      "at": 3166.4000000059605,
+      "seq": 5,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:5",
+      "workerMs": 263.29999999701977,
+      "totalMs": 633.1000000089407
+    },
+    {
+      "type": "queued",
+      "at": 4954.20000000298,
+      "input": "sha256-v1:2fdfdeaf88cf0e8903b4d42b51814469e4fd8968add1f01e4ffa16677cd086a0",
+      "immediate": false
+    },
+    {
+      "type": "dispatched",
+      "at": 5090.70000000298,
+      "seq": 6,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:6",
+      "input": "sha256-v1:2fdfdeaf88cf0e8903b4d42b51814469e4fd8968add1f01e4ffa16677cd086a0",
+      "attempt": 0,
+      "requestStarted": 4954.20000000298
+    },
+    {
+      "type": "queued",
+      "at": 5368.100000008941,
+      "input": "sha256-v1:2fdfdeaf88cf0e8903b4d42b51814469e4fd8968add1f01e4ffa16677cd086a0",
+      "immediate": true
+    },
+    {
+      "type": "cancelled",
+      "at": 5368.100000008941,
+      "seq": 6,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:6",
+      "reason": "superseded"
+    },
+    {
+      "type": "dispatched",
+      "at": 5553.20000000298,
+      "seq": 7,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:7",
+      "input": "sha256-v1:2fdfdeaf88cf0e8903b4d42b51814469e4fd8968add1f01e4ffa16677cd086a0",
+      "attempt": 0,
+      "requestStarted": 5368.100000008941
+    },
+    {
+      "type": "saving",
+      "at": 6166.20000000298,
+      "seq": 7,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:7",
+      "workerMs": 259.70000000298023
+    },
+    {
+      "type": "failed",
+      "at": 6277.20000000298,
+      "seq": 7,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:7",
+      "code": "commit",
+      "message": "Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.",
+      "totalMs": 909,
+      "attempt": 0
+    }
+  ],
+  "cycles": [
+    {
+      "label": "cold add attractor",
+      "iteration": null,
+      "requestSequence": 1,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:1",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 21.099999994039536,
+      "totalMs": 54.70000000298023,
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 21.1 MS WORKER · 54.7 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "coalesced numeric edit",
+      "iteration": null,
+      "requestSequence": 2,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:2",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 20.100000008940697,
+      "totalMs": 54,
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 20.1 MS WORKER · 54.0 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense boundary",
+      "iteration": null,
+      "requestSequence": 3,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:3",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 23.399999991059303,
+      "totalMs": 56.5,
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 23.4 MS WORKER · 56.5 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense spacing #a-spacing",
+      "iteration": null,
+      "requestSequence": 4,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:4",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 140.3999999910593,
+      "totalMs": 264.90000000596046,
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 140.4 MS WORKER · 264.9 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense spacing #b-spacing",
+      "iteration": null,
+      "requestSequence": 5,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:5",
+      "type": "committed",
+      "code": null,
+      "message": null,
+      "workerMs": 263.29999999701977,
+      "totalMs": 633.1000000089407,
+      "status": "CERTIFIED ATTRACTOR COMMITTED · 263.3 MS WORKER · 633.1 MS TOTAL.",
+      "statusError": false
+    },
+    {
+      "label": "dense worker loop",
+      "iteration": 0,
+      "requestSequence": 7,
+      "requestId": "ea2e2d84-374d-4b8f-85a7-fa7c0ef4de2c:7",
+      "type": "failed",
+      "code": "commit",
+      "message": "Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.",
+      "workerMs": null,
+      "totalMs": 909,
+      "status": "R1B COMMIT: Browser storage is unavailable or full. Your last saved workspace is intact. Download a project backup.",
+      "statusError": true
+    }
+  ]
+}

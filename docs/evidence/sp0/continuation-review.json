@@ -1,0 +1,128 @@
+{
+  "date": "2026-09-17",
+  "batch": "SP0 planning",
+  "build": "WF-R1D-ANCESTRY-REPAIR-20260917",
+  "capacityProof": "PASS",
+  "sourceIllustrationComparison": "OPEN",
+  "r1Checkpoint": "OPEN - stale browser verifier assertions and controls",
+  "productChanges": false,
+  "publication": false,
+  "retrievalFailures": [
+    {
+      "url": "https://www.embroidery.rocksea.org/images/embroidery/herringbone_square_2.jpg",
+      "result": "web cache miss"
+    },
+    {
+      "url": "https://rsnstitchbank.org/uploads/stitches/_800w/double_herringbone_stitch_variation_v2_05.png",
+      "result": "web cache miss"
+    },
+    {
+      "url": "https://www.embroidery.rocksea.org/stitch/herringbone-stitch/herringbone-square-stitch/",
+      "result": "browser navigation timed out"
+    },
+    {
+      "url": "https://dk.com/cdn/shop/files/getfile_d914054d-08f6-426d-9fac-95f67d4914ad.jpg?v=1757867706&width=3840",
+      "result": "web cache miss"
+    }
+  ],
+  "evidenceHashes": [
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\finite-capacity-proof.mjs",
+      "Hash": "6C5607663EC2F45059D9F165D1A4B86A29704FE18056FD6C841C5162B32AC836"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\sp0\\finite-capacity-results.json",
+      "Hash": "017818462585D8C9A3E32C1BA0C20BE51ECED3AD912CF81377BB08E55B5D7651"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\58-SP0-CAPACITY-AND-CHECKPOINT-REVIEW.md",
+      "Hash": "4CBA1B17E9FBA5E44717A6D00DA716B2FCF34112203BE76EBF3471E922E89E45"
+    }
+  ],
+  "applicationSourceHashes": [
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\ancestry-recovery.mjs",
+      "Hash": "384C8DEA3740F090114960BD400945846E7A33F17460F4E028328486CC5894C5"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\app.mjs",
+      "Hash": "3326067F006FB98D51CCEFCCAF64625F810FCC3BB5777C20D0D4B040077B5581"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\attractor.mjs",
+      "Hash": "44C41FCCFF553BD73F7197612CDFDBC841B208E9144BF5C3837733E3B0E9A9CD"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\boundary.mjs",
+      "Hash": "65E791C736DF0A229603B1005B46E6CE8B8D54C9BB3F40B760B84CA13098E84A"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\carrier.mjs",
+      "Hash": "239485AEA1401EA2C263F2426CBD3304D323FD58E24150DDE37007433896151F"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\combined.mjs",
+      "Hash": "6F15B9685D1A7C4C4563D8BBB60B9A8DA879931DC2E42FCF06253905933B124E"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\display.mjs",
+      "Hash": "F5E0DDAE605DD1628D8A10661A279BBA257B42F5054A412A1BC640434C5A190A"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\document.mjs",
+      "Hash": "65BDE15230FEF63A2A6D9A63230DC37DCBBF213A216EC0BFB7A4CA7B6DED2B22"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\exchange.mjs",
+      "Hash": "F7DCB9E0CD38C11A8259EC76E1CA2D2F6FB425F9B10412C284BBDEC014EB8A6B"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\history.mjs",
+      "Hash": "67857C1E35C911B57269B66C0B68DAE4657DC25D540122E51BA69774C8FDA6EF"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\index.html",
+      "Hash": "3B2290E2789446117BD2B101CB70CB031A558EE36D9D3B145D6B30738E4897FD"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\influence.mjs",
+      "Hash": "5C542B615FE8BA5A5D2D7FFA5E991A6520BA40120F045CD556C9C35D91261188"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\r1b-worker.mjs",
+      "Hash": "568E81B1B912BF2C11AA99FC7AFE81951E2D593D48D3EDCAE7981EFA06B8BAFE"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\storage-codec.mjs",
+      "Hash": "52356D8EED76B8CADBDE5BCCBB499959CC8B3AC0D81B77D1C95E40751905C2CD"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\storage-worker.mjs",
+      "Hash": "4F99D9D600CFFE54299697BB7082CFEBBEECFC42CE638719D3C6C01942F4061F"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\storage.mjs",
+      "Hash": "6366E3E02DD4F20FB9827F01E71D6A03811DD08D62467CCAE2A4FBA798E984DD"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\style.css",
+      "Hash": "415320A40DF5AC96A3BBFDBAB2E9A1867F509CF514C0496E87004D8322CCCF0A"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\svg-import.mjs",
+      "Hash": "FCD213DC16CB390A6AB496937C03B8F17F78C1A1D102A830F1E0A78B7F1712A2"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\viewport.mjs",
+      "Hash": "C0C6864677F85C0E784196D8210FD5929C5C9475B101B4F81D94E79D02FB6036"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\weave-render.mjs",
+      "Hash": "FD5D45871D32E4BD139A8B361BC59C773815999F046C9E0901DE648346349B92"
+    },
+    {
+      "Path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\weave.mjs",
+      "Hash": "5B64E316CA7791E86C27759712F492BDD2C871236800641FA70AA360192DBC4C"
+    }
+  ]
+}

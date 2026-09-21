@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import '../dist/weave.mjs';
+import {square} from '../dist/boundary.mjs';
+import {createStitchSource} from '../dist/stitch-source.mjs';
+import {deriveStitch,emptyStitchGeneration} from '../dist/stitch.mjs';
+import {encodeStitch,encodeStitchAsync} from '../dist/stitch-codec.mjs';
+const frozen=JSON.parse(fs.readFileSync(new URL('../docs/evidence/sp1/codec-before-hash-reuse.json',import.meta.url),'utf8'));
+for(const fixture of frozen)test(`hash reuse preserves every compact byte: ${fixture.recipe} active=${fixture.enabled}`,async()=>{const s=createStitchSource(fixture.recipe,'fixed'),g=emptyStitchGeneration(s);if(fixture.enabled)g.influences=[{id:'field',kind:'attractor',center:{x:0,y:0},radius:100,enabled:true,falloffVersion:'smooth-local-v1',falloff:3,direction:0,families:Object.fromEntries(s.roles.map(r=>[r,{strength:50,tension:0}]))}];const d=deriveStitch(square(),s,'board',{sourceBoardId:'board',sourceCarrierRevisionId:'revision'},g);for(const p of [encodeStitch(d),await encodeStitchAsync(d)])assert.deepEqual({...p,...Object.fromEntries(['f64','u32','i32','u16'].map(k=>[k,Buffer.from(p[k]).toString('base64')]))},fixture.payload);});

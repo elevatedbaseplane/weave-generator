@@ -1,0 +1,106 @@
+ M AGENTS.md
+ M dist/app.mjs
+ M dist/carrier.mjs
+ M dist/combined.mjs
+ M dist/document.mjs
+ M dist/index.html
+ M dist/r1b-worker.mjs
+ M dist/storage-codec.mjs
+ M dist/storage-worker.mjs
+ M dist/storage.mjs
+ M dist/style.css
+ M dist/weave-render.mjs
+ M dist/weave.mjs
+ M docs/00-MASTER-GUIDE.md
+ M docs/02-STATE-DECISIONS-AND-TESTS.md
+ M docs/04-SOL-CHECKPOINT.md
+ M docs/12-PHASED-DEVELOPMENT-PLAN.md
+ M docs/13-BUILD-BATCHES.md
+ M docs/14-BUILDER-CHECKLISTS.md
+ M docs/60-SP1-FOUNDATION-PRESET-APPROVAL-BRIEF.md
+ M scripts/check.mjs
+ M scripts/r1-checkpoint-browser.cjs
+ M scripts/r1-checkpoint-selection.cjs
+ M tests/carrier.test.mjs
+ M tests/storage-codec.test.mjs
+?? dist/crossing-controls.mjs
+?? dist/crossing-worker.mjs
+?? dist/edit-draft.mjs
+?? dist/family-domain.mjs
+?? dist/influence-controls.mjs
+?? dist/interlacing.mjs
+?? dist/line-presets.mjs
+?? dist/numeric-inputs.mjs
+?? dist/project-library.mjs
+?? dist/stitch-codec.mjs
+?? dist/stitch-intent.mjs
+?? dist/stitch-rounding.mjs
+?? dist/stitch-source.mjs
+?? dist/stitch.mjs
+?? dist/thread-appearance.mjs
+?? dist/weave-occlusion.mjs
+?? dist/weave-rules.mjs
+?? docs/65-R1-DETERMINISTIC-DENSE-SETUP.md
+?? docs/66-SP1-FOUNDATION-DEVELOPMENT-REPORT.md
+?? docs/67-SP1-CONTINUOUS-FIELD-CORRECTION.md
+?? docs/68-SP1-CLEAR-CONTROLS.md
+?? docs/69-SP1-GRID-PRESETS.md
+?? docs/70-STITCH-CROSSING-DELIVERY-CONTRACT.md
+?? docs/71-SP1-SOURCE-TRACKING-IMPLEMENTATION.md
+?? docs/72-SP1-LINKED-RESPONSE-TRIAL.md
+?? docs/73-WEAVE-FIRST-DIRECTION-BRIEF.md
+?? docs/74-W1-THREAD-APPEARANCE.md
+?? docs/75-W2-FIRST-INTERLACING-SLICE.md
+?? docs/76-W2-CONTINUOUS-OCCLUSION.md
+?? docs/77-W2-PRESET-AND-REPEAT-CONTROLS.md
+?? docs/78-W2-VISUAL-AND-INPUT-REFINEMENTS.md
+?? docs/79-FAMILY-ARCHITECTURE-FOUNDATION.md
+?? docs/80-W2-CROSSING-CONTROL-REPAIR.md
+?? docs/81-BUILD-1-PHASE-1B-NAMED-CROSSING-MODES.md
+?? docs/82-BUILD-1-PHASE-1B-LINKED-RECALCULATION.md
+?? docs/83-BUILD-1-PHASE-1C-FAMILY-RELATIONSHIPS.md
+?? docs/84-BUILD-1-PHASE-1C-INTUITIVE-LINKED-EDITING.md
+?? docs/85-BUILD-1-PHASE-1C-LIVE-CONTROL-FEEDBACK.md
+?? docs/86-BUILD-1-PHASE-1C-MULTITAB-CAPACITY-GUARD.md
+?? docs/87-BUILD-1-PHASE-1C-WORKFLOW-CLEANUP.md
+?? docs/88-BUILD-1-PHASE-1C-DIRECT-EDITING.md
+?? docs/89-BUILD-1-PHASE-1C-PROJECT-LIBRARY.md
+?? docs/90-BUILD-1-PHASE-1C-STORAGE-COMPATIBILITY.md
+?? docs/91-BUILD-1-PHASE-1C-PRESET-APPLY.md
+?? docs/92-STABILITY-SLICE-1-PROJECT-COMMITS.md
+?? docs/93-STABILITY-SLICE-2-LIVE-CONTROLS.md
+?? docs/94-STABILITY-SLICE-3-ATOMIC-FIELD-COMMIT.md
+?? docs/95-STABILITY-FOUNDATION-CORE.md
+?? docs/96-STABILITY-FOUNDATION-PHASE-PLAN.md
+?? docs/97-STABILITY-FOUNDATION-HANDOFF.md
+?? docs/98-NEW-BUILD-CHAT-COMPLETE-HANDOFF.md
+?? docs/evidence/
+?? pnpm-lock.yaml
+?? scripts/r1-dense-pointer.cjs
+?? tests/atomic-field-commit.test.mjs
+?? tests/crossing-execution.test.mjs
+?? tests/edit-draft.test.mjs
+?? tests/edit-preview-worker.test.mjs
+?? tests/family-architecture.test.mjs
+?? tests/influence-controls.test.mjs
+?? tests/interlacing.test.mjs
+?? tests/line-presets.test.mjs
+?? tests/multitab-capacity-guard.test.mjs
+?? tests/project-library.test.mjs
+?? tests/r1-dense-pointer.test.mjs
+?? tests/r1-dense-setup.test.mjs
+?? tests/stitch-capacity.test.mjs
+?? tests/stitch-codec-reuse.test.mjs
+?? tests/stitch-controls.test.mjs
+?? tests/stitch-field.test.mjs
+?? tests/stitch-intent.test.mjs
+?? tests/stitch-migration.test.mjs
+?? tests/stitch-trace-numerical.test.mjs
+?? tests/stitch-trace.test.mjs
+?? tests/stitch-worker-trace.test.mjs
+?? tests/stitch.test.mjs
+?? tests/thread-appearance.test.mjs
+?? tests/w2-refinements.test.mjs
+?? tests/weave-occlusion.test.mjs
+?? tests/weave-rules.test.mjs
+?? tests/workflow-cleanup.test.mjs

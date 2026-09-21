@@ -1,3 +1,5 @@
+Update 2026-09-17: user authorized SP1 and marked R1 development-complete, superseding the approval/checkpoint dependency below. Retained numerical, storage and performance contracts apply. Partial implementation/status: document66.
+
 # SP1 — first editable stitch foundations: approval brief
 
 Status: proposed, not implemented or authorized. Depends on a passing R1 browser checkpoint in document 59 and approval of documents 57–58 as corrected by 59. Baseline WF-R1D-ANCESTRY-REPAIR-20260917 remains unchanged.
@@ -34,3 +36,4 @@ These are editable foundations, not yet fully rendered woven stitches. R2A adds 
 After the R1 browser result passes and this scope is approved, Sol Medium can implement SP1 against these recorded decisions. It is a substantial implementation batch but follows the settled finite-source contract; it must stop on a failed numerical, integrity, capacity or performance gate. Introducing curves, resolving new crossing-topology rules or changing traditional stitch construction still requires architectural review.
 
 Publication is not included. A passing local version returns a preview and a short review report before the next scheduled feature batch.
+

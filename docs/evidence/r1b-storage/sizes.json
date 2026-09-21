@@ -1,0 +1,265 @@
+{
+  "method": "Reconstructed exact fixture operations using existing modules. Original browser bytes/IDs/date/quota not captured. UUID lengths and timestamp widths match; numbers may vary by runtime. gzip is empirical only, not a worst-case bound.",
+  "states": [
+    {
+      "label": "request4 previous recovery before request7",
+      "workspace": {
+        "codeUnits": 1376046,
+        "utf8Bytes": 1376046,
+        "utf16Bytes": 2752092,
+        "gzipBytes": 297399
+      },
+      "working": {
+        "codeUnits": 1374926,
+        "utf8Bytes": 1374926,
+        "utf16Bytes": 2749852,
+        "gzipBytes": 296894
+      },
+      "derived": {
+        "codeUnits": 1368491,
+        "utf8Bytes": 1368491,
+        "utf16Bytes": 2736982,
+        "gzipBytes": 295125
+      },
+      "pointArrays": {
+        "codeUnits": 762474,
+        "utf8Bytes": 762474,
+        "utf16Bytes": 1524948,
+        "gzipBytes": 230167
+      },
+      "certificateArrays": {
+        "codeUnits": 322375,
+        "utf8Bytes": 322375,
+        "utf16Bytes": 644750,
+        "gzipBytes": 38289
+      },
+      "certificatePropertyBytes": 331446,
+      "fragments": 432,
+      "pointCount": 16464,
+      "certificateCount": 16032,
+      "diagnostics": {
+        "tau": 1e-8,
+        "epsilon": 0.0125,
+        "accuracyScope": "unclipped-curve-to-polyline",
+        "clippingRoundingBound": 2.5e-9,
+        "displacementBound": 15,
+        "candidateLines": 224,
+        "subdivisionNodes": 31210,
+        "segments": 15941,
+        "clippedSegments": 16032,
+        "edgeTests": 1734,
+        "shortSpans": 99,
+        "collinearContacts": 0,
+        "maxCertifiedError": 0.012497520333515847,
+        "counts": {
+          "A": 199,
+          "B": 9
+        },
+        "intervals": 432,
+        "complete": true
+      },
+      "backup": {
+        "codeUnits": 3889359,
+        "utf8Bytes": 3889359,
+        "utf16Bytes": 7778718,
+        "gzipBytes": 351736
+      },
+      "compactJsonBackup": {
+        "codeUnits": 1376100,
+        "utf8Bytes": 1376100,
+        "utf16Bytes": 2752200,
+        "gzipBytes": 297429
+      }
+    },
+    {
+      "label": "request5 committed before request7",
+      "workspace": {
+        "codeUnits": 2620701,
+        "utf8Bytes": 2620701,
+        "utf16Bytes": 5241402,
+        "gzipBytes": 541500
+      },
+      "working": {
+        "codeUnits": 2619581,
+        "utf8Bytes": 2619581,
+        "utf16Bytes": 5239162,
+        "gzipBytes": 541040
+      },
+      "derived": {
+        "codeUnits": 2613145,
+        "utf8Bytes": 2613145,
+        "utf16Bytes": 5226290,
+        "gzipBytes": 539473
+      },
+      "pointArrays": {
+        "codeUnits": 1451579,
+        "utf8Bytes": 1451579,
+        "utf16Bytes": 2903158,
+        "gzipBytes": 418366
+      },
+      "certificateArrays": {
+        "codeUnits": 613621,
+        "utf8Bytes": 613621,
+        "utf16Bytes": 1227242,
+        "gzipBytes": 73610
+      },
+      "certificatePropertyBytes": 631260,
+      "fragments": 840,
+      "pointCount": 31348,
+      "certificateCount": 30508,
+      "diagnostics": {
+        "tau": 1e-8,
+        "epsilon": 0.0125,
+        "accuracyScope": "unclipped-curve-to-polyline",
+        "clippingRoundingBound": 2.5e-9,
+        "displacementBound": 15,
+        "candidateLines": 424,
+        "subdivisionNodes": 59384,
+        "segments": 30328,
+        "clippedSegments": 30508,
+        "edgeTests": 3306,
+        "shortSpans": 186,
+        "collinearContacts": 0,
+        "maxCertifiedError": 0.012497520333515847,
+        "counts": {
+          "A": 199,
+          "B": 199
+        },
+        "intervals": 840,
+        "complete": true
+      },
+      "backup": {
+        "codeUnits": 7406844,
+        "utf8Bytes": 7406844,
+        "utf16Bytes": 14813688,
+        "gzipBytes": 639853
+      },
+      "compactJsonBackup": {
+        "codeUnits": 2620755,
+        "utf8Bytes": 2620755,
+        "utf16Bytes": 5241510,
+        "gzipBytes": 541529
+      }
+    },
+    {
+      "label": "request7 proposed replacement",
+      "workspace": {
+        "codeUnits": 2624383,
+        "utf8Bytes": 2624383,
+        "utf16Bytes": 5248766,
+        "gzipBytes": 506779
+      },
+      "working": {
+        "codeUnits": 2623263,
+        "utf8Bytes": 2623263,
+        "utf16Bytes": 5246526,
+        "gzipBytes": 506252
+      },
+      "derived": {
+        "codeUnits": 2616828,
+        "utf8Bytes": 2616828,
+        "utf16Bytes": 5233656,
+        "gzipBytes": 504391
+      },
+      "pointArrays": {
+        "codeUnits": 1454898,
+        "utf8Bytes": 1454898,
+        "utf16Bytes": 2909796,
+        "gzipBytes": 386272
+      },
+      "certificateArrays": {
+        "codeUnits": 613985,
+        "utf8Bytes": 613985,
+        "utf16Bytes": 1227970,
+        "gzipBytes": 69000
+      },
+      "certificatePropertyBytes": 631624,
+      "fragments": 840,
+      "pointCount": 31350,
+      "certificateCount": 30510,
+      "diagnostics": {
+        "tau": 1e-8,
+        "epsilon": 0.0125,
+        "accuracyScope": "unclipped-curve-to-polyline",
+        "clippingRoundingBound": 2.5e-9,
+        "displacementBound": 15,
+        "candidateLines": 424,
+        "subdivisionNodes": 59384,
+        "segments": 30328,
+        "clippedSegments": 30510,
+        "edgeTests": 3420,
+        "shortSpans": 186,
+        "collinearContacts": 0,
+        "maxCertifiedError": 0.012497520333459737,
+        "counts": {
+          "A": 199,
+          "B": 199
+        },
+        "intervals": 840,
+        "complete": true
+      },
+      "backup": {
+        "codeUnits": 7410788,
+        "utf8Bytes": 7410788,
+        "utf16Bytes": 14821576,
+        "gzipBytes": 604962
+      },
+      "compactJsonBackup": {
+        "codeUnits": 2624437,
+        "utf8Bytes": 2624437,
+        "utf16Bytes": 5248874,
+        "gzipBytes": 506811
+      }
+    }
+  ],
+  "history": {
+    "persistedBytes": 0,
+    "beforeFailedAttempt": {
+      "codeUnits": 1598301,
+      "utf8Bytes": 1598301,
+      "utf16Bytes": 3196602,
+      "gzipBytes": 329637
+    },
+    "ifAttemptHadCommitted": {
+      "codeUnits": 4217883,
+      "utf8Bytes": 4217883,
+      "utf16Bytes": 8435766,
+      "gzipBytes": 870487
+    }
+  },
+  "localStorageValueTotals": {
+    "beforeAttempt": 3996747,
+    "afterPreviousWriteBeforeReplacement": 5241402,
+    "successfulReplacement": 5245084
+  },
+  "oneSavedRevision": {
+    "workspace": {
+      "codeUnits": 5247987,
+      "utf8Bytes": 5247987,
+      "utf16Bytes": 10495974,
+      "gzipBytes": 1012039
+    },
+    "revision": {
+      "codeUnits": 2623440,
+      "utf8Bytes": 2623440,
+      "utf16Bytes": 5246880,
+      "gzipBytes": 506330
+    },
+    "backup": {
+      "codeUnits": 16311854,
+      "utf8Bytes": 16311854,
+      "utf16Bytes": 32623708,
+      "gzipBytes": 1259416
+    }
+  },
+  "worstCaseNumericPayload": {
+    "segments": 65536,
+    "fragments": 20000,
+    "maxPoints": 85536,
+    "xyFloat64Bytes": 1368576,
+    "certificateFloat64Bytes": 524288,
+    "fragmentEndpointsFloat64Bytes": 320000,
+    "numericSubtotal": 2212864,
+    "note": "Conservative joint-capacity envelope, not a generated reachable fixture; excludes identities, offsets, provenance, manifests and saved studies."
+  }
+}

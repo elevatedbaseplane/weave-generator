@@ -1,0 +1,60 @@
+{
+  "rawEvidence": "browser-2026-09-17T19-38-15-107Z.json",
+  "rawSha256": "372719264bd09774ae7aeecb02ab24f6c7f4869243638ed57b4e34d32b1e28b7",
+  "cause": "Float32 native pointer transport at scale1.35 maps intended model x1 to0.999982 after approved six-decimal input rounding. Exact production counts remained29975/30393.",
+  "focusedTests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "verifierSyntax": true,
+  "productionChanged": false,
+  "newDenseCycles": [
+    {
+      "label": "dense center 0",
+      "epoch": 4,
+      "requestStarted": 5110,
+      "type": "committed",
+      "at": 5432.0999999940395,
+      "seq": 2,
+      "requestId": "813a0b0e-0c06-4b71-acfc-f7444269ceb6:2",
+      "workerMs": 165.09999999403954,
+      "totalMs": 322.09999999403954,
+      "storageGeneration": 4,
+      "phases": {
+        "dispatchMs": 78.900146484375,
+        "deriveMs": 135.69999998807907,
+        "encodeMs": 26.400000005960464,
+        "transferMs": 9.5,
+        "validationMs": 3.5999999940395355,
+        "admissionMs": 2.9000000059604645,
+        "transactionMs": 5.4000000059604645,
+        "historyMs": 0,
+        "renderMs": 19.69999998807907
+      }
+    },
+    {
+      "label": "dense center 1",
+      "epoch": 4,
+      "requestStarted": 9875,
+      "type": "committed",
+      "at": 10255.90000000596,
+      "seq": 3,
+      "requestId": "813a0b0e-0c06-4b71-acfc-f7444269ceb6:3",
+      "workerMs": 179.5,
+      "totalMs": 380.90000000596046,
+      "storageGeneration": 5,
+      "phases": {
+        "dispatchMs": 96.400146484375,
+        "deriveMs": 148.09999999403954,
+        "encodeMs": 28.400000005960464,
+        "transferMs": 9.699951171875,
+        "validationMs": 0.6000000238418579,
+        "admissionMs": 2.100000023841858,
+        "transactionMs": 8.099999994039536,
+        "historyMs": 0,
+        "renderMs": 20.5
+      }
+    }
+  ],
+  "checkpointComplete": false
+}

@@ -1,0 +1,19 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createWorkspace,saveBoundary,saveCarrierStudy,createWeaveStudy,addInfluence,saveWeaveStudy} from '../dist/document.mjs';
+import {createRectangularCarrier} from '../dist/carrier.mjs';
+import {createLinePreset} from '../dist/line-presets.mjs';
+import {refreshWeave} from '../dist/weave.mjs';
+import {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary} from '../dist/project-library.mjs';
+
+function fixture(){let project=createWorkspace().projects[0];project=saveBoundary(project,'BOUNDARY 01').project;project.working.carrier=createRectangularCarrier('library-carrier');project=saveCarrierStudy(project,'WEAVE 01').project;project=createWeaveStudy(project,project.working.carrierSourceRevisionId);project=addInfluence(project);project.working=refreshWeave(project.working,project.id);project=saveWeaveStudy(project,'INTERNAL RESULT',true).project;return project;}
+
+test('library presents field-force results as part of their parent weave',()=>{const project=fixture(),boundary=boundaryEntryForRevision(project),patterns=patternsForBoundary(project,boundary),selection=activeLibraryItems(project);assert.equal(patterns.length,1);assert.equal(patterns[0].name,'WEAVE 01');assert.equal(weaveResultForPattern(project,patterns[0]).name,'INTERNAL RESULT');assert.equal(selection.boundary.id,boundary.id);assert.equal(selection.pattern.id,patterns[0].id);});
+
+test('reusable weave fields adapt position and extent to a new boundary',()=>{const generation={influences:[{id:'one',x:25,y:75,radius:20},{id:'two',x:100,y:0,extent:10}],variation:{seed:4}},source={minX:0,maxX:100,minY:0,maxY:100},target={minX:-200,maxX:200,minY:-100,maxY:100},adapted=adaptGenerationToBoundary(generation,source,target);assert.deepEqual(adapted.influences[0],{id:'one',x:-100,y:50,radius:80});assert.deepEqual(adapted.influences[1],{id:'two',x:200,y:-100,extent:40});assert.deepEqual(generation.influences[0],{id:'one',x:25,y:75,radius:20});});
+
+test('triangular preset creates a visible three-family weave attached to the active boundary',()=>{let project=createWorkspace().projects[0];project=saveBoundary(project,'BOUNDARY 01').project;project.working.carrier=createLinePreset('triangular-grid','triangular-fixture');const saved=saveCarrierStudy(project,'WEAVE PATTERN 01');project=createWeaveStudy(saved.project,saved.revisionId);assert.deepEqual(Object.keys(project.working.carrier.families),['A','B','C']);assert.equal(project.working.carrierSourceRevisionId,saved.revisionId);assert.equal(project.working.weave.sourceContext.sourceCarrierRevisionId,saved.revisionId);assert.ok(project.working.weave.derived.strands.length>0);});
+
+test('preset picker applies immediately and reports local progress',()=>{const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8'),html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.match(app,/\$\('stitch-preset'\)\.oninput=applyPresetSelection/);assert.match(app,/\$\('stitch-preset'\)\.onchange=applyPresetSelection/);assert.match(app,/APPLIED \+ SAVED/);assert.match(html,/id="preset-apply-state"[^>]*aria-live="polite"/);});
+test('a new preset field receives a fresh saved result name instead of stale hidden input',()=>{const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8'),start=app.indexOf('function currentWeaveName('),end=app.indexOf('\n',start),implementation=app.slice(start,end);assert.match(implementation,/nextLibraryName\(owner\.weaveStudies,'INFLUENCED GRID'\)/);assert.doesNotMatch(implementation,/weave-name/);});

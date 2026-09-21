@@ -1,0 +1,23 @@
+✔ hash reuse preserves every compact byte: double-herringbone active=false (106.8492ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=true (99.4184ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=false (23.3457ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=true (40.4418ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=false (66.4797ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=true (174.412ms)
+✔ field adaptation overlaps row extents without adding backside connectors; bands stay exact (3.4924ms)
+✔ field candidates include every cell intersecting the test boundary and still enforce workload (21.3922ms)
+✔ field identity and active influence compact round trip preserve coordinates, certificates and references (274.9217ms)
+✔ reviewed finite foundations carry directed source runs without backside joins (1.9866ms)
+✔ retained source IDs survive parameter changes and duplicates isolate identity (1.8342ms)
+✔ finite support equations enclose unequal-length entry and exit roots (0.9521ms)
+✔ expanded search retains outside runs and rejects candidate overflow atomically (6.9027ms)
+✔ double-herringbone identity and influence preserve exact compact geometry (901.8002ms)
+✔ herringbone-square identity and influence preserve exact compact geometry (563.5678ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2380.5134

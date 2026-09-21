@@ -1,3 +1,17 @@
+## W2 control slice checkpoint - 2026-09-17
+
+WF-W2-RULES-20260917 adds preset construction and custom pair repeat controls, inversion, and explicit local upper-thread choice. See document77 for contracts, verification and limitations. W2 remains incomplete; next is incident/source correspondence and cross-row design policy, before W3 library. No publication.
+
+## Active direction — weave-first, 2026-09-17
+
+Document73 (docs/73-WEAVE-FIRST-DIRECTION-BRIEF.md) records the user-directed order: W1 thread width/outline → W2 integrated over/under → W3 complex preset library → W4 stitches/connection rules → W5 force/relationship analysis → W6 points → W7 polylines. It supersedes the standalone Analyze-first next action; necessary crossing computation remains an internal dependency with document70 correctness requirements. Current build WF-SP1-LINKED-20260917 unchanged. Planning only in this turn; next bounded implementation scope is W1. Preserve geometry/storage contracts, historical evidence and deferred host certification. No publication.
+
+## SP1 implementation complete for local review — 2026-09-17
+
+WF-SP1-SOURCE-TRACE-20260917: exact transient per-vertex source parameters and worker reconstruction, version2 embedded stitch intent for new instances with unchanged legacy saved bytes, preloaded/reused idle worker, clear tree action layout, portable-v3 import routing and order-independent metadata validation.32 distinct focused tests pass. Production maximum codec layout fits10MiB reserve; mixed migration preserves legacy buffers.30-request eight-influence worker p95/max149.5/177.3ms. Managed-browser Herringbone170.8ms total; Square add146.7ms/edit114ms; fields, parameter edits, Undo/Redo, reload and native backup import verified. Diagnostic JSON had one-ULP transport changes and is not backup evidence; native export audit is exact. All earlier failures preserved. Document71 has scope/evidence. SP1 development implementation complete, awaiting user visual acceptance; release certification not claimed. User “approved, keep working” next authorizes R2A visible crossing diagnostics, then R2B authored over/under, then curved-lacing work per70. No publication or host command.
+## Stitch-based priority and crossing readiness — 2026-09-17
+
+User clarified that presets must follow the researched stitch constructions, not more generic grids. Document70 reconciles SP1 → R2A → R2B → curved-lacing delivery. Actual saved field audit:69 multi-vertex fragments/1547 interior vertices lack retained per-point source parameters; intent is currently an identifier, not explicit pair brackets. Plan optional exact transient source trace and versioned intent templates before automatic crossing/precedence matching. No tolerance guessing, inferred parameters or arbitrary over/under. Application build unchanged; SP1 gates remain, R1 development-complete, no publication/host command. See docs/70-STITCH-CROSSING-DELIVERY-CONTRACT.md.
 # Weave Generator — manageable build batches
 
 Proposed stitch-library direction — 2026-09-17: see [56 — Stitch preset research and development plan](56-STITCH-PRESET-RESEARCH-AND-PLAN.md). It covers the requested construction methods, evidence gaps, finite-path and lace geometry, and suggested insertions around R2A/R2B. Planning only; the existing schedule is not superseded until this proposal is accepted. R1D repair functionality is user-confirmed; broader R1 checkpoint verification remains.
@@ -175,3 +189,5 @@ For specialized R10 operations, settle the input condition, geometry consequence
 Performance work R10Q is conditional and may be moved earlier if measurements show a blocker. Preserve its scope: solve one evidenced problem, not a speculative rewrite.
 
 Next: **R0A — source and geometry contracts**, followed by R0B and R0C. The first implementation batch would be R1A, after those contracts and explicit authorization. No implementation, model switch, release or private-site change is authorized by recording this schedule.
+
+

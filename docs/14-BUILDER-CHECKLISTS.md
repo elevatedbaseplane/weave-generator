@@ -1,3 +1,14 @@
+## W2 control slice checkpoint - 2026-09-17
+
+WF-W2-RULES-20260917 adds preset construction and custom pair repeat controls, inversion, and explicit local upper-thread choice. See document77 for contracts, verification and limitations. W2 remains incomplete; next is incident/source correspondence and cross-row design policy, before W3 library. No publication.
+
+## Active direction — weave-first, 2026-09-17
+
+Document73 (docs/73-WEAVE-FIRST-DIRECTION-BRIEF.md) records the user-directed order: W1 thread width/outline → W2 integrated over/under → W3 complex preset library → W4 stitches/connection rules → W5 force/relationship analysis → W6 points → W7 polylines. It supersedes the standalone Analyze-first next action; necessary crossing computation remains an internal dependency with document70 correctness requirements. Current build WF-SP1-LINKED-20260917 unchanged. Planning only in this turn; next bounded implementation scope is W1. Preserve geometry/storage contracts, historical evidence and deferred host certification. No publication.
+
+## Stitch-based priority and crossing readiness — 2026-09-17
+
+User clarified that presets must follow the researched stitch constructions, not more generic grids. Document70 reconciles SP1 → R2A → R2B → curved-lacing delivery. Actual saved field audit:69 multi-vertex fragments/1547 interior vertices lack retained per-point source parameters; intent is currently an identifier, not explicit pair brackets. Plan optional exact transient source trace and versioned intent templates before automatic crossing/precedence matching. No tolerance guessing, inferred parameters or arbitrary over/under. Application build unchanged; SP1 gates remain, R1 development-complete, no publication/host command. See docs/70-STITCH-CROSSING-DELIVERY-CONTRACT.md.
 ## Standing verification workflow — user decision, 2026-09-17
 
 Ordinary feature batches: run all applicable checks available inside Codex, provide a usable local preview and a short visual acceptance checklist. Do not require the user to run PowerShell as routine batch acceptance. External host-browser execution is reserved for major phase checkpoints, pre-publication verification, or defects demonstrably reproducible only outside the managed environment. Bundle every required host check for that checkpoint into one command; preserve completed evidence and rerun only affected checks when justified. A managed-browser limitation alone does not turn every feature batch into a host-run requirement. Distinguish local visual acceptance from outstanding formal certification; do not silently waive numerical, integrity or performance gates. Publication still requires separate authorization.
@@ -1181,3 +1192,4 @@ Worker review update — 2026-09-16: synchronous evidence in [21](21-R1B-ARCHITE
 The next chat receives the selected batch ID(s), actual prerequisite evidence, approved batch contract, exact files/modules inspected, expected fixtures and tests, save/migration policy, source state and implementation authorization. Unknowns are named rather than disguised as implementation freedom. A contract change needed during the build returns to an explicit decision before dependent work continues.
 
 Next is R0A, or an explicitly scoped combined R0 planning engagement. The first possible implementation is R1A after R0 and permission. No development or publication has begun.
+

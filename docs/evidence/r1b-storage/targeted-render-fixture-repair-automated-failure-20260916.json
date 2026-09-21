@@ -1,0 +1,34 @@
+{
+  "recordedAt": "2026-09-16",
+  "candidate": "WF-R1B-DELTA-20260916",
+  "stage": "complete automated suite after multi-tab fixture repair",
+  "passed": false,
+  "command": "node --test --test-isolation=none tests/*.test.mjs",
+  "suite": {
+    "tests": 65,
+    "passed": 64,
+    "failed": 1,
+    "durationMs": 13673.6288
+  },
+  "failedGate": {
+    "test": "dense certified evaluator meets worker computation target",
+    "runs": 30,
+    "warmupRuns": 5,
+    "p50Ms": 216.4406,
+    "p95Ms": 395.6484,
+    "maximumMs": 407.7048,
+    "p95LimitMs": 375,
+    "maximumLimitMs": 400,
+    "p95Passed": false,
+    "maximumPassed": false
+  },
+  "stopBehavior": {
+    "subsequentEquivalenceGateRan": false,
+    "subsequentPersistentWorkerGateRan": false,
+    "subsequentCapacityGatesRan": false,
+    "subsequentStaticGateRan": false,
+    "hostBrowserRerunRan": false
+  },
+  "scope": "No application implementation or threshold changed. The preceding change only opens collapsed Weave controls in the multi-tab browser fixture.",
+  "requiredNextStep": "Architectural review of the automated performance failure before another host-browser verification."
+}

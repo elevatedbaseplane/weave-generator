@@ -1,0 +1,3233 @@
+{
+  "capturedAt": "2026-09-21T01:20:07.600Z",
+  "node": "v24.19.0",
+  "scope": "Phase 0 measured baseline; timings are diagnostic, not sustained browser certification",
+  "fixtures": [
+    {
+      "name": "current-project-0.portable.json",
+      "sha256": "4c2360035be4b854648d8d1c19c224da4533c1f7ca8113c3d94e95eba5d54509",
+      "bytes": 375973,
+      "loadDecodeMs": 64.3879,
+      "fullValidationMs": 191.85510000000002,
+      "packMs": 47.22449999999998,
+      "projects": [
+        {
+          "id": "project-a86a24bd-a965-49db-a910-6e16de31845d",
+          "name": "WEAVE STUDIES",
+          "boundaries": 2,
+          "patterns": 7,
+          "weaves": 6,
+          "boundaryRevisions": 2,
+          "carrierRevisions": 25,
+          "weaveRevisions": 6,
+          "designs": [
+            {
+              "label": "working",
+              "studyId": "weave-study-80e7d48a-1500-4c11-bafb-c30cfa29c233",
+              "sourceRevision": "carrier-revision-4bf78d82-b896-4a06-8a99-e75532b8d0af",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-05116379-2ac4-4960-86d5-c2627cbfce52",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-c5437864-541e-464a-9bdf-a2d01c8bc913",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-33c9a344-0634-4101-8200-f3534d3e2a6e",
+                    "key": "C",
+                    "label": "FAMILY C",
+                    "order": 2,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-eded33ec-343c-4006-a775-479496cd9b38",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 72,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 0
+                  },
+                  "B": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 60
+                  },
+                  "C": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 120
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    },
+                    "C": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-a4475fe2-12d1-419a-bbe8-391353765b3b",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 79,
+                        "tension": 12
+                      },
+                      "B": {
+                        "strength": 58,
+                        "tension": 12
+                      },
+                      "C": {
+                        "strength": 58,
+                        "tension": 12
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-0138b11e-a7ea-47d4-8b7c-8b9a236d96fe",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-e96c18b4-b78b-49ad-8814-9571210338d7",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-778ba3f9-5b44-49ce-8acc-662835989a88",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "",
+                "overrides": [],
+                "rule": {
+                  "mode": "preset",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 1,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": []
+                }
+              },
+              "geometrySha256": "6527e48f712956ce3058fcf4bdcb7465145d53d66f5f563ddcaedd556163f9bd",
+              "svgSha256": "c4e44099b0d559caabc78ef8c25bff0f277bfe72a3d0b022205336947a1ae4dc",
+              "svgBytes": 422727,
+              "strands": 29,
+              "crossings": {
+                "crossings": 250,
+                "contacts": 0,
+                "overlaps": 165,
+                "uncertain": 0,
+                "multiway": 38,
+                "pairs": 4051
+              },
+              "assigned": 163,
+              "generationMs": 23.760000000000048,
+              "crossingMs": 29.339400000000012,
+              "svgPreparationMs": 10.871100000000013
+            },
+            {
+              "label": "FOUNDATION 01/weave-revision-3cfd1f4a-0518-4b4e-b920-2f317c83b2ef",
+              "studyId": "weave-study-d84caca1-fab6-4b64-9609-5a50a2fabe4d",
+              "sourceRevision": "carrier-revision-2af00fa3-3488-4dd4-9b5e-c29132302c7c",
+              "carrier": {
+                "kind": "stitch-recipe-v1",
+                "id": "pattern-8acfa210-5044-4bd8-8b4c-c5eaa7c50a22",
+                "recipeId": "double-herringbone-field",
+                "recipeVersion": 1,
+                "parameters": {
+                  "pitch": 120,
+                  "height": 60,
+                  "rowStep": 0.8,
+                  "overlap": 0.25,
+                  "rotation": 0
+                },
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "roles": [
+                  "A",
+                  "B"
+                ],
+                "runKeys": [
+                  "U",
+                  "D"
+                ],
+                "construction": {
+                  "version": 1,
+                  "backside": [
+                    [
+                      "U",
+                      "D",
+                      0,
+                      0
+                    ],
+                    [
+                      "D",
+                      "U",
+                      1,
+                      0
+                    ]
+                  ],
+                  "intent": "herringbone-field-unresolved-crossings-v1"
+                }
+              },
+              "generation": {
+                "version": "stitch-fields-v1",
+                "roles": [
+                  "A",
+                  "B"
+                ],
+                "influences": [
+                  {
+                    "id": "field-030089ed-a11f-4cb8-a1ee-a8812edb57de",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 79,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 79,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v1",
+                "families": {
+                  "A": {
+                    "width": 8.5,
+                    "mode": "outline"
+                  },
+                  "B": {
+                    "width": 8.5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "B",
+                "clearance": 1,
+                "source": "sha256-v1:28943faa193da70fea36b7552fa59890873eaf33ca50beddd621ddcf5e8c3b08",
+                "overrides": [
+                  [
+                    "{\"patternId\":\"pattern-8acfa210-5044-4bd8-8b4c-c5eaa7c50a22\",\"recipeVersion\":1,\"row\":-1,\"column\":-2,\"roleId\":\"A\",\"runKey\":\"D\"}/0/0|{\"patternId\":\"pattern-8acfa210-5044-4bd8-8b4c-c5eaa7c50a22\",\"recipeVersion\":1,\"row\":0,\"column\":-2,\"roleId\":\"B\",\"runKey\":\"U\"}/0/0",
+                    false
+                  ]
+                ],
+                "rule": {
+                  "mode": "preset",
+                  "recipe": "double-herringbone-field",
+                  "inverted": false,
+                  "over": 1,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": []
+                }
+              },
+              "geometrySha256": "9a68aa60719ad13cf1f9ac0b3291e5cddef96bf13379954ed6eb87e2a39af926",
+              "svgSha256": "1bef83e7f1a15163564a3f71ed7aec6eb4a26680ffa4b91406abdc4912752f53",
+              "svgBytes": 868497,
+              "strands": 236,
+              "crossings": {
+                "crossings": 1055,
+                "contacts": 80,
+                "overlaps": 117,
+                "uncertain": 0,
+                "multiway": 416,
+                "pairs": 3975
+              },
+              "assigned": 7,
+              "generationMs": 28.302399999999977,
+              "crossingMs": 34.8535,
+              "svgPreparationMs": 18.624300000000005
+            },
+            {
+              "label": "INFLUENCED GRID 02/weave-revision-7b1e1aed-5b6f-4c3f-811f-32a2a5c210a3",
+              "studyId": "weave-study-5905c5f7-4108-4afb-94c2-8122e57aa063",
+              "sourceRevision": "carrier-revision-8402412b-0efd-4e91-995a-bedcfe228aeb",
+              "carrier": {
+                "id": "carrier-b7658473-6976-4d13-bc87-0c4f99867885",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 0
+                  },
+                  "B": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 60
+                  },
+                  "C": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 120
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    },
+                    "C": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-516ce159-91bb-4ff3-9086-2843ebec7b82",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "geometrySha256": "7b3c0247ce7aab6e4d7ce13888432451d976a228fea198427b5d7ecc251c0f5d",
+              "svgSha256": "5f81542e8e973d0bfa1170abf2ddd8dd619f9cbf6a50aa1a393e3ea1acc24daf",
+              "svgBytes": 215389,
+              "strands": 31,
+              "crossings": {
+                "crossings": 198,
+                "contacts": 12,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 2008
+              },
+              "assigned": 0,
+              "generationMs": 10.977999999999952,
+              "crossingMs": 12.994199999999978,
+              "svgPreparationMs": 4.071000000000026
+            },
+            {
+              "label": "FOUNDATION 03/weave-revision-7d8a0707-ab0e-4001-93fe-cd2cb602fa76",
+              "studyId": "weave-study-c3747324-eac9-4a99-a41f-a882bc566b40",
+              "sourceRevision": "carrier-revision-d695d3f9-418f-434c-ad20-22b584a2bdeb",
+              "carrier": {
+                "kind": "stitch-recipe-v1",
+                "id": "pattern-261b8a45-fe32-4ce2-bd9a-b8a073c35b88",
+                "recipeId": "herringbone-square",
+                "recipeVersion": 1,
+                "parameters": {
+                  "width": 82,
+                  "height": 80,
+                  "gapX": 40,
+                  "gapY": 40,
+                  "extension": 0.125,
+                  "rotation": 0
+                },
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "roles": [
+                  "foundation"
+                ],
+                "runKeys": [
+                  "T",
+                  "R",
+                  "B",
+                  "L"
+                ],
+                "construction": {
+                  "version": 2,
+                  "backside": [
+                    [
+                      "T",
+                      "R",
+                      0,
+                      0
+                    ],
+                    [
+                      "R",
+                      "B",
+                      0,
+                      0
+                    ],
+                    [
+                      "B",
+                      "L",
+                      0,
+                      0
+                    ]
+                  ],
+                  "intent": "square-cyclic-v1",
+                  "rulesVersion": "stitch-intent-v1",
+                  "rules": [
+                    {
+                      "first": {
+                        "run": "T",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "L",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    },
+                    {
+                      "first": {
+                        "run": "R",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "T",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    },
+                    {
+                      "first": {
+                        "run": "B",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "R",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    },
+                    {
+                      "first": {
+                        "run": "L",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "B",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    }
+                  ],
+                  "crossRowPolicy": "not-authored"
+                }
+              },
+              "generation": {
+                "version": "stitch-fields-v1",
+                "roles": [
+                  "foundation"
+                ],
+                "influences": [
+                  {
+                    "id": "field-509e4b20-8b84-4c83-829b-a415c533e440",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "foundation": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "interlacing": {
+                "version": "interlacing-v1",
+                "enabled": false,
+                "topFamily": "foundation",
+                "clearance": 1,
+                "source": "",
+                "overrides": []
+              },
+              "geometrySha256": "c00e036c5c1f637389a69c7f21f95637204fbdd26bd60e1e8a1bca438b078fb1",
+              "svgSha256": "0f45d9486f98590f42141b5be5d2ddc2bc47050ae82f11998ad384638313a790",
+              "svgBytes": 219379,
+              "strands": 56,
+              "crossings": {
+                "crossings": 49,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 529
+              },
+              "assigned": 0,
+              "generationMs": 8.255100000000084,
+              "crossingMs": 4.532699999999977,
+              "svgPreparationMs": 3.648900000000026
+            },
+            {
+              "label": "WEAVE 04/weave-revision-1b1ea088-93ca-4b62-a3e7-c608ddebbea3",
+              "studyId": "weave-study-b7b0db77-97e1-4fd6-8ddd-51e5ce5a0ab7",
+              "sourceRevision": "carrier-revision-72ee2aba-4840-4bc3-8bfe-4d42ecd69538",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-4ed4cfd0-447c-4fc9-a798-f6e142f9250a",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-81b25673-4835-41eb-9f32-d347d0b6be06",
+                    "key": "A",
+                    "label": "WARP",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-10c55d21-9c4a-4da9-abee-ec0daa42140f",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 0
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-d0a42bf5-fa8a-445c-8d08-79d3a36aec22",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 1,
+                    "edgeWidth": 0.5,
+                    "width": 8.5,
+                    "mode": "outline"
+                  },
+                  "B": {
+                    "rank": 5,
+                    "edgeWidth": 1,
+                    "width": 6,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "",
+                "overrides": [],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 2,
+                      "under": 2,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "7e326b6502f83b6ef100e662247fd25db734b224229f3731627097822c3593d1",
+              "svgSha256": "09d75c1765c9339fd704a2564117b0891ec97ba95640f6fd0a3a07ff75659a51",
+              "svgBytes": 158114,
+              "strands": 18,
+              "crossings": {
+                "crossings": 72,
+                "contacts": 24,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 814
+              },
+              "assigned": 72,
+              "generationMs": 6.25509999999997,
+              "crossingMs": 7.1452999999999065,
+              "svgPreparationMs": 3.5412999999999784
+            },
+            {
+              "label": "FOUNDATION 05/weave-revision-1fd55e32-5c33-4312-9815-4c3f81efb77b",
+              "studyId": "weave-study-e017756f-c0dc-4dee-b3ae-eaff052070e0",
+              "sourceRevision": "carrier-revision-3ea9a88c-f676-46f0-933b-4b0e579d2fe1",
+              "carrier": {
+                "kind": "stitch-recipe-v1",
+                "id": "pattern-eb56a22b-d1cd-41a5-b2c5-adb3626be223",
+                "recipeId": "herringbone-square",
+                "recipeVersion": 1,
+                "parameters": {
+                  "width": 80,
+                  "height": 80,
+                  "gapX": 40,
+                  "gapY": 40,
+                  "extension": 0.125,
+                  "rotation": 0
+                },
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "roles": [
+                  "foundation"
+                ],
+                "runKeys": [
+                  "T",
+                  "R",
+                  "B",
+                  "L"
+                ],
+                "construction": {
+                  "version": 2,
+                  "backside": [
+                    [
+                      "T",
+                      "R",
+                      0,
+                      0
+                    ],
+                    [
+                      "R",
+                      "B",
+                      0,
+                      0
+                    ],
+                    [
+                      "B",
+                      "L",
+                      0,
+                      0
+                    ]
+                  ],
+                  "intent": "square-cyclic-v1",
+                  "rulesVersion": "stitch-intent-v1",
+                  "rules": [
+                    {
+                      "first": {
+                        "run": "T",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "L",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    },
+                    {
+                      "first": {
+                        "run": "R",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "T",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    },
+                    {
+                      "first": {
+                        "run": "B",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "R",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    },
+                    {
+                      "first": {
+                        "run": "L",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "second": {
+                        "run": "B",
+                        "role": "foundation",
+                        "cell": [
+                          0,
+                          0
+                        ]
+                      },
+                      "firstParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          0
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "secondParameter": {
+                        "numerator": [
+                          "extension",
+                          1,
+                          1
+                        ],
+                        "denominator": [
+                          "extension",
+                          2,
+                          1
+                        ]
+                      },
+                      "over": "first"
+                    }
+                  ],
+                  "crossRowPolicy": "not-authored"
+                }
+              },
+              "generation": {
+                "version": "stitch-fields-v1",
+                "roles": [
+                  "foundation"
+                ],
+                "influences": []
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "foundation": {
+                    "rank": 4,
+                    "edgeWidth": 1,
+                    "width": 9,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "foundation",
+                "clearance": 1,
+                "source": "sha256-v1:c3d80a107db9ce8824db804c681ecee6779b85d97945f93aad888f21676a4660",
+                "overrides": [],
+                "rule": {
+                  "mode": "preset",
+                  "recipe": "herringbone-square",
+                  "inverted": false,
+                  "over": 1,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": []
+                }
+              },
+              "geometrySha256": "7ed64525c5d9f92127e5e58e21f650eb8abb884b5ceaee9af261d905022b6969",
+              "svgSha256": "31f1eddfc7e1ac6eb7a2c85dfe07dd5a328433ccbde28734ef5e266e9bc78a04",
+              "svgBytes": 136721,
+              "strands": 56,
+              "crossings": {
+                "crossings": 49,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 49
+              },
+              "assigned": 49,
+              "generationMs": 2.963799999999992,
+              "crossingMs": 0.2477999999999838,
+              "svgPreparationMs": 2.1603999999999814
+            },
+            {
+              "label": "INFLUENCED GRID 06/weave-revision-ce544059-36f9-42bb-ba84-3ea1b909bd27",
+              "studyId": "weave-study-80e7d48a-1500-4c11-bafb-c30cfa29c233",
+              "sourceRevision": "carrier-revision-4bf78d82-b896-4a06-8a99-e75532b8d0af",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-05116379-2ac4-4960-86d5-c2627cbfce52",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-c5437864-541e-464a-9bdf-a2d01c8bc913",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-33c9a344-0634-4101-8200-f3534d3e2a6e",
+                    "key": "C",
+                    "label": "FAMILY C",
+                    "order": 2,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-eded33ec-343c-4006-a775-479496cd9b38",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 72,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 0
+                  },
+                  "B": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 60
+                  },
+                  "C": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 120
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    },
+                    "C": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-a4475fe2-12d1-419a-bbe8-391353765b3b",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 79,
+                        "tension": 12
+                      },
+                      "B": {
+                        "strength": 58,
+                        "tension": 12
+                      },
+                      "C": {
+                        "strength": 58,
+                        "tension": 12
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-0138b11e-a7ea-47d4-8b7c-8b9a236d96fe",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-e96c18b4-b78b-49ad-8814-9571210338d7",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-778ba3f9-5b44-49ce-8acc-662835989a88",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "C": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "",
+                "overrides": [],
+                "rule": {
+                  "mode": "preset",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 1,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": []
+                }
+              },
+              "geometrySha256": "6527e48f712956ce3058fcf4bdcb7465145d53d66f5f563ddcaedd556163f9bd",
+              "svgSha256": "c4e44099b0d559caabc78ef8c25bff0f277bfe72a3d0b022205336947a1ae4dc",
+              "svgBytes": 422727,
+              "strands": 29,
+              "crossings": {
+                "crossings": 250,
+                "contacts": 0,
+                "overlaps": 165,
+                "uncertain": 0,
+                "multiway": 38,
+                "pairs": 4051
+              },
+              "assigned": 163,
+              "generationMs": 22.425399999999968,
+              "crossingMs": 23.12099999999998,
+              "svgPreparationMs": 9.592499999999973
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "current-project-1.portable.json",
+      "sha256": "8d0084f361d0390cad1c9a9bce239c093027e966435d9bf8912a3eeb87306c23",
+      "bytes": 138810,
+      "loadDecodeMs": 14.50120000000004,
+      "fullValidationMs": 31.903400000000033,
+      "packMs": 12.727899999999977,
+      "projects": [
+        {
+          "id": "project-5abdb3e2-c843-4e68-afd1-08647465a498",
+          "name": "CONTROL DIAGNOSTIC",
+          "boundaries": 1,
+          "patterns": 2,
+          "weaves": 1,
+          "boundaryRevisions": 1,
+          "carrierRevisions": 6,
+          "weaveRevisions": 4,
+          "designs": [
+            {
+              "label": "working",
+              "studyId": "weave-study-ee50db45-1fe7-4cb3-b087-009e21d4afb6",
+              "sourceRevision": "carrier-revision-4907c473-b76b-442f-af01-083e221fd67b",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-dff23287-de0c-49de-ba37-a519fc4855a9",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-5af7ed5f-36d8-4b35-9b83-85b474b3b5d8",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-11c36d62-4431-42e8-b93b-0eb985c80477",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 509,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 0
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-2b8bf4d0-e686-4c58-92ce-6b165a5f28f1",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 75,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 75,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "geometrySha256": "d782df8826f84adcfc4d2c887b76368253397a0fb7d74f9895360b076e2844b8",
+              "svgSha256": "c506d871bfeddca39858433e503e23ae0a928db2176fc1ed5d8089ff1c780cf6",
+              "svgBytes": 97101,
+              "strands": 10,
+              "crossings": {
+                "crossings": 7,
+                "contacts": 4,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 529
+              },
+              "assigned": 0,
+              "generationMs": 3.7268000000000256,
+              "crossingMs": 3.3672000000000253,
+              "svgPreparationMs": 1.7560000000000855
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-c44b5259-ebb4-4576-8d93-51ffab9f675b",
+              "studyId": "weave-study-ee50db45-1fe7-4cb3-b087-009e21d4afb6",
+              "sourceRevision": "carrier-revision-2a4732bf-903b-4bec-965e-d0dd0108a8ac",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-dff23287-de0c-49de-ba37-a519fc4855a9",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-5af7ed5f-36d8-4b35-9b83-85b474b3b5d8",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-11c36d62-4431-42e8-b93b-0eb985c80477",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v1",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "angleDegrees": 0,
+                "families": {
+                  "A": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-2b8bf4d0-e686-4c58-92ce-6b165a5f28f1",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "geometrySha256": "4f48c7ea8f0bd735e53b43889ca07ce3e3ee5a02b1b1bae031ab527003c18c52",
+              "svgSha256": "bc24163fa7973e51e4b92b472f2796b3b6dbfe2319bfe2882d9815872eb507b7",
+              "svgBytes": 140511,
+              "strands": 18,
+              "crossings": {
+                "crossings": 72,
+                "contacts": 24,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 814
+              },
+              "assigned": 0,
+              "generationMs": 6.246499999999969,
+              "crossingMs": 6.118799999999965,
+              "svgPreparationMs": 2.441400000000044
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-1a96a81e-58ae-4bb7-a8e5-8548045b4911",
+              "studyId": "weave-study-ee50db45-1fe7-4cb3-b087-009e21d4afb6",
+              "sourceRevision": "carrier-revision-2a4732bf-903b-4bec-965e-d0dd0108a8ac",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-dff23287-de0c-49de-ba37-a519fc4855a9",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-5af7ed5f-36d8-4b35-9b83-85b474b3b5d8",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-11c36d62-4431-42e8-b93b-0eb985c80477",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v1",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "angleDegrees": 0,
+                "families": {
+                  "A": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-2b8bf4d0-e686-4c58-92ce-6b165a5f28f1",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 80,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 80,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "geometrySha256": "1cac1759e2c85e861d4f8dd9eb035d9ab18341d92e9330c52bf3b4fd6309db9a",
+              "svgSha256": "ebe54bd602d8f2795a6b088878e3c4dd2f739dfdd0f9d73280b52d46158e32ca",
+              "svgBytes": 168375,
+              "strands": 18,
+              "crossings": {
+                "crossings": 76,
+                "contacts": 12,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 966
+              },
+              "assigned": 0,
+              "generationMs": 7.963300000000004,
+              "crossingMs": 7.230300000000057,
+              "svgPreparationMs": 2.523800000000051
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-f7ddfa78-b125-4efb-a564-194d5869a5d7",
+              "studyId": "weave-study-ee50db45-1fe7-4cb3-b087-009e21d4afb6",
+              "sourceRevision": "carrier-revision-2a4732bf-903b-4bec-965e-d0dd0108a8ac",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-dff23287-de0c-49de-ba37-a519fc4855a9",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-5af7ed5f-36d8-4b35-9b83-85b474b3b5d8",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-11c36d62-4431-42e8-b93b-0eb985c80477",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v1",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "angleDegrees": 0,
+                "families": {
+                  "A": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-2b8bf4d0-e686-4c58-92ce-6b165a5f28f1",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 75,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 75,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "geometrySha256": "93de28c4b41d502f9e73f14fd436e9c7b43eedaf0289dd5fbd0fcbc146c3db0b",
+              "svgSha256": "1b486318af495ecfd249da4a8c0c4766136599029e32b72ba9f87dd628f50d10",
+              "svgBytes": 163706,
+              "strands": 18,
+              "crossings": {
+                "crossings": 77,
+                "contacts": 8,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 933
+              },
+              "assigned": 0,
+              "generationMs": 6.5605999999999085,
+              "crossingMs": 6.555700000000002,
+              "svgPreparationMs": 2.320600000000013
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-3e5ab33f-0688-4aea-91b8-28b1f5174bfa",
+              "studyId": "weave-study-ee50db45-1fe7-4cb3-b087-009e21d4afb6",
+              "sourceRevision": "carrier-revision-4907c473-b76b-442f-af01-083e221fd67b",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-dff23287-de0c-49de-ba37-a519fc4855a9",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-5af7ed5f-36d8-4b35-9b83-85b474b3b5d8",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-11c36d62-4431-42e8-b93b-0eb985c80477",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 509,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 0
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-2b8bf4d0-e686-4c58-92ce-6b165a5f28f1",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 75,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 75,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "geometrySha256": "d782df8826f84adcfc4d2c887b76368253397a0fb7d74f9895360b076e2844b8",
+              "svgSha256": "c506d871bfeddca39858433e503e23ae0a928db2176fc1ed5d8089ff1c780cf6",
+              "svgBytes": 97101,
+              "strands": 10,
+              "crossings": {
+                "crossings": 7,
+                "contacts": 4,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 529
+              },
+              "assigned": 0,
+              "generationMs": 4.3799999999999955,
+              "crossingMs": 3.3822999999999865,
+              "svgPreparationMs": 1.3303999999999405
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "workflow-after-boundary-return.portable.json",
+      "sha256": "18931abbb292d9ca26d76399ce77ac762c274820cef8574c9b6e26295edd487f",
+      "bytes": 67065,
+      "loadDecodeMs": 7.7975999999999885,
+      "fullValidationMs": 33.65519999999992,
+      "packMs": 10.959400000000073,
+      "projects": [
+        {
+          "id": "project-1796ea8f-8391-485d-986e-d0af2f581297",
+          "name": "STABILITY PHASE 0 BASELINE",
+          "boundaries": 2,
+          "patterns": 1,
+          "weaves": 1,
+          "boundaryRevisions": 2,
+          "carrierRevisions": 3,
+          "weaveRevisions": 1,
+          "designs": [
+            {
+              "label": "working",
+              "studyId": "weave-study-b290919c-89ea-4ff9-b6f0-21bd70b54104",
+              "sourceRevision": "carrier-revision-8c4dd2e5-7670-431b-8608-0576d5297602",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-fec99445-eabd-49b2-b5c0-9285f03289fc",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-0880121c-9219-434b-b809-6804a73d28a0",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-6559126e-179b-4612-9fef-8dbb4923b718",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 10
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-55323458-f331-4bf4-b5a8-e920d9b1bb4d",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 180,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 70,
+                        "tension": 20
+                      },
+                      "B": {
+                        "strength": 70,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3348207b-c904-4075-8684-fc7fb7e03a83",
+                    "kind": "repeller",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3aae86ff-a913-418b-b491-f2e04056f3ac",
+                    "kind": "deflector",
+                    "center": {
+                      "x": 12.82007,
+                      "y": -5.963138
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 3,
+                    "edgeWidth": 1,
+                    "width": 5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "sha256-v1:de18366228c927a5c78f7a2ae55312ed0449b2511b7dcc37298aaa27ebdff513",
+                "overrides": [
+                  [
+                    "project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:A:-1/0/0|project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:B:4/0/0",
+                    true
+                  ]
+                ],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 1,
+                      "under": 1,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+              "svgSha256": "0a1a604e6b6db772ef7dd56dd91304eaca6347d7e48cf6f3a40d240b4a5b4e5f",
+              "svgBytes": 307970,
+              "strands": 18,
+              "crossings": {
+                "crossings": 73,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 1617
+              },
+              "assigned": 73,
+              "generationMs": 14.173400000000015,
+              "crossingMs": 14.984800000000064,
+              "svgPreparationMs": 5.449400000000082
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-7efdc829-164c-43da-8866-a89faa7cdc76",
+              "studyId": "weave-study-b290919c-89ea-4ff9-b6f0-21bd70b54104",
+              "sourceRevision": "carrier-revision-8c4dd2e5-7670-431b-8608-0576d5297602",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-fec99445-eabd-49b2-b5c0-9285f03289fc",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-0880121c-9219-434b-b809-6804a73d28a0",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-6559126e-179b-4612-9fef-8dbb4923b718",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 10
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-55323458-f331-4bf4-b5a8-e920d9b1bb4d",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 180,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 70,
+                        "tension": 20
+                      },
+                      "B": {
+                        "strength": 70,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3348207b-c904-4075-8684-fc7fb7e03a83",
+                    "kind": "repeller",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3aae86ff-a913-418b-b491-f2e04056f3ac",
+                    "kind": "deflector",
+                    "center": {
+                      "x": 12.82007,
+                      "y": -5.963138
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 3,
+                    "edgeWidth": 1,
+                    "width": 5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "sha256-v1:de18366228c927a5c78f7a2ae55312ed0449b2511b7dcc37298aaa27ebdff513",
+                "overrides": [
+                  [
+                    "project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:A:-1/0/0|project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:B:4/0/0",
+                    true
+                  ]
+                ],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 1,
+                      "under": 1,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+              "svgSha256": "0a1a604e6b6db772ef7dd56dd91304eaca6347d7e48cf6f3a40d240b4a5b4e5f",
+              "svgBytes": 307970,
+              "strands": 18,
+              "crossings": {
+                "crossings": 73,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 1617
+              },
+              "assigned": 73,
+              "generationMs": 14.790499999999952,
+              "crossingMs": 14.718799999999987,
+              "svgPreparationMs": 4.927000000000021
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "workflow-after-reload.portable.json",
+      "sha256": "ad0cb47d1129d1c5c1f48138118ba16f06c1dd3abaf124b9cb150b58fe885249",
+      "bytes": 66633,
+      "loadDecodeMs": 7.9003999999999905,
+      "fullValidationMs": 30.62799999999993,
+      "packMs": 11.987999999999943,
+      "projects": [
+        {
+          "id": "project-1796ea8f-8391-485d-986e-d0af2f581297",
+          "name": "STABILITY PHASE 0 BASELINE",
+          "boundaries": 1,
+          "patterns": 1,
+          "weaves": 1,
+          "boundaryRevisions": 1,
+          "carrierRevisions": 3,
+          "weaveRevisions": 1,
+          "designs": [
+            {
+              "label": "working",
+              "studyId": "weave-study-b290919c-89ea-4ff9-b6f0-21bd70b54104",
+              "sourceRevision": "carrier-revision-8c4dd2e5-7670-431b-8608-0576d5297602",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-fec99445-eabd-49b2-b5c0-9285f03289fc",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-0880121c-9219-434b-b809-6804a73d28a0",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-6559126e-179b-4612-9fef-8dbb4923b718",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 10
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-55323458-f331-4bf4-b5a8-e920d9b1bb4d",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 180,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 70,
+                        "tension": 20
+                      },
+                      "B": {
+                        "strength": 70,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3348207b-c904-4075-8684-fc7fb7e03a83",
+                    "kind": "repeller",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3aae86ff-a913-418b-b491-f2e04056f3ac",
+                    "kind": "deflector",
+                    "center": {
+                      "x": 12.82007,
+                      "y": -5.963138
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 3,
+                    "edgeWidth": 1,
+                    "width": 5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "sha256-v1:de18366228c927a5c78f7a2ae55312ed0449b2511b7dcc37298aaa27ebdff513",
+                "overrides": [
+                  [
+                    "project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:A:-1/0/0|project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:B:4/0/0",
+                    true
+                  ]
+                ],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 1,
+                      "under": 1,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+              "svgSha256": "0a1a604e6b6db772ef7dd56dd91304eaca6347d7e48cf6f3a40d240b4a5b4e5f",
+              "svgBytes": 307970,
+              "strands": 18,
+              "crossings": {
+                "crossings": 73,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 1617
+              },
+              "assigned": 73,
+              "generationMs": 14.10940000000005,
+              "crossingMs": 14.379699999999957,
+              "svgPreparationMs": 5.9739000000000715
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-7efdc829-164c-43da-8866-a89faa7cdc76",
+              "studyId": "weave-study-b290919c-89ea-4ff9-b6f0-21bd70b54104",
+              "sourceRevision": "carrier-revision-8c4dd2e5-7670-431b-8608-0576d5297602",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-fec99445-eabd-49b2-b5c0-9285f03289fc",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-0880121c-9219-434b-b809-6804a73d28a0",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-6559126e-179b-4612-9fef-8dbb4923b718",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 10
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-55323458-f331-4bf4-b5a8-e920d9b1bb4d",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 180,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 70,
+                        "tension": 20
+                      },
+                      "B": {
+                        "strength": 70,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3348207b-c904-4075-8684-fc7fb7e03a83",
+                    "kind": "repeller",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3aae86ff-a913-418b-b491-f2e04056f3ac",
+                    "kind": "deflector",
+                    "center": {
+                      "x": 12.82007,
+                      "y": -5.963138
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 3,
+                    "edgeWidth": 1,
+                    "width": 5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "sha256-v1:de18366228c927a5c78f7a2ae55312ed0449b2511b7dcc37298aaa27ebdff513",
+                "overrides": [
+                  [
+                    "project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:A:-1/0/0|project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:B:4/0/0",
+                    true
+                  ]
+                ],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 1,
+                      "under": 1,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+              "svgSha256": "0a1a604e6b6db772ef7dd56dd91304eaca6347d7e48cf6f3a40d240b4a5b4e5f",
+              "svgBytes": 307970,
+              "strands": 18,
+              "crossings": {
+                "crossings": 73,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 1617
+              },
+              "assigned": 73,
+              "generationMs": 14.281299999999987,
+              "crossingMs": 15.331099999999878,
+              "svgPreparationMs": 4.612699999999904
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "workflow-before-reload.portable.json",
+      "sha256": "ad0cb47d1129d1c5c1f48138118ba16f06c1dd3abaf124b9cb150b58fe885249",
+      "bytes": 66633,
+      "loadDecodeMs": 7.749199999999973,
+      "fullValidationMs": 37.081699999999955,
+      "packMs": 9.517799999999852,
+      "projects": [
+        {
+          "id": "project-1796ea8f-8391-485d-986e-d0af2f581297",
+          "name": "STABILITY PHASE 0 BASELINE",
+          "boundaries": 1,
+          "patterns": 1,
+          "weaves": 1,
+          "boundaryRevisions": 1,
+          "carrierRevisions": 3,
+          "weaveRevisions": 1,
+          "designs": [
+            {
+              "label": "working",
+              "studyId": "weave-study-b290919c-89ea-4ff9-b6f0-21bd70b54104",
+              "sourceRevision": "carrier-revision-8c4dd2e5-7670-431b-8608-0576d5297602",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-fec99445-eabd-49b2-b5c0-9285f03289fc",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-0880121c-9219-434b-b809-6804a73d28a0",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-6559126e-179b-4612-9fef-8dbb4923b718",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 10
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-55323458-f331-4bf4-b5a8-e920d9b1bb4d",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 180,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 70,
+                        "tension": 20
+                      },
+                      "B": {
+                        "strength": 70,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3348207b-c904-4075-8684-fc7fb7e03a83",
+                    "kind": "repeller",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3aae86ff-a913-418b-b491-f2e04056f3ac",
+                    "kind": "deflector",
+                    "center": {
+                      "x": 12.82007,
+                      "y": -5.963138
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 3,
+                    "edgeWidth": 1,
+                    "width": 5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "sha256-v1:de18366228c927a5c78f7a2ae55312ed0449b2511b7dcc37298aaa27ebdff513",
+                "overrides": [
+                  [
+                    "project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:A:-1/0/0|project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:B:4/0/0",
+                    true
+                  ]
+                ],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 1,
+                      "under": 1,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+              "svgSha256": "0a1a604e6b6db772ef7dd56dd91304eaca6347d7e48cf6f3a40d240b4a5b4e5f",
+              "svgBytes": 307970,
+              "strands": 18,
+              "crossings": {
+                "crossings": 73,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 1617
+              },
+              "assigned": 73,
+              "generationMs": 17.42809999999986,
+              "crossingMs": 14.772400000000061,
+              "svgPreparationMs": 5.0949999999998
+            },
+            {
+              "label": "INFLUENCED GRID 01/weave-revision-7efdc829-164c-43da-8866-a89faa7cdc76",
+              "studyId": "weave-study-b290919c-89ea-4ff9-b6f0-21bd70b54104",
+              "sourceRevision": "carrier-revision-8c4dd2e5-7670-431b-8608-0576d5297602",
+              "families": {
+                "version": "family-catalog-v1",
+                "entries": [
+                  {
+                    "id": "family-fec99445-eabd-49b2-b5c0-9285f03289fc",
+                    "key": "A",
+                    "label": "FAMILY A",
+                    "order": 0,
+                    "includeInExport": true
+                  },
+                  {
+                    "id": "family-0880121c-9219-434b-b809-6804a73d28a0",
+                    "key": "B",
+                    "label": "FAMILY B",
+                    "order": 1,
+                    "includeInExport": true
+                  }
+                ]
+              },
+              "carrier": {
+                "id": "carrier-6559126e-179b-4612-9fef-8dbb4923b718",
+                "kind": "rectangular",
+                "generatorVersion": "rect-v2",
+                "clipVersion": "polygon-line-v1",
+                "selectionVersion": "density-v1",
+                "origin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "families": {
+                  "A": {
+                    "spacing": 60,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 10
+                  },
+                  "B": {
+                    "spacing": 50,
+                    "offset": 0,
+                    "density": 100,
+                    "angleDegrees": 90
+                  }
+                }
+              },
+              "generation": {
+                "version": "combined-influences-v1",
+                "variation": {
+                  "version": "strand-offset-v1",
+                  "seed": 1042,
+                  "families": {
+                    "A": {
+                      "amount": 0
+                    },
+                    "B": {
+                      "amount": 0
+                    }
+                  }
+                },
+                "influences": [
+                  {
+                    "id": "field-55323458-f331-4bf4-b5a8-e920d9b1bb4d",
+                    "kind": "attractor",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 180,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 70,
+                        "tension": 20
+                      },
+                      "B": {
+                        "strength": 70,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3348207b-c904-4075-8684-fc7fb7e03a83",
+                    "kind": "repeller",
+                    "center": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": "field-3aae86ff-a913-418b-b491-f2e04056f3ac",
+                    "kind": "deflector",
+                    "center": {
+                      "x": 12.82007,
+                      "y": -5.963138
+                    },
+                    "radius": 150,
+                    "enabled": true,
+                    "falloffVersion": "smooth-local-v1",
+                    "falloff": 3,
+                    "direction": 0,
+                    "families": {
+                      "A": {
+                        "strength": 50,
+                        "tension": 0
+                      },
+                      "B": {
+                        "strength": 50,
+                        "tension": 0
+                      }
+                    }
+                  }
+                ]
+              },
+              "appearance": {
+                "version": "thread-appearance-v2",
+                "families": {
+                  "A": {
+                    "rank": 3,
+                    "edgeWidth": 1,
+                    "width": 5,
+                    "mode": "outline"
+                  }
+                }
+              },
+              "interlacing": {
+                "version": "interlacing-v2",
+                "enabled": true,
+                "topFamily": "A",
+                "clearance": 1,
+                "source": "sha256-v1:de18366228c927a5c78f7a2ae55312ed0449b2511b7dcc37298aaa27ebdff513",
+                "overrides": [
+                  [
+                    "project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:A:-1/0/0|project-1796ea8f-8391-485d-986e-d0af2f581297:carrier-6559126e-179b-4612-9fef-8dbb4923b718:B:4/0/0",
+                    true
+                  ]
+                ],
+                "rule": {
+                  "mode": "repeat",
+                  "recipe": "",
+                  "inverted": false,
+                  "over": 2,
+                  "under": 1,
+                  "phase": 0,
+                  "pairs": [
+                    {
+                      "first": "A",
+                      "second": "B",
+                      "over": 1,
+                      "under": 1,
+                      "phase": 0
+                    }
+                  ]
+                }
+              },
+              "geometrySha256": "dc8796db19c0172b0571b65fdaea9b91e10b74f6a54b0d681d6a1ec2a495681d",
+              "svgSha256": "0a1a604e6b6db772ef7dd56dd91304eaca6347d7e48cf6f3a40d240b4a5b4e5f",
+              "svgBytes": 307970,
+              "strands": 18,
+              "crossings": {
+                "crossings": 73,
+                "contacts": 0,
+                "overlaps": 0,
+                "uncertain": 0,
+                "multiway": 0,
+                "pairs": 1617
+              },
+              "assigned": 73,
+              "generationMs": 15.712199999999939,
+              "crossingMs": 14.7032999999999,
+              "svgPreparationMs": 5.176500000000033
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "workerSamples": [
+    {
+      "fixture": "current-project-0.portable.json",
+      "requestId": "phase0:1",
+      "workerMs": 43.17000000000007,
+      "deriveMs": 36.98660000000018,
+      "encodeMs": 4.189799999999877,
+      "roundTripMs": 48.94970000000012,
+      "exact": true,
+      "within400ms": true
+    },
+    {
+      "fixture": "current-project-1.portable.json",
+      "requestId": "phase0:2",
+      "workerMs": 9.433299999999917,
+      "deriveMs": 7.691499999999905,
+      "encodeMs": 1.0037999999999556,
+      "roundTripMs": 11.171299999999974,
+      "exact": true,
+      "within400ms": true
+    },
+    {
+      "fixture": "workflow-after-boundary-return.portable.json",
+      "requestId": "phase0:3",
+      "workerMs": 20.53379999999993,
+      "deriveMs": 16.690200000000004,
+      "encodeMs": 3.6324999999999363,
+      "roundTripMs": 23.910900000000083,
+      "exact": true,
+      "within400ms": true
+    },
+    {
+      "fixture": "workflow-after-reload.portable.json",
+      "requestId": "phase0:4",
+      "workerMs": 18.882300000000214,
+      "deriveMs": 16.1733999999999,
+      "encodeMs": 2.5174999999999272,
+      "roundTripMs": 22.21939999999995,
+      "exact": true,
+      "within400ms": true
+    },
+    {
+      "fixture": "workflow-before-reload.portable.json",
+      "requestId": "phase0:5",
+      "workerMs": 14.37130000000002,
+      "deriveMs": 12.376899999999978,
+      "encodeMs": 1.7753999999999905,
+      "roundTripMs": 17.547700000000077,
+      "exact": true,
+      "within400ms": true
+    }
+  ]
+}

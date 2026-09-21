@@ -1,0 +1,10 @@
+✔ schema5 migration reuses exact legacy buffers; mixed foundation backup retains immutable revisions (129.388ms)
+✔ over-capacity migration rejects before mutating its source snapshot (379.7717ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 530.8576

@@ -1,0 +1,33 @@
+{
+  "fixture": "24-tooth comb",
+  "boundaryVertices": 100,
+  "spacing": 0.64,
+  "geometryPassed": true,
+  "backupAdmissionPassed": true,
+  "portableLimit": 10485760,
+  "geometryMs": 410.35609999999997,
+  "diagnostics": {
+    "tau": 1e-8,
+    "epsilon": 0.0005,
+    "accuracyScope": "unclipped-curve-to-polyline",
+    "clippingRoundingBound": 2.5e-9,
+    "displacementBound": 0.1,
+    "candidateLines": 1564,
+    "subdivisionNodes": 5302,
+    "segments": 4997,
+    "clippedSegments": 21053,
+    "edgeTests": 51253,
+    "shortSpans": 1558,
+    "collinearContacts": 16,
+    "maxCertifiedError": 0.0004994054698379544,
+    "counts": {
+      "A": 781,
+      "B": 781
+    },
+    "intervals": 19946,
+    "complete": true
+  },
+  "payloadDecodedBytes": 2538800,
+  "metadataBytes": 1194,
+  "backupBytes": 3391217
+}

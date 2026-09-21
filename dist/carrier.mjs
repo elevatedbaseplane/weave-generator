@@ -1,3 +1,4 @@
+import {STITCH_SOURCE,validateStitchSource} from './stitch-source.mjs';
 import {validateBoundaryRecord} from './boundary.mjs';
 
 export const CARRIER_LIMITS=Object.freeze({candidateLines:2000,intervals:20000,lineEdgeTests:2000000});
@@ -13,7 +14,7 @@ export function createRectangularCarrier(carrierId=`carrier-${crypto.randomUUID(
   return {id:carrierId,kind:'rectangular',generatorVersion:'rect-v1',clipVersion:'polygon-line-v1',selectionVersion:'density-v1',origin:{x:0,y:0},angleDegrees:0,families:{A:{spacing:50,offset:0,density:100},B:{spacing:50,offset:0,density:100}}};
 }
 
-export const familyNames=carrier=>Object.keys(carrier?.families||{}).sort();
+export const familyNames=carrier=>carrier?.kind===STITCH_SOURCE?[...carrier.roles]:Object.keys(carrier?.families||{}).sort();
 export function familyAxes(carrier,family){
   const names=familyNames(carrier);if(!names.includes(family))throw new Error('Unknown weave family.');
   const angle=(carrier.generatorVersion==='rect-v1'?(carrier.angleDegrees+(family==='B'?90:0)):carrier.families[family].angleDegrees)*Math.PI/180,clean=n=>Math.abs(n)<1e-15?0:n;
@@ -22,10 +23,11 @@ export function familyAxes(carrier,family){
 export function nextFamilyName(carrier){for(let i=0;i<FAMILY_LIMIT;i++){const name=String.fromCharCode(65+i);if(!(name in carrier.families))return name;}throw new Error(`Use no more than ${FAMILY_LIMIT} families per Weave Pattern.`);}
 
 export function validateCarrierRecipe(value){
+  if(value?.kind===STITCH_SOURCE)return validateStitchSource(value);
   if(!value||typeof value.id!=='string'||!value.id||value.id.length>120||value.kind!=='rectangular'||!['rect-v1','rect-v2'].includes(value.generatorVersion)||value.clipVersion!=='polygon-line-v1'||value.selectionVersion!=='density-v1')throw new Error('Invalid rectangular carrier recipe.');
   if(!Number.isFinite(value.origin?.x)||!Number.isFinite(value.origin?.y)||Math.abs(value.origin.x)>1e9||Math.abs(value.origin.y)>1e9)throw new Error('Invalid carrier origin.');
   const names=familyNames(value);if(value.generatorVersion==='rect-v1'){if(!Number.isFinite(value.angleDegrees)||value.angleDegrees < -180||value.angleDegrees > 180||names.join(',')!=='A,B')throw new Error('Carrier rotation must be between −180° and 180°.');}
-  else if(names.length<2||names.length>FAMILY_LIMIT||names.some((name,i)=>name!==String.fromCharCode(65+i)))throw new Error(`A Weave Pattern needs 2–${FAMILY_LIMIT} consecutively named families.`);
+  else if(names.length<2||names.length>FAMILY_LIMIT||names.some(name=>!/^[A-H]$/.test(name)))throw new Error(`A Weave Pattern needs 2–${FAMILY_LIMIT} uniquely identified families.`);
   for(const family of names){
     const f=value.families?.[family];
     if(value.generatorVersion==='rect-v2'&&(!Number.isFinite(f?.angleDegrees)||f.angleDegrees< -180||f.angleDegrees>180))throw new Error(`${family} angle must be between −180° and 180°.`);
@@ -52,6 +54,7 @@ function canonical(value){
 function fnv64(text){let h=14695981039346656037n;for(let i=0;i<text.length;i++){h^=BigInt(text.charCodeAt(i));h=BigInt.asUintN(64,h*1099511628211n);}return h.toString(16).padStart(16,'0');}
 export function carrierInputFingerprint(boundary,carrier){
   validateBoundaryRecord(boundary);validateCarrierRecipe(carrier);
+  if(carrier.kind===STITCH_SOURCE)return `stitch-${fnv64(canonical({points:boundary.points,carrier}))}`;
   return `carrier-${fnv64(canonical({points:boundary.points,closed:true,carrier:{kind:carrier.kind,generatorVersion:carrier.generatorVersion,clipVersion:carrier.clipVersion,selectionVersion:carrier.selectionVersion,origin:carrier.origin,...(carrier.generatorVersion==='rect-v1'?{angleDegrees:carrier.angleDegrees}:{}),families:carrier.families}}))}`;
 }
 

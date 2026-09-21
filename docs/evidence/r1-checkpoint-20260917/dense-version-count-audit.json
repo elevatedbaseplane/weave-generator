@@ -1,0 +1,38 @@
+[
+  {
+    "version": "v2",
+    "x": 0,
+    "segments": 30328,
+    "clippedSegments": 30510,
+    "candidates": 424,
+    "epsilon": 0.0125,
+    "complete": true
+  },
+  {
+    "version": "v5",
+    "x": 0,
+    "segments": 29956,
+    "clippedSegments": 30374,
+    "candidates": 424,
+    "epsilon": 0.0125,
+    "complete": true
+  },
+  {
+    "version": "v2",
+    "x": 1,
+    "segments": 30345,
+    "clippedSegments": 30528,
+    "candidates": 424,
+    "epsilon": 0.0125,
+    "complete": true
+  },
+  {
+    "version": "v5",
+    "x": 1,
+    "segments": 29975,
+    "clippedSegments": 30393,
+    "candidates": 424,
+    "epsilon": 0.0125,
+    "complete": true
+  }
+]

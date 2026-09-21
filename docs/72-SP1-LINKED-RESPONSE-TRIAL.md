@@ -1,0 +1,6 @@
+## SP1 linked response trial — 2026-09-17
+
+Build WF-SP1-LINKED-20260917 adds default-linked strength/tension editing with an independent-role checkbox. Each edited property applies to all roles of the selected influence; other response properties and other influences remain unchanged. Checking alone never rewrites existing saved values. Editing scope is session UI state (defaults linked after reload), while resulting values use the unchanged atomic save/schema paths. No evaluator, geometry, certificate, identity, codec or migration change. Targeted render now refreshes Undo/Redo enabled state, fixing an observed stale disabled button.
+
+Four focused tests pass plus static and syntax checks. Managed browser: A/B strength81 survives reload; independent B60 leaves A82; Undo restores81 after linked80 and Redo restores80. Preview screenshots inspected. Recorded worker/total samples79.3/175.5ms,68.6/179.9ms and101.7/248.1ms. The last exceeds the default200ms target; retained as diagnostic, not a performance certification pass. No exhaustive proofs or external command requested. Strong deformation can still alter crossings; linked roles do not guarantee topology preservation. Existing unequal tensions require a linked tension edit to equalize. SP1 trial awaits user visual acceptance; R2A remains next, not begun. No publication.
+

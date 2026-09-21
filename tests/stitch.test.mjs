@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import '../dist/weave.mjs';
+import {square} from '../dist/boundary.mjs';
+import {createStitchSource,stitchCell,stitchCandidates,validateStitchSource} from '../dist/stitch-source.mjs';
+import {deriveStitch,deriveStitchAsync,emptyStitchGeneration,finiteSupport} from '../dist/stitch.mjs';
+import {encodeStitch,decodeStitch} from '../dist/stitch-codec.mjs';
+const context={sourceBoardId:'board',sourceCarrierRevisionId:'source'};
+function field(s,n=3){return{id:'field',kind:'attractor',center:{x:0,y:0},radius:150,enabled:true,falloffVersion:'smooth-local-v1',falloff:n,direction:0,families:Object.fromEntries(s.roles.map(r=>[r,{strength:50,tension:0}]))};}
+test('reviewed finite foundations carry directed source runs without backside joins',()=>{const h=createStitchSource('double-herringbone','p'),r=stitchCell(h,0,0);assert.equal(r.length,4);assert.deepEqual(r[0].p0,{x:0,y:0});assert.deepEqual(r[0].p1,{x:75,y:60});assert.deepEqual(r[2].p0,{x:60,y:0});const s=createStitchSource('herringbone-square','q'),q=stitchCell(s,0,0);assert.equal(q.length,4);assert.equal(new Set(q.map(x=>x.identity.roleId)).size,1);assert.deepEqual(q[0].p0,{x:-10,y:80});assert.equal(s.construction.backside.length,3);});
+test('retained source IDs survive parameter changes and duplicates isolate identity',()=>{const s=createStitchSource('double-herringbone','p'),a=stitchCell(s,2,-3).map(r=>r.identity);s.parameters.pitch=180;assert.deepEqual(stitchCell(s,2,-3).map(r=>r.identity),a);s.id='q';assert.notDeepEqual(stitchCell(s,2,-3).map(r=>r.identity),a);assert.throws(()=>{s.parameters.rowGap=0;validateStitchSource(s)});});
+test('finite support equations enclose unequal-length entry and exit roots',()=>{const f={center:{x:5,y:0},radius:2};const r=finiteSupport({x:0,y:0},{x:10,y:0},f);assert.ok(r[0].lo<=.3&&r[0].hi>=.3);assert.ok(r[1].lo<=.7&&r[1].hi>=.7);assert.throws(()=>finiteSupport({x:0,y:0},{x:0,y:0},f),/Degenerate/);});
+test('expanded search retains outside runs and rejects candidate overflow atomically',()=>{const s=createStitchSource('double-herringbone','p');assert.ok(stitchCandidates(square(),s,160).length>stitchCandidates(square(),s,0).length);s.parameters.pitch=1;assert.throws(()=>stitchCandidates(square(),s),/2,000/);});
+for(const name of ['double-herringbone','herringbone-square'])test(name+' identity and influence preserve exact compact geometry',async()=>{const s=createStitchSource(name,'p'),g=emptyStitchGeneration(s);for(const n of [0,1,3,5]){g.influences=n?[field(s,n)]:[];const d=deriveStitch(square(),s,'board',context,g);assert.equal(d.complete,true);assert.ok(d.diagnostics.maxCertifiedError<=d.diagnostics.epsilon);assert.ok(d.strands.length>0);assert.deepEqual(decodeStitch(encodeStitch(d)),d);assert.deepEqual(await deriveStitchAsync(square(),s,'board',context,g),d);const packed=encodeStitch(d);new Uint32Array(packed.u32)[2]++;assert.throws(()=>decodeStitch(packed));}});

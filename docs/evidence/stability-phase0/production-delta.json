@@ -1,0 +1,9 @@
+{
+  "existingFilesChanged": [
+    "dist/app.mjs"
+  ],
+  "newProductionFiles": [
+    "dist/compatibility-baseline.mjs"
+  ],
+  "expectedOnly": "app.mjs read-only WebMCP registration"
+}

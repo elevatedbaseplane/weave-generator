@@ -1,0 +1,8 @@
+{
+  "build": "WF-W2-CONTINUOUS-20260917",
+  "renderMs": 84.2,
+  "completionMs": 337.1,
+  "limitMs": 50,
+  "passed": false,
+  "action": "Move exact same markup preparation to crossing worker; no threshold change."
+}

@@ -1,0 +1,86 @@
+{
+  "fixture": "100-vertex alternating-radius boundary; A/B spacing 2.5",
+  "geometry": {
+    "strands": 398,
+    "fragments": 840,
+    "segments": 30328,
+    "certificates": 30510
+  },
+  "phases": {
+    "workerResultStructuredCloneRoundTrip": {
+      "runs": 7,
+      "minMs": 51.091499999999996,
+      "p50Ms": 55.850400000000036,
+      "p95Ms": 57.37839999999994,
+      "maxMs": 57.37839999999994
+    },
+    "trustedWorkspaceValidation": {
+      "runs": 7,
+      "minMs": 7.044599999999946,
+      "p50Ms": 8.686500000000024,
+      "p95Ms": 15.89289999999994,
+      "maxMs": 15.89289999999994
+    },
+    "workspaceStructuredClone": {
+      "runs": 7,
+      "minMs": 13.78830000000005,
+      "p50Ms": 14.726400000000012,
+      "p95Ms": 17.743600000000015,
+      "maxMs": 17.743600000000015
+    },
+    "derivedGeometryHash": {
+      "runs": 7,
+      "minMs": 70.19540000000006,
+      "p50Ms": 73.1255000000001,
+      "p95Ms": 114.65620000000001,
+      "maxMs": 114.65620000000001
+    },
+    "compactCodecEncoding": {
+      "runs": 7,
+      "minMs": 87.68650000000002,
+      "p50Ms": 92.74210000000016,
+      "p95Ms": 95.51779999999985,
+      "maxMs": 95.51779999999985
+    },
+    "fullPortableSerializationAdmission": {
+      "runs": 7,
+      "minMs": 19.650100000000293,
+      "p50Ms": 20.59940000000006,
+      "p95Ms": 20.950500000000375,
+      "maxMs": 20.950500000000375
+    },
+    "currentPackWorkspaceTotal": {
+      "runs": 7,
+      "minMs": 133.42800000000034,
+      "p50Ms": 172.6483000000003,
+      "p95Ms": 244.24079999999958,
+      "maxMs": 244.24079999999958
+    },
+    "currentHistoryRecord": {
+      "runs": 7,
+      "minMs": 50.75570000000016,
+      "p50Ms": 63.192999999999756,
+      "p95Ms": 80.19649999999956,
+      "maxMs": 80.19649999999956
+    },
+    "indexedDbTransaction": {
+      "measured": false,
+      "reason": "The failed request timed out before transaction start; browser-only instrumentation is required."
+    },
+    "render": {
+      "measured": false,
+      "reason": "The failed request did not reach committed render; browser-only instrumentation is required."
+    }
+  },
+  "payload": {
+    "id": "sha256-v1:9821ca398377d44d2199b014298b7f29142cde0e7309131399381736c92056ce",
+    "byteLengths": {
+      "f64": 791664,
+      "u32": 46512,
+      "i32": 1592,
+      "u16": 3368
+    },
+    "backupBytes": 1133351
+  },
+  "interpretation": "Diagnostic timings are local Node measurements. Browser host evidence remains authoritative for the 750 ms gate."
+}

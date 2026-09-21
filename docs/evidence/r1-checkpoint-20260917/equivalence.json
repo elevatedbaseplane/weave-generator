@@ -1,0 +1,24 @@
+{
+  "mode": "verify",
+  "passed": true,
+  "fixtures": [
+    "v1",
+    "v2",
+    "negative",
+    "maximum"
+  ],
+  "portable": [
+    "v1",
+    "v2",
+    "saved",
+    "mixed",
+    "maximum"
+  ],
+  "failures": [
+    "v1Certificate",
+    "v2MissingCertificate",
+    "corruptLength",
+    "oversize"
+  ],
+  "baselineSha256": "a2376509a5478d7cf2af6b9d7b2c9833633930d8882046cb4c262cfd12123984"
+}

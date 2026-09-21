@@ -1,0 +1,57 @@
+✖ square-grid: editable independent pattern, clipped influence and exact backup (68.9576ms)
+✖ diamond-grid: editable independent pattern, clipped influence and exact backup (28.7933ms)
+✖ triangular-grid: editable independent pattern, clipped influence and exact backup (30.603ms)
+✔ unknown preset rejects rather than creating a misleading fallback (1.8984ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 157.1883
+
+✖ failing tests:
+
+test at tests\line-presets.test.mjs:6:43
+✖ square-grid: editable independent pattern, clipped influence and exact backup (68.9576ms)
+  Error: Invalid workspace manifest.
+      at reject (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/dist/storage-codec.mjs:7:68)
+      at unpackWorkspace (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/dist/storage-codec.mjs:76:142)
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/line-presets.test.mjs:13:120)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'storage-format'
+  }
+
+test at tests\line-presets.test.mjs:6:43
+✖ diamond-grid: editable independent pattern, clipped influence and exact backup (28.7933ms)
+  Error: Invalid workspace manifest.
+      at reject (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/dist/storage-codec.mjs:7:68)
+      at unpackWorkspace (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/dist/storage-codec.mjs:76:142)
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/line-presets.test.mjs:13:120)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'storage-format'
+  }
+
+test at tests\line-presets.test.mjs:6:43
+✖ triangular-grid: editable independent pattern, clipped influence and exact backup (30.603ms)
+  Error: Invalid workspace manifest.
+      at reject (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/dist/storage-codec.mjs:7:68)
+      at unpackWorkspace (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/dist/storage-codec.mjs:76:142)
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/line-presets.test.mjs:13:120)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    code: 'storage-format'
+  }

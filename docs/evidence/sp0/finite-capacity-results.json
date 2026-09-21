@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "scope": "SP0 synthetic layout/binary round-trip and exact byte-admission proof; not a production codec, geometric-validity, migration, browser-quota or performance pass",
+  "counts": {
+    "runs": 2000,
+    "fragments": 20000,
+    "points": 85536,
+    "certificates": 65536,
+    "edgeRefs": 80000
+  },
+  "byteLengths": {
+    "f64": 2628864,
+    "u32": 928000,
+    "i32": 16000,
+    "u16": 160000
+  },
+  "decodedBytes": 3732864,
+  "base64Characters": 4977160,
+  "envelopeAllowance": 16384,
+  "payloadUpperBound": 4993544,
+  "aggregateMetadataReserve": 262144,
+  "twoPayloadUpperBound": 10249232,
+  "headroom": 236528,
+  "measuredSingleWithReserve": 5240466,
+  "measuredTwoWithReserve": 10218539,
+  "measuredDuplicateWithReserve": 5240547,
+  "mixedLegacyNewUpperBound": 10238564,
+  "exactThresholdPassed": true,
+  "rejectChecks": [
+    "unknown codec",
+    "truncated base64",
+    "trailing buffer",
+    "noncontiguous fragment offset",
+    "oversized metadata",
+    "three distinct maximum payloads",
+    "one byte over ceiling"
+  ],
+  "currentPreviousDecodedPayloadBytes": 7465728,
+  "portableLimit": 10485760,
+  "notes": [
+    "Current and previous roots are separate recovery snapshots, not automatically both part of an exported workspace.",
+    "Saved revisions sharing content add references only. Additional distinct geometry counts fully.",
+    "Metadata reserve is a proof budget, not a claim about every possible workspace or an additional hard product quota.",
+    "The proof-only reserve field is not part of the proposed production envelope.",
+    "Browser storage overhead, retained undo roots and abandoned records have no universal quota guarantee; measure them at the checkpoint."
+  ]
+}

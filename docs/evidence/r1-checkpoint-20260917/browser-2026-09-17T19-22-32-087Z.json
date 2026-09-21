@@ -1,0 +1,676 @@
+{
+  "build": "WF-R1D-ANCESTRY-REPAIR-20260917",
+  "runId": "2026-09-17T19-22-32-087Z",
+  "checks": [
+    "square saved in tree",
+    "pattern visible before influence",
+    "coalesced latest input",
+    "pending undo cancellation",
+    "enable/disable",
+    "repeller/deflector/direction/falloff",
+    "spacing retains fields",
+    "eight-field limit",
+    "variation undo/redo",
+    "autosave exact reload",
+    "portable backup/import",
+    "corrupt current preserves validated previous recovery",
+    "legacy migration exact raw recovery",
+    "foreground stale-tab rejection"
+  ],
+  "cycles": [
+    {
+      "label": "default add influence",
+      "epoch": 0,
+      "requestStarted": 606.9000000059605,
+      "type": "committed",
+      "at": 690.1000000238419,
+      "seq": 1,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:1",
+      "workerMs": 17.600000023841858,
+      "totalMs": 83.2000000178814,
+      "storageGeneration": 4,
+      "phases": {
+        "dispatchMs": 29.7001953125,
+        "deriveMs": 15,
+        "encodeMs": 1.600000023841858,
+        "transferMs": 0.5,
+        "validationMs": 0.29999998211860657,
+        "admissionMs": 1,
+        "transactionMs": 1.2999999821186066,
+        "historyMs": 0,
+        "renderMs": 31.700000017881393
+      }
+    },
+    {
+      "label": "reenable influence",
+      "epoch": 0,
+      "requestStarted": 956.1000000238419,
+      "type": "committed",
+      "at": 1016.3000000119209,
+      "seq": 2,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:2",
+      "workerMs": 19.899999976158142,
+      "totalMs": 60.19999998807907,
+      "storageGeneration": 6,
+      "phases": {
+        "dispatchMs": 25.599853515625,
+        "deriveMs": 16.69999998807907,
+        "encodeMs": 1.699999988079071,
+        "transferMs": 0.2001953125,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.699999988079071,
+        "transactionMs": 1.199999988079071,
+        "historyMs": 0,
+        "renderMs": 10.800000011920929
+      }
+    },
+    {
+      "label": "coalesced strength",
+      "epoch": 0,
+      "requestStarted": 1202.800000011921,
+      "type": "committed",
+      "at": 1249.7000000178814,
+      "seq": 3,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:3",
+      "workerMs": 18.5,
+      "totalMs": 46.900000005960464,
+      "storageGeneration": 7,
+      "phases": {
+        "dispatchMs": 20.099853515625,
+        "deriveMs": 15.800000011920929,
+        "encodeMs": 1.5999999940395355,
+        "transferMs": 0.300048828125,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 0.699999988079071,
+        "transactionMs": 1,
+        "historyMs": 0,
+        "renderMs": 3.4000000059604645
+      }
+    },
+    {
+      "label": "repeller",
+      "epoch": 0,
+      "requestStarted": 1710.300000011921,
+      "type": "committed",
+      "at": 1766.6000000238419,
+      "seq": 4,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:4",
+      "workerMs": 19.400000005960464,
+      "totalMs": 56.30000001192093,
+      "storageGeneration": 8,
+      "phases": {
+        "dispatchMs": 21.199951171875,
+        "deriveMs": 15.599999994039536,
+        "encodeMs": 2.300000011920929,
+        "transferMs": 0.199951171875,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 1,
+        "transactionMs": 1.199999988079071,
+        "historyMs": 0.10000002384185791,
+        "renderMs": 8
+      }
+    },
+    {
+      "label": "deflector",
+      "epoch": 0,
+      "requestStarted": 2004.800000011921,
+      "type": "committed",
+      "at": 2051,
+      "seq": 5,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:5",
+      "workerMs": 14.800000011920929,
+      "totalMs": 46.19999998807907,
+      "storageGeneration": 9,
+      "phases": {
+        "dispatchMs": 22.699951171875,
+        "deriveMs": 12.599999994039536,
+        "encodeMs": 1,
+        "transferMs": 0.2001953125,
+        "validationMs": 0.10000002384185791,
+        "admissionMs": 0.800000011920929,
+        "transactionMs": 1.0999999940395355,
+        "historyMs": 0,
+        "renderMs": 2.699999988079071
+      }
+    },
+    {
+      "label": "direction",
+      "epoch": 0,
+      "requestStarted": 2329.600000023842,
+      "type": "committed",
+      "at": 2382.800000011921,
+      "seq": 6,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:6",
+      "workerMs": 14.900000005960464,
+      "totalMs": 53.19999998807907,
+      "storageGeneration": 10,
+      "phases": {
+        "dispatchMs": 20.2998046875,
+        "deriveMs": 12.5,
+        "encodeMs": 1.0999999940395355,
+        "transferMs": 0.30029296875,
+        "validationMs": 0.09999999403953552,
+        "admissionMs": 0.9000000059604645,
+        "transactionMs": 3.199999988079071,
+        "historyMs": 0,
+        "renderMs": 9.400000005960464
+      }
+    },
+    {
+      "label": "falloff",
+      "epoch": 0,
+      "requestStarted": 2683.800000011921,
+      "type": "committed",
+      "at": 2749.5,
+      "seq": 7,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:7",
+      "workerMs": 25.400000005960464,
+      "totalMs": 65.69999998807907,
+      "storageGeneration": 11,
+      "phases": {
+        "dispatchMs": 21.300048828125,
+        "deriveMs": 22.400000005960464,
+        "encodeMs": 1.9000000059604645,
+        "transferMs": 0.300048828125,
+        "validationMs": 0.09999999403953552,
+        "admissionMs": 0.699999988079071,
+        "transactionMs": 2.2000000178813934,
+        "historyMs": 0.09999999403953552,
+        "renderMs": 9.199999988079071
+      }
+    },
+    {
+      "label": "spacing after field",
+      "epoch": 0,
+      "requestStarted": 3263.5,
+      "type": "committed",
+      "at": 3349.600000023842,
+      "seq": 8,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:8",
+      "workerMs": 33,
+      "totalMs": 86.10000002384186,
+      "storageGeneration": 12,
+      "phases": {
+        "dispatchMs": 36.60009765625,
+        "deriveMs": 29.599999994039536,
+        "encodeMs": 2.199999988079071,
+        "transferMs": 0.599853515625,
+        "validationMs": 0.29999998211860657,
+        "admissionMs": 1,
+        "transactionMs": 1.800000011920929,
+        "historyMs": 0.09999999403953552,
+        "renderMs": 5.9000000059604645
+      }
+    },
+    {
+      "label": "duplicate influence",
+      "epoch": 0,
+      "requestStarted": 4115.700000017881,
+      "type": "committed",
+      "at": 4216.300000011921,
+      "seq": 9,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:9",
+      "workerMs": 48.29999998211861,
+      "totalMs": 100.59999999403954,
+      "storageGeneration": 13,
+      "phases": {
+        "dispatchMs": 26.60009765625,
+        "deriveMs": 43.5,
+        "encodeMs": 3,
+        "transferMs": 0.699951171875,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 1.0999999940395355,
+        "transactionMs": 3.0999999940395355,
+        "historyMs": 0,
+        "renderMs": 11
+      }
+    },
+    {
+      "label": "add influence 3",
+      "epoch": 0,
+      "requestStarted": 4867.4000000059605,
+      "type": "committed",
+      "at": 4999.5,
+      "seq": 10,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:10",
+      "workerMs": 68,
+      "totalMs": 132,
+      "storageGeneration": 14,
+      "phases": {
+        "dispatchMs": 31.900146484375,
+        "deriveMs": 63.099999994039536,
+        "encodeMs": 3.2000000178813934,
+        "transferMs": 1.099853515625,
+        "validationMs": 0.20000001788139343,
+        "admissionMs": 1.2000000178813934,
+        "transactionMs": 1.899999976158142,
+        "historyMs": 0.10000002384185791,
+        "renderMs": 15.799999982118607
+      }
+    },
+    {
+      "label": "add influence 4",
+      "epoch": 0,
+      "requestStarted": 6437.600000023842,
+      "type": "committed",
+      "at": 6582.700000017881,
+      "seq": 11,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:11",
+      "workerMs": 71.2000000178814,
+      "totalMs": 145,
+      "storageGeneration": 15,
+      "phases": {
+        "dispatchMs": 28.2998046875,
+        "deriveMs": 66.7000000178814,
+        "encodeMs": 2.9000000059604645,
+        "transferMs": 1.400146484375,
+        "validationMs": 0.10000002384185791,
+        "admissionMs": 2.399999976158142,
+        "transactionMs": 3.300000011920929,
+        "historyMs": 0,
+        "renderMs": 12.200000017881393
+      }
+    },
+    {
+      "label": "add influence 5",
+      "epoch": 0,
+      "requestStarted": 7565.100000023842,
+      "type": "committed",
+      "at": 7782.700000017881,
+      "seq": 12,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:12",
+      "workerMs": 136.5,
+      "totalMs": 217.59999999403954,
+      "storageGeneration": 16,
+      "phases": {
+        "dispatchMs": 41.999755859375,
+        "deriveMs": 130,
+        "encodeMs": 3.4000000059604645,
+        "transferMs": 0.800048828125,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 1.5,
+        "transactionMs": 3.199999988079071,
+        "historyMs": 0,
+        "renderMs": 16.700000017881393
+      }
+    },
+    {
+      "label": "add influence 6",
+      "epoch": 0,
+      "requestStarted": 8815.90000000596,
+      "type": "committed",
+      "at": 8966.100000023842,
+      "seq": 13,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:13",
+      "workerMs": 82,
+      "totalMs": 150.2000000178814,
+      "storageGeneration": 17,
+      "phases": {
+        "dispatchMs": 30.400146484375,
+        "deriveMs": 76.60000002384186,
+        "encodeMs": 3.199999988079071,
+        "transferMs": 0.800048828125,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 1.5999999940395355,
+        "transactionMs": 5,
+        "historyMs": 0,
+        "renderMs": 12.400000005960464
+      }
+    },
+    {
+      "label": "add influence 7",
+      "epoch": 0,
+      "requestStarted": 10421.600000023842,
+      "type": "committed",
+      "at": 10583.700000017881,
+      "seq": 14,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:14",
+      "workerMs": 92.40000000596046,
+      "totalMs": 162.09999999403954,
+      "storageGeneration": 18,
+      "phases": {
+        "dispatchMs": 35.2998046875,
+        "deriveMs": 86.19999998807907,
+        "encodeMs": 3.7000000178813934,
+        "transferMs": 1.000244140625,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 2,
+        "transactionMs": 2.5,
+        "historyMs": 0.10000002384185791,
+        "renderMs": 3.0999999940395355
+      }
+    },
+    {
+      "label": "add influence 8",
+      "epoch": 0,
+      "requestStarted": 11831.5,
+      "type": "committed",
+      "at": 12098.90000000596,
+      "seq": 15,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:15",
+      "workerMs": 158.59999999403954,
+      "totalMs": 267.40000000596046,
+      "storageGeneration": 19,
+      "phases": {
+        "dispatchMs": 60.39990234375,
+        "deriveMs": 150.5,
+        "encodeMs": 3.7999999821186066,
+        "transferMs": 1.10009765625,
+        "validationMs": 0.29999998211860657,
+        "admissionMs": 1.7000000178813934,
+        "transactionMs": 3.4000000059604645,
+        "historyMs": 0,
+        "renderMs": 16.799999982118607
+      }
+    },
+    {
+      "label": "seeded variation",
+      "epoch": 0,
+      "requestStarted": 13636.300000011921,
+      "type": "committed",
+      "at": 13883.700000017881,
+      "seq": 16,
+      "requestId": "fd332373-63f1-47fc-b0d8-80f17ec8df4d:16",
+      "workerMs": 155.2000000178814,
+      "totalMs": 247.40000000596046,
+      "storageGeneration": 20,
+      "phases": {
+        "dispatchMs": 53.19970703125,
+        "deriveMs": 148.5,
+        "encodeMs": 4.100000023841858,
+        "transferMs": 0.900146484375,
+        "validationMs": 0.19999998807907104,
+        "admissionMs": 1.9000000059604645,
+        "transactionMs": 4.4000000059604645,
+        "historyMs": 0,
+        "renderMs": 5.0999999940395355
+      }
+    },
+    {
+      "label": "authoritative tab edit",
+      "epoch": 1,
+      "requestStarted": 11417.59999999404,
+      "type": "committed",
+      "at": 11674.59999999404,
+      "seq": 18,
+      "requestId": "05bdf777-e003-40b9-95fb-ad2b86101802:18",
+      "workerMs": 137.30000001192093,
+      "totalMs": 257,
+      "storageGeneration": 23,
+      "phases": {
+        "dispatchMs": 65.89990234375,
+        "deriveMs": 131.39999997615814,
+        "encodeMs": 3.2000000178813934,
+        "transferMs": 1.000244140625,
+        "validationMs": 0.29999998211860657,
+        "admissionMs": 3.199999988079071,
+        "transactionMs": 3.4000000059604645,
+        "historyMs": 0,
+        "renderMs": 6.199999988079071
+      }
+    }
+  ],
+  "epochs": [
+    {
+      "epoch": 0,
+      "longTasks": [
+        {
+          "start": 7522.800000011921,
+          "duration": 63
+        },
+        {
+          "start": 11784.200000017881,
+          "duration": 76
+        },
+        {
+          "start": 13589.800000011921,
+          "duration": 70
+        }
+      ],
+      "inspections": [
+        {
+          "start": 283.30000001192093,
+          "end": 283.40000000596046
+        },
+        {
+          "start": 434.10000002384186,
+          "end": 434.10000002384186
+        },
+        {
+          "start": 574.4000000059605,
+          "end": 574.6000000238419
+        },
+        {
+          "start": 717.2000000178814,
+          "end": 718.3000000119209
+        },
+        {
+          "start": 883.8000000119209,
+          "end": 884.5
+        },
+        {
+          "start": 1051.4000000059605,
+          "end": 1053.1000000238419
+        },
+        {
+          "start": 1120.4000000059605,
+          "end": 1121.800000011921
+        },
+        {
+          "start": 1285,
+          "end": 1286.800000011921
+        },
+        {
+          "start": 1370.2000000178814,
+          "end": 1372
+        },
+        {
+          "start": 1446.5,
+          "end": 1448.300000011921
+        },
+        {
+          "start": 1550.6000000238419,
+          "end": 1552.4000000059605
+        },
+        {
+          "start": 1627.6000000238419,
+          "end": 1629.4000000059605
+        },
+        {
+          "start": 1800.9000000059605,
+          "end": 1803.1000000238419
+        },
+        {
+          "start": 1898.7000000178814,
+          "end": 1901
+        },
+        {
+          "start": 2084,
+          "end": 2086.100000023842
+        },
+        {
+          "start": 2204.4000000059605,
+          "end": 2207
+        },
+        {
+          "start": 2417.100000023842,
+          "end": 2419.2000000178814
+        },
+        {
+          "start": 2537.9000000059605,
+          "end": 2540.5
+        },
+        {
+          "start": 2783.7000000178814,
+          "end": 2786.800000011921
+        },
+        {
+          "start": 2979.300000011921,
+          "end": 2987.2000000178814
+        },
+        {
+          "start": 3384.100000023842,
+          "end": 3392.800000011921
+        },
+        {
+          "start": 3625.9000000059605,
+          "end": 3631.600000023842
+        },
+        {
+          "start": 3875,
+          "end": 3881.2000000178814
+        },
+        {
+          "start": 4253.800000011921,
+          "end": 4263.5
+        },
+        {
+          "start": 4561.4000000059605,
+          "end": 4568.300000011921
+        },
+        {
+          "start": 5033.200000017881,
+          "end": 5039.100000023842
+        },
+        {
+          "start": 5391.600000023842,
+          "end": 5421.800000011921
+        },
+        {
+          "start": 6618.800000011921,
+          "end": 6634.300000011921
+        },
+        {
+          "start": 7040.9000000059605,
+          "end": 7049.4000000059605
+        },
+        {
+          "start": 7819,
+          "end": 7837.4000000059605
+        },
+        {
+          "start": 8261.800000011921,
+          "end": 8271.600000023842
+        },
+        {
+          "start": 9001.200000017881,
+          "end": 9020.40000000596
+        },
+        {
+          "start": 9711.600000023842,
+          "end": 9732.40000000596
+        },
+        {
+          "start": 10616.600000023842,
+          "end": 10631.800000011921
+        },
+        {
+          "start": 11226.40000000596,
+          "end": 11238.90000000596
+        },
+        {
+          "start": 12133.200000017881,
+          "end": 12151.300000011921
+        },
+        {
+          "start": 12857,
+          "end": 12871.600000023842
+        },
+        {
+          "start": 13917.300000011921,
+          "end": 13954.40000000596
+        },
+        {
+          "start": 14741.800000011921,
+          "end": 14758
+        },
+        {
+          "start": 16566.100000023842,
+          "end": 16587.600000023842
+        },
+        {
+          "start": 18316,
+          "end": 18337.5
+        }
+      ]
+    },
+    {
+      "epoch": 1,
+      "longTasks": [
+        {
+          "start": 11273.300000011921,
+          "duration": 179
+        }
+      ],
+      "inspections": [
+        {
+          "start": 1441.800000011921,
+          "end": 1456.300000011921
+        },
+        {
+          "start": 10498.200000017881,
+          "end": 10519.300000011921
+        },
+        {
+          "start": 11708.09999999404,
+          "end": 11723.59999999404
+        }
+      ]
+    },
+    {
+      "epoch": 2,
+      "longTasks": [
+        {
+          "start": 831.6999999880791,
+          "duration": 311
+        }
+      ],
+      "inspections": [
+        {
+          "start": 1493.9000000059605,
+          "end": 1510.0999999940395
+        },
+        {
+          "start": 2665.699999988079,
+          "end": 2682.199999988079
+        },
+        {
+          "start": 33603.40000000596,
+          "end": 33641.5
+        }
+      ]
+    }
+  ],
+  "passed": false,
+  "repairApplicability": {
+    "decision": "Document 63 approved by user; document 64 implementation",
+    "changes": [
+      {
+        "path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\combined.mjs",
+        "before": "6f15b9685d1a7c4c4563d8bbb60b9a8da879931dc2e42fcf06253905933b124e",
+        "after": "0f13d6f3284fa713f81e150167ea4ad2d1e8c4c7d667c0813ed28d251a35b3a6"
+      }
+    ],
+    "evidence": {
+      "prepared-equivalence-result.json": "eee27905419ada7ac0c82e47edb01581d5e028d5b98ed13cdca1fb35394a309c",
+      "prepared-complete-baseline.json.gz": "703d00ee84e844b903436b993f373cbd8567dab29bc4f80fd636901f75a4f57d",
+      "prepared-focused-tests.txt": "757fffa014e6909cc6049a8487e4c6c7268fb9a0fa9465fa1e0af40482b5754a",
+      "cold-worker-review-2026-09-17T19-04-10-057Z.json": "96b11122be77088b943a61d417097ddc3d510a81215b3c79ba48f8ef7b64a3b0"
+    },
+    "preservedChecks": 14,
+    "applicability": "Only request-local evaluator preparation changed. Exact outputs, failures and focused field behavior revalidated internally. UI, storage, recovery and multi-tab code unchanged. New dense browser run revalidates worker/commit/render/long-task performance. Prior default and pending evidence retained for unchanged scheduling/UI; fresh default smoke is also measured."
+  },
+  "defaultMs": 83.2000000178814,
+  "pendingMs": 5.9000000059604645,
+  "inheritedEvidence": {
+    "path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\docs\\evidence\\r1-checkpoint-20260917\\browser-2026-09-17T18-17-46-862Z.json",
+    "sha256": "3a881397aa06e5df7168f95d0e98b38631524feb864d9730cc50a65f54568e76",
+    "checks": 14,
+    "cycles": 17
+  },
+  "stage": "launch",
+  "error": {
+    "message": "browserType.launch: spawn EPERM\nCall log:\n\u001b[2m  - <launching> C:/Program Files/Google/Chrome/Application/chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\\Users\\notbr\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-IrBKBE --remote-debugging-pipe --no-startup-window\u001b[22m\n",
+    "stack": "browserType.launch: spawn EPERM\nCall log:\n\u001b[2m  - <launching> C:/Program Files/Google/Chrome/Application/chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\\Users\\notbr\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-IrBKBE --remote-debugging-pipe --no-startup-window\u001b[22m\n\n    at C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1-checkpoint-browser.cjs:41:25\n    at Object.<anonymous> (C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1-checkpoint-browser.cjs:91:3)"
+  }
+}

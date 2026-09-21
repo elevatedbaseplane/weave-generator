@@ -1,0 +1,29 @@
+✔ square-grid: editable independent pattern, clipped influence and exact backup (50.3568ms)
+✔ diamond-grid: editable independent pattern, clipped influence and exact backup (27.9267ms)
+✔ triangular-grid: editable independent pattern, clipped influence and exact backup (29.5156ms)
+✔ unknown preset rejects rather than creating a misleading fallback (0.4654ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=false (14.6531ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=true (41.7024ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=false (5.2875ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=true (9.2348ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=false (17.4848ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=true (30.7529ms)
+✔ actual control handlers display percentages and commit exact source ratios (1.5127ms)
+✔ double-herringbone: trace preserves geometry/bytes and reconstructs every interior source parameter (94.8452ms)
+✔ double-herringbone-field: trace preserves geometry/bytes and reconstructs every interior source parameter (175.0635ms)
+✔ herringbone-square: trace preserves geometry/bytes and reconstructs every interior source parameter (54.9905ms)
+✔ persistent production worker binds successive source traces to exact results (119.475ms)
+✔ reviewed finite foundations carry directed source runs without backside joins (0.22ms)
+✔ retained source IDs survive parameter changes and duplicates isolate identity (0.5217ms)
+✔ finite support equations enclose unequal-length entry and exit roots (0.1872ms)
+✔ expanded search retains outside runs and rejects candidate overflow atomically (1.4113ms)
+✔ double-herringbone identity and influence preserve exact compact geometry (207.0994ms)
+✔ herringbone-square identity and influence preserve exact compact geometry (128.9225ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1042.3871

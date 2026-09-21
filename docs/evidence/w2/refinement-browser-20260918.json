@@ -1,0 +1,24 @@
+{
+  "build": "WF-W2-REFINED-20260918",
+  "verification": "focused managed browser, not sustained certification",
+  "checks": [
+    "actual mouse crossing selection",
+    "swap upper thread",
+    "clear local override",
+    "B width6 rank5 retained with A width8.5 rank1",
+    "reload",
+    "typed outline0.5",
+    "invalid width99 rejected",
+    "typed spacing55 saved and restored50",
+    "Undo width7 to6",
+    "all numeric ranges paired",
+    "close-zoom visual inspection"
+  ],
+  "sample": {
+    "crossings": 81,
+    "workerMs": 33.8,
+    "renderMs": 1.899999976158142,
+    "totalMs": 147.59999999403954
+  },
+  "published": false
+}

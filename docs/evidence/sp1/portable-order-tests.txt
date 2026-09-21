@@ -1,0 +1,20 @@
+✔ hash reuse preserves every compact byte: double-herringbone active=false (24.5147ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=true (26.122ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=false (6.7471ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=true (11.204ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=false (18.6246ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=true (33.8092ms)
+✔ double-herringbone embedded intent matches its local source intersections and round trips (61.4725ms)
+✔ double-herringbone-field embedded intent matches its local source intersections and round trips (70.0909ms)
+✔ herringbone-square embedded intent matches its local source intersections and round trips (18.6375ms)
+✔ portable key ordering does not alter construction validity; unknown metadata still rejects (1.1037ms)
+✔ schema5 migration reuses exact legacy buffers; mixed foundation backup retains immutable revisions (105.8384ms)
+✔ over-capacity migration rejects before mutating its source snapshot (389.8999ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 794.1968

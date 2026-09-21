@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-09-16",
+  "build": "WF-R1B-DELTA-20260916",
+  "acceptedWithoutRerun": true,
+  "locallyComplete": true,
+  "correctness": {
+    "functional": true,
+    "schema5SaveReload": true,
+    "transactionalCurrentPreviousRecovery": true,
+    "foregroundMultiTabConflictRejection": true,
+    "portableBackupExportImport": true,
+    "legacyExactByteMigration": true
+  },
+  "performance": {
+    "defaultCompletionMs": 33.7,
+    "workerP95Ms": 169.6,
+    "workerMaximumMs": 170.6,
+    "denseEndToEndP95Ms": 313.1,
+    "denseEndToEndMaximumMs": 315.8,
+    "renderMaximumMs": 41.3,
+    "pendingResponsivenessPassed": true,
+    "applicationAttributableLongTasks": 0
+  },
+  "longTaskDecision": {
+    "rawLongTaskCount": 32,
+    "verifierInspectionCount": 32,
+    "applicationAttributableCount": 0,
+    "rawFailureEvidence": "dense-650-host-long-task-failure-20260916.json",
+    "rawFailureEvidenceSha256": "9243D3F35D1821DB0DED76533F3A498D6F05CDC2D7E6896072D1A425FA57D33D",
+    "attributionEvidence": "long-task-attribution-acceptance-20260916.json",
+    "attributionEvidenceSha256": "0D4DE4D83836747BFF268C04AC42581940B2B1CDF85D06C58CD46B89A7F0DF4E"
+  },
+  "freeze": {
+    "r1b": "locally complete",
+    "r1c": "not started",
+    "published": false,
+    "nextActionRequiresAuthorization": true
+  }
+}

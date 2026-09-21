@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "inheritedChecks": 14,
+  "inheritedCycles": 17,
+  "approvedSourceGuard": true,
+  "syntaxChecks": true
+}

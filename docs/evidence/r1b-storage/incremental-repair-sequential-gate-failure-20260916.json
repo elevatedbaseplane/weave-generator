@@ -1,0 +1,46 @@
+{
+  "build": "WF-R1B-DELTA-20260916",
+  "result": "failed",
+  "stage": "sequential automated verification",
+  "command": "node --test --test-isolation=none tests/*.test.mjs",
+  "tests": {
+    "total": 62,
+    "passed": 61,
+    "failed": 1
+  },
+  "failedGate": {
+    "name": "dense certified evaluator meets worker computation target",
+    "fixture": "100-vertex alternating-radius boundary, A/B spacing 2.5, 30 runs",
+    "observed": {
+      "p50Ms": 256.8100999999997,
+      "p95Ms": 576.1514999999999,
+      "maxMs": 650.538599999999
+    },
+    "required": {
+      "p95MaximumMs": 300,
+      "absoluteMaximumMs": 400
+    },
+    "failed": [
+      "p95",
+      "absolute maximum"
+    ]
+  },
+  "repairChecksThatPassedBeforeStop": [
+    "worker returns one exact transferable certified payload",
+    "incremental payload commit is deep-equal and exact-byte admitted",
+    "incremental saved revision adds one record and reuses its payload",
+    "v1/v2 compatibility and cross-version rejection",
+    "synthetic maximum capacity proof with exact additive ledger"
+  ],
+  "capacityProof": {
+    "passed": true,
+    "ledgerExact": true,
+    "singleMaximumBackupBytes": 4968987,
+    "twoMaximumBackupBytes": 9937492,
+    "thirdMaximumRejected": true
+  },
+  "browserVerificationStarted": false,
+  "publicationStarted": false,
+  "r1cStarted": false,
+  "requiredDisposition": "architectural-review"
+}

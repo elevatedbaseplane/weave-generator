@@ -1,0 +1,18 @@
+{
+  "build": "WF-R1B-IDB-20260916",
+  "passed": false,
+  "stage": "fixture setup",
+  "iteration": null,
+  "error": {
+    "name": "TimeoutError",
+    "message": "page.waitForFunction: Timeout 3000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 3000ms exceeded.\n    at C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\scripts\\r1b-browser.cjs:27:690"
+  },
+  "terminal": null,
+  "finalStatus": "Invalid fragment keys.",
+  "finalStatusError": true,
+  "pendingWorker": null,
+  "activeWorker": null,
+  "workerEvents": [],
+  "cycles": []
+}

@@ -1,0 +1,18 @@
+{
+  "decision": "Document 63 approved by user; document 64 implementation",
+  "changes": [
+    {
+      "path": "C:\\Users\\notbr\\Documents\\Codex\\2026-09-14\\confirm-you-have-editable-terminal-access\\work\\weave-rebuild\\dist\\combined.mjs",
+      "before": "6f15b9685d1a7c4c4563d8bbb60b9a8da879931dc2e42fcf06253905933b124e",
+      "after": "0f13d6f3284fa713f81e150167ea4ad2d1e8c4c7d667c0813ed28d251a35b3a6"
+    }
+  ],
+  "evidence": {
+    "prepared-equivalence-result.json": "eee27905419ada7ac0c82e47edb01581d5e028d5b98ed13cdca1fb35394a309c",
+    "prepared-complete-baseline.json.gz": "703d00ee84e844b903436b993f373cbd8567dab29bc4f80fd636901f75a4f57d",
+    "prepared-focused-tests.txt": "757fffa014e6909cc6049a8487e4c6c7268fb9a0fa9465fa1e0af40482b5754a",
+    "cold-worker-review-2026-09-17T19-04-10-057Z.json": "96b11122be77088b943a61d417097ddc3d510a81215b3c79ba48f8ef7b64a3b0"
+  },
+  "preservedChecks": 14,
+  "applicability": "Only request-local evaluator preparation changed. Exact outputs, failures and focused field behavior revalidated internally. UI, storage, recovery and multi-tab code unchanged. New dense browser run revalidates worker/commit/render/long-task performance. Prior default and pending evidence retained for unchanged scheduling/UI; fresh default smoke is also measured."
+}

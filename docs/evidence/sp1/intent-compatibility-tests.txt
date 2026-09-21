@@ -1,0 +1,17 @@
+✔ hash reuse preserves every compact byte: double-herringbone active=false (24.8817ms)
+✔ hash reuse preserves every compact byte: double-herringbone active=true (27.54ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=false (5.5351ms)
+✔ hash reuse preserves every compact byte: herringbone-square active=true (10.7554ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=false (18.4326ms)
+✔ hash reuse preserves every compact byte: double-herringbone-field active=true (32.9831ms)
+✔ double-herringbone embedded intent matches its local source intersections and round trips (53.7247ms)
+✔ double-herringbone-field embedded intent matches its local source intersections and round trips (59.9082ms)
+✔ herringbone-square embedded intent matches its local source intersections and round trips (16.148ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 274.4474

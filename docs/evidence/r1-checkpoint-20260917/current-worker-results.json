@@ -1,0 +1,328 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "kind": "current-eight-mixed",
+      "fixture": {
+        "vertices": 100,
+        "spacing": 50,
+        "influences": 8
+      },
+      "warmup": [
+        {
+          "i": -5,
+          "workerMs": 146.65909999999997,
+          "receivedEpoch": 1789667654562.2844,
+          "deriveMs": 130.19230000000002,
+          "encodeMs": 12.504700000000014,
+          "postedEpoch": 1789667654708.9429
+        },
+        {
+          "i": -4,
+          "workerMs": 114.84219999999999,
+          "receivedEpoch": 1789667654710.8455,
+          "deriveMs": 106.96549999999996,
+          "encodeMs": 5.806600000000003,
+          "postedEpoch": 1789667654825.6873
+        },
+        {
+          "i": -3,
+          "workerMs": 95.44479999999999,
+          "receivedEpoch": 1789667654827.9497,
+          "deriveMs": 90.74379999999996,
+          "encodeMs": 4.178899999999999,
+          "postedEpoch": 1789667654923.3943
+        },
+        {
+          "i": -2,
+          "workerMs": 92.87769999999995,
+          "receivedEpoch": 1789667654925.2515,
+          "deriveMs": 88.16090000000003,
+          "encodeMs": 4.1761000000000195,
+          "postedEpoch": 1789667655018.1287
+        },
+        {
+          "i": -1,
+          "workerMs": 86.75659999999993,
+          "receivedEpoch": 1789667655020.5896,
+          "deriveMs": 81.56240000000003,
+          "encodeMs": 4.679700000000025,
+          "postedEpoch": 1789667655107.3457
+        }
+      ],
+      "runs": [
+        {
+          "i": 0,
+          "workerMs": 94.11869999999999,
+          "receivedEpoch": 1789667655109.4636,
+          "deriveMs": 90.04050000000007,
+          "encodeMs": 3.606400000000008,
+          "postedEpoch": 1789667655203.582
+        },
+        {
+          "i": 1,
+          "workerMs": 96.44659999999999,
+          "receivedEpoch": 1789667655205.6748,
+          "deriveMs": 89.94990000000007,
+          "encodeMs": 4.0376999999999725,
+          "postedEpoch": 1789667655302.121
+        },
+        {
+          "i": 2,
+          "workerMs": 85.3827,
+          "receivedEpoch": 1789667655303.9187,
+          "deriveMs": 81.05169999999998,
+          "encodeMs": 3.8267000000000735,
+          "postedEpoch": 1789667655389.3008
+        },
+        {
+          "i": 3,
+          "workerMs": 85.28719999999998,
+          "receivedEpoch": 1789667655391.559,
+          "deriveMs": 81.11049999999989,
+          "encodeMs": 3.419499999999971,
+          "postedEpoch": 1789667655476.846
+        },
+        {
+          "i": 4,
+          "workerMs": 83.29860000000008,
+          "receivedEpoch": 1789667655478.5964,
+          "deriveMs": 78.94430000000011,
+          "encodeMs": 3.7963999999999487,
+          "postedEpoch": 1789667655561.8948
+        },
+        {
+          "i": 5,
+          "workerMs": 83.41470000000004,
+          "receivedEpoch": 1789667655563.734,
+          "deriveMs": 79.60990000000015,
+          "encodeMs": 3.2786000000000968,
+          "postedEpoch": 1789667655647.1482
+        },
+        {
+          "i": 6,
+          "workerMs": 81.60069999999996,
+          "receivedEpoch": 1789667655648.777,
+          "deriveMs": 77.61279999999988,
+          "encodeMs": 3.430499999999938,
+          "postedEpoch": 1789667655730.3777
+        },
+        {
+          "i": 7,
+          "workerMs": 87.26229999999987,
+          "receivedEpoch": 1789667655732.3315,
+          "deriveMs": 83.27059999999983,
+          "encodeMs": 3.417599999999993,
+          "postedEpoch": 1789667655819.5938
+        },
+        {
+          "i": 8,
+          "workerMs": 90.2483000000002,
+          "receivedEpoch": 1789667655821.719,
+          "deriveMs": 85.4677999999999,
+          "encodeMs": 4.281299999999874,
+          "postedEpoch": 1789667655911.967
+        },
+        {
+          "i": 9,
+          "workerMs": 85.50459999999998,
+          "receivedEpoch": 1789667655913.7478,
+          "deriveMs": 81.5929000000001,
+          "encodeMs": 3.5226000000000113,
+          "postedEpoch": 1789667655999.2522
+        },
+        {
+          "i": 10,
+          "workerMs": 89.75590000000011,
+          "receivedEpoch": 1789667656001.3132,
+          "deriveMs": 84.86310000000003,
+          "encodeMs": 4.449299999999994,
+          "postedEpoch": 1789667656091.0688
+        },
+        {
+          "i": 11,
+          "workerMs": 83.07000000000016,
+          "receivedEpoch": 1789667656092.921,
+          "deriveMs": 78.32889999999998,
+          "encodeMs": 4.331200000000081,
+          "postedEpoch": 1789667656175.9907
+        },
+        {
+          "i": 12,
+          "workerMs": 84.50600000000009,
+          "receivedEpoch": 1789667656177.7366,
+          "deriveMs": 80.26459999999997,
+          "encodeMs": 3.8695999999999913,
+          "postedEpoch": 1789667656262.2424
+        },
+        {
+          "i": 13,
+          "workerMs": 79.22119999999995,
+          "receivedEpoch": 1789667656263.9543,
+          "deriveMs": 75.3936000000001,
+          "encodeMs": 3.43529999999987,
+          "postedEpoch": 1789667656343.1753
+        },
+        {
+          "i": 14,
+          "workerMs": 80.7702999999999,
+          "receivedEpoch": 1789667656344.7466,
+          "deriveMs": 76.00490000000013,
+          "encodeMs": 4.391100000000051,
+          "postedEpoch": 1789667656425.5166
+        },
+        {
+          "i": 15,
+          "workerMs": 87.58200000000011,
+          "receivedEpoch": 1789667656427.352,
+          "deriveMs": 80.69559999999979,
+          "encodeMs": 6.504800000000159,
+          "postedEpoch": 1789667656514.9338
+        },
+        {
+          "i": 16,
+          "workerMs": 78.56989999999996,
+          "receivedEpoch": 1789667656516.6895,
+          "deriveMs": 74.67799999999988,
+          "encodeMs": 3.5000999999997475,
+          "postedEpoch": 1789667656595.259
+        },
+        {
+          "i": 17,
+          "workerMs": 79.3710000000001,
+          "receivedEpoch": 1789667656597.0005,
+          "deriveMs": 75.55670000000009,
+          "encodeMs": 3.3953999999998814,
+          "postedEpoch": 1789667656676.3713
+        },
+        {
+          "i": 18,
+          "workerMs": 84.2772,
+          "receivedEpoch": 1789667656677.9668,
+          "deriveMs": 79.73230000000012,
+          "encodeMs": 4.160199999999804,
+          "postedEpoch": 1789667656762.244
+        },
+        {
+          "i": 19,
+          "workerMs": 82.6289999999999,
+          "receivedEpoch": 1789667656763.8513,
+          "deriveMs": 77.54929999999968,
+          "encodeMs": 4.684200000000146,
+          "postedEpoch": 1789667656846.4802
+        },
+        {
+          "i": 20,
+          "workerMs": 78.18409999999994,
+          "receivedEpoch": 1789667656848.6812,
+          "deriveMs": 74.35919999999987,
+          "encodeMs": 3.4191000000000713,
+          "postedEpoch": 1789667656926.865
+        },
+        {
+          "i": 21,
+          "workerMs": 79.07590000000027,
+          "receivedEpoch": 1789667656928.4463,
+          "deriveMs": 74.61790000000019,
+          "encodeMs": 4.06439999999975,
+          "postedEpoch": 1789667657007.522
+        },
+        {
+          "i": 22,
+          "workerMs": 79.35930000000008,
+          "receivedEpoch": 1789667657009.2427,
+          "deriveMs": 74.74139999999989,
+          "encodeMs": 4.216699999999946,
+          "postedEpoch": 1789667657088.6018
+        },
+        {
+          "i": 23,
+          "workerMs": 76.71320000000014,
+          "receivedEpoch": 1789667657090.519,
+          "deriveMs": 72.82709999999997,
+          "encodeMs": 3.478900000000067,
+          "postedEpoch": 1789667657167.232
+        },
+        {
+          "i": 24,
+          "workerMs": 81.03720000000021,
+          "receivedEpoch": 1789667657168.935,
+          "deriveMs": 77.27079999999978,
+          "encodeMs": 3.3666000000002896,
+          "postedEpoch": 1789667657249.9722
+        },
+        {
+          "i": 25,
+          "workerMs": 92.16159999999991,
+          "receivedEpoch": 1789667657252.2827,
+          "deriveMs": 87.67849999999999,
+          "encodeMs": 4.097099999999955,
+          "postedEpoch": 1789667657344.444
+        },
+        {
+          "i": 26,
+          "workerMs": 79.56449999999995,
+          "receivedEpoch": 1789667657347.094,
+          "deriveMs": 74.85420000000022,
+          "encodeMs": 3.54950000000008,
+          "postedEpoch": 1789667657426.6582
+        },
+        {
+          "i": 27,
+          "workerMs": 79.55709999999999,
+          "receivedEpoch": 1789667657428.6206,
+          "deriveMs": 75.64429999999993,
+          "encodeMs": 3.485900000000129,
+          "postedEpoch": 1789667657508.1775
+        },
+        {
+          "i": 28,
+          "workerMs": 76.42749999999978,
+          "receivedEpoch": 1789667657515.271,
+          "deriveMs": 72.5605999999998,
+          "encodeMs": 3.458900000000085,
+          "postedEpoch": 1789667657591.6985
+        },
+        {
+          "i": 29,
+          "workerMs": 76.89920000000029,
+          "receivedEpoch": 1789667657593.4114,
+          "deriveMs": 72.79070000000002,
+          "encodeMs": 3.6362999999996646,
+          "postedEpoch": 1789667657670.3105
+        }
+      ],
+      "passed": true,
+      "diagnostics": {
+        "tau": 1e-8,
+        "epsilon": 0.05,
+        "accuracyScope": "unclipped-curve-to-polyline",
+        "clippingRoundingBound": 2.5e-9,
+        "displacementBound": 120,
+        "candidateLines": 30,
+        "influenceCount": 8,
+        "subdivisionNodes": 7232,
+        "segments": 3719,
+        "clippedSegments": 3719,
+        "edgeTests": 404,
+        "shortSpans": 0,
+        "collinearContacts": 0,
+        "maxCertifiedError": 0.04974359555779996,
+        "counts": {
+          "A": 9,
+          "B": 9
+        },
+        "intervals": 30,
+        "complete": true
+      },
+      "summary": {
+        "runs": 30,
+        "minMs": 76.42749999999978,
+        "p50Ms": 83.07000000000016,
+        "p95Ms": 94.11869999999999,
+        "maxMs": 96.44659999999999,
+        "meanMs": 83.37655000000004
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "counts": {
+    "strands": 2000,
+    "fragments": 20000,
+    "points": 85536,
+    "certificates": 65536,
+    "edgeRefs": 80000
+  },
+  "binary": 3732864,
+  "envelopeBytes": 4978608,
+  "twoWithReserve": 10219360,
+  "ceiling": 10485760,
+  "scope": "codec table capacity; synthetic values, not derivation completeness or arbitrary workspace admission"
+}

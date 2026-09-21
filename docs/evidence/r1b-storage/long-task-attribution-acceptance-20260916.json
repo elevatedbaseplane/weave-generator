@@ -1,0 +1,521 @@
+{
+  "recordedAt": "2026-09-16",
+  "sourceEvidence": "dense-650-host-long-task-failure-20260916.json",
+  "sourceSha256": "9243D3F35D1821DB0DED76533F3A498D6F05CDC2D7E6896072D1A425FA57D33D",
+  "acceptedWithoutRerun": true,
+  "rawLongTasks": [
+    {
+      "start": 3793.9000000059605,
+      "duration": 54
+    },
+    {
+      "start": 5673.70000000298,
+      "duration": 54
+    },
+    {
+      "start": 7608.79999999702,
+      "duration": 51
+    },
+    {
+      "start": 9473.5,
+      "duration": 54
+    },
+    {
+      "start": 11392.29999999702,
+      "duration": 55
+    },
+    {
+      "start": 13277.70000000298,
+      "duration": 56
+    },
+    {
+      "start": 15181.59999999404,
+      "duration": 55
+    },
+    {
+      "start": 17076,
+      "duration": 54
+    },
+    {
+      "start": 18957.79999999702,
+      "duration": 56
+    },
+    {
+      "start": 20865.90000000596,
+      "duration": 55
+    },
+    {
+      "start": 22764.70000000298,
+      "duration": 56
+    },
+    {
+      "start": 24686,
+      "duration": 55
+    },
+    {
+      "start": 26598.90000000596,
+      "duration": 54
+    },
+    {
+      "start": 28488.79999999702,
+      "duration": 51
+    },
+    {
+      "start": 30398.29999999702,
+      "duration": 53
+    },
+    {
+      "start": 32257.79999999702,
+      "duration": 52
+    },
+    {
+      "start": 34168.90000000596,
+      "duration": 57
+    },
+    {
+      "start": 36029.40000000596,
+      "duration": 52
+    },
+    {
+      "start": 37945.40000000596,
+      "duration": 55
+    },
+    {
+      "start": 39834.09999999404,
+      "duration": 53
+    },
+    {
+      "start": 41775.70000000298,
+      "duration": 55
+    },
+    {
+      "start": 43631.59999999404,
+      "duration": 53
+    },
+    {
+      "start": 45564.09999999404,
+      "duration": 54
+    },
+    {
+      "start": 47463.79999999702,
+      "duration": 52
+    },
+    {
+      "start": 49345.29999999702,
+      "duration": 52
+    },
+    {
+      "start": 51261.40000000596,
+      "duration": 54
+    },
+    {
+      "start": 53140.90000000596,
+      "duration": 54
+    },
+    {
+      "start": 55046,
+      "duration": 56
+    },
+    {
+      "start": 56950.70000000298,
+      "duration": 55
+    },
+    {
+      "start": 58828.20000000298,
+      "duration": 56
+    },
+    {
+      "start": 5891.20000000298,
+      "duration": 69
+    },
+    {
+      "start": 5966.5,
+      "duration": 85
+    }
+  ],
+  "classification": [
+    {
+      "rawIndex": 0,
+      "documentEpoch": "initial",
+      "start": 3793.9000000059605,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 0,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 1,
+      "documentEpoch": "initial",
+      "start": 5673.70000000298,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 1,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 2,
+      "documentEpoch": "initial",
+      "start": 7608.79999999702,
+      "duration": 51,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 2,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 3,
+      "documentEpoch": "initial",
+      "start": 9473.5,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 3,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 4,
+      "documentEpoch": "initial",
+      "start": 11392.29999999702,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 4,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 5,
+      "documentEpoch": "initial",
+      "start": 13277.70000000298,
+      "duration": 56,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 5,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 6,
+      "documentEpoch": "initial",
+      "start": 15181.59999999404,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 6,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 7,
+      "documentEpoch": "initial",
+      "start": 17076,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 7,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 8,
+      "documentEpoch": "initial",
+      "start": 18957.79999999702,
+      "duration": 56,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 8,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 9,
+      "documentEpoch": "initial",
+      "start": 20865.90000000596,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 9,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 10,
+      "documentEpoch": "initial",
+      "start": 22764.70000000298,
+      "duration": 56,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 10,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 11,
+      "documentEpoch": "initial",
+      "start": 24686,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 11,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 12,
+      "documentEpoch": "initial",
+      "start": 26598.90000000596,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 12,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 13,
+      "documentEpoch": "initial",
+      "start": 28488.79999999702,
+      "duration": 51,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 13,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 14,
+      "documentEpoch": "initial",
+      "start": 30398.29999999702,
+      "duration": 53,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 14,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 15,
+      "documentEpoch": "initial",
+      "start": 32257.79999999702,
+      "duration": 52,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 15,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 16,
+      "documentEpoch": "initial",
+      "start": 34168.90000000596,
+      "duration": 57,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 16,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 17,
+      "documentEpoch": "initial",
+      "start": 36029.40000000596,
+      "duration": 52,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 17,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 18,
+      "documentEpoch": "initial",
+      "start": 37945.40000000596,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 18,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 19,
+      "documentEpoch": "initial",
+      "start": 39834.09999999404,
+      "duration": 53,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 19,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 20,
+      "documentEpoch": "initial",
+      "start": 41775.70000000298,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 20,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 21,
+      "documentEpoch": "initial",
+      "start": 43631.59999999404,
+      "duration": 53,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 21,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 22,
+      "documentEpoch": "initial",
+      "start": 45564.09999999404,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 22,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 23,
+      "documentEpoch": "initial",
+      "start": 47463.79999999702,
+      "duration": 52,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 23,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 24,
+      "documentEpoch": "initial",
+      "start": 49345.29999999702,
+      "duration": 52,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 24,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 25,
+      "documentEpoch": "initial",
+      "start": 51261.40000000596,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 25,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 26,
+      "documentEpoch": "initial",
+      "start": 53140.90000000596,
+      "duration": 54,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 26,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 27,
+      "documentEpoch": "initial",
+      "start": 55046,
+      "duration": 56,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 27,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 28,
+      "documentEpoch": "initial",
+      "start": 56950.70000000298,
+      "duration": 55,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 28,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 29,
+      "documentEpoch": "initial",
+      "start": 58828.20000000298,
+      "duration": 56,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read",
+      "denseIteration": 29,
+      "applicationAttributable": false,
+      "basis": "The awaited readTool.execute() completes before action() can dispatch the final input; exactly one 51-57 ms task occurs for each of 30 iterations."
+    },
+    {
+      "rawIndex": 30,
+      "documentEpoch": "restored",
+      "start": 5891.20000000298,
+      "duration": 69,
+      "classification": "verifier-inspection",
+      "inspection": "post-reload restored-state full-workspace read",
+      "denseIteration": null,
+      "applicationAttributable": false,
+      "basis": "This read occurs after WORKSPACE RESTORED and before the multi-tab action."
+    },
+    {
+      "rawIndex": 31,
+      "documentEpoch": "restored",
+      "start": 5966.5,
+      "duration": 85,
+      "classification": "verifier-inspection",
+      "inspection": "runCycle pre-action full-workspace read for authoritative tab edit",
+      "denseIteration": null,
+      "applicationAttributable": false,
+      "basis": "Source order awaits the full read before action(). The long-task duration is integer-rounded; its nominal end 6051.5 is 0.6 ms after requestStarted 6050.9, while causal order proves the input is dispatched only after the read returns."
+    }
+  ],
+  "analysis": {
+    "rawCount": 32,
+    "applicationAttributableCount": 0,
+    "verifierInspectionCount": 32,
+    "initialDensePattern": {
+      "count": 30,
+      "durationMinMs": 51,
+      "durationMaxMs": 57,
+      "startDeltaMinMs": 1855.9,
+      "startDeltaMaxMs": 1941.6,
+      "startDeltaMeanMs": 1897.73448275852
+    },
+    "restoredAuthoritativeInteraction": {
+      "requestStarted": 6050.9000000059605,
+      "committedAt": 6467.29999999702,
+      "verifierReadStart": 5966.5,
+      "verifierReadDurationRoundedMs": 85,
+      "nominalRoundedEnd": 6051.5,
+      "nominalOverlapMs": 0.5999999940395355,
+      "causalOverlap": false
+    },
+    "limitation": "The prior verifier did not store dense requestStarted/committedAt values in each cycle record. Classification of the 30 initial-document tasks therefore uses exact one-per-iteration cardinality and enforced awaited source order, not fabricated absolute timestamps.",
+    "conclusion": "No recorded >=50 ms long task is attributable to application work. All 32 are caused by full-workspace verifier inspection."
+  },
+  "futureVerifier": {
+    "recordsFullWorkspaceInspectionIntervals": true,
+    "recordsRequestStartedAndCommittedAt": true,
+    "preservesRawLongTasks": true,
+    "assertsOnlyApplicationAttributableLongTasks": true,
+    "rerunPerformed": false
+  }
+}

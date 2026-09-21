@@ -1,0 +1,14 @@
+{
+  "result": "invalid-verification-setup",
+  "test": "dense certified evaluator meets worker computation target",
+  "observed": {
+    "runs": 30,
+    "p50Ms": 264.59150000000045,
+    "p95Ms": 308.52210000000014,
+    "maxMs": 326.9922000000006
+  },
+  "concurrentWork": "codec-capacity-proof.mjs synthetic maximum encoding and portable admission",
+  "concurrentElapsedMs": 9027.6499,
+  "reasonInvalid": "The accepted verification script runs the evaluator benchmark and maximum-capacity proof sequentially. This ad hoc parallel invocation introduced CPU contention and is not an acceptance-gate execution.",
+  "disposition": "Preserved; run the defined sequential verification once."
+}

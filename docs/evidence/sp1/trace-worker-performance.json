@@ -1,0 +1,306 @@
+{
+  "passed": true,
+  "summary": {
+    "p95": 149.53989999999976,
+    "max": 177.3484000000003
+  },
+  "rows": [
+    {
+      "warmup": true,
+      "workerMs": 152.1482,
+      "deriveMs": 132.16359999999997,
+      "encodeMs": 18.138499999999993,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": true,
+      "workerMs": 119.59830000000002,
+      "deriveMs": 107.78460000000001,
+      "encodeMs": 10.604899999999986,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": true,
+      "workerMs": 99.80090000000001,
+      "deriveMs": 89.25799999999998,
+      "encodeMs": 10.31189999999998,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 99.17420000000004,
+      "deriveMs": 88.82160000000005,
+      "encodeMs": 9.779300000000035,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 98.18490000000008,
+      "deriveMs": 88.52530000000002,
+      "encodeMs": 9.198399999999992,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 111.37040000000002,
+      "deriveMs": 90.79719999999998,
+      "encodeMs": 20.40070000000003,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 106.31420000000003,
+      "deriveMs": 96.60019999999997,
+      "encodeMs": 9.482900000000086,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 97.74940000000004,
+      "deriveMs": 88.12209999999993,
+      "encodeMs": 9.452499999999986,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 91.42420000000004,
+      "deriveMs": 82.8608999999999,
+      "encodeMs": 8.382200000000012,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 93.02320000000009,
+      "deriveMs": 82.6896999999999,
+      "encodeMs": 10.150300000000016,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 97.18219999999997,
+      "deriveMs": 87.95100000000002,
+      "encodeMs": 9.060100000000148,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 94.01019999999994,
+      "deriveMs": 84.80210000000011,
+      "encodeMs": 9.048299999999927,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 116.59870000000001,
+      "deriveMs": 100.29860000000008,
+      "encodeMs": 16.124000000000024,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 99.70039999999995,
+      "deriveMs": 90.5797,
+      "encodeMs": 8.960600000000113,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 91.89469999999983,
+      "deriveMs": 83.19560000000001,
+      "encodeMs": 8.460299999999961,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 93.2473,
+      "deriveMs": 84.356,
+      "encodeMs": 8.733699999999999,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 89.96879999999987,
+      "deriveMs": 81.76040000000012,
+      "encodeMs": 8.051999999999907,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 102.87660000000005,
+      "deriveMs": 85.61149999999998,
+      "encodeMs": 17.081900000000132,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 105.36879999999996,
+      "deriveMs": 93.9077000000002,
+      "encodeMs": 11.282799999999952,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 96.86889999999994,
+      "deriveMs": 88.12750000000005,
+      "encodeMs": 8.558199999999943,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 92.5,
+      "deriveMs": 83.70920000000024,
+      "encodeMs": 8.54970000000003,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 93.81370000000015,
+      "deriveMs": 83.5664999999999,
+      "encodeMs": 10.089300000000094,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 95.13149999999996,
+      "deriveMs": 86.3096999999998,
+      "encodeMs": 8.667500000000018,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 99.55859999999984,
+      "deriveMs": 83.24440000000004,
+      "encodeMs": 16.141700000000128,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 99.29460000000017,
+      "deriveMs": 90.9342999999999,
+      "encodeMs": 8.193099999999959,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 92.4398000000001,
+      "deriveMs": 84.30999999999995,
+      "encodeMs": 7.982500000000073,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 91.49270000000024,
+      "deriveMs": 83.29500000000007,
+      "encodeMs": 8.028499999999894,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 90.5337999999997,
+      "deriveMs": 81.38310000000001,
+      "encodeMs": 8.990400000000136,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 125.61040000000003,
+      "deriveMs": 114.63460000000032,
+      "encodeMs": 10.685199999999895,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 177.3484000000003,
+      "deriveMs": 160.33500000000004,
+      "encodeMs": 16.786299999999756,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 146.9005000000002,
+      "deriveMs": 135.54320000000007,
+      "encodeMs": 11.19320000000016,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    },
+    {
+      "warmup": false,
+      "workerMs": 149.53989999999976,
+      "deriveMs": 132.97859999999991,
+      "encodeMs": 16.323700000000372,
+      "candidates": 720,
+      "segments": 4606,
+      "tracePoints": 4358
+    },
+    {
+      "warmup": false,
+      "workerMs": 144.76130000000012,
+      "deriveMs": 130.7854000000002,
+      "encodeMs": 13.698499999999967,
+      "candidates": 720,
+      "segments": 4557,
+      "tracePoints": 4309
+    }
+  ]
+}

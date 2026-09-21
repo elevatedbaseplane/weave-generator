@@ -1,0 +1,154 @@
+[
+  {
+    "sha256": "384c8dea3740f090114960bd400945846e7a33f17460f4e028328486cc5894c5",
+    "path": "dist/ancestry-recovery.mjs"
+  },
+  {
+    "sha256": "09422274673d20cc255e76fdc7c05595292dd4eaed7ce2c71fc356ae432d84e0",
+    "path": "dist/app.mjs"
+  },
+  {
+    "sha256": "44c41fccff553bd73f7197612cdfdbc841b208e9144bf5c3837733e3b0e9a9cd",
+    "path": "dist/attractor.mjs"
+  },
+  {
+    "sha256": "65e791c736df0a229603b1005b46e6ce8b8d54c9bb3f40b760b84ca13098e84a",
+    "path": "dist/boundary.mjs"
+  },
+  {
+    "sha256": "951cb22b0098b4cec5621f0be6babc5735bbf1385f1971b8b894e7a4ba827868",
+    "path": "dist/carrier.mjs"
+  },
+  {
+    "sha256": "d66c6e96c27dc563b03df8589beb796bafbc45b587d2a3001b2fd58bfe963dfc",
+    "path": "dist/combined.mjs"
+  },
+  {
+    "sha256": "9d716ad854dcf5d6299d6365be2bf8d13eb88e1ff0dd3b181fb6d0d6eb7601a5",
+    "path": "dist/crossing-controls.mjs"
+  },
+  {
+    "sha256": "68f032d2ea1a3c9e5b7d8828b50fddfcb068c2ec1ef20f6a5cdab87f70270e09",
+    "path": "dist/crossing-worker.mjs"
+  },
+  {
+    "sha256": "f5e0ddae605dd1628d8a10661a279bba257b42f5054a412a1bc640434c5a190a",
+    "path": "dist/display.mjs"
+  },
+  {
+    "sha256": "dc27ffef3ce825df2fdf67c06e547105b8b54548e5206fc315ab04daf138ae0f",
+    "path": "dist/document.mjs"
+  },
+  {
+    "sha256": "16a57bbf9e0075549549e6d2a7339f376fc156f639930a460b170fb6385120fa",
+    "path": "dist/edit-draft.mjs"
+  },
+  {
+    "sha256": "f7dcb9e0cd38c11a8259ec76e1ca2d2f6fb425f9b10412c284bbdec014eb8a6b",
+    "path": "dist/exchange.mjs"
+  },
+  {
+    "sha256": "f5c4bc42ac01783a81656e58a5cf04dec0543d9175106690a015228622021d6a",
+    "path": "dist/family-domain.mjs"
+  },
+  {
+    "sha256": "67857c1e35c911b57269b66c0b68dae4657dc25d540122e51ba69774c8fda6ef",
+    "path": "dist/history.mjs"
+  },
+  {
+    "sha256": "dd4a44a68ee6363d76b5464f5a02965c6a0a82a82799691baadaa969764f4c73",
+    "path": "dist/index.html"
+  },
+  {
+    "sha256": "e3affcfe26beeecca12c29c666442c2935e797eebbc0c9332494a3a1e4c20a3a",
+    "path": "dist/influence-controls.mjs"
+  },
+  {
+    "sha256": "5c542b615fe8ba5a5d2d7ffa5e991a6520ba40120f045cd556c9c35d91261188",
+    "path": "dist/influence.mjs"
+  },
+  {
+    "sha256": "6f0700ef484c2cdf37464c06dc257bbc91c5a6133f838ab12fc3ac706bbbcad8",
+    "path": "dist/interlacing.mjs"
+  },
+  {
+    "sha256": "8d2caf0da006191e8ef42212608538aeb46b73840d6eea020b2150c249483a6c",
+    "path": "dist/line-presets.mjs"
+  },
+  {
+    "sha256": "7d99ab32ee74f9661887eb221b4b7d98bb366b0080a68549767ac0bcbee54cf9",
+    "path": "dist/numeric-inputs.mjs"
+  },
+  {
+    "sha256": "bee6a3d0ef191fb1852da7916e6709cd29005b214c0830cb8549e2eb0ca2547d",
+    "path": "dist/project-library.mjs"
+  },
+  {
+    "sha256": "63604c45e4c3ee642333aa26c2fe59cf91e82b728b0db3dd9f95f5a0df2d8e3a",
+    "path": "dist/r1b-worker.mjs"
+  },
+  {
+    "sha256": "daf0043404d5d52376d38a81a4d2e2bc102456d68725c69021967482e68d1768",
+    "path": "dist/stitch-codec.mjs"
+  },
+  {
+    "sha256": "467901f21e8e5696ed5966974bd752a8fac1c3c22f25a38aa5a59cb96cb784c7",
+    "path": "dist/stitch-intent.mjs"
+  },
+  {
+    "sha256": "b34f4d4e73415eba920a0f70144c049467beb532964ac10a8709352b22feea55",
+    "path": "dist/stitch-rounding.mjs"
+  },
+  {
+    "sha256": "07eab3bdc1fa2f21713cef027209c4627c04b149f8e2aad6a5a4f1df1e29a005",
+    "path": "dist/stitch-source.mjs"
+  },
+  {
+    "sha256": "930e5dea2748e7e7b485da77e98359699c50dc53219370f71e1b3a2ba735bc64",
+    "path": "dist/stitch.mjs"
+  },
+  {
+    "sha256": "1f998f93dbfe5be5e90bf7209ba632b8439695882637bce245bdfc68ca493cf8",
+    "path": "dist/storage-codec.mjs"
+  },
+  {
+    "sha256": "14b6bfc59dec0cafc78f7f50950797930cd96ba45e52c523061abf25b507cfbd",
+    "path": "dist/storage-worker.mjs"
+  },
+  {
+    "sha256": "920dca99f33f85790d2b89bcc87820e2287daba2a5ddb68560d73ab6ce484053",
+    "path": "dist/storage.mjs"
+  },
+  {
+    "sha256": "65223bfe434694d35bb4e13dda3435af5b1082637a066563b29aaaa2897f5e39",
+    "path": "dist/style.css"
+  },
+  {
+    "sha256": "fcd213dc16cb390a6ab496937c03b8f17f78c1a1d102a830f1e0a78b7f1712a2",
+    "path": "dist/svg-import.mjs"
+  },
+  {
+    "sha256": "84130fc604d6925612541d3a12fa4d533c55675db1d1de7ec2ed5af1295a432d",
+    "path": "dist/thread-appearance.mjs"
+  },
+  {
+    "sha256": "c0c6864677f85c0e784196d8210fd5929c5c9475b101b4f81d94e79d02fb6036",
+    "path": "dist/viewport.mjs"
+  },
+  {
+    "sha256": "b8be38862f985283a4b66281d4a341a46d5ec8ee0a8ddbd63111c0efbaee99a6",
+    "path": "dist/weave-occlusion.mjs"
+  },
+  {
+    "sha256": "2d24ca8a7971c5646a4eb4f519c4722066a0ef3ca1402c368ec799be1cac6a65",
+    "path": "dist/weave-render.mjs"
+  },
+  {
+    "sha256": "7bd68a0265163b9c4a6beb7e4304d7d709d405f48b0bc4a37543afdc193fd167",
+    "path": "dist/weave-rules.mjs"
+  },
+  {
+    "sha256": "5723e2aaa7716c92a225a09c0db58d364a220b9048960bbc08e55ace891be0ca",
+    "path": "dist/weave.mjs"
+  }
+]

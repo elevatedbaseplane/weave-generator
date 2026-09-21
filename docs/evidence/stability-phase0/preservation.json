@@ -1,0 +1,17 @@
+{
+  "projects": [
+    {
+      "id": "project-a86a24bd-a965-49db-a910-6e16de31845d",
+      "name": "WEAVE STUDIES",
+      "exactPortableBytesUnchanged": true
+    },
+    {
+      "id": "project-5abdb3e2-c843-4e68-afd1-08647465a498",
+      "name": "CONTROL DIAGNOSTIC",
+      "exactPortableBytesUnchanged": true
+    }
+  ],
+  "phase0ProjectRetained": true,
+  "visibleActiveProjectRestored": true,
+  "packedActiveProjectRestored": false
+}

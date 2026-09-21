@@ -1,0 +1,17 @@
+✔ field adaptation overlaps row extents without adding backside connectors; bands stay exact (8.9394ms)
+✔ field candidates include every cell intersecting the test boundary and still enforce workload (22.2621ms)
+✔ field identity and active influence compact round trip preserve coordinates, certificates and references (430.6762ms)
+✔ reviewed finite foundations carry directed source runs without backside joins (1.2407ms)
+✔ retained source IDs survive parameter changes and duplicates isolate identity (1.7312ms)
+✔ finite support equations enclose unequal-length entry and exit roots (0.9155ms)
+✔ expanded search retains outside runs and rejects candidate overflow atomically (7.6114ms)
+✔ double-herringbone identity and influence preserve exact compact geometry (1214.2395ms)
+✔ herringbone-square identity and influence preserve exact compact geometry (644.5477ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2412.8778

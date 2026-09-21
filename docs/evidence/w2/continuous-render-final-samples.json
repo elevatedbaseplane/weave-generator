@@ -1,0 +1,21 @@
+{
+  "build": "WF-W2-CONTINUOUS-20260917",
+  "samples": [
+    {
+      "workerMs": 270,
+      "renderMs": 34.6,
+      "totalMs": 464.3
+    },
+    {
+      "workerMs": 112.1,
+      "renderMs": 33.4,
+      "totalMs": 324.2
+    }
+  ],
+  "maximumLimits": {
+    "workerMs": 400,
+    "renderMs": 50,
+    "totalMs": 750
+  },
+  "scope": "focused managed-browser samples; not sustained certification; default200ms remains unmet"
+}

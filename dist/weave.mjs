@@ -1,3 +1,7 @@
+import {continuousWeaveSvg} from './weave-occlusion.mjs';
+import {threadPaths,threadStroke,threadOpacity} from './thread-appearance.mjs';
+import {STITCH_SOURCE} from './stitch-source.mjs';
+import {deriveStitch,emptyStitchGeneration,validateStitchGeneration,STITCH_VERSIONS} from './stitch.mjs';
 import {deriveCarrier,validateCarrierRecipe,carrierTolerance,carrierInputFingerprint,CARRIER_LIMITS,familyNames,familyAxes} from './carrier.mjs';
 import {validateBoundaryRecord,bounds} from './boundary.mjs';
 import {deriveAttractor,validateGeneration,ATTRACTOR_VERSIONS} from './attractor.mjs';
@@ -48,7 +52,7 @@ export function preflightCarrier(boundary,carrier){
  if(count*boundary.points.length>CARRIER_LIMITS.lineEdgeTests)throw new Error('This carrier would exceed the line-edge test limit.');
  return count;
 }
-export function safeDeriveCarrier(boundary,carrier,boardId){preflightCarrier(boundary,carrier);return deriveCarrier(boundary,carrier,boardId);}
+export function safeDeriveCarrier(boundary,carrier,boardId){if(carrier?.kind===STITCH_SOURCE){const d=deriveStitch(boundary,carrier,boardId,{sourceBoardId:boardId,sourceCarrierRevisionId:'source-view'},emptyStitchGeneration(carrier));return{inputFingerprint:carrierInputFingerprint(boundary,carrier),paths:d.strands.map(s=>({family:s.identity.roleId,selected:true,intervals:s.fragments.map(f=>({start:f.points[0],end:f.points.at(-1)}))})),diagnostics:{...d.diagnostics,counts:Object.fromEntries(carrier.roles.map(r=>[r,{available:d.diagnostics.counts[r],retained:d.diagnostics.counts[r]}]))}};}preflightCarrier(boundary,carrier);return deriveCarrier(boundary,carrier,boardId);}
 export function deriveIdentity(boundary,carrier,boardId,context){
  const d=safeDeriveCarrier(boundary,carrier,boardId);
  const geometry=d.paths.filter(p=>p.selected).map(p=>{
@@ -66,14 +70,15 @@ export function refreshWeave(working,boardId){
  if(next.weave)next.weave.derived=deriveForWeave(next.weave,next.boundary,next.carrier,boardId);
  return next;
 }
-export function deriveForWeave(w,boundary,carrier,boardId){if(w.weaveVersion===ATTRACTOR_VERSIONS.study){validateGeneration(w.generation);const f=w.generation.attractor;if(f&&f.enabled&&f.strength>0&&w.generation.tension<100)return deriveAttractor(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}if([INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(w.weaveVersion)){validateInfluenceGeneration(w.generation);if(!isIdentityGeneration(w.generation))return deriveInfluence(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}if(w.weaveVersion===COMBINED_VERSIONS.study){validateCombinedGeneration(w.generation);if(!combinedIdentity(w.generation))return deriveCombined(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}return deriveIdentity(boundary,carrier,boardId,w.sourceContext);}
+export function deriveForWeave(w,boundary,carrier,boardId){if(carrier?.kind===STITCH_SOURCE)return deriveStitch(boundary,carrier,boardId,w.sourceContext,w.generation||emptyStitchGeneration(carrier));if(w.weaveVersion===ATTRACTOR_VERSIONS.study){validateGeneration(w.generation);const f=w.generation.attractor;if(f&&f.enabled&&f.strength>0&&w.generation.tension<100)return deriveAttractor(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}if([INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(w.weaveVersion)){validateInfluenceGeneration(w.generation);if(!isIdentityGeneration(w.generation))return deriveInfluence(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}if(w.weaveVersion===COMBINED_VERSIONS.study){validateCombinedGeneration(w.generation);if(!combinedIdentity(w.generation))return deriveCombined(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}return deriveIdentity(boundary,carrier,boardId,w.sourceContext);}
 export function validateWeave(weave,working,project,verifyDerived=true){
- const v2=weave?.weaveVersion===ATTRACTOR_VERSIONS.study,v3=weave?.weaveVersion===INFLUENCE_VERSIONS.study,v4=weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study,v5=weave?.weaveVersion===COMBINED_VERSIONS.study;exactKeys(weave,v2||v3||v4||v5?['studyId','sourceName','sourceContext','originLineage','weaveVersion','generation','derived']:['studyId','sourceName','sourceContext','originLineage','derived'],'weave');if(v2)validateGeneration(weave.generation);if(v3||v4)validateInfluenceGeneration(weave.generation);if(v5)validateCombinedGeneration(weave.generation);
+ const v6=weave?.weaveVersion===STITCH_VERSIONS.study;
+ const v2=weave?.weaveVersion===ATTRACTOR_VERSIONS.study,v3=weave?.weaveVersion===INFLUENCE_VERSIONS.study,v4=weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study,v5=weave?.weaveVersion===COMBINED_VERSIONS.study;exactKeys(weave,v2||v3||v4||v5||v6?['studyId','sourceName','sourceContext','originLineage','weaveVersion','generation','derived']:['studyId','sourceName','sourceContext','originLineage','derived'],'weave');if(v2)validateGeneration(weave.generation);if(v3||v4)validateInfluenceGeneration(weave.generation);if(v5)validateCombinedGeneration(weave.generation);if(v6)validateStitchGeneration(weave.generation,working.carrier.roles);
  if(typeof weave.studyId!=='string'||!weave.studyId||weave.studyId.length>120||typeof weave.sourceName!=='string'||weave.sourceName.length>80)throw new Error('Invalid weave identity.');
  const c=weave.sourceContext;
  exactKeys(c,['sourceBoardId','sourceCarrierRevisionId','parameterizationVersion','snapshot'],'source context');
  const found=project.carrierStudies.flatMap(e=>e.revisions).find(r=>r.id===c.sourceCarrierRevisionId);
- if(c.sourceBoardId!==project.id||c.parameterizationVersion!==WEAVE_VERSIONS.parameterization||!found||canonical(found)!==canonical(c.snapshot))throw new Error('Weave source snapshot or revision does not match.');
+ if(c.sourceBoardId!==project.id||c.parameterizationVersion!==(v6?STITCH_VERSIONS.parameterization:WEAVE_VERSIONS.parameterization)||!found||canonical(found)!==canonical(c.snapshot))throw new Error('Weave source snapshot or revision does not match.');
  if(working.carrier?.id!==c.snapshot.carrier.id)throw new Error('Weave carrier identity changed.');
  if(!Array.isArray(weave.originLineage)||weave.originLineage.length>100)throw new Error('Invalid origin lineage.');
  for(const origin of weave.originLineage){exactKeys(origin,['boardId','sourceCarrierRevisionId'],'origin');if(typeof origin.boardId!=='string'||!origin.boardId||origin.boardId.length>120||origin.sourceCarrierRevisionId!==c.sourceCarrierRevisionId)throw new Error('Invalid origin lineage.');}
@@ -88,12 +93,14 @@ export function rebaseWeave(working,oldBoardId,newBoardId){
  w.sourceContext.sourceBoardId=newBoardId;
  w.derived=deriveForWeave(w,working.boundary,working.carrier,newBoardId);
 }
-export function derivedSvg(working,boardId,trustedDerived=false){
+export function derivedSvg(working,boardId,trustedDerived=false,displayStrands=null){
+ if(working.interlacing?.enabled&&!displayStrands)throw Error('Wait for complete interlacing before SVG export.');
  if(!working.weave)throw new Error('Create a Weave Study first.');
  const w=working.weave,expected=trustedDerived?w.derived:deriveForWeave(w,working.boundary,working.carrier,boardId);
  if(canonical(expected)!==canonical(w.derived))throw new Error('Export requires complete current derived geometry.');
  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),n=x=>{if(!Number.isFinite(x))throw new Error('Nonfinite export.');return String(x);},b=bounds(working.boundary.points),pad=Math.max(b.maxX-b.minX,b.maxY-b.minY)*.05;
- const metadata={format:'weave-derived-svg',version:1,coordinates:{units:'document-units',yAxis:'up',svgTransform:'negate-y'},studyId:w.studyId,sourceName:w.sourceName,sourceContext:w.sourceContext,originLineage:w.originLineage,derived:w.derived};
-  const groups=familyNames(working.carrier).map(f=>'<g id="family-'+f+'">'+expected.strands.filter(p=>p.family===f).flatMap(p=>p.fragments.map(q=>'<path data-strand-id="'+esc(p.strandId)+'" data-fragment-id="'+esc(q.fragmentId)+'" d="M '+q.points.map(v=>n(v.x)+' '+n(-v.y)).join(' L ')+'"/>')).join('')+'</g>').join('');
- return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+[b.minX-pad,-b.maxY-pad,b.maxX-b.minX+2*pad,b.maxY-b.minY+2*pad].map(n).join(' ')+'" data-weave-coordinate-system="document-units;y-up;svg-y-negated"><metadata>'+esc(JSON.stringify(metadata))+'</metadata><g fill="none" stroke="black" stroke-width="1">'+groups+'</g></svg>';
+ const metadata={format:'weave-derived-svg',version:1,coordinates:{units:'document-units',yAxis:'up',svgTransform:'negate-y'},studyId:w.studyId,sourceName:w.sourceName,sourceContext:w.sourceContext,originLineage:w.originLineage,derived:w.derived,...(working.interlacing?{interlacing:working.interlacing}:{}),...(working.threadAppearance?{threadAppearance:working.threadAppearance}:{})};
+  const groups=working.interlacing?.enabled?continuousWeaveSvg(expected.strands,displayStrands,working.interlacing,working.threadAppearance,expected.provenanceFingerprint,working.boundary):expected.strands.flatMap(p=>p.fragments.map(q=>{const record=threadPaths([{...p,fragments:[q]}],working.threadAppearance,v=>({x:v.x,y:-v.y}))[0];return '<path data-strand-id="'+esc(p.strandId||JSON.stringify(p.identity))+'" data-fragment-id="'+esc(q.fragmentId||JSON.stringify(q.fragmentReference))+'" opacity="'+threadOpacity(record)+'" stroke-width="'+threadStroke(record)+'" d="'+record.d+'"/>'})).join('');
+ const clip=working.boundary.points.map(v=>n(v.x)+','+n(-v.y)).join(' ');
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+[b.minX-pad,-b.maxY-pad,b.maxX-b.minX+2*pad,b.maxY-b.minY+2*pad].map(n).join(' ')+'" data-weave-coordinate-system="document-units;y-up;svg-y-negated"><metadata>'+esc(JSON.stringify(metadata))+'</metadata><defs><clipPath id="boundary"><polygon points="'+clip+'"/></clipPath></defs><g clip-path="url(#boundary)" fill="none" stroke="black" stroke-linejoin="round">'+groups+'</g></svg>';
 }

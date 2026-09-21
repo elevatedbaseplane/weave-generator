@@ -1,0 +1,88 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "tests/stability-phase0.test.mjs",
+      "tests/atomic-field-commit.test.mjs",
+      "tests/project-library.test.mjs",
+      "tests/family-architecture.test.mjs",
+      "tests/edit-draft.test.mjs",
+      "tests/edit-preview-worker.test.mjs",
+      "tests/influence-controls.test.mjs",
+      "tests/weave-rules.test.mjs",
+      "tests/thread-appearance.test.mjs",
+      "tests/multitab-capacity-guard.test.mjs",
+      "tests/crossing-execution.test.mjs",
+      "tests/workflow-cleanup.test.mjs",
+      "tests/w2-refinements.test.mjs",
+      "tests/stitch-migration.test.mjs",
+      "tests/stitch-codec-reuse.test.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-isolation=none",
+      "--test-name-pattern=schema-4 raw recovery",
+      "tests/r1b.test.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  },
+  {
+    "command": [
+      "node",
+      "scripts/check.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "dist/app.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "dist/compatibility-baseline.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "scripts/stability-phase0.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "scripts/stability-phase0-checks.mjs"
+    ],
+    "exitCode": null,
+    "error": "spawnSync C:\\Users\\notbr\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe EPERM",
+    "summary": []
+  }
+]

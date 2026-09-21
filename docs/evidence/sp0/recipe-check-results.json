@@ -1,0 +1,438 @@
+{
+  "status": "PASS",
+  "scope": "24 normalized run fixtures; source crossing relationships only; no production, historical-authenticity, capacity or performance certification",
+  "fixtures": [
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.1,
+      "run": "A0U",
+      "sequence": "OUO",
+      "hits": [
+        {
+          "other": "A-1D",
+          "u": 0.04545454545454549
+        },
+        {
+          "other": "B-1D",
+          "u": 0.5
+        },
+        {
+          "other": "A0D",
+          "u": 0.9545454545454545
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.1,
+      "run": "A0D",
+      "sequence": "UOU",
+      "hits": [
+        {
+          "other": "A0U",
+          "u": 0.04545454545454549
+        },
+        {
+          "other": "B0U",
+          "u": 0.5
+        },
+        {
+          "other": "A1U",
+          "u": 0.9545454545454545
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.1,
+      "run": "B0U",
+      "sequence": "OUO",
+      "hits": [
+        {
+          "other": "B-1D",
+          "u": 0.04545454545454549
+        },
+        {
+          "other": "A0D",
+          "u": 0.5
+        },
+        {
+          "other": "B0D",
+          "u": 0.9545454545454545
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.1,
+      "run": "B0D",
+      "sequence": "UOU",
+      "hits": [
+        {
+          "other": "B0U",
+          "u": 0.04545454545454549
+        },
+        {
+          "other": "A1U",
+          "u": 0.5
+        },
+        {
+          "other": "B1U",
+          "u": 0.9545454545454545
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.25,
+      "run": "A0U",
+      "sequence": "OUO",
+      "hits": [
+        {
+          "other": "A-1D",
+          "u": 0.1
+        },
+        {
+          "other": "B-1D",
+          "u": 0.5
+        },
+        {
+          "other": "A0D",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.25,
+      "run": "A0D",
+      "sequence": "UOU",
+      "hits": [
+        {
+          "other": "A0U",
+          "u": 0.1
+        },
+        {
+          "other": "B0U",
+          "u": 0.5
+        },
+        {
+          "other": "A1U",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.25,
+      "run": "B0U",
+      "sequence": "OUO",
+      "hits": [
+        {
+          "other": "B-1D",
+          "u": 0.1
+        },
+        {
+          "other": "A0D",
+          "u": 0.5
+        },
+        {
+          "other": "B0D",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.25,
+      "run": "B0D",
+      "sequence": "UOU",
+      "hits": [
+        {
+          "other": "B0U",
+          "u": 0.1
+        },
+        {
+          "other": "A1U",
+          "u": 0.5
+        },
+        {
+          "other": "B1U",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.4,
+      "run": "A0U",
+      "sequence": "OUO",
+      "hits": [
+        {
+          "other": "A-1D",
+          "u": 0.14285714285714282
+        },
+        {
+          "other": "B-1D",
+          "u": 0.5
+        },
+        {
+          "other": "A0D",
+          "u": 0.8571428571428572
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.4,
+      "run": "A0D",
+      "sequence": "UOU",
+      "hits": [
+        {
+          "other": "A0U",
+          "u": 0.14285714285714282
+        },
+        {
+          "other": "B0U",
+          "u": 0.5
+        },
+        {
+          "other": "A1U",
+          "u": 0.8571428571428572
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.4,
+      "run": "B0U",
+      "sequence": "OUO",
+      "hits": [
+        {
+          "other": "B-1D",
+          "u": 0.14285714285714282
+        },
+        {
+          "other": "A0D",
+          "u": 0.5
+        },
+        {
+          "other": "B0D",
+          "u": 0.8571428571428572
+        }
+      ]
+    },
+    {
+      "recipe": "double-herringbone",
+      "overlap": 0.4,
+      "run": "B0D",
+      "sequence": "UOU",
+      "hits": [
+        {
+          "other": "B0U",
+          "u": 0.14285714285714282
+        },
+        {
+          "other": "A1U",
+          "u": 0.5
+        },
+        {
+          "other": "B1U",
+          "u": 0.8571428571428572
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.05,
+      "run": "T",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "L",
+          "u": 0.045454545454545456
+        },
+        {
+          "other": "R",
+          "u": 0.9545454545454546
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.05,
+      "run": "R",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "T",
+          "u": 0.04545454545454549
+        },
+        {
+          "other": "B",
+          "u": 0.9545454545454546
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.05,
+      "run": "B",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "R",
+          "u": 0.04545454545454549
+        },
+        {
+          "other": "L",
+          "u": 0.9545454545454546
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.05,
+      "run": "L",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "B",
+          "u": 0.045454545454545456
+        },
+        {
+          "other": "T",
+          "u": 0.9545454545454546
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.125,
+      "run": "T",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "L",
+          "u": 0.1
+        },
+        {
+          "other": "R",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.125,
+      "run": "R",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "T",
+          "u": 0.1
+        },
+        {
+          "other": "B",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.125,
+      "run": "B",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "R",
+          "u": 0.1
+        },
+        {
+          "other": "L",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.125,
+      "run": "L",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "B",
+          "u": 0.1
+        },
+        {
+          "other": "T",
+          "u": 0.9
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.25,
+      "run": "T",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "L",
+          "u": 0.16666666666666666
+        },
+        {
+          "other": "R",
+          "u": 0.8333333333333334
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.25,
+      "run": "R",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "T",
+          "u": 0.16666666666666666
+        },
+        {
+          "other": "B",
+          "u": 0.8333333333333334
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.25,
+      "run": "B",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "R",
+          "u": 0.16666666666666666
+        },
+        {
+          "other": "L",
+          "u": 0.8333333333333334
+        }
+      ]
+    },
+    {
+      "recipe": "herringbone-square",
+      "extension": 0.25,
+      "run": "L",
+      "sequence": "OU",
+      "hits": [
+        {
+          "other": "B",
+          "u": 0.16666666666666666
+        },
+        {
+          "other": "T",
+          "u": 0.8333333333333334
+        }
+      ]
+    }
+  ]
+}

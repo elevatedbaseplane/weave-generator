@@ -1,0 +1,40 @@
+{
+  "contract": "derived-buffer-v2",
+  "passed": true,
+  "limits": {
+    "strands": 2000,
+    "fragments": 20000,
+    "points": 85536,
+    "certificates": 65536,
+    "edgeRefs": 80000,
+    "f64": 328608,
+    "u32": 232000,
+    "i32": 2000,
+    "u16": 80000,
+    "dictionaryUtf8": 980
+  },
+  "counts": {
+    "strands": 2000,
+    "fragments": 20000,
+    "points": 85536,
+    "certificates": 65536,
+    "edgeRefs": 80000
+  },
+  "byteLengths": {
+    "f64": 2628864,
+    "u32": 928000,
+    "i32": 8000,
+    "u16": 160000
+  },
+  "decodedBufferBytes": 3724864,
+  "base64Characters": 4966492,
+  "metadataBytes": 1387,
+  "singleMaximumBackupBytes": 4968987,
+  "twoMaximumBackupBytes": 9937492,
+  "portableLimit": 10485760,
+  "remainingBytes": 5516773,
+  "ledgerExact": true,
+  "thirdRejected": true,
+  "thirdError": "This complete workspace exceeds the 10 MiB portable backup limit. Previous work is unchanged.",
+  "elapsedMs": 6057.8937
+}

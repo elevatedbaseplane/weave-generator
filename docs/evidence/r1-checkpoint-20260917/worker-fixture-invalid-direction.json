@@ -1,0 +1,347 @@
+{
+  "passed": false,
+  "reports": [
+    {
+      "kind": "current-dense-single",
+      "fixture": {
+        "vertices": 100,
+        "spacing": 2.5,
+        "influences": 1
+      },
+      "warmup": [
+        {
+          "i": -5,
+          "workerMs": 315.5507,
+          "receivedEpoch": 1789667618155.9487,
+          "deriveMs": 264.51199999999994,
+          "encodeMs": 47.371500000000026,
+          "postedEpoch": 1789667618471.4985
+        },
+        {
+          "i": -4,
+          "workerMs": 283.079,
+          "receivedEpoch": 1789667618490.6467,
+          "deriveMs": 240.5116,
+          "encodeMs": 39.540700000000015,
+          "postedEpoch": 1789667618773.7256
+        },
+        {
+          "i": -3,
+          "workerMs": 274.3757999999999,
+          "receivedEpoch": 1789667618791.4822,
+          "deriveMs": 222.1313,
+          "encodeMs": 49.41989999999987,
+          "postedEpoch": 1789667619065.8574
+        },
+        {
+          "i": -2,
+          "workerMs": 262.58680000000004,
+          "receivedEpoch": 1789667619080.1519,
+          "deriveMs": 203.51659999999993,
+          "encodeMs": 58.45589999999993,
+          "postedEpoch": 1789667619342.738
+        },
+        {
+          "i": -1,
+          "workerMs": 239.9215999999999,
+          "receivedEpoch": 1789667619356.3428,
+          "deriveMs": 202.6235999999999,
+          "encodeMs": 36.576499999999896,
+          "postedEpoch": 1789667619596.2637
+        }
+      ],
+      "runs": [
+        {
+          "i": 0,
+          "workerMs": 236.62580000000003,
+          "receivedEpoch": 1789667619610.2107,
+          "deriveMs": 200.92520000000013,
+          "encodeMs": 35.06449999999995,
+          "postedEpoch": 1789667619846.8362
+        },
+        {
+          "i": 1,
+          "workerMs": 226.3671999999999,
+          "receivedEpoch": 1789667619861.7312,
+          "deriveMs": 190.25670000000014,
+          "encodeMs": 35.61030000000028,
+          "postedEpoch": 1789667620088.098
+        },
+        {
+          "i": 2,
+          "workerMs": 239.67830000000004,
+          "receivedEpoch": 1789667620101.9438,
+          "deriveMs": 203.40920000000006,
+          "encodeMs": 35.31530000000021,
+          "postedEpoch": 1789667620341.6216
+        },
+        {
+          "i": 3,
+          "workerMs": 239.6599000000001,
+          "receivedEpoch": 1789667620355.8533,
+          "deriveMs": 203.86290000000008,
+          "encodeMs": 35.057700000000295,
+          "postedEpoch": 1789667620595.5125
+        },
+        {
+          "i": 4,
+          "workerMs": 232.8471999999997,
+          "receivedEpoch": 1789667620610.2964,
+          "deriveMs": 195.1230999999998,
+          "encodeMs": 35.677999999999884,
+          "postedEpoch": 1789667620843.143
+        },
+        {
+          "i": 5,
+          "workerMs": 235.29899999999998,
+          "receivedEpoch": 1789667620858.468,
+          "deriveMs": 199.26620000000003,
+          "encodeMs": 33.40639999999985,
+          "postedEpoch": 1789667621093.7668
+        },
+        {
+          "i": 6,
+          "workerMs": 245.98709999999983,
+          "receivedEpoch": 1789667621109.961,
+          "deriveMs": 193.4304000000002,
+          "encodeMs": 51.98959999999988,
+          "postedEpoch": 1789667621355.9478
+        },
+        {
+          "i": 7,
+          "workerMs": 229.27149999999983,
+          "receivedEpoch": 1789667621368.646,
+          "deriveMs": 195.18820000000005,
+          "encodeMs": 33.61689999999999,
+          "postedEpoch": 1789667621597.9172
+        },
+        {
+          "i": 8,
+          "workerMs": 218.29680000000008,
+          "receivedEpoch": 1789667621611.7305,
+          "deriveMs": 185.27880000000005,
+          "encodeMs": 32.53319999999985,
+          "postedEpoch": 1789667621830.0266
+        },
+        {
+          "i": 9,
+          "workerMs": 219.28499999999985,
+          "receivedEpoch": 1789667621843.0122,
+          "deriveMs": 185.88760000000002,
+          "encodeMs": 32.871200000000044,
+          "postedEpoch": 1789667622062.2969
+        },
+        {
+          "i": 10,
+          "workerMs": 220.94510000000037,
+          "receivedEpoch": 1789667622075.0376,
+          "deriveMs": 187.6819000000005,
+          "encodeMs": 32.749399999999696,
+          "postedEpoch": 1789667622295.9827
+        },
+        {
+          "i": 11,
+          "workerMs": 220.39529999999922,
+          "receivedEpoch": 1789667622309.9604,
+          "deriveMs": 185.53599999999915,
+          "encodeMs": 34.487599999999475,
+          "postedEpoch": 1789667622530.3555
+        },
+        {
+          "i": 12,
+          "workerMs": 221.34319999999934,
+          "receivedEpoch": 1789667622543.28,
+          "deriveMs": 187.8073000000004,
+          "encodeMs": 33.11250000000018,
+          "postedEpoch": 1789667622764.623
+        },
+        {
+          "i": 13,
+          "workerMs": 220.76749999999993,
+          "receivedEpoch": 1789667622777.8372,
+          "deriveMs": 187.23899999999958,
+          "encodeMs": 33.16650000000027,
+          "postedEpoch": 1789667622998.6045
+        },
+        {
+          "i": 14,
+          "workerMs": 219.54109999999946,
+          "receivedEpoch": 1789667623012.875,
+          "deriveMs": 186.96600000000035,
+          "encodeMs": 32.21510000000035,
+          "postedEpoch": 1789667623232.4158
+        },
+        {
+          "i": 15,
+          "workerMs": 226.6305000000002,
+          "receivedEpoch": 1789667623245.9949,
+          "deriveMs": 192.8024000000005,
+          "encodeMs": 33.36660000000029,
+          "postedEpoch": 1789667623472.625
+        },
+        {
+          "i": 16,
+          "workerMs": 235.84929999999986,
+          "receivedEpoch": 1789667623485.6917,
+          "deriveMs": 202.53979999999956,
+          "encodeMs": 32.93339999999989,
+          "postedEpoch": 1789667623721.5408
+        },
+        {
+          "i": 17,
+          "workerMs": 215.07580000000053,
+          "receivedEpoch": 1789667623735.0415,
+          "deriveMs": 182.1319999999996,
+          "encodeMs": 32.57540000000063,
+          "postedEpoch": 1789667623950.1172
+        },
+        {
+          "i": 18,
+          "workerMs": 232.84659999999985,
+          "receivedEpoch": 1789667623963.087,
+          "deriveMs": 196.29339999999956,
+          "encodeMs": 35.50420000000031,
+          "postedEpoch": 1789667624195.9333
+        },
+        {
+          "i": 19,
+          "workerMs": 231.78620000000046,
+          "receivedEpoch": 1789667624209.5237,
+          "deriveMs": 198.03340000000026,
+          "encodeMs": 33.391999999999825,
+          "postedEpoch": 1789667624441.3096
+        },
+        {
+          "i": 20,
+          "workerMs": 237.9449999999997,
+          "receivedEpoch": 1789667624454.692,
+          "deriveMs": 205.3737999999994,
+          "encodeMs": 32.16830000000027,
+          "postedEpoch": 1789667624692.6365
+        },
+        {
+          "i": 21,
+          "workerMs": 219.91720000000078,
+          "receivedEpoch": 1789667624705.995,
+          "deriveMs": 186.39050000000043,
+          "encodeMs": 33.09220000000005,
+          "postedEpoch": 1789667624925.9119
+        },
+        {
+          "i": 22,
+          "workerMs": 224.75440000000071,
+          "receivedEpoch": 1789667624939.703,
+          "deriveMs": 189.4941000000008,
+          "encodeMs": 34.90889999999945,
+          "postedEpoch": 1789667625164.457
+        },
+        {
+          "i": 23,
+          "workerMs": 219.1851000000006,
+          "receivedEpoch": 1789667625177.9573,
+          "deriveMs": 186.4385999999995,
+          "encodeMs": 32.393200000000434,
+          "postedEpoch": 1789667625397.142
+        },
+        {
+          "i": 24,
+          "workerMs": 229.14919999999984,
+          "receivedEpoch": 1789667625412.2886,
+          "deriveMs": 196.14630000000034,
+          "encodeMs": 32.64060000000063,
+          "postedEpoch": 1789667625641.4375
+        },
+        {
+          "i": 25,
+          "workerMs": 222.84040000000005,
+          "receivedEpoch": 1789667625654.2961,
+          "deriveMs": 189.83529999999973,
+          "encodeMs": 32.57499999999982,
+          "postedEpoch": 1789667625877.1362
+        },
+        {
+          "i": 26,
+          "workerMs": 218.91160000000036,
+          "receivedEpoch": 1789667625890.3062,
+          "deriveMs": 186.09709999999995,
+          "encodeMs": 32.455700000000434,
+          "postedEpoch": 1789667626109.2175
+        },
+        {
+          "i": 27,
+          "workerMs": 223.44959999999992,
+          "receivedEpoch": 1789667626122.0605,
+          "deriveMs": 191.16739999999936,
+          "encodeMs": 31.918799999999464,
+          "postedEpoch": 1789667626345.51
+        },
+        {
+          "i": 28,
+          "workerMs": 216.95789999999943,
+          "receivedEpoch": 1789667626358.7834,
+          "deriveMs": 184.066499999999,
+          "encodeMs": 32.50489999999991,
+          "postedEpoch": 1789667626575.741
+        },
+        {
+          "i": 29,
+          "workerMs": 217.3842999999997,
+          "receivedEpoch": 1789667626589.0945,
+          "deriveMs": 183.96219999999994,
+          "encodeMs": 33.03520000000026,
+          "postedEpoch": 1789667626806.474
+        }
+      ],
+      "passed": true,
+      "diagnostics": {
+        "tau": 1e-8,
+        "epsilon": 0.0125,
+        "accuracyScope": "unclipped-curve-to-polyline",
+        "clippingRoundingBound": 2.5e-9,
+        "displacementBound": 15,
+        "candidateLines": 424,
+        "influenceCount": 1,
+        "subdivisionNodes": 59012,
+        "segments": 29956,
+        "clippedSegments": 30374,
+        "edgeTests": 3196,
+        "shortSpans": 0,
+        "collinearContacts": 0,
+        "maxCertifiedError": 0.012497520333459737,
+        "counts": {
+          "A": 199,
+          "B": 199
+        },
+        "intervals": 840,
+        "complete": true
+      },
+      "summary": {
+        "runs": 30,
+        "minMs": 215.07580000000053,
+        "p50Ms": 224.75440000000071,
+        "p95Ms": 239.67830000000004,
+        "maxMs": 245.98709999999983,
+        "meanMs": 226.6331033333333
+      }
+    },
+    {
+      "kind": "current-eight-mixed",
+      "fixture": {
+        "vertices": 100,
+        "spacing": 50,
+        "influences": 8
+      },
+      "warmup": [],
+      "runs": [],
+      "passed": false,
+      "failure": {
+        "message": "Influence direction must be from -180 to 180 degrees.",
+        "workerError": {
+          "code": "evaluator",
+          "name": "Error",
+          "message": "Influence direction must be from -180 to 180 degrees."
+        }
+      }
+    }
+  ]
+}

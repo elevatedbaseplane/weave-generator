@@ -1,3 +1,14 @@
+## W2 control slice checkpoint - 2026-09-17
+
+WF-W2-RULES-20260917 adds preset construction and custom pair repeat controls, inversion, and explicit local upper-thread choice. See document77 for contracts, verification and limitations. W2 remains incomplete; next is incident/source correspondence and cross-row design policy, before W3 library. No publication.
+
+## Active direction — weave-first, 2026-09-17
+
+Document73 (docs/73-WEAVE-FIRST-DIRECTION-BRIEF.md) records the user-directed order: W1 thread width/outline → W2 integrated over/under → W3 complex preset library → W4 stitches/connection rules → W5 force/relationship analysis → W6 points → W7 polylines. It supersedes the standalone Analyze-first next action; necessary crossing computation remains an internal dependency with document70 correctness requirements. Current build WF-SP1-LINKED-20260917 unchanged. Planning only in this turn; next bounded implementation scope is W1. Preserve geometry/storage contracts, historical evidence and deferred host certification. No publication.
+
+## Stitch-based priority and crossing readiness — 2026-09-17
+
+User clarified that presets must follow the researched stitch constructions, not more generic grids. Document70 reconciles SP1 → R2A → R2B → curved-lacing delivery. Actual saved field audit:69 multi-vertex fragments/1547 interior vertices lack retained per-point source parameters; intent is currently an identifier, not explicit pair brackets. Plan optional exact transient source trace and versioned intent templates before automatic crossing/precedence matching. No tolerance guessing, inferred parameters or arbitrary over/under. Application build unchanged; SP1 gates remain, R1 development-complete, no publication/host command. See docs/70-STITCH-CROSSING-DELIVERY-CONTRACT.md.
 # Weave Generator — phased development plan and checklist
 
 **Execution detail:** [14 — Builder checklists](14-BUILDER-CHECKLISTS.md) specifies to-dos and verification scenarios for every batch in document 13, with a policy for safely combining small related deliveries. Feature count is not an effort estimate. The actual building chat must settle each decision gate and obtain implementation authorization.
@@ -278,3 +289,4 @@ Gate: outer boundary and parent source remain unchanged, declared units/roles pe
 ## Immediate next action
 
 R0: prepare a concise shared contract and R1A scope using representative relational examples. No implementation is ready merely because this roadmap exists. The earlier compression fixture may inform tests, but its C1–C3 sequence and numerical defaults do not govern this plan.
+

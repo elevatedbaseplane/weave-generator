@@ -1,0 +1,13 @@
+# W1 implementation report
+
+## W1 thread appearance ready for review — 2026-09-17
+
+Build WF-W1-THREADS-20260917. Thread Appearance panel provides width0.5–30 document units (default3), Solid/Outline, linked/per-family editing and reset. Source and derived paths use the same presentation; existing visibility and color/opacity remain. Transparent outline contours use bounded miter/bevel joins and independent closed fragment subpaths, clipped to the boundary. They are display geometry, not certified physical offsets or additional strands. No over/under claim.
+
+Versioned optional thread-appearance-v1 metadata lives in working and saved pattern/field revisions; absent legacy metadata uses defaults without rewriting old records. Old app versions may reject new metadata; current app reads both. Geometry, certificates, identities and compact buffers are unchanged. Appearance-only commits reuse existing payloads/records and exact portable admission; new carrier metadata uses a bounded incremental manifest update. SVG exports include appearance and clipped outline/solid paths with original strand/fragment IDs and exact source metadata. Black SVG styling remains existing behavior; no texture/color export change.
+
+12 focused tests pass: existing render parity plus linked isolation, strict settings rejection, old revision preservation, appearance backup roundtrip, zero new geometry payloads, carrier delta, admission rejection, transparent separated outlines, bounded joins, family-bounded dense output and production worker trace. Static and syntax checks pass. Managed browser verifies mixed A-outline/B-solid at8.5 units, Undo/Redo, reload, influence edit preservation and standalone pattern save. One field edit worker79.0ms/total203.1ms: retains default200ms timing debt, no phase-wide performance pass claimed. Earlier failures remain preserved. No host command or publication.
+
+W1 implementation complete for development visual review; user acceptance outstanding. Next W2: integrated crossing computation with visible over/under rules and overrides, preserving document70 correctness requirements without a separate Analyze prerequisite. W3 library, W4 bindings, W5 analysis, W6 points and W7 polylines remain. Preview http://127.0.0.1:43831/?sp1=20260917 (refresh for current build).
+
+Visual checks: select a pattern; open Thread Appearance; adjust width; switch Outline; unlink and edit B only; Undo/Redo and reload. Use Display > Distorted Only for a clean influenced view. Width scales with document zoom; outlines remain transparent at intersections until W2. Linking is an editing scope, defaults on reload, and does not rewrite values until a control is changed. Reset follows selected/all-family scope.
