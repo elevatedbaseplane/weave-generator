@@ -27,7 +27,7 @@ import {STITCH_VERSIONS,stitchIdentity,validateStitchGeneration} from './stitch.
 
 import {createWorkspace,createProject,activeProject,clone,saveBoundary,saveBoundaryAndUpdatePatterns,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,createWeaveStudy,retargetWeaveSource,saveWeaveStudy,restoreWeaveStudy,findWeaveRevision,parseBackup,mergeBackup,addInfluence,duplicateInfluence,candidateInfluence,candidateVariation,removeInfluence,influenceOf,influencesOf,validateTrustedWorkspace,addWeaveFamily,removeWeaveFamily,renameLibraryItem,deleteLibraryItem,duplicateLibraryItem} from './document.mjs';
 
-import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,canonical,digest} from './weave.mjs';
+import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,centerlineSvg,weavePdf,canonical,digest} from './weave.mjs';
 
 import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';
 
@@ -58,7 +58,7 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-GENERATOR-SCOPE-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-STRUCTURED-EXPORT-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
@@ -324,7 +324,7 @@ function renderWeaveControls(){
 
   renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);
 
-  for(const id of ['save-weave','save-influence','export-derived-svg']){const button=$(id);if(button)button.disabled=!!pending;}
+  for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf']){const button=$(id);if(button)button.disabled=!!pending||!displayWeave;}
 
  }else{activeInfluenceId=undefined;$('add-attractor').hidden=false;$('attractor-prompt').hidden=false;$('attractor-settings').hidden=true;syncAttractorState(null);}
 
@@ -370,7 +370,7 @@ function renderAttractorGuide(){const layer=$('attractor-layer');layer.replaceCh
 
 function syncInfluenceEditingAvailability(field,count){const disabled=!field;for(const id of ['influence-type','attractor-radius-range','attractor-strength-range','attractor-tension-range','attractor-falloff-range','influence-direction-range','toggle-attractor-enabled','reset-attractor','remove-attractor']){const control=$(id);if(control)control.disabled=disabled;}$('duplicate-influence').disabled=disabled||count>=COMBINED_LIMITS.influences;}
 
-function renderAttractorControls(){const displayWorking=pending?.working||project().working,displayWeave=displayWorking.weave,fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);for(const id of ['save-weave','save-influence','export-derived-svg']){const button=$(id);if(button)button.disabled=!!pending;}}
+function renderAttractorControls(){const displayWorking=pending?.working||project().working,displayWeave=displayWorking.weave,fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf']){const button=$(id);if(button)button.disabled=!!pending||!displayWorking.weave;}}
 
 function renderR1BState(redrawDerived){$('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;targetedRenderCount++;renderInterlaceControls();renderThreadControls();if(redrawDerived)renderDerivedWeaveLayer();else $('weave-derived-layer').classList.toggle('pending-result',!!pending);renderAttractorControls();renderAttractorGuide();updateCanvasLegend();}
 
@@ -703,7 +703,9 @@ $('field-presentation-reset').onclick=()=>attempt(()=>previewFieldPresentation({
 
 
 
-$('export-derived-svg').onclick=async()=>{try{if(pending)throw Error('Wait for certified geometry or cancel the pending change.');const trusted=isCertifiedStudy(project().working.weave);if(trusted){status('VALIDATING CERTIFIED GEOMETRY FOR EXPORT…');await certifyWorking(project().working,project().id)}const current=project().working;if(current.interlacing?.enabled&&crossingCache?.key!==current.weave.derived.provenanceFingerprint)throw Error('Wait for complete interlacing before export.');download(derivedSvg(current,project().id,trusted,current.interlacing?.enabled?crossingCache.result:null),'weave-derived.svg','image/svg+xml');status('CERTIFIED DERIVED SVG EXPORTED.');}catch(error){status(error.message,true)}};
+async function certifiedExportState(){if(pending)throw Error('Wait for certified geometry or cancel the pending change.');const trusted=isCertifiedStudy(project().working.weave);if(trusted){status('VALIDATING CERTIFIED GEOMETRY FOR EXPORT…');await certifyWorking(project().working,project().id)}const current=project().working;if(!current.weave)throw Error('Create a Weave Study first.');if(current.interlacing?.enabled&&crossingCache?.key!==current.weave.derived.provenanceFingerprint)throw Error('Wait for complete interlacing before export.');return{current,trusted,crossings:current.interlacing?.enabled?crossingCache.result:null};}
+$('export-weave-svg').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),centerlines=$('weave-svg-mode').value==='centerlines',svg=centerlines?centerlineSvg(current,project().id,trusted):derivedSvg(current,project().id,trusted,crossings);download(svg,centerlines?'weave-centerlines.svg':'weave-full.svg','image/svg+xml');status(centerlines?'CENTERLINE SVG EXPORTED.':'FULL WEAVE SVG EXPORTED.');}catch(error){status(error.message,true)}};
+$('export-weave-pdf').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),color=$('weave-pdf-color').value;download(weavePdf(current,project().id,color,trusted,crossings),`weave-drawing-${color}.pdf`,'application/pdf');status(`${color.toUpperCase()} LINE PDF EXPORTED · NO BACKGROUND.`);}catch(error){status(error.message,true)}};
 
 const transientProject=()=>{const p=copyProjectForEdit(pending?.projectUpdate||project());if(pending)p.working=copyWorkingForEdit(pending.working);return p;};
 
