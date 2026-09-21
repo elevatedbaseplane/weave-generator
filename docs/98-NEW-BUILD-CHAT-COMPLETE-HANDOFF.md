@@ -57,8 +57,8 @@ There should be no Create Weave Pattern button after selecting a preset. Woven o
 
 - Checkout: `work/weave-rebuild`
 - Branch: `foundation`
-- Current local build identity: `WF-GENERATOR-SCOPE-20260921`
-- Local preview path: `http://127.0.0.1:43831/?generator-scope=20260921`
+- Current local build identity: `WF-STRUCTURED-EXPORT-20260921`
+- Local preview path: `http://127.0.0.1:43831/?structured-export=20260921`
 - The local server is ephemeral; restart `node scripts/serve.mjs 43831` when the URL refuses the connection.
 - Public output is `dist/`.
 - Hosting manifest: `.openai/hosting.json`.
@@ -174,7 +174,7 @@ Do not begin Build 1B feature expansion before the Stability Foundation is accep
 
 ## 11. Current phase and historical baseline instructions
 
-Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; documents 110 and 111 record completed Phase 1D seeded structured variation and Phase 1E effective-precedence display. Build 1 is complete. Documents 119 and 120 record the completed contact-constraint and adaptive-tension work, including the visible-response correction. The active generator roadmap no longer includes point extraction or polyline composition, and rule-based binding is deferred. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
+Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; documents 110 and 111 record completed Phase 1D seeded structured variation and Phase 1E effective-precedence display. Build 1 is complete. Documents 119 and 120 record the completed contact-constraint and adaptive-tension work, including the visible-response correction. Document 122 records the structured centerline SVG, full-weave SVG, and background-free vector PDF export build. The active generator roadmap no longer includes point extraction or polyline composition, and rule-based binding is deferred. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
 
 Begin Phase 0 only:
 
