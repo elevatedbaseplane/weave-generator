@@ -1,5 +1,5 @@
 {
-  "originalAppPreservedExcludingDiagnosticRegistration": true,
-  "registrationLineEndingMayDiffer": true,
-  "otherExistingDistributionFilesUnchanged": true
+  "originalAppByteIdentical": true,
+  "allExistingDistributionFilesByteIdentical": true,
+  "newProductionFiles": []
 }

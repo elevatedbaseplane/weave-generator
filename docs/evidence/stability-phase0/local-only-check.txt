@@ -1,0 +1,17 @@
+✔ Phase 0 diagnostics are opt-in local preview only; public files are exactly preserved (5.5421ms)
+✔ diagnostic returns native text without mutating captured state (1.0593ms)
+✔ diagnostic rejects unsettled, blocked, changed and failed exports (0.433ms)
+✔ frozen native fixture exact reload and regeneration: current-project-0.portable.json (445.1722ms)
+✔ frozen native fixture exact reload and regeneration: current-project-1.portable.json (96.578ms)
+✔ frozen native fixture exact reload and regeneration: workflow-after-boundary-return.portable.json (87.1602ms)
+✔ frozen native fixture exact reload and regeneration: workflow-after-reload.portable.json (85.1551ms)
+✔ frozen native fixture exact reload and regeneration: workflow-before-reload.portable.json (83.4162ms)
+✔ five-workflow fixture retains independent decisions and exact reload/return (27.4598ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 865.3588

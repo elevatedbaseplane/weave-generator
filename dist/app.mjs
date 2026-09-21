@@ -804,10 +804,7 @@ if(document.modelContext?.registerTool){
   const storageTool={name:'read_weave_storage_capacity',description:'Read compact portable-backup capacity accounting without returning workspace geometry.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');return{build:BUILD,storageBlocked:store.blocked,capacity:storageDiagnostics()};}};
 
   try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
-  try{Promise.resolve(document.modelContext.registerTool(storageTool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
-  const {compatibilityBaselineTool}=await import('./compatibility-baseline.mjs');
-  const baselineTool=compatibilityBaselineTool(()=>({build:BUILD,blocked:store.blocked,pending:Boolean(pending||activeJob||threadSaving),packed:store.lastPacked,root:store.head?.currentRoot}), (packed,projectId)=>storageTask({type:'export',packed,projectId}));
-  try{Promise.resolve(document.modelContext.registerTool(baselineTool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
+  try{Promise.resolve(document.modelContext.registerTool(storageTool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
 
   window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
 

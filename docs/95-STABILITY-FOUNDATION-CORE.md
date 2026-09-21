@@ -4,6 +4,8 @@ Date: 2026-09-20
 
 Status: approved direction for the next build sequence. This document contains lasting rules. The temporary implementation sequence is in document 96, and the current handoff is in document 97.
 
+Phase 0 publication exception: the user's latest instruction requires local-only diagnostics and no push or deployment. Publication is excluded from Phase 0 completion criteria. Its completed baseline is ready for user review; stop before Phase 1. Standing publication authorization remains applicable to later authorized application builds.
+
 ## Product objective
 
 The tool is a weave generator. It must let a user create or select a boundary, apply or reuse a weave, edit independent thread families, apply field influences, control crossings, and later export families separately or together. Technical rigor must make this workflow simpler rather than expose more steps.

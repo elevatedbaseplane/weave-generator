@@ -10,7 +10,7 @@ Each coherent application review build should be validated locally and then publ
 
 Capture compatibility fixtures for current projects, boundaries, saved weaves, families, influences, crossing rules, and manual overrides. Record the source fields required to regenerate each design and measure current geometry, worker, render, commit, storage, and reload behavior. Turn the five protected workflows from document 95 into a focused regression matrix.
 
-Exit: existing behavior is reproducible, open defects are distinguished from historical harness debt, and no user-facing feature has been removed.
+Exit: existing behavior is reproducible, open defects are distinguished from historical harness debt, and no user-facing feature has been removed. Keep diagnostics local-only; do not push or deploy Phase 0. Publication is not a completion criterion. Mark Phase 0 complete and ready for user review, then stop before Phase 1.
 
 ## Phase 1 — canonical weave document
 

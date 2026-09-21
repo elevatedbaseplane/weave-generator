@@ -6,15 +6,15 @@ Phase 0 only. Product build remains `WF-STABILITY-S4-BOUNDED-AUTOSAVE-20260918`;
 
 ## Status and preservation
 
-The local Phase 0 baseline is complete and verified for publication. The Sites installation temporarily disappeared during this task, then became available again before delivery. The hosting skill and publishing references have now been read; the native publication workflow has resumed for the existing project. See the terminal publication record in this evidence directory when delivery completes. Phase 1 has not started.
+**Phase 0 is complete and ready for user review.** Under the user's latest instruction, publication is excluded from completion criteria: do not push or deploy Phase 0. No push succeeded and no deployment occurred. Diagnostics are local-only. Phase 1 has not started; work stops here for review.
 
-Existing source HEAD: `c13fc6ad03dacf90a9cc4ec216cbc72d46eebaad`, branch `foundation`. The extensive pre-existing dirty tree is retained. The initial status and SHA-256 of every existing distribution file are in `docs/evidence/stability-phase0/working-tree-before.txt` and `production-before.json`. Only `dist/app.mjs` changed among those files, by adding the read-only diagnostic registration; `dist/compatibility-baseline.mjs` is new. `production-delta.json` records this boundary. No reset, clean, replacement scaffold, or unrelated revert occurred.
+Initial source HEAD: `c13fc6ad03dacf90a9cc4ec216cbc72d46eebaad`, branch `foundation`. The extensive pre-existing work is preserved in local checkpoint `09d1d9ab951e668ffab2711bafe5bf6c7d560b2b`; final local-only adjustments remain in the working tree. The initial status and SHA-256 of every existing distribution file are in `docs/evidence/stability-phase0/working-tree-before.txt` and `production-before.json`. Every existing distribution file now matches those initial bytes, and no production file was added. The temporary diagnostic registration was removed from `dist/app.mjs` and the diagnostic module moved to `scripts/`. `production-delta.json` records the final boundary. No reset, clean, replacement scaffold, or unrelated revert occurred.
 
 Existing browser projects WEAVE STUDIES and CONTROL DIAGNOSTIC remained **byte-for-byte identical in native portable form** before and after testing. The separate STABILITY PHASE 0 BASELINE project is retained as a review fixture. The preview was returned to WEAVE STUDIES. The visible active project differs from the last persisted active-project selection until a later save, an existing distinction recorded in `preservation.json`.
 
 ## Visible and internal changes
 
-No visible product capability or control changed. The new WebMCP diagnostic returns each saved project's existing native portable string and captured root. It rejects blocked/unsettled state and a changed root or packed object during capture. It calls the existing storage-worker export path and never commits or mutates a document.
+No visible product capability or control changed. The local-only WebMCP diagnostic returns each saved project's existing native portable string and captured root. It rejects blocked/unsettled state and a changed root or packed object during capture. It calls the existing storage-worker export path and never commits or mutates a document. It lives in `scripts/compatibility-baseline.mjs`; `scripts/phase0-preview.mjs` injects its registration into the served response only when the loopback preview explicitly starts with `node scripts/serve.mjs 43831 --phase0`. Default preview responses and all files under `dist/` remain unchanged. No diagnostic is included in the public application.
 
 Why native strings: the initial expanded WebMCP snapshot failed exact derived validation after transport. Native portable captures subsequently passed complete derivation validation and byte-identical repacking. Expanded snapshots are retained as **diagnostic evidence only**, not as portable fixtures or a substitute for geometry validation.
 
@@ -78,7 +78,7 @@ Retain formal worker 375/400 ms, end-to-end 650/750 ms, render 50 ms, and defaul
 
 ## Checks and replay
 
-Final result: **75/75 focused tests plus 1/1 reviewed schema-recovery test pass (76 total)**. Static/private-output/rebuild-target checks and changed-module syntax checks pass. No full legacy-suite pass is asserted.
+Earlier focused result: **75/75 focused tests plus 1/1 reviewed schema-recovery test passed (76 total)**. After moving the diagnostic outside production, **9/9 final targeted checks passed**, including one additional distinct local-only test (77 distinct tests across the runs). That test verifies all initial production hashes, absence of the diagnostic from `dist/`, default-disabled preview instrumentation, and explicit opt-in registration. Final static/private-output/rebuild-target and changed-module syntax checks pass. See `local-only-check.txt` for the final targeted result. No full legacy-suite pass is asserted.
 
 - `node scripts/stability-phase0.mjs`: exact native parse/repack, full saved-geometry regeneration, crossing and SVG preparation measurements, production worker equivalence. Fixture bytes are versioned inputs, not regenerated expected values.
 - `node scripts/stability-phase0-checks.mjs`: focused current contracts, diagnostic failure behavior, frozen fixture hashes, exact workflow/reload/return assertions, reviewed schema recovery case, static output/target checks, and changed-module syntax. Results and raw output are in `focused-checks.json` and `focused-check-*.txt`.
@@ -96,7 +96,7 @@ Use the local preview `http://127.0.0.1:43831/?phase0=20260921`. A retained STAB
 
 ## Delivery and next step
 
-The local baseline can now detect regressions; no user-facing feature was removed. At source freeze, remaining delivery work is exact source commit/push/package and terminal deployment verification. The restored Sites plugin is available. Preserve the current audience and attach the terminal result to the local evidence after publication.
+The local baseline can now detect regressions; no user-facing feature was removed. Phase 0 is complete and ready for user review, with no remaining implementation or publication work in this phase. Do not push, package for publication, or deploy Phase 0. The local source checkpoint and final working-tree adjustments are retained for review.
 
 Existing destination verified at task start: `appgprj_6aa83001d03481918d4a13e46c9612fb`, owner-only custom audience, version 4, `https://weave-foundation.notbrandon175.chatgpt.site`. This URL still denotes the previous publication, not this local Phase 0 update.
 

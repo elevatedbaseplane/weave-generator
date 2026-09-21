@@ -280,7 +280,7 @@ After every build report exactly:
 7. The deployed ChatGPT Sites URL when deployment succeeds.
 8. What comes next.
 
-If the phase is complete, say `ready for the next phase`.
+If the phase is complete, say `ready for the next phase`. Phase 0 exception under the user's latest instruction: mark it complete and ready for user review, keep diagnostics local-only, do not push or deploy, and stop before Phase 1. Publication is not a Phase 0 completion criterion.
 
 When the Stability Foundation and all remaining Build 1 phases are complete, say `Build 1 complete`.
 

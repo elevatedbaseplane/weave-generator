@@ -1,9 +1,6 @@
 {
-  "existingFilesChanged": [
-    "dist/app.mjs"
-  ],
-  "newProductionFiles": [
-    "dist/compatibility-baseline.mjs"
-  ],
-  "expectedOnly": "app.mjs read-only WebMCP registration"
+  "existingFilesChanged": [],
+  "newProductionFiles": [],
+  "diagnosticLocalOnly": true,
+  "expectedOnly": "All production files match initial SHA-256; diagnostic is opt-in local preview middleware under scripts."
 }

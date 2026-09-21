@@ -2,12 +2,26 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import {compatibilityBaselineTool} from '../dist/compatibility-baseline.mjs';
+import {compatibilityBaselineTool} from '../scripts/compatibility-baseline.mjs';
+import {phase0PreviewAsset} from '../scripts/phase0-preview.mjs';
 import {parsePortable,packWorkspace,portableText} from '../dist/storage-codec.mjs';
 import {validateWorkspace} from '../dist/document.mjs';
 import {refreshWeave,canonical} from '../dist/weave.mjs';
 const dir=new URL('../docs/evidence/stability-phase0/',import.meta.url);
 const hashes=JSON.parse(fs.readFileSync(new URL('fixture-sha256.json',dir),'utf8'));
+
+test('Phase 0 diagnostics are opt-in local preview only; public files are exactly preserved',()=>{
+ const before=JSON.parse(fs.readFileSync(new URL('production-before.json',dir),'utf8').replace(/^\uFEFF/,''));
+ for(const file of before)assert.equal(createHash('sha256').update(fs.readFileSync(new URL('../'+file.path,import.meta.url))).digest('hex'),file.sha256,file.path);
+ assert.equal(fs.existsSync(new URL('../dist/compatibility-baseline.mjs',import.meta.url)),false);
+ assert.equal(phase0PreviewAsset('/app.mjs'),null);
+ assert.equal(phase0PreviewAsset('/__phase0/compatibility-baseline.mjs'),null);
+ assert.equal(phase0PreviewAsset('/index.html',true),null);
+ const instrumented=phase0PreviewAsset('/app.mjs',true).toString();
+ assert.match(instrumented,/import\('\/__phase0\/compatibility-baseline.mjs'\)/);
+ assert.equal(instrumented.match(/registerTool\(baselineTool/g).length,1);
+ assert.match(phase0PreviewAsset('/__phase0/compatibility-baseline.mjs',true).toString(),/read_weave_compatibility_baseline/);
+});
 
 test('diagnostic returns native text without mutating captured state',async()=>{
  const state={build:'fixture',root:'root',packed:{manifest:{activeProjectId:'a',projects:[{id:'a',name:'A'},{id:'b',name:'B'}]}}};
