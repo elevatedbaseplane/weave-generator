@@ -1,8 +1,8 @@
 import {deriveStitchWithTrace,STITCH_VERSIONS} from './stitch.mjs';
 import {deriveAttractorAsync,ATTRACTOR_VERSIONS} from './attractor.mjs';
 import {deriveInfluenceAsync,INFLUENCE_VERSIONS,FAMILY_INFLUENCE_VERSIONS} from './influence.mjs';
-import {deriveCombinedAsync,COMBINED_VERSIONS} from './combined.mjs';
-import {digest} from './weave.mjs';
+import {deriveCombinedAsync,combinedIdentity,COMBINED_VERSIONS} from './combined.mjs';
+import {deriveIdentity,digest} from './weave.mjs';
 import {encodeDerivedAsync} from './storage-codec.mjs';
 import {dependencyPlan as calculateDependencyPlan} from './dependency-plan.mjs';
 
@@ -17,7 +17,7 @@ self.onmessage=async e=>{
   const legacy=['protocolVersion','workerBuildId','sessionId','requestSequence','requestId','boardId','weaveStudyId','baseCommittedFingerprint','candidateInputFingerprint','algorithmVersions','candidate'],planned=[...legacy.slice(0,-1),'dependencyPlan','candidate'],r1c=[INFLUENCE_VERSIONS.protocol,FAMILY_INFLUENCE_VERSIONS.protocol].includes(m.protocolVersion),r1d=m.protocolVersion===COMBINED_VERSIONS.protocol,sp1=m.protocolVersion===STITCH_VERSIONS.protocol;
   if((!keys(m,legacy)&&!keys(m,planned))||(!r1c&&!r1d&&!sp1&&m.protocolVersion!==ATTRACTOR_VERSIONS.protocol)||!Number.isSafeInteger(m.requestSequence))throw Error('Unsupported worker request.');
   const dependencyPlan=m.dependencyPlan||{version:'dependency-plan-v1',families:[],stages:['geometry'],reuse:{geometry:false,crossings:false,presentation:false},reasons:['legacy-request']};validatePlan(dependencyPlan);if(digest(m.candidate)!==m.candidateInputFingerprint)throw Error('Worker candidate fingerprint mismatch.');
-  const c=m.candidate,cached=cache.get(m.candidateInputFingerprint),actualPlan=r1d&&lastCombined?calculateDependencyPlan(lastCombined.candidate,c):null,incremental=r1d&&lastCombined?.result?.__familyWork&&digest(actualPlan)===digest(dependencyPlan)&&actualPlan.families.length?{previous:lastCombined.result,families:actualPlan.families}:null,deriveStarted=performance.now(),evaluated=cached||await (sp1?deriveStitchWithTrace:r1d?deriveCombinedAsync:r1c?deriveInfluenceAsync:deriveAttractorAsync)(c.boundary,c.carrier,m.boardId,c.sourceContext,c.generation,incremental),result=sp1?evaluated.derived:evaluated,sourceTrace=sp1?evaluated.trace:null,deriveMs=performance.now()-deriveStarted;
+  const c=m.candidate,cached=cache.get(m.candidateInputFingerprint),actualPlan=r1d&&lastCombined?calculateDependencyPlan(lastCombined.candidate,c):null,incremental=r1d&&lastCombined?.result?.__familyWork&&digest(actualPlan)===digest(dependencyPlan)&&actualPlan.families.length?{previous:lastCombined.result,families:actualPlan.families}:null,evaluator=sp1?deriveStitchWithTrace:r1d?(combinedIdentity(c.generation)?deriveIdentity:deriveCombinedAsync):r1c?deriveInfluenceAsync:deriveAttractorAsync,deriveStarted=performance.now(),evaluated=cached||await evaluator(c.boundary,c.carrier,m.boardId,c.sourceContext,c.generation,incremental),result=sp1?evaluated.derived:evaluated,sourceTrace=sp1?evaluated.trace:null,deriveMs=performance.now()-deriveStarted;
   if(!cached)remember(m.candidateInputFingerprint,evaluated);
   if(r1d)lastCombined={candidate:structuredClone(c),result};
   const encodeStarted=performance.now(),payload=await encodeDerivedAsync(result),encodeMs=performance.now()-encodeStarted,postedEpoch=performance.timeOrigin+performance.now(),workerMs=performance.now()-started,reused=cached?['geometry']:incremental?[...new Set(Object.keys(c.carrier.families||{}).filter(n=>!actualPlan.families.includes(n)).map(n=>'family:'+n))]:[];

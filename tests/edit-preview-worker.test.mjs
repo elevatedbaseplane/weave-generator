@@ -7,19 +7,21 @@ const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 const dispatch=app.slice(app.indexOf('function dispatchPending()'),app.indexOf('async function certifyWorking(')).replaceAll('import.meta.url',JSON.stringify(new URL('../dist/app.mjs',import.meta.url).href));
 test('a request based on an older accepted document never reaches background autosave',async()=>{
  const worker={postMessage(m){this.sent=m},terminate(){}},p={previewOnly:false,working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root:0',acceptedVersion:0,started:0,versions:{protocol:'protocol'}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}};
- const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,workerTimer:0,acceptedVersion:1,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,workspace:{activeProjectId:'board',projects:[owner]},copyProjectForEdit:structuredClone,store:{head:{currentRoot:'root'}},autosave:{accept(){throw Error('obsolete request must not reach autosave')}},editGesture:{clear(){}},workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){},retainSourceTrace(){}};
+ const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,workerTimer:0,acceptedVersion:1,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,workspace:{activeProjectId:'board',projects:[owner]},copyProjectForEdit:structuredClone,store:{head:{currentRoot:'root'}},autosave:{accept(){throw Error('obsolete request must not reach autosave')}},editGesture:{clear(){}},workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){},retainSourceTrace(){},primeIdleDerivationWorker(){}};
  vm.createContext(context);vm.runInContext(dispatch+'\ndispatchPending();',context);
  await worker.onmessage({data:{...worker.sent,type:'success',resultCanonicalFingerprint:'payload',payload:{id:'payload'},result:{certified:true}}});
  assert.equal(context.pending,null);assert.equal(context.activeJob,null);assert.deepEqual(owner.working.weave.derived,{old:true});
 });
 
-test('failed newest calculation retains committed geometry and clears its edit gesture',async()=>{
- const worker={postMessage(m){this.sent=m},terminate(){}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}},p={working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root',started:0,versions:{protocol:'protocol'}};let cleared=false;
- const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,sessionId:'session',BUILD:'build',performance:{now:()=>1},project:()=>owner,workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},typedError:(code,message)=>Object.assign(Error(message),{code}),editGesture:{clear(){cleared=true}}};
+test('failed newest calculation retains committed geometry and keeps the responsive worker warm',async()=>{
+ const worker={postMessage(m){this.sent=m},terminate(){this.terminated=true}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}},p={working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root',started:0,versions:{protocol:'protocol'}};let cleared=false;
+ const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,sessionId:'session',BUILD:'build',performance:{now:()=>1},project:()=>owner,workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},typedError:(code,message)=>Object.assign(Error(message),{code}),editGesture:{clear(){cleared=true}},primeIdleDerivationWorker(){}};
  vm.createContext(context);vm.runInContext(dispatch+'\ndispatchPending();',context);
  await worker.onmessage({data:{...worker.sent,type:'failure',error:{code:'evaluator',message:'Rejected candidate'}}});
  assert.equal(context.pending,null);assert.equal(context.carrierPreview,null);assert.equal(cleared,true);assert.deepEqual(owner.working.weave.derived,{old:true});
+ assert.equal(context.idleDerivationWorker,worker);assert.notEqual(worker.terminated,true);
 });
+
 test('canceling a preview aborts its transaction and restores committed geometry',()=>{
  let aborted=false,terminated=false,redraw=false;
  const context={editGesture:{clear(){}},activeJob:{seq:1,requestId:'request',controller:{abort(){aborted=true}},worker:{terminate(){terminated=true}},timeout:1},pending:{feedback:{scope:'field'}},carrierPreview:{unsaved:true},workerTimer:1,clearTimeout(){},workerEvent(){},renderR1BState(value){redraw=value},setEditFeedback(){},status(){}};

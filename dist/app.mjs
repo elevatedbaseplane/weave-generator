@@ -56,7 +56,7 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-STABILITY-P4-INCREMENTAL-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-STABILITY-P4-WARM-WORKER-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
@@ -142,16 +142,18 @@ function queueWorkingCalculation(working,label,immediate=false,options={}){
  if(workerUnavailable)throw Error('Certified nonlinear computation is unavailable in this browser session.');validateWeaveGeneration(working.weave);const versions=versionsForWeave(working.weave),candidate=weaveCalculationInput(readWeaveSource(working,project().id)),input=digest(candidate),base=`${store.head?.currentRoot||'unsaved'}:${acceptedVersion}`,current=project().working?.weave?.derived?weaveCalculationInput(readWeaveSource(project().working,project().id)):null,plan=dependencyPlan(current,candidate);pending={previewOnly:!immediate,working:copyWorkingForEdit(working),candidate,input,base,acceptedVersion,label,versions,plan,phase:'QUEUED',started:performance.now(),projectUpdate:options.projectUpdate?copyProjectForEdit(options.projectUpdate):null,saveWeaveName:options.saveWeaveName||null,feedback:options.feedback||null};workerEvent('queued',{input,immediate,plan});clearTimeout(workerTimer);workerTimer=0;if(pending.feedback)setEditFeedback(pending.feedback.scope,'working',`UPDATING · ${pending.feedback.label}`);renderR1BState(false);status('UPDATING WEAVE — SHOWING THE LAST COMPLETE RESULT.');if(activeJob){const obsolete=activeJob;clearTimeout(obsolete.timeout);obsolete.worker.onmessage=null;obsolete.worker.onerror=null;obsolete.worker.terminate();activeJob=null;workerEvent('cancelled-obsolete',{requestId:obsolete.requestId,input:obsolete.input,replacement:input});}if(plan.reuse.geometry){const totalMs=performance.now()-pending.started,feedback=pending.feedback;pending=null;carrierPreview=null;editGesture.clear();renderR1BState(true);if(feedback)setEditFeedback(feedback.scope,'applied',`UNCHANGED · ${feedback.label}`);status('SOURCE RETURNED TO THE CURRENT CERTIFIED RESULT.');workerEvent('reused-current',{input,totalMs,plan});return;}workerTimer=setTimeout(dispatchPending,immediate?0:40);
 }
 
-let idleDerivationWorker=null;
-
-try{idleDerivationWorker=new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'});idleDerivationWorker.onerror=()=>{idleDerivationWorker?.terminate();idleDerivationWorker=null;};}catch{}
+let idleDerivationWorker=null;
+
+function primeIdleDerivationWorker(){if(idleDerivationWorker)return;try{const worker=new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'});idleDerivationWorker=worker;worker.onerror=()=>{if(idleDerivationWorker===worker)idleDerivationWorker=null;worker.terminate();};}catch{}}
+
+primeIdleDerivationWorker();
 
 window.addEventListener('pagehide',()=>{void autosave.flush();idleDerivationWorker?.terminate();activeJob?.worker.terminate();});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')void autosave.flush();});
 
 function dispatchPending(){workerTimer=0;if(!pending||activeJob)return;const p=pending,seq=++workerSequence,requestId=sessionId+':'+seq,worker=idleDerivationWorker||new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'}),job={worker,request:p,requestId,seq,input:p.input,base:p.base,attempt:p.retried?1:0,started:performance.now()};idleDerivationWorker=null;activeJob=job;p.phase='CERTIFYING';workerEvent('dispatched',{seq,requestId,input:p.input,attempt:job.attempt,requestStarted:p.started,plan:p.plan});renderR1BState(false);status('UPDATING WEAVE — SHOWING THE LAST COMPLETE RESULT.');const message={protocolVersion:p.versions.protocol,workerBuildId:BUILD,sessionId,requestSequence:seq,requestId,boardId:project().id,weaveStudyId:p.working.weave.studyId,baseCommittedFingerprint:p.base,candidateInputFingerprint:p.input,algorithmVersions:{...p.versions},dependencyPlan:p.plan,candidate:p.candidate};
 
- const fail=error=>{if(activeJob!==job)return;worker.terminate();clearTimeout(job.timeout);activeJob=null;const code=error?.code||'worker-failure',text=error?.message||'Worker failed.',totalMs=performance.now()-p.started;workerEvent('failed',{seq,requestId,code,message:text,totalMs,attempt:job.attempt});if(pending!==p){workerEvent('superseded-result',{seq,requestId,outcome:'failed'});setTimeout(dispatchPending,0);return}if(!p.retried&&(code==='worker-load'||code==='worker-crash')){p.retried=true;workerEvent('retrying',{seq,requestId,code});setTimeout(dispatchPending,0);return}if((code==='worker-load'||code==='worker-crash')&&p.retried)workerUnavailable=true;pending=null;carrierPreview=null;editGesture.clear();renderR1BState(true);if(p.feedback)setEditFeedback(p.feedback.scope,'error',`NOT APPLIED · ${text}`);if(code==='concurrent-change'){$('reload-latest').hidden=false;$('project-section').open=true;}status(`R1D ${code.toUpperCase()}: ${text}`,true)};
+ const fail=(error,reuseWorker=false)=>{if(activeJob!==job)return;if(reuseWorker){worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;}else{worker.terminate();primeIdleDerivationWorker();}clearTimeout(job.timeout);activeJob=null;const code=error?.code||'worker-failure',text=error?.message||'Worker failed.',totalMs=performance.now()-p.started;workerEvent('failed',{seq,requestId,code,message:text,totalMs,attempt:job.attempt});if(pending!==p){workerEvent('superseded-result',{seq,requestId,outcome:'failed'});setTimeout(dispatchPending,0);return}if(!p.retried&&(code==='worker-load'||code==='worker-crash')){p.retried=true;workerEvent('retrying',{seq,requestId,code});setTimeout(dispatchPending,0);return}if((code==='worker-load'||code==='worker-crash')&&p.retried)workerUnavailable=true;pending=null;carrierPreview=null;editGesture.clear();renderR1BState(true);if(p.feedback)setEditFeedback(p.feedback.scope,'error',`NOT APPLIED · ${text}`);if(code==='concurrent-change'){$('reload-latest').hidden=false;$('project-section').open=true;}status(`R1D ${code.toUpperCase()}: ${text}`,true)};
 
  worker.onerror=e=>fail(typedError('worker-load',e.message||'Certified worker failed to load.'));
 
@@ -159,7 +161,7 @@ function dispatchPending(){workerTimer=0;if(!pending||activeJob)return;const p=p
 
   if(activeJob!==job||e.data?.requestId!==requestId||e.data.requestSequence!==seq){workerEvent('stale-message',{seq,requestId});return}
 
-  if(e.data.type==='failure'){fail(typedError(e.data.error?.code||'evaluator',e.data.error?.message||'Certified derivation failed.'));return}
+  if(e.data.type==='failure'){fail(typedError(e.data.error?.code||'evaluator',e.data.error?.message||'Certified derivation failed.'),true);return}
 
   let deadlineTimer;
 

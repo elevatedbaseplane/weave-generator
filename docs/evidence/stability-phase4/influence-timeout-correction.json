@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-STABILITY-P4-WARM-WORKER-20260921",
+  "reportedFailure": {
+    "surface": "published Phase 4 Site",
+    "operation": "first influence after identity-state edits",
+    "code": "completion-timeout",
+    "totalMs": 750.5,
+    "dataIntegrity": "existing weave retained; no partial influence saved"
+  },
+  "cause": "A typed identity evaluator response caused the responsive worker to be terminated, so the first influence paid cold browser-worker startup on the 750 ms critical path.",
+  "correction": {
+    "identityRoute": "exact deriveIdentity inside the combined certified worker",
+    "typedFailure": "retain responsive worker",
+    "crashLoadTimeout": "terminate and prime replacement",
+    "limitsChanged": false
+  },
+  "checks": {
+    "phase4Focused": {"passed": 128, "failed": 0},
+    "finalAffected": {"passed": 9, "failed": 0},
+    "preservedPhase0Fixtures": {"passed": 8, "failed": 0},
+    "allDistSyntax": "pass",
+    "staticCheck": "pass",
+    "diffCheck": "pass"
+  },
+  "browser": {
+    "project": "P4 TIMEOUT REGRESSION",
+    "families": 3,
+    "identityFamilyEdit": "applied and saved",
+    "firstInfluenceWorkerMs": 29.1,
+    "firstInfluence": "applied and saved",
+    "reloadInfluenceCount": 1,
+    "reloadDerivedStrands": 31
+  },
+  "phase5Started": false
+}
