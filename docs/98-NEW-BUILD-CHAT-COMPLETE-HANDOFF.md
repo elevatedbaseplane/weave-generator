@@ -174,7 +174,7 @@ Do not begin Build 1B feature expansion before the Stability Foundation is accep
 
 ## 11. Current phase and historical baseline instructions
 
-Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, and Phase 5. Documents 104–108 record the completed implementation and production corrections through Phase 5. Document 109 records the Phase 6 governing matrix and five-workflow managed-browser route. Phase 6 is internally complete and published for user review. Do not begin Build 1B or state the Stability Foundation completion phrase until the user accepts the five protected workflows. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
+Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; document 110 records completed Phase 1D seeded structured variation. Phase 1E precedence display/checkpoint is next and has not begun. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
 
 Begin Phase 0 only:
 

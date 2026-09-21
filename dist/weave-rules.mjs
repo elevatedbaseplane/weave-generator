@@ -1,9 +1,11 @@
 import {stitchIntentRules} from './stitch-intent.mjs';
 export const familyOf=s=>s.family||s.identity?.roleId;
 export const defaultRule=(recipe='')=>({mode:'preset',recipe,inverted:false,over:1,under:1,phase:0,pairs:[]});
-export const NAMED_RULE_MODES=Object.freeze(['preset','alternating','two-over-one','grouped','priority']);
+export const STRUCTURED_VARIATION_DEFAULTS=Object.freeze({seed:1042,balance:50,maxRun:3});
+export const NAMED_RULE_MODES=Object.freeze(['preset','alternating','two-over-one','grouped','seeded','priority']);
+export function withStructuredVariation(rule,patch={}){return{...STRUCTURED_VARIATION_DEFAULTS,...structuredClone(rule),...Object.fromEntries(Object.entries(patch).filter(([key])=>key in STRUCTURED_VARIATION_DEFAULTS))};}
 export function namedRuleMode(rule){
- if(rule.mode==='preset'||rule.mode==='priority')return rule.mode;
+ if(rule.mode==='preset'||rule.mode==='priority'||rule.mode==='seeded')return rule.mode;
  if(rule.over===1&&rule.under===1)return'alternating';
  if(rule.over===2&&rule.under===1)return'two-over-one';
  return'grouped';
@@ -12,12 +14,21 @@ export function applyNamedRuleMode(rule,mode){
  if(!NAMED_RULE_MODES.includes(mode))throw Error('Invalid named weave mode.');
  const next=structuredClone(rule);
  if(mode==='preset'||mode==='priority')next.mode=mode;
+ else if(mode==='seeded')return Object.assign(withStructuredVariation(next),{mode:'seeded'});
  else {const wasGrouped=namedRuleMode(next)==='grouped';next.mode='repeat';if(mode==='alternating'){next.over=1;next.under=1;}else if(mode==='two-over-one'){next.over=2;next.under=1;}else if(!wasGrouped){next.over=2;next.under=2;}}
  validateRule(next);return next;
 }
 export function repeatSequence(over,under,phase=0){
  if(!count(over)||!count(under)||!Number.isInteger(phase)||phase<0||phase>15)throw Error('Invalid weave repeat preview.');
  const length=over+under;return Array.from({length},(_,index)=>((index+phase)%length)<over?'OVER':'UNDER');
+}
+function mix32(value){value=(value+0x9e3779b9)>>>0;value=Math.imul(value^(value>>>16),0x21f0aaad);value=Math.imul(value^(value>>>15),0x735a2d97);return(value^(value>>>15))>>>0;}
+function textHash(text){let value=2166136261;for(const char of text){value^=char.codePointAt(0);value=Math.imul(value,16777619);}return value>>>0;}
+export function seededVariationSequence(seed,balance,maxRun,length=32,salt=''){
+ if(!Number.isInteger(seed)||seed<0||seed>65535||!Number.isInteger(balance)||balance<10||balance>90||balance%5||!Number.isInteger(maxRun)||maxRun<1||maxRun>8||!Number.isInteger(length)||length<1||length>256||typeof salt!=='string')throw Error('Invalid seeded weave variation.');
+ const result=[];let overCount=0,last=null,run=0,state=(seed^textHash(salt))>>>0;
+ for(let index=0;index<length;index++){state=mix32(state+index);const target=(index+1)*balance/100,deficit=target-overCount;let over=state/4294967296<Math.max(0,Math.min(1,.5+deficit));if(last!==null&&run>=maxRun)over=!last;result.push(over);overCount+=over?1:0;if(over===last)run++;else{last=over;run=1;}}
+ return result;
 }
 const mod=(value,length)=>((value%length)+length)%length;
 function familyRelativeValues(pair,family){
@@ -53,7 +64,9 @@ export function clearFamilyRule(rule,family,families){const targets=new Set(fami
 const exact=(v,keys)=>v&&Object.keys(v).sort().join(',')===keys.sort().join(',');
 const count=n=>Number.isInteger(n)&&n>=1&&n<=8;
 export function validateRule(r){
- if(!exact(r,['mode','recipe','inverted','over','under','phase','pairs'])||!['preset','repeat','priority'].includes(r.mode)||!['','double-herringbone-field','double-herringbone','herringbone-square'].includes(r.recipe)||typeof r.inverted!=='boolean'||!count(r.over)||!count(r.under)||!Number.isInteger(r.phase)||r.phase<0||r.phase>15||!Array.isArray(r.pairs)||r.pairs.length>36)throw Error('Invalid weave rule.');
+ const extended=exact(r,['mode','recipe','inverted','over','under','phase','pairs','seed','balance','maxRun']),legacy=exact(r,['mode','recipe','inverted','over','under','phase','pairs']);
+ if((!legacy&&!extended)||!['preset','repeat','priority',...(extended?['seeded']:[])].includes(r.mode)||!['','double-herringbone-field','double-herringbone','herringbone-square'].includes(r.recipe)||typeof r.inverted!=='boolean'||!count(r.over)||!count(r.under)||!Number.isInteger(r.phase)||r.phase<0||r.phase>15||!Array.isArray(r.pairs)||r.pairs.length>36)throw Error('Invalid weave rule.');
+ if(extended)seededVariationSequence(r.seed,r.balance,r.maxRun,1);
  const seen=new Set();for(const p of r.pairs){if(!exact(p,['first','second','over','under','phase'])||typeof p.first!=='string'||typeof p.second!=='string'||!p.first||p.first.length>20||!p.second||p.second.length>20||p.first>p.second||!count(p.over)||!count(p.under)||!Number.isInteger(p.phase)||p.phase<0||p.phase>15||seen.has(p.first+'|'+p.second))throw Error('Invalid family pair rule.');seen.add(p.first+'|'+p.second);}
 }
 const pairKey=e=>[e.a.si,e.b.si].sort((a,b)=>a-b).join('/');
@@ -78,7 +91,7 @@ export function resolveWeaveRules(strands,result,settings,source){
   // Clipping/visibility cannot renumber it. Stitch repeats use embedded cell coordinates.
   const first=fa<fb?fa:fb,second=fa<fb?fb:fa,p=r.mode==='preset'?{over:1,under:1,phase:0}:r;
   const index=s=>Number.isInteger(s.k)?s.k:s.identity? s.identity.row+s.identity.column:null;
-  const ia=index(a),ib=index(b);if(ia!==null&&ib!==null&&fa!==fb){const n=p.over+p.under,over=((ia+ib+p.phase)%n+n)%n<p.over;upper=fa===first?over:!over;}
+  const ia=index(a),ib=index(b);if(ia!==null&&ib!==null&&fa!==fb){let over;if(r.mode==='seeded'){const sequence=seededVariationSequence(r.seed,r.balance,r.maxRun,256,first+'|'+second);over=sequence[mod(ia+ib,sequence.length)];}else{const n=p.over+p.under;over=((ia+ib+p.phase)%n+n)%n<p.over;}upper=fa===first?over:!over;}
  }
  if(upper!==null&&r?.inverted)upper=!upper;
  if(overrides.has(e.id))upper=overrides.get(e.id);

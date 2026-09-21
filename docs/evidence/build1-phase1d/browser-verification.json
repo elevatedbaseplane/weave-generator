@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-B1-P1D-SEEDED-VARIATION-20260921",
+  "fixture": {
+    "families": 3,
+    "derivedPaths": 31,
+    "restoredMode": "preset",
+    "restoredPairRules": 0
+  },
+  "seeded": {
+    "seed": 43210,
+    "balance": 65,
+    "maxRun": 2,
+    "persistedAfterReload": true,
+    "wovenMasks": 31
+  },
+  "precedence": {
+    "pair": "A|B",
+    "pairRule": "alternating",
+    "globalModeWhilePairApplied": "seeded",
+    "seededDisabledForPairTarget": true
+  },
+  "storageBlocked": false,
+  "result": "pass"
+}

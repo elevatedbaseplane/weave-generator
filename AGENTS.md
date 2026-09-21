@@ -1,6 +1,10 @@
+## Build 1 Phase 1D seeded structured variation — 2026-09-21
+
+Document 110 records build `WF-B1-P1D-SEEDED-VARIATION-20260921`. The whole-weave Over / Under control now includes deterministic seeded structured variation with exact Seed, First Family Over balance, and Maximum Run controls. The rule is stored as bounded `interlacing-v3`; existing v1/v2 documents remain unchanged until the new mode is selected. Family-pair rules and geometry-bound manual overrides retain precedence. The current-contract matrix passes 246/246, the focused Phase 1D suite passes 18/18, and all eight preserved Phase 0 diagnostic/fixture checks pass. Managed-browser verification covered exact control persistence, pair precedence, reload, 31 retained woven masks, and unblocked storage; the fixture was restored to preset behavior. Phase 1D is internally complete and ready for publication and user review. Phase 1E precedence display/checkpoint has not begun.
+
 ## Stability Foundation Phase 6 verification — 2026-09-21
 
-Document 109 records build `WF-STABILITY-P6-VERIFICATION-20260921`. The governing current-contract matrix passes 240/240 and the preserved Phase 0 fixture subset passes 8/8. The managed local route completed all five protected workflows through three influences, an explicit crossing override, boundary switching and reload with storage unblocked. Phase 6 is internally complete and published for user review. Do not begin Build 1B or state the Stability Foundation completion phrase until the user accepts these five workflows.
+Document 109 records build `WF-STABILITY-P6-VERIFICATION-20260921`. The governing current-contract matrix passes 240/240 and the preserved Phase 0 fixture subset passes 8/8. The managed local route completed all five protected workflows through three influences, an explicit crossing override, boundary switching and reload with storage unblocked. The user accepted these workflows; the Stability Foundation is complete and Build 1B resumed with the already completed named-mode and family-relationship work preserved.
 
 ## Stability Foundation Phase 5 influence/storage correction — 2026-09-21
 
