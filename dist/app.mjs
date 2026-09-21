@@ -57,11 +57,11 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-B1-OVERLAP-MASK-CORRECTION-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-B1-CLEAN-CROSSING-CELLS-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
-document.querySelector('footer').innerHTML='BUILD 1 · OVERLAP MASK CORRECTION<br>Locally upper threads remain visible through neighboring masks.';
+document.querySelector('footer').innerHTML='BUILD 1 · CLEAN CROSSING CELLS<br>Each over / under gap stays within its local crossing.';
 
 const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';
 
