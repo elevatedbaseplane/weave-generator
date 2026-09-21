@@ -1,0 +1,43 @@
+{
+  "build": "WF-B1-FIELD-OVERLAP-CORRECTION-20260921",
+  "date": "2026-09-21",
+  "sourceCommit": "9d12debb702aee6bda92b0b550384fddf4c684f2",
+  "publishedCommit": "9d12debb702aee6bda92b0b550384fddf4c684f2",
+  "siteProjectId": "appgprj_6aa83001d03481918d4a13e46c9612fb",
+  "siteUrl": "https://weave-foundation.notbrandon175.chatgpt.site/",
+  "siteVersion": 18,
+  "visibility": "owner-only",
+  "local": {
+    "currentContract": {"passed": 256, "failed": 0},
+    "phase0Preserved": {"passed": 8, "failed": 0},
+    "focusedRecoveryOverlap": "passed",
+    "staticCheck": "passed",
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "browser": {
+      "recover": {"recoveryFragments": 62, "maskedRecoveryFragments": 32, "recoveryMasks": 32},
+      "fray": {"recoveryFragments": 124, "maskedRecoveryFragments": 34, "layers": ["root", "tip"]},
+      "pendingWovenGroups": 0,
+      "timeout": false,
+      "restoredMode": "recover"
+    }
+  },
+  "live": {
+    "status": "succeeded",
+    "bodyPaths": 90,
+    "recoveryFragments": 180,
+    "openRecoveryFragments": 180,
+    "maskedRecoveryFragments": 136,
+    "recoveryMasks": 136,
+    "representedCrossings": 1479,
+    "assignedCrossings": 1479,
+    "unresolvedCrossings": 0,
+    "workerMs": 157.1,
+    "zoomPercent": [167.8, 7621.8, 167.8],
+    "pendingWovenGroups": 0,
+    "timeout": false,
+    "storageWarning": false,
+    "browserWarningOrError": false
+  },
+  "laterWorkStarted": false
+}
