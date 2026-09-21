@@ -19,11 +19,21 @@ test('projects, boundaries and saved weaves are direct workflow choices',()=>{
   assert.match(html,/id="board-list" class="library-list"/);
   assert.match(html,/id="boundary-list" class="library-list"/);
   assert.match(html,/id="weave-list" class="library-list"/);
-  assert.match(html,/APPLY SELECTED WEAVE TO THIS BOUNDARY/);
+  assert.match(html,/APPLIED WEAVES/);
+  assert.match(html,/id="library-template-list" class="library-list"/);
+  assert.match(html,/USE SELECTED WEAVE ON CURRENT BOUNDARY/);
   assert.match(html,/id="saved-pattern-presets" label="MY SAVED PATTERNS"/);
   assert.match(app,/option\.value='saved:'\+entry\.latestRevisionId/);
   assert.match(app,/CREATED FROM \$\{savedChoice\?'YOUR SAVED WEAVE':'PRESET'\}/);
   assert.match(app,/adaptGenerationToBoundary/);
+  assert.match(app,/REUSABLE WEAVE SELECTED/);
+});
+
+test('current project boundary and weave are labeled independently',()=>{
+  assert.match(html,/id="context-project"/);
+  assert.match(html,/id="context-boundary"/);
+  assert.match(html,/id="context-weave"/);
+  assert.match(app,/\$\('context-project'\)\.textContent=p\.name/);
 });
 
 test('over-under starts with the whole weave and hides advanced crossing editing',()=>{

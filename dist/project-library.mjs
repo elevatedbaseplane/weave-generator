@@ -18,6 +18,19 @@ export function patternsForBoundary(project,boundary){
   return project.carrierStudies.filter(pattern=>pattern.revisions.some(revision=>revisionIds.has(revision.boundarySourceRevisionId)));
 }
 
+export function boundaryNameForPattern(project,pattern){
+  const sourceIds=new Set(pattern.revisions.map(revision=>revision.boundarySourceRevisionId));
+  return project.boundaries.find(entry=>entry.revisions.some(revision=>sourceIds.has(revision.id)))?.name||'SAVED WEAVE';
+}
+
+export function reusableWeaves(project){
+  return project.carrierStudies.map(pattern=>({pattern,boundaryName:boundaryNameForPattern(project,pattern)}));
+}
+
+export function latestReusableRevision(project,revisionId){
+  return project.carrierStudies.find(pattern=>pattern.revisions.some(revision=>revision.id===revisionId))?.latestRevisionId||null;
+}
+
 export function activeLibraryItems(project){
   const boundary=boundaryEntryForRevision(project);
   const available=new Set(patternsForBoundary(project,boundary).map(entry=>entry.id));

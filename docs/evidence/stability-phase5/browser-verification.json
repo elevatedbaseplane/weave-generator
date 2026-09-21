@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-STABILITY-P5-WORKFLOW-20260921",
+  "browser": "managed Chromium local preview",
+  "route": [
+    "created empty project P5 WORKFLOW REVIEW",
+    "created BOUNDARY 01",
+    "applied triangular preset immediately: 3 families, 31 strands, woven overlaps enabled",
+    "added first attractor: automatically saved, worker 20.8 ms",
+    "changed Family A spacing to 64: automatically saved, worker 14.9 ms",
+    "created BOUNDARY 02",
+    "reused newest selected library weave: WEAVE PATTERN 01 COPY 02, spacing 64, 1 influence, 29 strands, worker 31.0 ms",
+    "reloaded: 1 project, 2 boundaries, 2 applied weaves, copied weave selected, spacing 64, 1 influence, autosave clean"
+  ],
+  "context": {
+    "project": "P5 WORKFLOW REVIEW",
+    "boundary": "BOUNDARY 02",
+    "weave": "WEAVE PATTERN 01 COPY 02"
+  },
+  "result": "pass",
+  "notes": [
+    "Projects, Boundaries, Applied Weaves, and Weave Library were visually distinct.",
+    "The header labeled current Project, Boundary, and Weave independently.",
+    "No internal storage concepts were required during the route.",
+    "Selecting an older reusable revision after an edit resolved to the newest revision before application."
+  ]
+}

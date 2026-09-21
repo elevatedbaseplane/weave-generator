@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-STABILITY-P5-WORKFLOW-20260921",
+  "broadRun": {
+    "total": 176,
+    "passed": 172,
+    "failed": 4
+  },
+  "classifiedFailures": [
+    "stitch-controls.test.mjs: stale test VM omits sliderEventNumber",
+    "weave.test.mjs: historical zero-strand open-group presentation assertion",
+    "weave.test.mjs: historical schema-5 assertion; established current compatibility encoding is schema 6",
+    "weave.test.mjs: historical raw-SVG no-Z assertion against the established outline presentation"
+  ],
+  "assessment": "Known historical harness and presentation assertions outside the Phase 5 workflow/library change. No product limit or verification gate was changed to satisfy them."
+}
