@@ -298,6 +298,10 @@ Complete bounded batches with meaningful model and browser verification, exact s
 
 No delegation or subagents are requested. Sol Medium handoff is a recommendation; do not send this task to another model automatically.
 
+## Stability Foundation Phase 4 — 2026-09-21
+
+The user approved Phase 3 and authorized Phase 4. Build `WF-STABILITY-P4-INCREMENTAL-20260921` adds explicit dependency invalidation, newest-edit cancellation, exact current-result reuse, worker-private per-family reuse, crossing reuse, and timing evidence without changing public geometry or storage shapes. Focused checks pass 127/127, the frozen Phase 0 baseline passes 8/8, and managed-browser rapid-edit, presentation, zoom, woven-overlap, autosave, and reload checks pass on the restored five-project fixture. Phase 4 is complete and published for review. Phase 5 has not started. See document 105 and `docs/evidence/stability-phase4/`.
+
 
 
 

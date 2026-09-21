@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-STABILITY-P4-INCREMENTAL-20260921",
+  "fixture": "STABILITY PHASE 2 REVIEW / BOUNDARY 01 / WEAVE PATTERN 01",
+  "result": "pass",
+  "rapidEdit": {
+    "obsoleteWorkersCancelled": 2,
+    "newestValueAccepted": true,
+    "singleFamilyPlan": ["C"],
+    "reusedFamilies": ["A", "B"],
+    "acceptedTotalMs": [98.4, 81.2],
+    "workerMs": [31.1, 29.4]
+  },
+  "currentResultReuse": {
+    "workerDispatched": false,
+    "totalMs": [1.5, 1.3]
+  },
+  "presentation": {
+    "appearanceAppliedMs": [9.1, 8.4],
+    "crossingsReused": true,
+    "wovenPresentationMs": [82.4, 72.4]
+  },
+  "viewport": {
+    "zoomPercent": 1358.5,
+    "overlapMasks": 49,
+    "rawTopLevelFallbackPaths": 0,
+    "pendingWovenGroups": 0
+  },
+  "reload": {
+    "workspaceRestored": true,
+    "projectCount": 5,
+    "spacingA": 27,
+    "strengths": {"A": 99, "B": 71, "C": 65},
+    "threadWidthA": 2,
+    "storageGeneration": 368,
+    "autosaveFailed": false
+  },
+  "compatibilityCorrection": "Per-family work metadata was initially enumerable in derived diagnostics and exact reload rejected it. It was moved to worker-private non-enumerable state; focused migration/codec checks and the final browser reload passed before this evidence was recorded."
+}
