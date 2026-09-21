@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {influenceResponseChanges as changes} from '../dist/influence-controls.mjs';
+import {influenceResponseChanges as changes,influenceResponsesLinked} from '../dist/influence-controls.mjs';
 import {createWorkspace,saveCarrierStudy,createWeaveStudy,addInfluence,candidateInfluence} from '../dist/document.mjs';
 import {createStitchSource} from '../dist/stitch-source.mjs';
 test('linked and independent edits use existing immutable candidate path without clobbering other controls',()=>{
@@ -12,6 +12,12 @@ test('linked and independent edits use existing immutable candidate path without
  q=apply(true,'attractor-tension',{tension:30});for(const response of Object.values(q.working.weave.generation.influences[0].families))assert.equal(response.tension,30);
  for(const control of [undefined,'attractor-radius','attractor-falloff','influence-direction'])assert.deepEqual(changes(field,'A',true,control,{strength:82}),{});
  assert.deepEqual(p,before);
+});
+
+test('linked response state is reconstructed from persisted family values',()=>{
+ assert.equal(influenceResponsesLinked({families:{A:{strength:50,tension:0},B:{strength:50,tension:0}}}),true);
+ assert.equal(influenceResponsesLinked({families:{A:{strength:50,tension:0},B:{strength:35,tension:0}}}),false);
+ assert.equal(influenceResponsesLinked({}),true);
 });
 
 import vm from 'node:vm';import fs from 'node:fs';

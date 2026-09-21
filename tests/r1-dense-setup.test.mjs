@@ -11,7 +11,7 @@ function fixture({width=775,height=799,missing=false,hidden=false,restoreFails=f
  const events=[],nodes={},rect={left:200,top:100,width,height},board={id:'board-1',working:{weave:{generation:{influences:[{id:'field-1',kind:'attractor',center:{x:0,y:0}}]}}}},geometryBefore=JSON.stringify(board);
  let pendingRestore=false,guide=false,active=null,status='',wheel,workspaceDown,commits=[];
  const canvas={viewBox:{baseVal:{width,height}},getBoundingClientRect:()=>rect,addEventListener(type,fn){assert.equal(type,'wheel');wheel=fn;},dispatchEvent(e){if(!noWheel)wheel(e);return true;}};
- const sandbox={zoomAt,toDocument,Math,Number,JSON,WheelEvent:class{constructor(type,options){Object.assign(this,options);this.type=type;}preventDefault(){}},renderCanvas(){events.push('render');},renderAttractorControls(){},renderAttractorGuide(){},status(s){status=s;},document:{querySelector:s=>s==='.workspace'?{addEventListener:(_,fn)=>workspaceDown=fn}:s==='#status'?{textContent:status}:null},$:id=>id==='canvas'?canvas:nodes[id],attempt:fn=>fn(),transientProject:()=>board,candidateInfluence:(_,changes)=>({working:{changes}}),weaveSaveOptions:()=>({}),requestWorking:(w,_,final)=>commits.push({w,final})};
+ const sandbox={zoomAt,toDocument,Math,Number,JSON,WheelEvent:class{constructor(type,options){Object.assign(this,options);this.type=type;}preventDefault(){}},renderCanvas(){events.push('render');},renderAttractorControls(){},renderAttractorGuide(){},focusDerivedEditing(){},status(s){status=s;},document:{querySelector:s=>s==='.workspace'?{addEventListener:(_,fn)=>workspaceDown=fn}:s==='#status'?{textContent:status}:null},$:id=>id==='canvas'?canvas:nodes[id],attempt:fn=>fn(),transientProject:()=>board,candidateInfluence:(_,changes)=>({working:{changes}}),weaveSaveOptions:()=>({}),requestWorking:(w,_,final)=>commits.push({w,final}),influenceParameterEdit:(_key,influence,final)=>commits.push({w:{changes:{influence}},final})};
  const ctx=vm.createContext(sandbox);
  vm.runInContext(`let view={cx:0,cy:0,scale:1.35},width=${width},height=${height},activeInfluenceId=null,drag=null,pending=null;${line('const localPoint=')}\n${line('function deselectActiveInfluence()')}\n${line("document.querySelector('.workspace').addEventListener('pointerdown'")}\n${line("$('canvas').addEventListener('wheel'")}\n${line("$('canvas').onpointerup=")}`,ctx);
  const currentView=()=>JSON.parse(vm.runInContext('JSON.stringify(view)',ctx));
@@ -44,7 +44,7 @@ test('complete restore → guides → Fit → selection → viewport → exact n
   for(const x of [0,1]){
    const p=densePointer(viewport.after,viewport.box,x);
    vm.runInContext("drag={type:'attractor',handle:'center',field:{id:'field-1'}}",f.ctx);
-   f.canvas.onpointerup({clientX:Math.fround(p.x),clientY:Math.fround(p.y)});
+   f.canvas.onpointerup({clientX:Math.fround(p.x),clientY:Math.fround(p.y),target:{closest:()=>null}});
    assert.deepEqual(JSON.parse(JSON.stringify(f.commits.at(-1).w.changes.influence.center)),{x,y:0});assert.equal(f.commits.at(-1).final,true);
   }
  }

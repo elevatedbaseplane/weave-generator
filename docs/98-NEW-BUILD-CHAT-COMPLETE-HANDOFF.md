@@ -57,7 +57,7 @@ There should be no Create Weave Pattern button after selecting a preset. Woven o
 
 - Checkout: `work/weave-rebuild`
 - Branch: `foundation`
-- Current local build identity: `WF-STABILITY-P4-WARM-WORKER-20260921`
+- Current local build identity: `WF-STABILITY-P6-VERIFICATION-20260921`
 - Local preview path: `http://127.0.0.1:43831/?stability-s4c=20260918`
 - The local server is ephemeral; restart `node scripts/serve.mjs 43831` when the URL refuses the connection.
 - Public output is `dist/`.
@@ -174,7 +174,7 @@ Do not begin Build 1B feature expansion before the Stability Foundation is accep
 
 ## 11. Current phase and historical baseline instructions
 
-Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, and Phase 3. Document 104 records Phase 3 compact background autosave. Document 105 records the verified Phase 4 dependency invalidation, newest-edit cancellation, exact-result reuse, worker-private family reuse, crossing reuse, timing evidence, and compatibility correction. Document 106 records the Phase 4 production correction for a first-influence 750 ms timeout after an identity-state edit. Document 107 records the Phase 5 workflow and library simplification, including the verified empty-project reuse route. Document 108 records the Phase 5 correction for cold-worker influence release and saved-study validation of older multi-influence weaves. Phase 5 is complete and ready for publication and user review; Phase 6 has not started. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence must remain unchanged.
+Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, and Phase 5. Documents 104–108 record the completed implementation and production corrections through Phase 5. Document 109 records the Phase 6 governing matrix and five-workflow managed-browser route. Phase 6 is internally complete and published for user review. Do not begin Build 1B or state the Stability Foundation completion phrase until the user accepts the five protected workflows. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
 
 Begin Phase 0 only:
 

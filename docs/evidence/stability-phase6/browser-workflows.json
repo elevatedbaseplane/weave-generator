@@ -1,0 +1,75 @@
+{
+  "date": "2026-09-21",
+  "buildUnderTest": "WF-STABILITY-P5-WORKER-RECOVERY-20260921",
+  "reviewBuild": "WF-STABILITY-P6-VERIFICATION-20260921",
+  "project": "PHASE 6 REVIEW",
+  "workflows": [
+    {
+      "id": 1,
+      "result": "pass",
+      "evidence": "Created a 500-unit square Boundary 01 and directly applied Triangular grid as WEAVE PATTERN 01 with three stable families."
+    },
+    {
+      "id": 2,
+      "result": "pass",
+      "evidence": {
+        "family": "A",
+        "spacing": 64,
+        "rotationDegrees": 12,
+        "threadWidth": 5,
+        "visualHierarchy": 6,
+        "familyBAndCRemainIndependent": true
+      }
+    },
+    {
+      "id": 3,
+      "result": "pass",
+      "evidence": {
+        "influenceCount": 3,
+        "types": ["deflector", "attractor", "attractor"],
+        "editedRadius": 180,
+        "editedStrength": 70,
+        "editedTension": 15,
+        "perFamilyResponse": {
+          "influence": 3,
+          "family": "B",
+          "strength": 35,
+          "tension": 0,
+          "applyToAllFamilies": false,
+          "reloadVerified": true
+        },
+        "directCenterMove": {
+          "saved": true,
+          "workerMs": 24.2,
+          "canvasStatus": "APPLIED + SAVED · DIRECT CENTER MOVE"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "result": "pass",
+      "evidence": {
+        "rule": "alternate 1 over / 1 under",
+        "crossings": 181,
+        "assigned": 181,
+        "unresolved": 0,
+        "localOverrides": 1,
+        "postReloadWorkerMs": 30.0
+      }
+    },
+    {
+      "id": 5,
+      "result": "pass",
+      "evidence": {
+        "boundaryReturn": "Boundary 01 and WEAVE PATTERN 01 reopened after visiting additional saved boundaries.",
+        "reload": "Workspace restored asynchronously with the same 31 source and 31 derived paths, three influences, family settings, rule and one local override.",
+        "storageBlocked": false,
+        "activeProjectBackupBytes": 82075,
+        "workspaceBytes": 1458632,
+        "remainingBytes": 10403685
+      }
+    }
+  ],
+  "automationNote": "The managed check created Boundary 03 while applying a 620-unit square because an accessibility index changed between observations. This added a disposable empty boundary inside the dedicated PHASE 6 REVIEW project; it did not modify the accepted weave or any earlier project. The return and reload assertions used Boundary 01.",
+  "diagnosticNote": "The compact storage diagnostic completed. The expanded whole-workspace diagnostic exceeded the browser automation transport timeout on the eight-project fixture, so exact decisions were verified through the live UI and the automated canonical regeneration suite."
+}

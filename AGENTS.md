@@ -1,3 +1,7 @@
+## Stability Foundation Phase 6 verification — 2026-09-21
+
+Document 109 records build `WF-STABILITY-P6-VERIFICATION-20260921`. The governing current-contract matrix passes 240/240 and the preserved Phase 0 fixture subset passes 8/8. The managed local route completed all five protected workflows through three influences, an explicit crossing override, boundary switching and reload with storage unblocked. Phase 6 is internally complete and published for user review. Do not begin Build 1B or state the Stability Foundation completion phrase until the user accepts these five workflows.
+
 ## Stability Foundation Phase 5 influence/storage correction — 2026-09-21
 
 Document 108 records build `WF-STABILITY-P5-WORKER-RECOVERY-20260921`. Pointer release now promotes an identical in-flight influence preview instead of restarting the final calculation on a cold worker; genuinely obsolete jobs immediately prime a replacement. Reload/import validation uses one private persistent worker across all current and saved revisions, preventing older multi-influence weaves from pausing storage because of repeated worker startup. The 750 ms limit and all geometry/storage contracts are unchanged. The affected suite passes 75/75 plus all eight frozen Phase 0 checks. A five-influence browser route moved and saved an influence in 50.3 ms, then reloaded with storage unblocked. Phase 5 remains complete; Phase 6 has not started.

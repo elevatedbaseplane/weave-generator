@@ -15,7 +15,7 @@ import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';
 
 import {threadStyle,threadPaths,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
 
-import {influenceResponseChanges} from './influence-controls.mjs';
+import {influenceResponseChanges,influenceResponsesLinked} from './influence-controls.mjs';
 
 import {LINE_PRESETS,createLinePreset} from './line-presets.mjs';
 
@@ -56,11 +56,11 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-STABILITY-P5-WORKER-RECOVERY-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-STABILITY-P6-VERIFICATION-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
-document.querySelector('footer').innerHTML='STABILITY FOUNDATION · PHASE 5<br>Projects, applied weaves, and reusable weaves are distinct.';
+document.querySelector('footer').innerHTML='STABILITY FOUNDATION · PHASE 6 REVIEW<br>Five protected workflows verified locally.';
 
 const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';
 
@@ -290,7 +290,7 @@ function renderFamilyTabs(containerId,names,active,onSelect){const box=$(contain
 
 function renderPatternFamilyTabs(carrier){const entries=familyEntries(),names=entries.map(entry=>entry.key);renderFamilyTabs('pattern-family-tabs',names,activePatternFamily,name=>{activePatternFamily=name;render();status(`EDITING ${familyLabel(name)}.`);});const entry=entries.find(item=>item.key===activePatternFamily);if(!entry)return;$('family-label').value=entry.label;$('family-id').textContent=`PERMANENT ID ${entry.id} · ENGINE KEY ${entry.key}`;$('family-export').checked=entry.includeInExport;const index=indexDerivedFamilies(project().working),view=index.families.find(item=>item.id===entry.id);$('family-export-summary').textContent=view?.strandCount?`EXPORT-READY VIEW · ${view.strandCount} STRANDS · ${view.fragmentCount} FRAGMENTS · ${view.segmentCount} SEGMENTS`:'EXPORT-READY VIEW · SAVES WITH THIS FAMILY';$('family-move-left').disabled=entry.order===0;$('family-move-right').disabled=entry.order===entries.length-1;const isolated=display.isolatedFamilyId===entry.id;$('family-isolate').textContent=isolated?'SHOW ALL FAMILIES':'ISOLATE THIS FAMILY';$('family-isolate').setAttribute('aria-pressed',String(isolated));}
 
-function syncAttractorField(working,field){const limits=boundarySliderLimits(working.boundary),names=familyNames(working.carrier);if(!names.includes(activeInfluenceFamily))activeInfluenceFamily=names[0];renderFamilyTabs('influence-family-tabs',names,activeInfluenceFamily,name=>{activeInfluenceFamily=name;renderAttractorControls();status(`EDITING FAMILY ${name} INFLUENCE RESPONSE.`);});const q=working.weave.weaveVersion===ATTRACTOR_VERSIONS.study?{strength:field.strength,tension:working.weave.generation.tension}:[COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(working.weave.weaveVersion)?field.families[activeInfluenceFamily]:familySettings(working.weave.generation,activeInfluenceFamily);syncSlider('attractor-radius',field.radius,limits.radius);syncSlider('attractor-strength',q.strength);syncSlider('attractor-tension',q.tension);syncSlider('attractor-falloff',field.falloff??3);syncSlider('influence-direction',field.direction??0);$('influence-type').value=field.kind;$('direction-control').hidden=field.kind!=='deflector';$('family-control-label').textContent=`EDITING FAMILY ${activeInfluenceFamily}`;$('attractor-enabled').checked=field.enabled;$('toggle-attractor-enabled').textContent=field.enabled?'DISABLE INFLUENCE':'ENABLE INFLUENCE';$('toggle-attractor-enabled').setAttribute('aria-pressed',String(field.enabled));}
+function syncAttractorField(working,field){const limits=boundarySliderLimits(working.boundary),names=familyNames(working.carrier);if(!names.includes(activeInfluenceFamily))activeInfluenceFamily=names[0];renderFamilyTabs('influence-family-tabs',names,activeInfluenceFamily,name=>{activeInfluenceFamily=name;renderAttractorControls();status(`EDITING FAMILY ${name} INFLUENCE RESPONSE.`);});const q=working.weave.weaveVersion===ATTRACTOR_VERSIONS.study?{strength:field.strength,tension:working.weave.generation.tension}:[COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(working.weave.weaveVersion)?field.families[activeInfluenceFamily]:familySettings(working.weave.generation,activeInfluenceFamily);syncSlider('attractor-radius',field.radius,limits.radius);syncSlider('attractor-strength',q.strength);syncSlider('attractor-tension',q.tension);syncSlider('attractor-falloff',field.falloff??3);syncSlider('influence-direction',field.direction??0);$('influence-type').value=field.kind;$('direction-control').hidden=field.kind!=='deflector';$('family-control-label').textContent=`EDITING FAMILY ${activeInfluenceFamily}`;$('link-influence-roles').checked=influenceResponsesLinked(field);$('attractor-enabled').checked=field.enabled;$('toggle-attractor-enabled').textContent=field.enabled?'DISABLE INFLUENCE':'ENABLE INFLUENCE';$('toggle-attractor-enabled').setAttribute('aria-pressed',String(field.enabled));}
 
 function syncAttractorState(field,count=0){$('attractor-state').textContent=!field?(count?`${count} FIELD${count===1?'':'S'} · NONE SELECTED`:'READY TO ADD'):pending?'CALCULATING':`${field.enabled?'ACTIVE':'DISABLED'} ${field.kind.toUpperCase()}`;}
 
