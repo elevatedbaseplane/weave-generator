@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-B1-OVERLAP-MASK-CORRECTION-20260921",
+  "applicationCommit": "0260c8bb944e2c844066f34cbb47676943a82eab",
+  "siteProjectId": "appgprj_6aa83001d03481918d4a13e46c9612fb",
+  "siteVersion": 19,
+  "deploymentId": "appgdep_6ab199351374819193edd12c81fd89cd",
+  "url": "https://weave-foundation.notbrandon175.chatgpt.site/",
+  "accessMode": "public",
+  "tests": {
+    "currentContract": { "passed": 257, "failed": 0 },
+    "preservedPhase0": { "passed": 8, "failed": 0 },
+    "staticAndSyntax": "passed"
+  },
+  "hostedFixture": {
+    "sourcePaths": 90,
+    "derivedPaths": 90,
+    "fields": 5,
+    "fitZoomPercent": 167.8,
+    "checkedZoomPercent": 598.7,
+    "pendingFallback": false
+  },
+  "scope": "Presentation-only SVG mask composition; certified geometry, crossing assignments, persistence and exports unchanged."
+}
