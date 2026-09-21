@@ -6,6 +6,8 @@ Status: approved direction for the next build sequence. This document contains l
 
 Phase 0 publication exception: the user's latest instruction requires local-only diagnostics and no push or deployment. Publication is excluded from Phase 0 completion criteria. Its completed baseline is ready for user review; stop before Phase 1. Standing publication authorization remains applicable to later authorized application builds.
 
+Current scope decision (2026-09-21): Point Extraction and Polyline Composer have moved to another tool and are outside this generator. Rule-based binding is deferred. Historical references remain evidence; the current handoff in document 98 governs active work.
+
 ## Product objective
 
 The tool is a weave generator. It must let a user create or select a boundary, apply or reuse a weave, edit independent thread families, apply field influences, control crossings, and later export families separately or together. Technical rigor must make this workflow simpler rather than expose more steps.

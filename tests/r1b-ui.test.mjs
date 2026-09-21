@@ -75,16 +75,17 @@ test('right rail follows the settled workflow and keeps deferred stages noninter
   const rail=html.slice(html.indexOf('<aside id="controls"'),html.indexOf('</aside>',html.indexOf('<aside id="controls"')));
   const headings=['PROJECT / STUDY','BOUNDARY','WEAVE PATTERN','FIELD FORCES','DISPLAY','EXCHANGE + BACKUP'];
   let prior=-1;for(const heading of headings){const at=rail.indexOf(heading);assert.ok(at>prior,heading);prior=at;}
-  for(const stage of ['ANALYZE','INTERPRET','EXTRACT','SYNTHESIZE','EXPORT'])assert.match(rail,new RegExp(`<li>${stage} <em>UPCOMING</em></li>`));
-  assert.doesNotMatch(rail,/<button[^>]*>\s*(ANALYZE|INTERPRET|EXTRACT|SYNTHESIZE)/);
+  for(const stage of ['ANALYZE','INTERPRET','EXPORT'])assert.match(rail,new RegExp(`<li>${stage} <em>UPCOMING</em></li>`));
+  assert.doesNotMatch(rail,/(EXTRACT|SYNTHESIZE|POINT EXTRACTION|POLYLINE COMPOSER)/);
+  assert.doesNotMatch(rail,/<button[^>]*>\s*(ANALYZE|INTERPRET)/);
 });
 
 test('reference shell exposes header actions workflow strip and paired drafting sliders',()=>{
   assert.match(html,/B\.A\.C: WEAVE GENERATOR\.\.\.\.\. V02/);
   assert.match(html,/id="toggle-boards"[\s\S]*id="new-board"[\s\S]*id="toggle-controls"/);
   assert.match(html,/class="stage-tab active"><b>01<\/b> WEAVE FIELD/);
-  assert.match(html,/POINT EXTRACTION · UPCOMING/);
-  assert.match(html,/POLYLINE COMPOSER · UPCOMING/);
+  assert.equal((html.match(/class="stage-tab(?:\s|")/g)||[]).length,1);
+  assert.doesNotMatch(html,/(POINT EXTRACTION|POLYLINE COMPOSER|EXTRACT → SYNTHESIZE)/);
   const css=fs.readFileSync(new URL('../dist/style.css',import.meta.url),'utf8');
   assert.match(css,/\.slider-label output\{display:block;border:1px solid var\(--ink\)/);
   assert.match(css,/\.model-slider\{appearance:none/);

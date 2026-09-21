@@ -1,3 +1,7 @@
+## Generator scope cleanup — 2026-09-21
+
+The user moved Point Extraction and Polyline Composer to another tool. Build `WF-GENERATOR-SCOPE-20260921` removes both stages from the generator's visible workflow and active roadmap without changing weave documents, geometry, crossings, persistence, or exports. Rule-based binding is deferred and is not an active generator milestone. Historical documents and fixtures remain evidence rather than current implementation instructions. The active generator path is field and weave construction, authored analysis/interpretation work when scheduled, and stable family/strand export.
+
 ## Build 1 clean crossing cells — 2026-09-21
 
 Document 117 replaces the broad upper-thread repaint from document 116 with build `WF-B1-CLEAN-CROSSING-CELLS-20260921`. Every assigned mask is clipped to the nearest-neighbor cell along its lower thread, so dense crossings cannot spread their gaps through an adjacent crossing and no thread is broadly repainted over another. Certified geometry, crossing assignments, persistence and exports remain unchanged. The governing current-contract matrix passes 257/257 and all eight preserved Phase 0 checks pass. Public Site version 20 restored the user's 84-source/84-derived, 1,037-crossing fixture in 148.3 ms with 204 masks, zero broad protection regions, clean Fit and 598.7% zoom views, and no browser warnings or errors. Contact constraints and adaptive tension have not begun.

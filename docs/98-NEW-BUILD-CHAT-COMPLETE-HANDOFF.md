@@ -6,7 +6,7 @@ This is the complete execution handoff. Read documents 95 and 96 with it. Older 
 
 ## 1. Product goal
 
-Build a rigorous weave generator rather than a generic two-dimensional grid maker. A user should be able to create or choose a boundary, apply a reusable weave, edit each thread family, deform the weave with field influences, control visible over/under construction, attach connection stitches in later phases, and eventually analyze forces and derive points and polylines.
+Build a rigorous weave generator rather than a generic two-dimensional grid maker. A user should be able to create or choose a boundary, apply a reusable weave, edit each thread family, deform the weave with field influences, control visible over/under construction, analyze authored forces and relationships, and export stable family and strand geometry. Point extraction and polyline composition have moved to another tool. Rule-based binding is deferred and is not part of the active generator roadmap.
 
 The tool must become simpler as its internal model becomes more rigorous. Ordinary creation should never require the user to understand revision roots, certified payloads, storage epochs, worker requests, or recovery manifests.
 
@@ -15,12 +15,11 @@ The long-term sequence is:
 1. Stable weave creation and editing.
 2. Reliable automatic and manual over/under construction.
 3. Expanded traditional and complex weave library.
-4. Connection stitches and rule-based bindings.
-5. Contact constraints and adaptive tension.
-6. Force and relationship analysis.
-7. Derived points.
-8. Derived polylines.
-9. Per-family and combined SVG/DXF export.
+4. Contact constraints and adaptive tension.
+5. Force and relationship analysis.
+6. Stable per-family, per-strand, and combined SVG/DXF export.
+
+Point extraction and polyline composition belong to another tool and must not be added to this generator. Rule-based binding is deferred. Historical documents and fixtures that mention these capabilities remain evidence; they are not active implementation instructions.
 
 Analysis remains on hold until the weave itself is dependable.
 
@@ -57,7 +56,7 @@ There should be no Create Weave Pattern button after selecting a preset. Woven o
 
 - Checkout: `work/weave-rebuild`
 - Branch: `foundation`
-- Current local build identity: `WF-STABILITY-P6-VERIFICATION-20260921`
+- Current local build identity: `WF-GENERATOR-SCOPE-20260921`
 - Local preview path: `http://127.0.0.1:43831/?stability-s4c=20260918`
 - The local server is ephemeral; restart `node scripts/serve.mjs 43831` when the URL refuses the connection.
 - Public output is `dist/`.
@@ -174,7 +173,7 @@ Do not begin Build 1B feature expansion before the Stability Foundation is accep
 
 ## 11. Current phase and historical baseline instructions
 
-Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; documents 110 and 111 record completed Phase 1D seeded structured variation and Phase 1E effective-precedence display. Build 1 is complete. Contact constraints and adaptive tension remain a separate later build and have not begun. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
+Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections, Phase 2, Phase 3, Phase 4, Phase 5, and the Phase 6 five-workflow review. Documents 104–109 record the completed Stability Foundation. The Stability Foundation is complete. Build 1B resumed from the preserved named-mode and family-relationship implementation; documents 110 and 111 record completed Phase 1D seeded structured variation and Phase 1E effective-precedence display. Build 1 is complete. Documents 119 and 120 record the completed contact-constraint and adaptive-tension work, including the visible-response correction. The active generator roadmap no longer includes point extraction or polyline composition, and rule-based binding is deferred. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence remain unchanged.
 
 Begin Phase 0 only:
 
