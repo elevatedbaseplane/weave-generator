@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-B1-CLEAN-CROSSING-CELLS-20260921",
+  "applicationCommit": "d9e6a39694eb024506445cd68ca34c30af583a4b",
+  "siteProjectId": "appgprj_6aa83001d03481918d4a13e46c9612fb",
+  "siteVersion": 20,
+  "deploymentId": "appgdep_6ab19e72b57c81919b612575bc4af7bb",
+  "url": "https://weave-foundation.notbrandon175.chatgpt.site/",
+  "accessMode": "public",
+  "tests": {
+    "currentContract": { "passed": 257, "failed": 0 },
+    "preservedPhase0": { "passed": 8, "failed": 0 },
+    "focused": { "passed": 19, "failed": 0 },
+    "staticSyntaxAndDiff": "passed"
+  },
+  "localFixture": {
+    "crossings": 181,
+    "assigned": 181,
+    "masks": 63,
+    "protectionRegions": 0,
+    "workerMs": 43.0,
+    "checkedZoomPercent": [76.0, 156.1, 320.8]
+  },
+  "hostedFixture": {
+    "sourcePaths": 84,
+    "derivedPaths": 84,
+    "fields": 2,
+    "crossings": 1037,
+    "assigned": 1037,
+    "masks": 204,
+    "protectionRegions": 0,
+    "workerMs": 148.3,
+    "fitZoomPercent": 167.8,
+    "checkedZoomPercent": 598.7,
+    "browserWarningsOrErrors": 0
+  }
+}
