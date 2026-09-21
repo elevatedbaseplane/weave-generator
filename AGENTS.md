@@ -1,3 +1,7 @@
+## Phase 1 review corrections — 2026-09-21
+
+Document 101 fixes the reproduced hierarchy snap-back (duplicate content-addressed records retained outside the current compact index) and intermittent loss of woven presentation (preview bypass, committed-only crossing acceptance, and stale carrierPreview after commit). 56 focused checks and real-browser repeated setting/influence edits pass; the user's working design was restored exactly after testing. Preserve these fixes and the untouched Phase 0 fixtures. Phase 2 has not started. Consult review-fix delivery evidence for publication status.
+
 ## Stability Foundation Phase 1 — 2026-09-21
 
 Phase 0 is approved. Its final diagnostic cleanup is committed as `dbfc7c2`; frozen evidence remains untouched. Phase 1 introduces `canonical-weave-source-v1`, lossless read migration from the existing working envelope, source-only regeneration and shared worker input preparation. Schema-6 storage remains the compatibility encoding; no duplicate canonical field is persisted. See document 100 for ownership, validation, visual review and limits. Focused checks pass 78/78 plus eight preserved baseline checks and one recovery check. Phase 2 has not started. Standing publication authorization applies to this coherent Phase 1 application build; preserve the existing owner-only Site. Consult Phase 1 delivery evidence for actual publication status rather than inferring success from this note.

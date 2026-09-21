@@ -1,0 +1,29 @@
+{
+  "phase": 1,
+  "status": "complete",
+  "readyForNextPhase": true,
+  "phase2Started": false,
+  "cleanupCommit": "dbfc7c2",
+  "sourceCommit": "af2b092f2d9eb07ebd06fd8deb3b6c27f8f22bdf",
+  "checks": {
+    "focused": 78,
+    "frozenBaseline": 8,
+    "schemaRecovery": 1
+  },
+  "archiveSha256": "53061f8c631ef72d39e68965b5348ab5fcbc2efee50f7d52483a3215d02caa2c",
+  "packaging": "Native Sites prepare-site-build.cjs and Windows tar; Bash wrapper unavailable. Exact staged output hashes checked; diagnostic/evidence excluded.",
+  "deployment": {
+    "id": "appgdep_6ab08e6a9de8819194239d4e69258402",
+    "project_id": "appgprj_6aa83001d03481918d4a13e46c9612fb",
+    "title": "Weave Generator — Foundation",
+    "version_id": "appgprj_6aa83001d03481918d4a13e46c9612fb~appgver_540b97995d3c8191901eb283dcf79468",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://weave-foundation.notbrandon175.chatgpt.site",
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "site---6aa83001d03481918d4a13e46c9612fb",
+    "failure_message": null,
+    "env_set_revision": 0,
+    "updated_at": "2026-09-21T01:54:56.617225+00:00"
+  }
+}

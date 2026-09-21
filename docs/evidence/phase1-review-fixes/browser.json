@@ -1,0 +1,97 @@
+{
+  "build": "WF-STABILITY-P1-EDIT-REVIEW-FIX-20260921",
+  "reproducedError": "Transactional storage commit failed: Key already exists in the object store.",
+  "rankReturn": 3,
+  "workingRestored": true,
+  "woven": 1,
+  "pending": "false",
+  "workerTelemetry": {
+    "active": null,
+    "events": [
+      {
+        "at": 63213.80000001192,
+        "immediate": false,
+        "input": "sha256-v1:de757033187b0d7c67cb4681f42d9df1db658002f020adeed9ce2da3fb272293",
+        "type": "queued"
+      },
+      {
+        "at": 63216.30000001192,
+        "immediate": true,
+        "input": "sha256-v1:de757033187b0d7c67cb4681f42d9df1db658002f020adeed9ce2da3fb272293",
+        "type": "queued"
+      },
+      {
+        "at": 63254.19999998808,
+        "attempt": 0,
+        "input": "sha256-v1:de757033187b0d7c67cb4681f42d9df1db658002f020adeed9ce2da3fb272293",
+        "requestId": "8abb64bd-98a5-4ea7-b398-13a923d20b0d:18",
+        "requestStarted": 63216.19999998808,
+        "seq": 18,
+        "type": "dispatched"
+      },
+      {
+        "at": 63438.39999997616,
+        "phases": {
+          "admissionMs": 28.5,
+          "deriveMs": 104.89999997615814,
+          "dispatchMs": 38.89990234375,
+          "encodeMs": 10.300000011920927,
+          "historyMs": 0.09999996423721312,
+          "renderMs": 12.399999976158142,
+          "transactionMs": 6.900000035762787,
+          "transferMs": 4.5,
+          "validationMs": 0.19999998807907104
+        },
+        "requestId": "8abb64bd-98a5-4ea7-b398-13a923d20b0d:18",
+        "seq": 18,
+        "storageGeneration": 277,
+        "totalMs": 222.19999998807907,
+        "type": "committed",
+        "workerMs": 117.69999998807909
+      },
+      {
+        "at": 72586.80000001192,
+        "immediate": false,
+        "input": "sha256-v1:a7ed58d6b9a3d6e878e4300f252f8cb3ef910c3b90f4b35e34c915da2519f9c4",
+        "type": "queued"
+      },
+      {
+        "at": 72588.89999997616,
+        "immediate": true,
+        "input": "sha256-v1:a7ed58d6b9a3d6e878e4300f252f8cb3ef910c3b90f4b35e34c915da2519f9c4",
+        "type": "queued"
+      },
+      {
+        "at": 72615.69999998808,
+        "attempt": 0,
+        "input": "sha256-v1:a7ed58d6b9a3d6e878e4300f252f8cb3ef910c3b90f4b35e34c915da2519f9c4",
+        "requestId": "8abb64bd-98a5-4ea7-b398-13a923d20b0d:19",
+        "requestStarted": 72588.89999997616,
+        "seq": 19,
+        "type": "dispatched"
+      },
+      {
+        "at": 72769.80000001192,
+        "phases": {
+          "admissionMs": 28,
+          "deriveMs": 78.69999998807907,
+          "dispatchMs": 27.300048828125,
+          "encodeMs": 6.699999988079071,
+          "historyMs": 0.09999996423721312,
+          "renderMs": 11.100000023841858,
+          "transactionMs": 9.5,
+          "transferMs": 3.89990234375,
+          "validationMs": 0.19999998807907104
+        },
+        "requestId": "8abb64bd-98a5-4ea7-b398-13a923d20b0d:19",
+        "seq": 19,
+        "storageGeneration": 278,
+        "totalMs": 180.80000001192093,
+        "type": "committed",
+        "workerMs": 87.09999996423721
+      }
+    ],
+    "pending": null,
+    "sequence": 19
+  }
+}

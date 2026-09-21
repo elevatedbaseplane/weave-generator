@@ -20,7 +20,9 @@ const req=request=>new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(
 const storageError=(code,message,cause,stage,transactionId)=>Object.assign(Error(message),{code,causeName:cause?.name||null,stage,transactionId});
 function packedSnapshot(packed){return{root:packed.root,version:packed.version,manifest:packed.manifest,recordIds:packed.records.map(r=>r.id),payloadIds:packed.payloads.map(p=>p.id),backupBytes:packed.backupBytes};}
 function putPacked(tx,packed){for(const r of packed.records)tx.objectStore('records').put(r);for(const p of packed.payloads)tx.objectStore('payloads').put(p);tx.objectStore('snapshots').put(packedSnapshot(packed));}
-function putDelta(tx,prepared){for(const r of prepared.newRecords)tx.objectStore('records').add(r);for(const p of prepared.newPayloads)tx.objectStore('payloads').add(p);tx.objectStore('snapshots').put(packedSnapshot(prepared.packed));}
+// Content-addressed records may already exist in retained recovery roots. Reusing
+// the same immutable content is idempotent, even when absent from the active index.
+function putDelta(tx,prepared){for(const r of prepared.newRecords)tx.objectStore('records').put(r);for(const p of prepared.newPayloads)tx.objectStore('payloads').put(p);tx.objectStore('snapshots').put(packedSnapshot(prepared.packed));}
 
 export class IndexedStore{
  constructor(factory,storage){this.factory=factory;this.storage=storage;this.db=null;this.head=null;this.blocked=false;this.lastRaw=null;this.lastPacked=null;this.recoveryPacked=null;}
