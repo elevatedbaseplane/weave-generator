@@ -2,7 +2,7 @@
 
 Date: 2026-09-21
 
-Status: implementation and local verification complete; delivery evidence records publication.
+Status: complete and published for owner-only review.
 
 Build: `WF-B1-FIELD-PRESENTATION-20260921`
 
@@ -43,6 +43,8 @@ Automated checks:
 The focused tests cover strict bounds and compatibility defaults, deterministic square and irregular-boundary recovery, continuity, family direction, all four modes, open/fading layers, certified-input immutability, zero new geometry payloads, revision restore, compact portable backup, SVG parity, presentation-only control wiring, and overlap-worker priming before dense restored work.
 
 Managed local-browser verification used the preserved multi-family workspace. Recover, Loose, Fray, and Crop rendered without entering a pending woven state. Exact 30/40/75 slider values survived reload. Fray produced two recovery layers per family, Hidden removed the boundary stroke while keeping editing available, and Crop removed recovery paths. Undo restored Recover, Redo restored Loose, and Reset returned the saved defaults. Light, Dark, and Neo retained 82 woven body paths plus three recovery paths with no pending fallback. Fit and repeated zoom retained the complete body and recovery paths. The accepted fixture was restored to Recover 20/20/100 with Faint boundary before delivery.
+
+The first private publication exposed a hosted cold-start miss at the unchanged 750 ms overlap deadline and was superseded before completion. The corrected build primes the worker during restoration. Private Site version 17 then restored the five-family fixture with 82 stable family-tagged woven paths and five open recovery paths, 1,220 represented crossings at 166.0 ms worker time, zero pending groups, and no timeout or storage warning. Zoom from Fit to 611.8 percent and back retained the complete body, overlaps, and recovery paths. The live fixture remains at Recover 20/20/100 with Faint boundary.
 
 ## Scope
 

@@ -1,11 +1,11 @@
 {
   "build": "WF-B1-FIELD-PRESENTATION-20260921",
   "date": "2026-09-21",
-  "sourceCommit": null,
-  "publishedCommit": null,
+  "sourceCommit": "7c554b179d74cdf5667248c033cfcd52d3c36a1f",
+  "publishedCommit": "96d67d104c6129f516e811c55a9f18abed284208",
   "siteProjectId": "appgprj_6aa83001d03481918d4a13e46c9612fb",
   "siteUrl": "https://weave-foundation.notbrandon175.chatgpt.site/",
-  "siteVersion": null,
+  "siteVersion": 17,
   "visibility": "owner-only",
   "local": {
     "currentContract": {"passed": 255, "failed": 0},
@@ -25,6 +25,26 @@
       "restored": {"mode": "recover", "recoveryPercent": 20, "variationPercent": 20, "straighteningPercent": 100, "boundaryEmphasis": "faint"}
     }
   },
-  "live": null,
+  "supersededAttempt": {
+    "siteVersion": 16,
+    "status": "superseded-before-completion",
+    "reason": "The dense hosted fixture exposed a cold overlap-worker module-startup miss at the unchanged 750 ms gate."
+  },
+  "live": {
+    "status": "succeeded",
+    "bodyFamilyPaths": 82,
+    "recoveryPaths": 5,
+    "openRecoveryPaths": 5,
+    "representedCrossings": 1220,
+    "assignedCrossings": 1157,
+    "ambiguousCrossings": 63,
+    "workerMs": 166.0,
+    "zoomPercent": [78.6, 611.8, 78.6],
+    "pendingWovenGroups": 0,
+    "timeout": false,
+    "storageWarning": false,
+    "browserWarningOrError": false,
+    "settings": {"mode": "recover", "recoveryPercent": 20, "variationPercent": 20, "straighteningPercent": 100, "boundaryEmphasis": "faint"}
+  },
   "laterWorkStarted": false
 }
