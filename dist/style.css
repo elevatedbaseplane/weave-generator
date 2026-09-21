@@ -65,7 +65,7 @@ body[data-theme=neo] .tree-board,body[data-theme=neo] .tree-node,body[data-theme
 #controls .numeric-pair-output{display:none!important}
 #controls .slider-number{grid-column:2;grid-row:1;width:78px;min-height:28px;height:28px;padding:3px 5px;text-align:right;font-size:11px}
 #controls .slider-label>input[type=range]{grid-column:1 / -1;grid-row:2}
-#thread-controls [hidden]{display:none!important}
+#thread-controls [hidden]{display:none!important}.boundary-path.boundary-faint{opacity:.32;stroke-dasharray:4 4}.boundary-path.boundary-hidden{opacity:0}
 [data-crossing]:focus-visible{outline:none;stroke:var(--accent);stroke-width:3}
 
 .carrier-family{opacity:calc(.82 * var(--thread-opacity,1))}

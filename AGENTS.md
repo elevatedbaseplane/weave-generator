@@ -1,6 +1,10 @@
+## Build 1 weave field presentation — 2026-09-21
+
+Document 114 records build `WF-B1-FIELD-PRESENTATION-20260921`. Certified strands now continue into family-aware presentation recovery zones that begin at the exact boundary contact and relax toward each authored family direction. Recover, Loose, Fray, and Crop modes, deterministic end variation, recovery extent, straightening, and Reference/Faint/Hidden boundary emphasis save without changing certified geometry or crossing-worker inputs. Canvas and SVG export share the same open recovery records and stable family identity. The governing current-contract matrix passes 254/254, the focused field-presentation suite passes 6/6, and all eight preserved Phase 0 checks pass. Local managed-browser verification covers dense woven rendering, exact save/reload, Undo/Redo, repeated zoom, all themes, and restoration of the accepted fixture. Publication evidence is in `docs/evidence/build1-field-presentation/`. Contact constraints and adaptive tension have not begun.
+
 ## Weave field presentation refinement plan — 2026-09-21
 
-Document 113 is the ready-for-review implementation plan for improving how the weave field and outward ends are represented. It reuses the presentation-only seam established by document 112: certified geometry and crossings stay unchanged, the crossing worker produces only the woven body, and family-aware recovery paths are appended afterward and exported through the same deterministic records. The planned sequence is recovery continuity, deterministic porous endings, boundary hierarchy, then export and dense-fixture certification. Planning only is complete; no implementation, new controls, source behavior, publication, contact constraints, or adaptive tension work has begun.
+Document 113 is the approved implementation plan for improving how the weave field and outward ends are represented. Its presentation refinement is complete in document 114: certified geometry and crossings stay unchanged, the crossing worker produces only the woven body, and family-aware recovery paths are appended afterward and exported through the same deterministic records. Contact constraints and adaptive tension remain next and have not begun.
 
 ## Build 1 edge refinement — 2026-09-21
 

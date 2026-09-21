@@ -13,7 +13,8 @@ import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,ind
 
 import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';
 
-import {threadStyle,threadPaths,presentationBleedStrands,presentationTailStrands,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
+import {threadStyle,threadPaths,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
+import {FIELD_PRESENTATION_DEFAULT,effectiveFieldPresentation,changeFieldPresentation,presentationTailLayers} from './field-presentation.mjs';
 
 import {influenceResponseChanges,influenceResponsesLinked} from './influence-controls.mjs';
 
@@ -56,11 +57,11 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-B1-EDGE-REFINEMENT-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-B1-FIELD-PRESENTATION-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
-document.querySelector('footer').innerHTML='BUILD 1 · EDGE REFINEMENT<br>Open thread ends with straight boundary continuations.';
+document.querySelector('footer').innerHTML='BUILD 1 · FIELD PRESENTATION<br>Family-aware recovery zones with deterministic open ends.';
 
 const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';
 
@@ -74,7 +75,7 @@ const workingRoots=new WeakMap();
 
 const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
 
-let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0;
+let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,fieldPresentationPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0;
 
 let activePatternFamily='A',activeInfluenceFamily='A',activeInfluenceId=undefined;
 
@@ -244,7 +245,7 @@ function renderSavedChoices(){const p=project(),boundarySelect=$('saved-boundary
 
 function render(){
 
-  fullRenderCount++;if(!pending)resetEditFeedback();threadPreview=null;renderInterlaceControls();renderThreadControls();renderBoards();renderSavedChoices();renderWeaveControls();const b=project().working.boundary;
+  fullRenderCount++;if(!pending)resetEditFeedback();threadPreview=null;fieldPresentationPreview=null;renderInterlaceControls();renderThreadControls();renderBoards();renderSavedChoices();renderWeaveControls();const b=project().working.boundary;
 
   const p=project();renderProjectSummary();
 
@@ -344,7 +345,9 @@ function drawWeaveLayer(id,paths,source=false){
 
 
 
-function renderThreadLayer(layer,strands,appearance,source=false){const isolated=isolatedFamilyKey();for(const record of threadPaths(strands,appearance,p=>toScreen(p,view,width,height))){if(isolated&&record.family!==isolated)continue;const path=svgElement('path',{d:record.d,class:source?'weave-source':familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-fragments':record.fragments,'data-segments':record.segments});path.style.strokeWidth=String(threadStroke(record)*view.scale);path.style.setProperty('--thread-opacity',String(threadOpacity(record)));path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';layer.append(path);}}
+function renderThreadLayer(layer,strands,appearance,source=false){const isolated=isolatedFamilyKey();for(const record of threadPaths(strands,appearance,p=>toScreen(p,view,width,height))){if(isolated&&record.family!==isolated)continue;const path=svgElement('path',{d:record.d,class:source?'weave-source':familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-fragments':record.fragments,'data-segments':record.segments});path.style.strokeWidth=String(threadStroke(record)*view.scale);path.style.setProperty('--thread-opacity',String(threadOpacity(record)));path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';layer.append(path);}}
+
+function appendPresentationTails(layer,w,appearance,transform,scaled=false){const settings=fieldPresentationPreview||w.fieldPresentation,isolated=isolatedFamilyKey(w);for(const [layerIndex,presentation] of presentationTailLayers(w.weave.derived.strands,w.boundary,settings).entries())for(const record of threadPaths(presentation.strands,appearance,transform)){if(isolated&&record.family!==isolated)continue;const opacity=threadOpacity(record)*presentation.opacity,path=svgElement('path',{d:record.d,class:familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-boundary-continuation':'true','data-presentation-layer':layerIndex,opacity,'stroke-width':threadStroke(record)*(scaled?view.scale:1)});path.style.setProperty('--thread-opacity',String(opacity));path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';layer.append(path);}}
 
 function updateThreadClip(){let defs=$('thread-defs');if(!defs){defs=svgElement('defs',{id:'thread-defs'});$('canvas').prepend(defs);}defs.replaceChildren();const clip=svgElement('clipPath',{id:'thread-boundary-clip',clipPathUnits:'userSpaceOnUse'});clip.append(svgElement('polygon',{points:project().working.boundary.points.map(p=>{const q=toScreen(p,view,width,height);return q.x+','+q.y}).join(' ')}));defs.append(clip);for(const id of ['family-a-layer','family-b-layer','weave-source-layer'])$(id).setAttribute('clip-path','url(#thread-boundary-clip)');$('weave-derived-layer').removeAttribute('clip-path');}
 
@@ -352,12 +355,12 @@ function updateThreadClip(){let defs=$('thread-defs');if(!defs){defs=svgElement(
 
 function renderContinuousWeave(layer,w){
  ensureCrossings(w);const appearance=threadPreview||w.threadAppearance;
- if(!w.interlacing?.enabled){renderThreadLayer(layer,presentationBleedStrands(w.weave.derived.strands,w.boundary),appearance);return;}
+ if(!w.interlacing?.enabled){renderThreadLayer(layer,w.weave.derived.strands,appearance);appendPresentationTails(layer,w,appearance,p=>toScreen(p,view,width,height),true);return;}
  const current=crossingCache?.paintKey===crossingPaintKey(w),previous=lastWovenPresentation?.identity===wovenPresentationIdentity(w);
  if(!current&&!previous)return;
  const group=svgElement('g',{transform:'translate('+(width/2-view.cx*view.scale)+' '+(height/2+view.cy*view.scale)+') scale('+view.scale+')',fill:'none',stroke:'var(--muted)','stroke-linejoin':'round',opacity:.82,'data-continuous-weave':'true','data-woven-pending':String(!current)});
  group.innerHTML=current?crossingCache.markup:lastWovenPresentation.markup;
- for(const record of threadPaths(presentationTailStrands(w.weave.derived.strands,w.boundary),appearance,p=>({x:p.x,y:-p.y}))){const path=svgElement('path',{d:record.d,class:familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-boundary-continuation':'true',opacity:threadOpacity(record),'stroke-width':threadStroke(record)});path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';group.append(path);}
+ appendPresentationTails(group,w,appearance,p=>({x:p.x,y:-p.y}));
  const isolated=isolatedFamilyKey(w);if(isolated)for(const path of group.querySelectorAll('[data-weave-family]'))path.style.display=path.dataset.weaveFamily===isolated?'':'none';layer.append(group);
 }
 
@@ -415,13 +418,13 @@ function renderCanvas(){
 
   if(weave&&display.weaveSource)renderThreadLayer($('weave-source-layer'),deriveWorking(weave.sourceContext.snapshot).paths.filter(p=>p.selected).map(p=>({family:p.family||p.identity?.roleId,fragments:p.intervals.map(f=>({points:[f.start,f.end]}))})),threadPreview||working.threadAppearance,true);renderDerivedWeaveLayer(working.weave&&!working.weave.derived?project().working:working,Boolean(carrierPreview));renderAttractorGuide();
 
-  const points=drag?.points||vertexPreview?.points||project().working.boundary.points;
+  const points=drag?.points||vertexPreview?.points||project().working.boundary.points,presentation=effectiveFieldPresentation(fieldPresentationPreview||working.fieldPresentation);
 
   if(display.boundary){
 
     const screen=points.map(p=>toScreen(p,view,width,height));
 
-    geometry.append(svgElement('polygon',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:'boundary-path'}));
+    geometry.append(svgElement('polygon',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:`boundary-path boundary-${presentation.boundaryEmphasis}`,'data-boundary-emphasis':presentation.boundaryEmphasis}));
 
     if(tool==='select')screen.forEach((p,i)=>{const vertex=svgElement('circle',{cx:p.x,cy:p.y,r:selected===i?6:4,class:`vertex${selected===i?' selected':''}`,'data-vertex':i});geometry.append(vertex);});
 
@@ -489,7 +492,7 @@ const libraryClick=event=>attempt(async()=>{
 
   if(board){event.preventDefault();event.stopPropagation();treeOpenState.set(`board:${board.dataset.board}`,true);const next=clone(workspace);next.activeProjectId=board.dataset.board;await persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
 
-  if(revision){event.preventDefault();event.stopPropagation();if(pending)cancelPending('OPENING BOUNDARY.');const found=findRevision(project(),revision.dataset.revision);if(!found)throw Error('This boundary is missing.');const updated=clone(project());updated.working={boundary:clone(found.revision.boundary),sourceRevisionId:revision.dataset.revision,carrier:null,carrierSourceRevisionId:null,weave:null};delete updated.working.familyCatalog;delete updated.working.threadAppearance;delete updated.working.interlacing;await editWorking(updated.working,'BOUNDARY OPENED. SELECT NEW OR APPLY THE PREVIOUSLY SELECTED WEAVE.',{projectUpdate:updated});$('boundary-name').value=found.entry.name;display.boundary=true;display.originalGrid=false;display.weaveSource=false;display.weaveDerived=false;display.attractor=false;saveView();selected=null;fit();}
+  if(revision){event.preventDefault();event.stopPropagation();if(pending)cancelPending('OPENING BOUNDARY.');const found=findRevision(project(),revision.dataset.revision);if(!found)throw Error('This boundary is missing.');const updated=clone(project());updated.working={boundary:clone(found.revision.boundary),sourceRevisionId:revision.dataset.revision,carrier:null,carrierSourceRevisionId:null,weave:null};delete updated.working.familyCatalog;delete updated.working.threadAppearance;delete updated.working.interlacing;delete updated.working.fieldPresentation;await editWorking(updated.working,'BOUNDARY OPENED. SELECT NEW OR APPLY THE PREVIOUSLY SELECTED WEAVE.',{projectUpdate:updated});$('boundary-name').value=found.entry.name;display.boundary=true;display.originalGrid=false;display.weaveSource=false;display.weaveDerived=false;display.attractor=false;saveView();selected=null;fit();}
 
   if(weaveRevision){event.preventDefault();event.stopPropagation();const found=findWeaveRevision(project(),weaveRevision.dataset.weaveRevision),restored=restoreWeaveStudy(project(),weaveRevision.dataset.weaveRevision),sourceId=restored.working.weave.sourceContext.sourceCarrierRevisionId,pattern=restored.carrierStudies.find(x=>x.revisions.some(r=>r.id===sourceId));$('weave-name').value=found.entry.name;if(pattern&&pattern.latestRevisionId!==sourceId){const updated=retargetWeaveSource(restored,pattern.latestRevisionId);await editWorking(updated.working,'INFLUENCED GRID OPENED AND UPDATED TO THE CURRENT PATTERN.',{projectUpdate:updated,saveWeaveName:found.entry.name});}else await editWorking(restored.working,'INFLUENCED GRID OPENED.');$('field-section').open=true;selected=null;}
 
@@ -554,10 +557,11 @@ const applyPresetSelection=event=>{const select=event.currentTarget,choice=selec
  const carrier=savedChoice?clone(source.revision.carrier):choice==='lines'?createRectangularCarrier():LINE_PRESETS[choice]?createLinePreset(choice):createStitchSource(choice,undefined,2);carrier.id='carrier-'+crypto.randomUUID();
  base.working={...base.working,carrier,carrierSourceRevisionId:null,weave:null};
  if(savedChoice&&source.revision.familyCatalog)base.working.familyCatalog=clone(source.revision.familyCatalog);else delete base.working.familyCatalog;
- if(savedChoice&&source.revision.threadAppearance)base.working.threadAppearance=clone(source.revision.threadAppearance);else delete base.working.threadAppearance;
+ if(savedChoice&&source.revision.threadAppearance)base.working.threadAppearance=clone(source.revision.threadAppearance);else delete base.working.threadAppearance;
+ if(savedChoice&&source.revision.fieldPresentation)base.working.fieldPresentation=clone(source.revision.fieldPresentation);else delete base.working.fieldPresentation;
  delete base.working.interlacing;
  const name=nextLibraryName(base.carrierStudies,savedChoice?source.entry.name+' COPY':'WEAVE PATTERN'),saved=saveCarrierStudy(base,name),instantWeave=true;
- if(instantWeave){saved.project=createWeaveStudy(saved.project,saved.revisionId);saved.project.working.interlacing={...defaultInterlacing(),version:'interlacing-v2',enabled:true,rule:defaultRule(carrier.recipeId||'')};if(sourceResult){const sourceWorking=sourceResult.revisions.at(-1).working,created=saved.project.working.weave,sourceBounds=bounds(sourceWorking.boundary.points),targetBounds=bounds(saved.project.working.boundary.points);saved.project.working.weave={...clone(sourceWorking.weave),studyId:created.studyId,sourceName:created.sourceName,sourceContext:created.sourceContext,generation:adaptGenerationToBoundary(sourceWorking.weave.generation,sourceBounds,targetBounds),derived:created.derived};if(sourceWorking.threadAppearance)saved.project.working.threadAppearance=clone(sourceWorking.threadAppearance);if(sourceWorking.interlacing)saved.project.working.interlacing=clone(sourceWorking.interlacing);}}
+ if(instantWeave){saved.project=createWeaveStudy(saved.project,saved.revisionId);saved.project.working.interlacing={...defaultInterlacing(),version:'interlacing-v2',enabled:true,rule:defaultRule(carrier.recipeId||'')};if(sourceResult){const sourceWorking=sourceResult.revisions.at(-1).working,created=saved.project.working.weave,sourceBounds=bounds(sourceWorking.boundary.points),targetBounds=bounds(saved.project.working.boundary.points);saved.project.working.weave={...clone(sourceWorking.weave),studyId:created.studyId,sourceName:created.sourceName,sourceContext:created.sourceContext,generation:adaptGenerationToBoundary(sourceWorking.weave.generation,sourceBounds,targetBounds),derived:created.derived};if(sourceWorking.threadAppearance)saved.project.working.threadAppearance=clone(sourceWorking.threadAppearance);if(sourceWorking.fieldPresentation)saved.project.working.fieldPresentation=clone(sourceWorking.fieldPresentation);if(sourceWorking.interlacing)saved.project.working.interlacing=clone(sourceWorking.interlacing);}}
  $('carrier-name').value=name;display.originalGrid=true;display.weaveSource=false;display.weaveDerived=!!saved.project.working.weave;display.attractor=Boolean(sourceResult);if(saved.project.working.interlacing?.enabled)display=applyDisplayPreset(display,'derived-only');saveView();carrierPreview=saved.project.working;renderCanvas();$('preset-apply-state').textContent=`PREVIEW · ${name} · SAVING…`;await new Promise(resolve=>requestAnimationFrame(resolve));await editWorking(saved.project.working,`${name} CREATED FROM ${savedChoice?'YOUR SAVED WEAVE':'PRESET'}, FIT TO THIS BOUNDARY, SHOWN, AND SAVED.`,{projectUpdate:saved.project,saveWeaveName:sourceResult?nextLibraryName(base.weaveStudies,'WEAVE RESULT'):null});libraryTemplateRevisionId=saved.revisionId;$('carrier-section').open=true;$('field-section').open=true;$('preset-apply-state').textContent=`APPLIED + SAVED · ${name}`;
  }catch(error){$('preset-apply-state').textContent=`NOT APPLIED · ${error.message}`;throw error;}finally{applyingPreset=false;select.disabled=false;select.value='';}});};
 $('stitch-preset').oninput=applyPresetSelection;
@@ -661,14 +665,17 @@ $('interlace-enabled').onchange=()=>attempt(()=>updateInterlacing());$('interlac
 
 
 
-let threadPreview=null,threadSaving=false;
+let threadPreview=null,threadSaving=false;
+
+function renderFieldPresentationControls(){const settings=effectiveFieldPresentation(fieldPresentationPreview||project().working.fieldPresentation),disabled=threadSaving||!!pending;$('field-edge-mode').value=settings.mode;$('field-recovery').value=Math.round(settings.recoveryLength*100);$('field-recovery-value').value=Math.round(settings.recoveryLength*100)+'%';$('field-variation').value=Math.round(settings.endVariation*100);$('field-variation-value').value=Math.round(settings.endVariation*100)+'%';$('field-relaxation').value=Math.round(settings.relaxation*100);$('field-relaxation-value').value=Math.round(settings.relaxation*100)+'%';$('field-boundary-emphasis').value=settings.boundaryEmphasis;$('field-presentation-status').textContent=settings.mode.toUpperCase()+' · '+Math.round(settings.recoveryLength*100)+'% EXTENT · '+Math.round(settings.endVariation*100)+'% VARIATION';for(const id of ['field-edge-mode','field-recovery','field-variation','field-relaxation','field-boundary-emphasis','field-presentation-reset'])$(id).disabled=disabled;}
 
-function renderThreadControls(){const w=project().working,names=w.carrier?familyEntries(w).map(entry=>entry.key):[];$('thread-controls').hidden=!names.length;$('thread-prerequisite').hidden=!!names.length;const selected=$('thread-family').value;$('thread-family').replaceChildren(...names.map(name=>{const o=document.createElement('option');o.value=name;o.textContent=familyLabel(name,w);return o}));$('thread-family').value=names.includes(selected)?selected:names[0]||'';if(names.length){const q=threadStyle(w.threadAppearance,$('thread-family').value);$('thread-width').value=q.width;$('thread-width-value').value=q.width;$('thread-rank').value=q.rank||1;$('thread-rank-value').value=q.rank||1;$('thread-edge').value=q.edgeWidth??1;$('thread-edge-value').value=q.edgeWidth??1;$('thread-edge-row').hidden=false;}for(const id of ['thread-width','thread-rank','thread-edge','thread-reset','thread-family','thread-linked'])$(id).disabled=threadSaving||!!pending;}
+function renderThreadControls(){const w=project().working,names=w.carrier?familyEntries(w).map(entry=>entry.key):[];$('thread-controls').hidden=!names.length;$('thread-prerequisite').hidden=!!names.length;const selected=$('thread-family').value;$('thread-family').replaceChildren(...names.map(name=>{const o=document.createElement('option');o.value=name;o.textContent=familyLabel(name,w);return o}));$('thread-family').value=names.includes(selected)?selected:names[0]||'';if(names.length){const q=threadStyle(w.threadAppearance,$('thread-family').value);$('thread-width').value=q.width;$('thread-width-value').value=q.width;$('thread-rank').value=q.rank||1;$('thread-rank-value').value=q.rank||1;$('thread-edge').value=q.edgeWidth??1;$('thread-edge-value').value=q.edgeWidth??1;$('thread-edge-row').hidden=false;}renderFieldPresentationControls();for(const id of ['thread-width','thread-rank','thread-edge','thread-reset','thread-family','thread-linked'])$(id).disabled=threadSaving||!!pending;}
 
 function appearanceFromControls(patch){return changeThreadAppearance(project().working.threadAppearance,familyNames(project().working.carrier),$('thread-family').value,$('thread-linked').checked,patch);}
 
 function commitThreadAppearance(appearance,interlacePatch=null){const next=copyWorkingForEdit(project().working);if(appearance)next.threadAppearance=appearance;if(interlacePatch)next.interlacing=interlacePatch;return updateWorking(next,'APPEARANCE UPDATED.',{presentation:true,interlacePatch});}
-async function savePresentationEdit(working,interlacePatch=null){if(pending||threadSaving)throw Error('Wait for the current change to finish.');const started=performance.now(),plan=presentationPlan(interlacePatch?'crossing-rules':'appearance');threadPreview=null;threadSaving=true;renderThreadControls();try{const before=project().working,base=copyProjectForEdit(project());base.working=working;const saved=base.working.weave?saveWeaveStudy(base,currentWeaveName(base.working,base),true,true).project:saveCarrierStudy(base,currentPatternName(base)).project,next={...workspace,projects:workspace.projects.map(p=>p.id===saved.id?saved:p)},savedStatus=interlacePatch?'INTERLACING RULE SAVED. GEOMETRY UNCHANGED.':'THREAD APPEARANCE SAVED. GEOMETRY UNCHANGED.';workspace=next;acceptedVersion++;history().recordImmutable(before);autosave.accept({workspace:next},{savedStatus,started});status(`${savedStatus} BACKUP PENDING.`);}finally{threadSaving=false;render();workerEvent('presentation-applied',{totalMs:performance.now()-started,plan});}}
+function previewFieldPresentation(patch,commit=false){const value=changeFieldPresentation(project().working.fieldPresentation,patch);if(!commit){fieldPresentationPreview=value;renderThreadControls();renderCanvas();return;}const next=copyWorkingForEdit(project().working);next.fieldPresentation=value;fieldPresentationPreview=null;return updateWorking(next,'FIELD PRESENTATION UPDATED.',{presentation:true});}
+async function savePresentationEdit(working,interlacePatch=null){if(pending||threadSaving)throw Error('Wait for the current change to finish.');const started=performance.now(),plan=presentationPlan(interlacePatch?'crossing-rules':'appearance'),fieldChanged=JSON.stringify(working.fieldPresentation)!==JSON.stringify(project().working.fieldPresentation);threadPreview=null;fieldPresentationPreview=null;threadSaving=true;renderThreadControls();try{const before=project().working,base=copyProjectForEdit(project());base.working=working;const saved=base.working.weave?saveWeaveStudy(base,currentWeaveName(base.working,base),true,true).project:saveCarrierStudy(base,currentPatternName(base)).project,next={...workspace,projects:workspace.projects.map(p=>p.id===saved.id?saved:p)},savedStatus=interlacePatch?'INTERLACING RULE SAVED. GEOMETRY UNCHANGED.':fieldChanged?'FIELD PRESENTATION SAVED. GEOMETRY UNCHANGED.':'THREAD APPEARANCE SAVED. GEOMETRY UNCHANGED.';workspace=next;acceptedVersion++;history().recordImmutable(before);autosave.accept({workspace:next},{savedStatus,started});status(`${savedStatus} BACKUP PENDING.`);}finally{threadSaving=false;render();workerEvent('presentation-applied',{totalMs:performance.now()-started,plan});}}
 
 function appearanceParameterEdit(id,key,event,commit){
  if(pending||threadSaving)throw Error('Wait for the current change to finish.');
@@ -683,7 +690,11 @@ for(const [id,key] of [['thread-rank','rank'],['thread-edge','edgeWidth'],['thre
 }
 $('thread-family').onchange=()=>{editGesture.clear();threadPreview=null;renderThreadControls();renderCanvas();};
 
-$('thread-reset').onclick=()=>attempt(()=>commitThreadAppearance(appearanceFromControls({width:3,mode:'outline',rank:1,edgeWidth:1})));
+$('thread-reset').onclick=()=>attempt(()=>commitThreadAppearance(appearanceFromControls({width:3,mode:'outline',rank:1,edgeWidth:1})));
+$('field-edge-mode').onchange=event=>attempt(()=>previewFieldPresentation({mode:event.target.value},true));
+$('field-boundary-emphasis').onchange=event=>attempt(()=>previewFieldPresentation({boundaryEmphasis:event.target.value},true));
+for(const [id,key] of [['field-recovery','recoveryLength'],['field-variation','endVariation'],['field-relaxation','relaxation']]){const control=$(id);control.oninput=event=>attempt(()=>{const value=sliderEventNumber(event,control)/100;$(`${id}-value`).value=Math.round(value*100)+'%';return previewFieldPresentation({[key]:value});});control.onchange=event=>attempt(()=>previewFieldPresentation({[key]:sliderEventNumber(event,control)/100},true));}
+$('field-presentation-reset').onclick=()=>attempt(()=>previewFieldPresentation({...FIELD_PRESENTATION_DEFAULT},true));
 
 
 

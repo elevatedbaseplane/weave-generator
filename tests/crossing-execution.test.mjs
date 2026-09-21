@@ -22,7 +22,7 @@ test('obsolete appearance completion is discarded without poisoning the new pres
 });
 test('pending woven redraw retains the last complete weave instead of exposing unoccluded lines',()=>{
  const {scope,w}=setup(),groups=[];let raw=0;scope.ensureCrossings=()=>{};
- Object.assign(scope,{width:100,height:100,view:{cx:0,cy:0,scale:1},svgElement:(_,attrs)=>({attrs,style:{},append(){},querySelectorAll:()=>[]}),isolatedFamilyKey:()=>null,presentationBleedStrands:strands=>strands,presentationTailStrands:()=>[],threadPaths:()=>[],renderThreadLayer:()=>raw++});
+ Object.assign(scope,{width:100,height:100,view:{cx:0,cy:0,scale:1},svgElement:(_,attrs)=>({attrs,style:{},append(){},querySelectorAll:()=>[]}),isolatedFamilyKey:()=>null,presentationTailLayers:()=>[],threadPaths:()=>[],renderThreadLayer:()=>raw++,appendPresentationTails:()=>{},fieldPresentationPreview:null});
  vm.runInContext(app.slice(app.indexOf('function renderContinuousWeave('),app.indexOf('function renderDerivedWeaveLayer(')),scope);
  scope.lastWovenPresentation={identity:scope.wovenPresentationIdentity(w),markup:'last complete'};
  scope.renderContinuousWeave({append:g=>groups.push(g)},w);

@@ -2,7 +2,9 @@
 
 Date: 2026-09-21
 
-Status: planning complete; implementation has not begun.
+Status: approved and implemented in document 114.
+
+Implementation note: the completed build places the new bounded recovery calculation in `dist/field-presentation.mjs` rather than enlarging `dist/thread-appearance.mjs`. This keeps strand styling separate from field extent while retaining one shared presentation calculation for canvas and SVG export. The behavior and contracts below remain the approved basis for the build.
 
 This refinement is inserted after Build 1 edge refinement and before contact constraints and adaptive tension. It develops the weave's visible field and outward endings without changing the certified weave, crossing decisions, saved geometry, worker limits, or Project → Boundary → applied Weave model.
 

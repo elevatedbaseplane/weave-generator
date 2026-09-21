@@ -3,6 +3,7 @@ import {validateCarrierRecipe} from './carrier.mjs';
 import {validateFamilyCatalog} from './family-domain.mjs';
 import {validateThreadAppearance} from './thread-appearance.mjs';
 import {validateInterlacing} from './interlacing.mjs';
+import {validateFieldPresentation} from './field-presentation.mjs';
 import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';
 import {INFLUENCE_VERSIONS,FAMILY_INFLUENCE_VERSIONS,validateGeneration as validateInfluenceGeneration} from './influence.mjs';
 import {COMBINED_VERSIONS,validateCombinedGeneration} from './combined.mjs';
@@ -10,7 +11,7 @@ import {STITCH_VERSIONS,validateStitchGeneration} from './stitch.mjs';
 import {STITCH_SOURCE} from './stitch-source.mjs';
 
 export const WEAVE_SOURCE_VERSION='canonical-weave-source-v1';
-const optional=['familyCatalog','threadAppearance','interlacing'];
+const optional=['familyCatalog','threadAppearance','interlacing','fieldPresentation'];
 const required=['boundary','sourceRevisionId','carrier','carrierSourceRevisionId','weave'];
 function keys(value,required,optional=[]){
  if(!value||typeof value!=='object'||Array.isArray(value)||required.some(k=>!Object.hasOwn(value,k))||Object.keys(value).some(k=>!required.includes(k)&&!optional.includes(k)))throw Error('Invalid canonical weave source keys.');
@@ -34,7 +35,7 @@ export function validateWeaveSource(source){
  identity(source.projectId);const w=source.working;keys(w,required,optional);
  identity(w.sourceRevisionId,true);identity(w.carrierSourceRevisionId,true);
  validateBoundaryRecord(w.boundary);if(w.carrier!==null)validateCarrierRecipe(w.carrier);
- validateFamilyCatalog(w.familyCatalog,w.carrier);validateThreadAppearance(w.threadAppearance);validateInterlacing(w.interlacing);
+ validateFamilyCatalog(w.familyCatalog,w.carrier);validateThreadAppearance(w.threadAppearance);validateInterlacing(w.interlacing);validateFieldPresentation(w.fieldPresentation);
  if(w.weave!==null){
   keys(w.weave,['studyId','sourceName','sourceContext','originLineage'],['weaveVersion','generation']);
   identity(w.weave.studyId);if(!w.carrier)throw Error('Canonical weave requires a recipe.');
