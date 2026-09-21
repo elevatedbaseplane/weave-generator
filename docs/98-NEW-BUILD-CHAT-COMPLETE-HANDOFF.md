@@ -6,7 +6,7 @@ This is the complete execution handoff. Read documents 95 and 96 with it. Older 
 
 ## 1. Product goal
 
-Build a rigorous weave generator rather than a generic two-dimensional grid maker. A user should be able to create or choose a boundary, apply a reusable weave, edit each thread family, deform the weave with field influences, control visible over/under construction, analyze authored forces and relationships, and export stable family and strand geometry. Point extraction and polyline composition have moved to another tool. Rule-based binding is deferred and is not part of the active generator roadmap.
+Build a rigorous weave generator rather than a generic two-dimensional grid maker. A user should be able to create or choose a boundary, apply a reusable weave, edit each thread family, deform the weave with field influences, control visible over/under construction, add connection stitches in a later phase, analyze authored forces and relationships, and export stable family and strand geometry. Point extraction and polyline composition have moved to another tool. Rule-based binding is deferred and is not part of the active generator roadmap.
 
 The tool must become simpler as its internal model becomes more rigorous. Ordinary creation should never require the user to understand revision roots, certified payloads, storage epochs, worker requests, or recovery manifests.
 
@@ -15,9 +15,10 @@ The long-term sequence is:
 1. Stable weave creation and editing.
 2. Reliable automatic and manual over/under construction.
 3. Expanded traditional and complex weave library.
-4. Contact constraints and adaptive tension.
-5. Force and relationship analysis.
-6. Stable per-family, per-strand, and combined SVG/DXF export.
+4. Connection stitches without rule-based binding.
+5. Contact constraints and adaptive tension.
+6. Force and relationship analysis.
+7. Stable per-family, per-strand, and combined SVG/DXF export.
 
 Point extraction and polyline composition belong to another tool and must not be added to this generator. Rule-based binding is deferred. Historical documents and fixtures that mention these capabilities remain evidence; they are not active implementation instructions.
 

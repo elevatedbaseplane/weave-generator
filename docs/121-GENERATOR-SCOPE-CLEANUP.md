@@ -14,6 +14,7 @@ Public Site version: 24
 - Their top-level tabs and Extract/Synthesize workflow stages were removed from the generator interface.
 - Both capabilities were removed from the generator's active roadmap.
 - Rule-based binding is deferred and is not an active generator milestone.
+- Connection stitches remain a separate later capability without rule-based binding.
 - Historical documents and fixtures remain unchanged as evidence unless they are authoritative current handoffs.
 
 ## Preserved behavior
@@ -25,9 +26,10 @@ The change does not alter canonical weave documents, saved-work compatibility, f
 1. Stable weave creation and editing.
 2. Reliable automatic and manual over/under construction.
 3. Expanded traditional and complex weave library.
-4. Contact constraints and adaptive tension.
-5. Force and relationship analysis.
-6. Stable per-family, per-strand, and combined SVG/DXF export.
+4. Connection stitches without rule-based binding.
+5. Contact constraints and adaptive tension.
+6. Force and relationship analysis.
+7. Stable per-family, per-strand, and combined SVG/DXF export.
 
 ## Verification
 
