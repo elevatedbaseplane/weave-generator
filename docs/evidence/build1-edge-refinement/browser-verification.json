@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-21",
+  "build": "WF-B1-EDGE-REFINEMENT-20260921",
+  "fixture": {
+    "project": "PHASE 6 REVIEW",
+    "boundary": "BOUNDARY 01",
+    "weave": "WEAVE PATTERN 01",
+    "sourcePaths": 31,
+    "derivedPaths": 31,
+    "fields": 3
+  },
+  "fitView": {
+    "zoomPercent": 78.6,
+    "derivedLayerClip": null,
+    "visibleClosedPaths": 0,
+    "openOutlinePairs": 31,
+    "pendingFallback": false
+  },
+  "zoomView": {
+    "zoomPercent": 131.3,
+    "derivedLayerClip": null,
+    "visibleClosedPaths": 0,
+    "derivedPaths": 31,
+    "pendingFallback": false
+  },
+  "warningOrErrorLogs": 0,
+  "governingMatrix": {
+    "passed": 249,
+    "failed": 0
+  },
+  "focusedChecks": {
+    "passed": 33,
+    "failed": 0
+  },
+  "preservedPhase0Checks": {
+    "passed": 8,
+    "failed": 0
+  },
+  "result": "pass"
+}

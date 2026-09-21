@@ -12,7 +12,8 @@ test('thread appearance has one outline presentation and no ineffective style se
   assert.match(html,/THREADS ALWAYS USE A CLEAN OUTLINE/);
   assert.equal(threadStyle({version:'thread-appearance-v1',families:{A:{width:4,mode:'solid'}}},'A').mode,'outline');
   const paths=threadPaths([{family:'A',fragments:[{points:[{x:0,y:0},{x:10,y:0}]}]}],undefined);
-  assert.match(paths[0].d,/ Z$/);
+  assert.equal((paths[0].d.match(/M/g)||[]).length,2);
+  assert.doesNotMatch(paths[0].d,/ Z/);
 });
 
 test('projects, boundaries and saved weaves are direct workflow choices',()=>{

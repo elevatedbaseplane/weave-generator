@@ -13,7 +13,7 @@ import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,ind
 
 import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';
 
-import {threadStyle,threadPaths,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
+import {threadStyle,threadPaths,presentationBleedStrands,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
 
 import {influenceResponseChanges,influenceResponsesLinked} from './influence-controls.mjs';
 
@@ -56,11 +56,11 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-B1-P1E-PRECEDENCE-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-B1-EDGE-REFINEMENT-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
-document.querySelector('footer').innerHTML='BUILD 1 · PHASE 1E<br>Crossing decisions show their controlling rule.';
+document.querySelector('footer').innerHTML='BUILD 1 · EDGE REFINEMENT<br>Open thread ends with straight boundary continuations.';
 
 const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';
 
@@ -346,13 +346,13 @@ function drawWeaveLayer(id,paths,source=false){
 
 function renderThreadLayer(layer,strands,appearance,source=false){const isolated=isolatedFamilyKey();for(const record of threadPaths(strands,appearance,p=>toScreen(p,view,width,height))){if(isolated&&record.family!==isolated)continue;const path=svgElement('path',{d:record.d,class:source?'weave-source':familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-fragments':record.fragments,'data-segments':record.segments});path.style.strokeWidth=String(threadStroke(record)*view.scale);path.style.setProperty('--thread-opacity',String(threadOpacity(record)));path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';layer.append(path);}}
 
-function updateThreadClip(){let defs=$('thread-defs');if(!defs){defs=svgElement('defs',{id:'thread-defs'});$('canvas').prepend(defs);}defs.replaceChildren();const clip=svgElement('clipPath',{id:'thread-boundary-clip',clipPathUnits:'userSpaceOnUse'});clip.append(svgElement('polygon',{points:project().working.boundary.points.map(p=>{const q=toScreen(p,view,width,height);return q.x+','+q.y}).join(' ')}));defs.append(clip);for(const id of ['family-a-layer','family-b-layer','weave-derived-layer','weave-source-layer'])$(id).setAttribute('clip-path','url(#thread-boundary-clip)');}
+function updateThreadClip(){let defs=$('thread-defs');if(!defs){defs=svgElement('defs',{id:'thread-defs'});$('canvas').prepend(defs);}defs.replaceChildren();const clip=svgElement('clipPath',{id:'thread-boundary-clip',clipPathUnits:'userSpaceOnUse'});clip.append(svgElement('polygon',{points:project().working.boundary.points.map(p=>{const q=toScreen(p,view,width,height);return q.x+','+q.y}).join(' ')}));defs.append(clip);for(const id of ['family-a-layer','family-b-layer','weave-source-layer'])$(id).setAttribute('clip-path','url(#thread-boundary-clip)');$('weave-derived-layer').removeAttribute('clip-path');}
 
 
 
 function renderContinuousWeave(layer,w){
  ensureCrossings(w);const appearance=threadPreview||w.threadAppearance;
- if(!w.interlacing?.enabled){renderThreadLayer(layer,w.weave.derived.strands,appearance);return;}
+ if(!w.interlacing?.enabled){renderThreadLayer(layer,presentationBleedStrands(w.weave.derived.strands,w.boundary),appearance);return;}
  const current=crossingCache?.paintKey===crossingPaintKey(w),previous=lastWovenPresentation?.identity===wovenPresentationIdentity(w);
  if(!current&&!previous)return;
  const group=svgElement('g',{transform:'translate('+(width/2-view.cx*view.scale)+' '+(height/2+view.cy*view.scale)+') scale('+view.scale+')',fill:'none',stroke:'var(--muted)','stroke-linejoin':'round',opacity:.82,'data-continuous-weave':'true','data-woven-pending':String(!current)});

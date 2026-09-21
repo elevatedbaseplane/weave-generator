@@ -5,9 +5,9 @@ import fs from 'node:fs';
 const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
 const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 
-test('Phase 1E preserves bounded seeded crossing controls and current build identity',()=>{
- assert.match(html,/WF-B1-P1E-PRECEDENCE-20260921/);
- assert.match(app,/BUILD='WF-B1-P1E-PRECEDENCE-20260921'/);
+test('edge refinement preserves bounded seeded crossing controls and current build identity',()=>{
+ assert.match(html,/WF-B1-EDGE-REFINEMENT-20260921/);
+ assert.match(app,/BUILD='WF-B1-EDGE-REFINEMENT-20260921'/);
  assert.match(html,/<option value="seeded">SEEDED STRUCTURED VARIATION<\/option>/);
  assert.match(html,/id="interlace-seed"[^>]+min="0"[^>]+max="65535"/);
  assert.match(html,/id="interlace-balance"[^>]+min="10"[^>]+max="90"[^>]+step="5"/);
