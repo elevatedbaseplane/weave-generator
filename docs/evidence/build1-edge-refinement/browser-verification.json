@@ -13,7 +13,8 @@
     "zoomPercent": 78.6,
     "derivedLayerClip": null,
     "visibleClosedPaths": 0,
-    "openOutlinePairs": 31,
+    "openWovenPaths": 31,
+    "familyGroupedContinuationPaths": 3,
     "pendingFallback": false
   },
   "zoomView": {
@@ -35,6 +36,13 @@
   "preservedPhase0Checks": {
     "passed": 8,
     "failed": 0
+  },
+  "publicationGate": {
+    "initialVersion": 13,
+    "initialResult": "failed: dense five-family fixture exceeded the unchanged 750 ms crossing completion deadline",
+    "rollbackVersion": 12,
+    "rollbackResult": "passed: restored the dense 82-path woven view",
+    "correction": "boundary-tail paths are appended after accepted crossing-worker markup and do not enter certified crossing computation"
   },
   "result": "pass"
 }

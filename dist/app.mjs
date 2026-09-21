@@ -13,7 +13,7 @@ import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,ind
 
 import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';
 
-import {threadStyle,threadPaths,presentationBleedStrands,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
+import {threadStyle,threadPaths,presentationBleedStrands,presentationTailStrands,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
 
 import {influenceResponseChanges,influenceResponsesLinked} from './influence-controls.mjs';
 
@@ -357,6 +357,7 @@ function renderContinuousWeave(layer,w){
  if(!current&&!previous)return;
  const group=svgElement('g',{transform:'translate('+(width/2-view.cx*view.scale)+' '+(height/2+view.cy*view.scale)+') scale('+view.scale+')',fill:'none',stroke:'var(--muted)','stroke-linejoin':'round',opacity:.82,'data-continuous-weave':'true','data-woven-pending':String(!current)});
  group.innerHTML=current?crossingCache.markup:lastWovenPresentation.markup;
+ for(const record of threadPaths(presentationTailStrands(w.weave.derived.strands,w.boundary),appearance,p=>({x:p.x,y:-p.y}))){const path=svgElement('path',{d:record.d,class:familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-boundary-continuation':'true',opacity:threadOpacity(record),'stroke-width':threadStroke(record)});path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';group.append(path);}
  const isolated=isolatedFamilyKey(w);if(isolated)for(const path of group.querySelectorAll('[data-weave-family]'))path.style.display=path.dataset.weaveFamily===isolated?'':'none';layer.append(group);
 }
 

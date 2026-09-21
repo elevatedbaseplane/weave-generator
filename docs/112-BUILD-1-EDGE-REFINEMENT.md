@@ -14,6 +14,8 @@ Derived weave threads no longer finish as closed rectangular ribbons. Each outli
 
 The square or irregular boundary remains available as a drawing reference, but it no longer acts as a hard mask for the derived weave. Source and construction layers remain clipped to the authoritative boundary. Over/under occlusion masks still use the original certified strands, so the continuation cannot change crossing identity or assignment.
 
+The crossing worker produces only the certified woven body. Boundary continuations are appended on the main presentation layer after the worker result is accepted, keeping the edge treatment outside the unchanged 750 ms certified-completion gate. The initial version-13 publication placed continuation work inside the crossing worker and the dense five-family Site fixture exceeded that gate. Version 12 was immediately restored before this separation was implemented and reverified.
+
 SVG presentation exports use the same open-edge continuation and record it as `presentation.openThreadEnds`, `presentation.boundaryContinuation`, and `presentation.lengthRatio`. The complete certified geometry remains embedded unchanged in export metadata.
 
 ## Preserved contracts
@@ -35,7 +37,7 @@ The full historical suite was also sampled. Its remaining failures are the alrea
 
 ## Managed-browser evidence
 
-The preserved three-family Phase 6 fixture restored with 31 source paths, 31 derived paths, three fields, and storage unblocked. At Fit and after zooming to 131.3%, the derived layer retained 31 paths, zero closed visible paths, no boundary clip, no pending fallback, and no browser warning or error. Returning to the restored 78.6% view produced 31 open outline pairs and zero closed paths.
+The preserved three-family Phase 6 fixture restored with 31 source paths, 31 derived paths, three fields, and storage unblocked. At Fit, the derived layer contained 31 woven body paths and three family-grouped boundary-continuation paths, with zero closed visible paths, no boundary clip, and no pending fallback. After zooming to 131.3%, the weave remained visible with no browser warning or error.
 
 Evidence is recorded in `docs/evidence/build1-edge-refinement/browser-verification.json`.
 
