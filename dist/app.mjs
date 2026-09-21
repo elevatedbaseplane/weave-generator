@@ -577,7 +577,11 @@ $('save-weave').onclick=()=>attempt(saveCurrentWeaveRevision);$('save-influence'
 
 
 
-let crossingJob=null,crossingCache=null,crossingFailure=null,crossingSequence=0,lastWovenPresentation=null;
+let crossingJob=null,crossingCache=null,crossingFailure=null,crossingSequence=0,lastWovenPresentation=null,primedCrossingWorker=null;
+
+function primeCrossingWorker(){if(primedCrossingWorker)return;try{const worker=new Worker(new URL('./crossing-worker.mjs',import.meta.url),{type:'module'});primedCrossingWorker=worker;worker.onerror=()=>{if(primedCrossingWorker===worker){primedCrossingWorker=null;worker.terminate();}};}catch{primedCrossingWorker=null;}}
+
+primeCrossingWorker();
 function displayedWeaveWorking(){const w=carrierPreview||pending?.working||project().working;return w.weave&&!w.weave.derived?project().working:w;}
 function crossingPaintKey(w){return w.weave?.derived?.provenanceFingerprint+JSON.stringify([w.interlacing,threadPreview||w.threadAppearance]);}
 function wovenPresentationIdentity(w){return JSON.stringify([project().id,w.weave?.studyId,w.boundary]);}
@@ -634,10 +638,10 @@ function ensureCrossings(w){
  const key=w.weave.derived.provenanceFingerprint,paintKey=crossingPaintKey(w);
  if(crossingCache?.paintKey===paintKey||crossingJob?.paintKey===paintKey||crossingFailure?.paintKey===paintKey)return;
  if(crossingJob){crossingJob.worker.terminate();clearTimeout(crossingJob.timer);crossingJob=null;}
- let worker;try{worker=new Worker(new URL('./crossing-worker.mjs',import.meta.url),{type:'module'});}catch(error){crossingFailure={key,paintKey,message:'Crossing worker unavailable: '+error.message};return;}
+ let worker;try{worker=primedCrossingWorker||new Worker(new URL('./crossing-worker.mjs',import.meta.url),{type:'module'});primedCrossingWorker=null;}catch(error){crossingFailure={key,paintKey,message:'Crossing worker unavailable: '+error.message};return;}
  const id=++crossingSequence,started=performance.now(),identity=wovenPresentationIdentity(w);crossingJob={worker,key,id,paintKey};
  $('interlace-status').textContent='UPDATING WOVEN VIEW — KEEPING LAST COMPLETE PRESENTATION';
- const fail=message=>{if(crossingJob?.id!==id)return;clearTimeout(crossingJob.timer);worker.terminate();crossingJob=null;crossingFailure={key,paintKey,message};renderDerivedWeaveLayer();};
+ const fail=message=>{if(crossingJob?.id!==id)return;clearTimeout(crossingJob.timer);worker.terminate();crossingJob=null;crossingFailure={key,paintKey,message};primeCrossingWorker();renderDerivedWeaveLayer();};
  crossingJob.timer=setTimeout(()=>fail('750 ms completion deadline exceeded.'),750);worker.onerror=e=>fail(e.message||'Worker unavailable.');
  worker.onmessage=e=>{
   if(crossingJob?.id!==id||e.data.id!==id)return;
@@ -645,7 +649,7 @@ function ensureCrossings(w){
   if(crossingPaintKey(current)!==paintKey||wovenPresentationIdentity(current)!==identity){clearTimeout(crossingJob.timer);worker.terminate();crossingJob=null;renderDerivedWeaveLayer();return;}
   if(e.data.error)return fail(e.data.error);
   if(e.data.workerMs>400)return fail('Worker maximum exceeded: '+e.data.workerMs.toFixed(1)+' ms');
-  clearTimeout(crossingJob.timer);worker.terminate();crossingJob=null;
+  clearTimeout(crossingJob.timer);worker.terminate();crossingJob=null;primeCrossingWorker();
   crossingCache={key,paintKey,markup:e.data.markup,result:e.data.result,workerMs:e.data.workerMs};crossingFailure=null;
   const renderStart=performance.now();renderDerivedWeaveLayer();const renderMs=performance.now()-renderStart,totalMs=performance.now()-started;
   $('weave-derived-layer').setAttribute('data-crossing-render-ms',String(renderMs));$('weave-derived-layer').setAttribute('data-crossing-total-ms',String(totalMs));

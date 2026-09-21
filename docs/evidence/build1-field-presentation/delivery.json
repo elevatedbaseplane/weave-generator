@@ -8,7 +8,7 @@
   "siteVersion": null,
   "visibility": "owner-only",
   "local": {
-    "currentContract": {"passed": 254, "failed": 0},
+    "currentContract": {"passed": 255, "failed": 0},
     "fieldPresentation": {"passed": 6, "failed": 0},
     "phase0Preserved": {"passed": 8, "failed": 0},
     "staticCheck": "passed",

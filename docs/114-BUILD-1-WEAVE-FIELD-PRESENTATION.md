@@ -22,7 +22,7 @@ Recover produces an orderly transition. Loose extends farther with bounded later
 
 ## Architecture and preservation
 
-`field-presentation-v1` is an optional bounded presentation decision. `dist/field-presentation.mjs` owns its validation, deterministic endpoint identity, recovery sampling, and ordered layers. Canvas rendering appends those layers after the accepted woven body. The crossing worker, crossing paint key, carrier derivation, field deformation, weave certificate, provenance fingerprint, and compact geometry payload remain unchanged.
+`field-presentation-v1` is an optional bounded presentation decision. `dist/field-presentation.mjs` owns its validation, deterministic endpoint identity, recovery sampling, and ordered layers. Canvas rendering appends those layers after the accepted woven body. The crossing worker is primed while the workspace restores so a hosted cold module fetch cannot consume its unchanged 750 ms completion allowance. The crossing algorithm, input, paint key, carrier derivation, field deformation, weave certificate, provenance fingerprint, and compact geometry payload remain unchanged.
 
 Carrier and weave revisions preserve explicit presentation decisions. Undo/Redo, portable backup, revision restore, saved-pattern reuse, and saved-weave reuse carry them with the working document. Old documents with no object remain valid.
 
@@ -34,13 +34,13 @@ The source and construction layers remain clipped to the working boundary. The d
 
 Automated checks:
 
-- governing current-contract matrix: 254 passed, 0 failed;
+- governing current-contract matrix: 255 passed, 0 failed;
 - focused field-presentation tests: 6 passed, 0 failed;
 - preserved Phase 0 diagnostic and native-fixture subset: 8 passed, 0 failed;
 - static entrypoint/reference/private-output check: passed;
 - changed-module syntax and `git diff --check`: passed.
 
-The focused tests cover strict bounds and compatibility defaults, deterministic square and irregular-boundary recovery, continuity, family direction, all four modes, open/fading layers, certified-input immutability, zero new geometry payloads, revision restore, compact portable backup, SVG parity, and presentation-only control wiring.
+The focused tests cover strict bounds and compatibility defaults, deterministic square and irregular-boundary recovery, continuity, family direction, all four modes, open/fading layers, certified-input immutability, zero new geometry payloads, revision restore, compact portable backup, SVG parity, presentation-only control wiring, and overlap-worker priming before dense restored work.
 
 Managed local-browser verification used the preserved multi-family workspace. Recover, Loose, Fray, and Crop rendered without entering a pending woven state. Exact 30/40/75 slider values survived reload. Fray produced two recovery layers per family, Hidden removed the boundary stroke while keeping editing available, and Crop removed recovery paths. Undo restored Recover, Redo restored Loose, and Reset returned the saved defaults. Light, Dark, and Neo retained 82 woven body paths plus three recovery paths with no pending fallback. Fit and repeated zoom retained the complete body and recovery paths. The accepted fixture was restored to Recover 20/20/100 with Faint boundary before delivery.
 
