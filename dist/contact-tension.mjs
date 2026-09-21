@@ -16,8 +16,8 @@ export function adaptiveContactReach(baseReach,threadWidth,metrics,contact){
  const nearest=Number.isFinite(metrics.nearest)?metrics.nearest:Infinity;
  const proximity=Number.isFinite(nearest)?clamp(1-nearest/(baseReach*4||1)):0;
  const pressure=clamp(.35*proximity+.25*clamp(1-metrics.sin)+.25*clamp(metrics.curvature)+.15*clamp(metrics.neighborCount/2));
- const effective=Math.min(100,contact.base+contact.adaptive*pressure*(100-contact.base)/100);
- const desired=baseReach+threadWidth*1.5*(1-effective/100);
- const room=Number.isFinite(nearest)?Math.max(0,nearest/2-baseReach):Infinity;
- return baseReach+Math.min(desired-baseReach,room);
+ const slack=clamp((100-contact.base)/100),adapt=clamp(contact.adaptive/100);
+ const extra=threadWidth*2.5*Math.pow(slack,.65)*(1-.65*adapt*pressure);
+ const room=Number.isFinite(nearest)?Math.max(0,nearest/2):Infinity;
+ return baseReach+Math.min(extra,room);
 }

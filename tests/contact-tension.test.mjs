@@ -16,11 +16,13 @@ test('contact tension is an explicit bounded interlacing-v4 decision',()=>{
  assert.throws(()=>validateInterlacing({...settings,contact:{...settings.contact,extra:1}}));
 });
 
-test('adaptive reach never clips the required ribbon footprint or crosses a neighboring restraint',()=>{
+test('adaptive reach never clips the required ribbon footprint and bounds extra reach by neighboring restraints',()=>{
  const loose={enabled:true,base:0,adaptive:0},tight={enabled:true,base:100,adaptive:100};
  assert.equal(adaptiveContactReach(5,4,{nearest:Infinity,neighborCount:0,sin:1,curvature:0},tight),5);
- assert.equal(adaptiveContactReach(5,4,{nearest:10,neighborCount:2,sin:.2,curvature:1},loose),5);
- assert.equal(adaptiveContactReach(5,4,{nearest:40,neighborCount:1,sin:1,curvature:0},loose),11);
+ assert.equal(adaptiveContactReach(5,4,{nearest:10,neighborCount:2,sin:.2,curvature:1},loose),10);
+ assert.equal(adaptiveContactReach(5,4,{nearest:40,neighborCount:1,sin:1,curvature:0},loose),15);
+ const visible=adaptiveContactReach(5,4,{nearest:40,neighborCount:1,sin:.7,curvature:.3},{enabled:true,base:85,adaptive:75});
+ assert.ok(visible>6,'ordinary high-tension settings still create a visible response');
 });
 
 test('contact response changes only mask clearance and leaves strand geometry untouched',()=>{

@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8')
 const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 
 test('edge refinement preserves bounded seeded crossing controls and current build identity',()=>{
- assert.match(html,/WF-CONTACT-TENSION-20260921/);
- assert.match(app,/BUILD='WF-CONTACT-TENSION-20260921'/);
+ assert.match(html,/WF-CONTACT-TENSION-RESPONSE-20260921/);
+ assert.match(app,/BUILD='WF-CONTACT-TENSION-RESPONSE-20260921'/);
  assert.match(html,/<option value="seeded">SEEDED STRUCTURED VARIATION<\/option>/);
  assert.match(html,/id="interlace-seed"[^>]+min="0"[^>]+max="65535"/);
  assert.match(html,/id="interlace-balance"[^>]+min="10"[^>]+max="90"[^>]+step="5"/);
@@ -39,4 +39,5 @@ test('contact tension controls use the existing presentation autosave path',()=>
  assert.match(html,/id="contact-tension-adaptive"[^>]+min="0"[^>]+max="100"/);
  assert.match(app,/version='interlacing-v4'/);
  assert.match(app,/commitThreadAppearance\(null,v\)/);
+ assert.match(app,/contact-tension-enabled'\)\.checked=true/);
 });
