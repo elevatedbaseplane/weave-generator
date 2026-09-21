@@ -101,6 +101,12 @@ test('v3 seeded rules roundtrip a saved revision and portable backup without new
  const next=prepareIncrementalRevisionWorkspace(ws,packed),round=parsePortable(portableText(next.packed));assert.equal(next.newPayloads.length,0);assert.deepEqual(round,ws);assert.equal(digest(p.working.weave.derived),hash);assert.deepEqual(round.projects[0].working.interlacing.rule,{...rule});assert.equal(round.projects[0].weaveStudies[0].revisions.at(-1).working.interlacing.version,'interlacing-v3');
 });
 
+test('v4 contact tension roundtrips without adding geometry payloads',()=>{
+ const ws=createWorkspace();let p=ws.projects[0];p.working.carrier=createStitchSource('herringbone-square','contact-rules',2);p=saveCarrierStudy(p,'P').project;p=createWeaveStudy(p,p.carrierStudies[0].latestRevisionId);p=saveWeaveStudy(p,'W',true).project;ws.projects[0]=p;const packed=packWorkspace(ws),hash=digest(p.working.weave.derived),contact={enabled:true,base:45,adaptive:70};
+ p=structuredClone(p);p.working.interlacing={...settings('herringbone-square'),version:'interlacing-v4',contact};p=saveWeaveStudy(p,'W',true).project;ws.projects[0]=p;validateTrustedWorkspace(ws);const next=prepareIncrementalRevisionWorkspace(ws,packed),round=parsePortable(portableText(next.packed));
+ assert.equal(next.newPayloads.length,0);assert.equal(digest(p.working.weave.derived),hash);assert.deepEqual(round.projects[0].working.interlacing.contact,contact);assert.equal(round.projects[0].weaveStudies[0].revisions.at(-1).working.interlacing.version,'interlacing-v4');
+});
+
 test('preset rules use construction order, new cross-row meetings stay unresolved, and explicit family rules override fallback',()=>{
  const id=(runKey,row=0)=>({patternId:'p',recipeVersion:1,roleId:'foundation',runKey,row,column:0});
  const s=[{identity:id('T')},{identity:id('L')},{identity:id('R')},{identity:id('B')},{identity:id('L',1)}],r={events:[event(1,0,1),event(2,2,0),event(3,3,2),event(4,1,3),event(5,0,4)]};

@@ -1,11 +1,13 @@
 import {resolveWeaveRules} from './weave-rules.mjs';
 import {outlinePoints,threadStyle,threadPaths,threadStroke,threadOpacity} from './thread-appearance.mjs';
+import {adaptiveContactReach,effectiveContactTension} from './contact-tension.mjs';
 
 function distances(points){const ds=[0];for(let k=1;k<points.length;k++)ds.push(ds[k-1]+Math.hypot(points[k].x-points[k-1].x,points[k].y-points[k-1].y));return ds;}
 function arcAt(points,j,t){const ds=distances(points);return ds[j]+t*(ds[j+1]-ds[j]);}
 function sliceAt(points,j,t,reach){const ds=distances(points),c=ds[j]+t*(ds[j+1]-ds[j]),lo=Math.max(0,c-reach),hi=Math.min(ds.at(-1),c+reach),at=d=>{let k=1;while(k<ds.length-1&&ds[k]<d)k++;const u=(d-ds[k-1])/(ds[k]-ds[k-1]||1);return{x:points[k-1].x+u*(points[k].x-points[k-1].x),y:points[k-1].y+u*(points[k].y-points[k-1].y)}};return[at(lo),...points.filter((p,k)=>ds[k]>lo&&ds[k]<hi),at(hi)];}
 const path=(points,transform)=>points.map((p,i)=>{const q=transform(p);return(i?'L':'M')+q.x+' '+q.y}).join(' ')+' Z';
 const fragmentKey=side=>side.si+'/'+side.fi;
+function localCurvature(points,j){const direction=(a,b)=>{const length=Math.hypot(b.x-a.x,b.y-a.y)||1;return{x:(b.x-a.x)/length,y:(b.y-a.y)/length}},current=direction(points[j],points[j+1]),values=[];if(j)values.push(direction(points[j-1],points[j]));if(j+2<points.length)values.push(direction(points[j+1],points[j+2]));return values.length?Math.max(...values.map(other=>(1-current.x*other.x-current.y*other.y)/2)):0;}
 
 // Pairwise weave rules can form a depth cycle when three or more crossings are
 // closer than their visible ribbon footprints. Only those impossible local
@@ -41,8 +43,19 @@ function coherentAssignments(strands,result,settings,appearance,source){
 // detached fragment or geometry mutation.
 export function weaveOcclusions(strands,result,settings,appearance,source,transform=p=>p){
  const masks=new Map();if(!settings?.enabled||!result?.complete)return masks;
- const assignments=coherentAssignments(strands,result,settings,appearance,source);
- for(const ev of result.events){if(ev.ambiguous||!assignments.has(ev.id))continue;const aOver=assignments.get(ev.id),over=aOver?ev.a:ev.b,under=aOver?ev.b:ev.a,top=strands[over.si],bottom=strands[under.si],p=top.fragments[over.fi].points,q=bottom.fragments[under.fi].points,dx=p[over.j+1].x-p[over.j].x,dy=p[over.j+1].y-p[over.j].y,ux=q[under.j+1].x-q[under.j].x,uy=q[under.j+1].y-q[under.j].y,den=Math.hypot(dx,dy)*Math.hypot(ux,uy),sin=Math.abs(dx*uy-dy*ux)/den,cos=Math.abs(dx*ux+dy*uy)/den;if(!sin)continue;const ts=threadStyle(appearance,top.family||top.identity?.roleId),bs=threadStyle(appearance,bottom.family||bottom.identity?.roleId),topWidth=ts.width+(ts.mode==='outline'?threadStroke(ts):0),bottomWidth=bs.width+(bs.mode==='outline'?threadStroke(bs):0),reach=(bottomWidth/2+topWidth*cos/2)/sin+threadStroke(ts),polygon=outlinePoints(sliceAt(p,over.j,over.t,reach),ts.width),key=fragmentKey(under);if(!masks.has(key))masks.set(key,[]);masks.get(key).push({d:path(polygon,transform),edge:ts.mode==='outline'?threadStroke(ts):0});}
+ const assignments=coherentAssignments(strands,result,settings,appearance,source),contact=effectiveContactTension(settings),records=[],byUnder=new Map();
+ for(const ev of result.events){
+  if(ev.ambiguous||!assignments.has(ev.id))continue;
+  const aOver=assignments.get(ev.id),over=aOver?ev.a:ev.b,under=aOver?ev.b:ev.a,top=strands[over.si],bottom=strands[under.si],p=top.fragments[over.fi].points,q=bottom.fragments[under.fi].points,dx=p[over.j+1].x-p[over.j].x,dy=p[over.j+1].y-p[over.j].y,ux=q[under.j+1].x-q[under.j].x,uy=q[under.j+1].y-q[under.j].y,den=Math.hypot(dx,dy)*Math.hypot(ux,uy),sin=Math.abs(dx*uy-dy*ux)/den,cos=Math.abs(dx*ux+dy*uy)/den;
+  if(!sin)continue;
+  const ts=threadStyle(appearance,top.family||top.identity?.roleId),bs=threadStyle(appearance,bottom.family||bottom.identity?.roleId),topWidth=ts.width+(ts.mode==='outline'?threadStroke(ts):0),bottomWidth=bs.width+(bs.mode==='outline'?threadStroke(bs):0),baseReach=(bottomWidth/2+topWidth*cos/2)/sin+threadStroke(ts),key=fragmentKey(under),record={over,under,p,q,ts,key,arc:arcAt(q,under.j,under.t),baseReach,topWidth,sin,curvature:localCurvature(q,under.j)};
+  records.push(record);if(!byUnder.has(key))byUnder.set(key,[]);byUnder.get(key).push(record);
+ }
+ for(const list of byUnder.values()){list.sort((a,b)=>a.arc-b.arc);for(let index=0;index<list.length;index++){const before=index?list[index].arc-list[index-1].arc:Infinity,after=index+1<list.length?list[index+1].arc-list[index].arc:Infinity;list[index].nearest=Math.min(before,after);list[index].neighborCount=Number(Number.isFinite(before))+Number(Number.isFinite(after));}}
+ for(const record of records){
+  const reach=adaptiveContactReach(record.baseReach,record.topWidth,{nearest:record.nearest,neighborCount:record.neighborCount,sin:record.sin,curvature:record.curvature},contact),polygon=outlinePoints(sliceAt(record.p,record.over.j,record.over.t,reach),record.ts.width);
+  if(!masks.has(record.key))masks.set(record.key,[]);masks.get(record.key).push({d:path(polygon,transform),edge:record.ts.mode==='outline'?threadStroke(record.ts):0});
+ }
  return masks;
 }
 
