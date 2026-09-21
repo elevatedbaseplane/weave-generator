@@ -5,10 +5,11 @@
   "phase4Started": false,
   "publication": {
     "authorized": true,
-    "attempted": false,
+    "attempted": true,
     "deployed": false,
+    "blockedAt": "source push",
+    "reason": "The session network proxy refused the required HTTPS connection to the Sites source repository. No source state was pushed, so no version was saved or deployed.",
     "projectId": "appgprj_6aa83001d03481918d4a13e46c9612fb",
     "productionUrl": "https://weave-foundation.notbrandon175.chatgpt.site/"
   }
 }
-
