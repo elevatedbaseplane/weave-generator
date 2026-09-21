@@ -1,3 +1,4 @@
+import {readWeaveSource,validateWeaveSource,materializeWeaveSource} from './weave-source.mjs';
 import {continuousWeaveSvg} from './weave-occlusion.mjs';
 import {threadPaths,threadStroke,threadOpacity} from './thread-appearance.mjs';
 import {STITCH_SOURCE} from './stitch-source.mjs';
@@ -66,11 +67,22 @@ export function deriveIdentity(boundary,carrier,boardId,context){
   const families=familyNames(carrier),counts=Object.fromEntries(families.map(f=>[f,strands.filter(p=>p.family===f).length]));return JSON.parse(JSON.stringify({versions:{...WEAVE_VERSIONS},contentFingerprint,provenanceFingerprint,carrierFingerprint:d.inputFingerprint,referenceSpacing:Math.min(...families.map(f=>carrier.families[f].spacing)),strands,diagnostics:{tau:d.diagnostics.tau,candidateLines:d.diagnostics.candidateLines,lineEdgeTests:d.diagnostics.lineEdgeTests,intervals:strands.reduce((n,p)=>n+p.fragments.length,0),counts,approximationError:0},complete:true}));
 }
 export function refreshWeave(working,boardId){
- const next=structuredClone(working);
- if(next.weave)next.weave.derived=deriveForWeave(next.weave,next.boundary,next.carrier,boardId);
- return next;
+ const source=readWeaveSource(working,boardId);
+ return materializeWeaveSource(source,source.working.weave?deriveWeaveSource(source):null);
 }
-export function deriveForWeave(w,boundary,carrier,boardId){if(carrier?.kind===STITCH_SOURCE)return deriveStitch(boundary,carrier,boardId,w.sourceContext,w.generation||emptyStitchGeneration(carrier));if(w.weaveVersion===ATTRACTOR_VERSIONS.study){validateGeneration(w.generation);const f=w.generation.attractor;if(f&&f.enabled&&f.strength>0&&w.generation.tension<100)return deriveAttractor(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}if([INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(w.weaveVersion)){validateInfluenceGeneration(w.generation);if(!isIdentityGeneration(w.generation))return deriveInfluence(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}if(w.weaveVersion===COMBINED_VERSIONS.study){validateCombinedGeneration(w.generation);if(!combinedIdentity(w.generation))return deriveCombined(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}return deriveIdentity(boundary,carrier,boardId,w.sourceContext);}
+export function deriveForWeave(w,boundary,carrier,boardId){return deriveWeaveSource(readWeaveSource({boundary,sourceRevisionId:null,carrier,carrierSourceRevisionId:null,weave:w},boardId));}
+export function deriveWeaveSource(source){
+ validateWeaveSource(source);
+ const {boundary,carrier,weave:w}=source.working,boardId=source.projectId;
+ if(!w)throw Error('Canonical source has no applied weave.');
+ const version=w.weaveVersion||WEAVE_VERSIONS.study;
+ if(![WEAVE_VERSIONS.study,ATTRACTOR_VERSIONS.study,INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study,COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(version))throw Error('Unsupported canonical weave algorithm version.');
+ if(carrier?.kind===STITCH_SOURCE)return deriveStitch(boundary,carrier,boardId,w.sourceContext,w.generation||emptyStitchGeneration(carrier));
+ if(version===ATTRACTOR_VERSIONS.study){validateGeneration(w.generation);const f=w.generation.attractor;if(f&&f.enabled&&f.strength>0&&w.generation.tension<100)return deriveAttractor(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}
+ if([INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(version)){validateInfluenceGeneration(w.generation);if(!isIdentityGeneration(w.generation))return deriveInfluence(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}
+ if(version===COMBINED_VERSIONS.study){validateCombinedGeneration(w.generation);if(!combinedIdentity(w.generation))return deriveCombined(boundary,carrier,boardId,w.sourceContext,w.generation,digest)}
+ return deriveIdentity(boundary,carrier,boardId,w.sourceContext);
+}
 export function validateWeave(weave,working,project,verifyDerived=true){
  const v6=weave?.weaveVersion===STITCH_VERSIONS.study;
  const v2=weave?.weaveVersion===ATTRACTOR_VERSIONS.study,v3=weave?.weaveVersion===INFLUENCE_VERSIONS.study,v4=weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study,v5=weave?.weaveVersion===COMBINED_VERSIONS.study;exactKeys(weave,v2||v3||v4||v5||v6?['studyId','sourceName','sourceContext','originLineage','weaveVersion','generation','derived']:['studyId','sourceName','sourceContext','originLineage','derived'],'weave');if(v2)validateGeneration(weave.generation);if(v3||v4)validateInfluenceGeneration(weave.generation);if(v5)validateCombinedGeneration(weave.generation);if(v6)validateStitchGeneration(weave.generation,working.carrier.roles);

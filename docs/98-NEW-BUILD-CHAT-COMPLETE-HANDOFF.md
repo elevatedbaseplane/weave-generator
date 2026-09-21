@@ -172,7 +172,9 @@ Follow document 96 exactly:
 
 Do not begin Build 1B feature expansion before the Stability Foundation is accepted. Do not combine all phases into one unreviewable rewrite.
 
-## 11. Exact next action
+## 11. Current phase and historical baseline instructions
+
+Phase 0 is approved. The user authorized Phase 1, with the diagnostic cleanup committed before later publication. Document 100 records the canonical-source implementation and review. Do not start Phase 2 until Phase 1 is reviewed. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence must remain unchanged.
 
 Begin Phase 0 only:
 

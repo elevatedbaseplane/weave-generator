@@ -1,0 +1,16 @@
+✔ diagnostic returns native text without mutating captured state (2.0508ms)
+✔ diagnostic rejects unsettled, blocked, changed and failed exports (0.4052ms)
+✔ frozen native fixture exact reload and regeneration: current-project-0.portable.json (423.0841ms)
+✔ frozen native fixture exact reload and regeneration: current-project-1.portable.json (103.7373ms)
+✔ frozen native fixture exact reload and regeneration: workflow-after-boundary-return.portable.json (89.233ms)
+✔ frozen native fixture exact reload and regeneration: workflow-after-reload.portable.json (84.1274ms)
+✔ frozen native fixture exact reload and regeneration: workflow-before-reload.portable.json (84.8954ms)
+✔ five-workflow fixture retains independent decisions and exact reload/return (27.0361ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 849.7186

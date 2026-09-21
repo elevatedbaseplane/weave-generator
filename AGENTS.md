@@ -1,4 +1,8 @@
-## Stability Foundation Phase 0 local baseline — 2026-09-21
+## Stability Foundation Phase 1 — 2026-09-21
+
+Phase 0 is approved. Its final diagnostic cleanup is committed as `dbfc7c2`; frozen evidence remains untouched. Phase 1 introduces `canonical-weave-source-v1`, lossless read migration from the existing working envelope, source-only regeneration and shared worker input preparation. Schema-6 storage remains the compatibility encoding; no duplicate canonical field is persisted. See document 100 for ownership, validation, visual review and limits. Focused checks pass 78/78 plus eight preserved baseline checks and one recovery check. Phase 2 has not started. Standing publication authorization applies to this coherent Phase 1 application build; preserve the existing owner-only Site. Consult Phase 1 delivery evidence for actual publication status rather than inferring success from this note.
+
+## Stability Foundation Phase 0 local baseline — 2026-09-21 (approved)
 
 Phase 0 is complete and ready for user review. Document `99-STABILITY-FOUNDATION-PHASE-0-BASELINE.md` and `docs/evidence/stability-phase0/` record five frozen native portable fixtures, dependency inventory, all five protected workflow baselines, storage/revision/performance measurements, and reviewed stale-test repairs. Earlier focused checks passed 76 tests; final local-only checks passed 9/9 (one additional distinct test), plus static/syntax checks. Original saved projects remain byte-identical; existing work is preserved. Every production file matches its original baseline bytes. The read-only diagnostic lives under scripts and is enabled only by the local preview's explicit `--phase0` flag. A pre-existing stale library/context label after asynchronous weave restoration is documented, not fixed. Phase 1 has not started.
 
