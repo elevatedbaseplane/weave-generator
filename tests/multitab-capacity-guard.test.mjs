@@ -7,8 +7,8 @@ const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
 const storage=fs.readFileSync(new URL('../dist/storage.mjs',import.meta.url),'utf8');
 
-test('field commits check the authoritative IndexedDB head before backup admission',()=>{
-  const commit=app.slice(app.indexOf("worker.onmessage=async e=>"),app.indexOf("async function certifyWorking"));
+test('background field backups check the authoritative IndexedDB head before backup admission',()=>{
+  const commit=app.slice(app.indexOf('async function persistSnapshot('),app.indexOf('async function persist('));
   const freshness=commit.indexOf('await store.assertCurrent()');
   const admission=commit.indexOf('prepareIncrementalWorkspace(');
   assert.ok(freshness>=0,'missing freshness check');
@@ -17,8 +17,8 @@ test('field commits check the authoritative IndexedDB head before backup admissi
   assert.match(storage,/Another tab saved a newer workspace\. Reload this tab to continue from the latest saved version\./);
 });
 
-test('all non-worker saves also check freshness before packing',()=>{
-  const persist=app.slice(app.indexOf('async function persist('),app.indexOf('function deriveWorking('));
+test('all compact autosaves check freshness before packing',()=>{
+  const persist=app.slice(app.indexOf('async function persistSnapshot('),app.indexOf('async function persist('));
   assert.ok(persist.indexOf('await store.assertCurrent()')<persist.indexOf('prepareStorage('));
 });
 

@@ -35,6 +35,6 @@ test('zoom redraw keeps the woven renderer even while a carrier preview flag exi
  const scope={working,pending:null,display:{weaveDerived:true},displayedWeaveWorking:()=>working,$:id=>{assert.equal(id,'weave-derived-layer');return layer;},renderContinuousWeave(_,value){assert.equal(value,working);woven++;},renderCrossingMarks(){marks++;}};
  vm.createContext(scope);vm.runInContext(app.slice(app.indexOf('function renderDerivedWeaveLayer('),app.indexOf('function renderAttractorGuide('))+'\nrenderDerivedWeaveLayer(working,true);',scope);
  assert.equal(woven,1,'viewport redraw must preserve woven masks');assert.equal(marks,0,'preview redraw can still omit editable marks');
- const commit=app.slice(app.indexOf("p.phase='SAVING'"),app.indexOf("workerEvent('committed'"));
- assert.match(commit,/workspace=nextWorkspace;carrierPreview=null;/,'successful calculation must clear the preview flag before later zoom/pan redraws');
+ const commit=app.slice(app.indexOf("p.phase='ACCEPTING'"),app.indexOf("workerEvent('accepted'"));
+ assert.match(commit,/workspace=nextWorkspace;acceptedVersion\+\+;carrierPreview=null;/,'successful calculation must clear the preview flag before later zoom/pan redraws');
 });

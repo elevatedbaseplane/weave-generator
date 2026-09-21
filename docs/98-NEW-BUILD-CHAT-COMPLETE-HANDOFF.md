@@ -174,7 +174,7 @@ Do not begin Build 1B feature expansion before the Stability Foundation is accep
 
 ## 11. Current phase and historical baseline instructions
 
-Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections. Document 102 records Phase 2's locally verified unified editing implementation; publication is blocked by session network permissions. Phase 2 is ready for user review. Do not start Phase 3 before that review. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence must remain unchanged.
+Phase 0 is approved and its diagnostic cleanup was committed before publication. The user approved Phase 1 and its document-101 corrections. The user also approved Phase 2. Document 104 records the locally verified Phase 3 compact background autosave implementation. Phase 3 is complete and ready for user review; Phase 4 has not started. The following Phase 0 checklist is retained as historical baseline scope; its fixtures and evidence must remain unchanged.
 
 Begin Phase 0 only:
 

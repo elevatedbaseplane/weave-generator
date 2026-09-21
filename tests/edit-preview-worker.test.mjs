@@ -5,12 +5,12 @@ import vm from 'node:vm';
 
 const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 const dispatch=app.slice(app.indexOf('function dispatchPending()'),app.indexOf('async function certifyWorking(')).replaceAll('import.meta.url',JSON.stringify(new URL('../dist/app.mjs',import.meta.url).href));
-test('a request superseded during freshness validation never starts its storage transaction',async()=>{
- const worker={postMessage(m){this.sent=m},terminate(){}},p={previewOnly:false,working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root',started:0,versions:{protocol:'protocol'}},latest={newer:true},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}};
- const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,workerTimer:0,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,workspace:{activeProjectId:'board',projects:[owner]},copyProjectForEdit:structuredClone,store:{head:{currentRoot:'root'},async assertCurrent(){context.pending=latest}},prepareIncrementalWorkspace(){throw Error('obsolete request must not reach storage preparation');},workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){},retainSourceTrace(){},AbortController};
+test('a request based on an older accepted document never reaches background autosave',async()=>{
+ const worker={postMessage(m){this.sent=m},terminate(){}},p={previewOnly:false,working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root:0',acceptedVersion:0,started:0,versions:{protocol:'protocol'}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}};
+ const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,workerTimer:0,acceptedVersion:1,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,workspace:{activeProjectId:'board',projects:[owner]},copyProjectForEdit:structuredClone,store:{head:{currentRoot:'root'}},autosave:{accept(){throw Error('obsolete request must not reach autosave')}},editGesture:{clear(){}},workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){},retainSourceTrace(){}};
  vm.createContext(context);vm.runInContext(dispatch+'\ndispatchPending();',context);
  await worker.onmessage({data:{...worker.sent,type:'success',resultCanonicalFingerprint:'payload',payload:{id:'payload'},result:{certified:true}}});
- assert.equal(context.pending,latest);assert.equal(context.activeJob,null);assert.deepEqual(owner.working.weave.derived,{old:true});assert.equal(context.idleDerivationWorker,worker);
+ assert.equal(context.pending,null);assert.equal(context.activeJob,null);assert.deepEqual(owner.working.weave.derived,{old:true});
 });
 
 test('failed newest calculation retains committed geometry and clears its edit gesture',async()=>{
@@ -27,8 +27,8 @@ test('canceling a preview aborts its transaction and restores committed geometry
  assert.ok(aborted&&terminated&&redraw);assert.equal(context.pending,null);assert.equal(context.carrierPreview,null);
 });
 test('the actual worker preview branch validates results but never writes storage or revision history',async()=>{
- const events=[],worker={postMessage(message){this.sent=message},terminate(){}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}},p={previewOnly:true,working:{weave:{studyId:'study'}},input:'input',base:'root',started:0,candidate:{},versions:{protocol:'protocol'},feedback:{scope:'field',label:'STRENGTH 80'}};
- const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,store:{head:{currentRoot:'root'}},workerEvent:(type,data)=>events.push({type,...data}),renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){context.validated++},retainSourceTrace(){},renderCanvas(){context.rendered++},setEditFeedback(){},validated:0,rendered:0};
+ const events=[],worker={postMessage(message){this.sent=message},terminate(){}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}},p={previewOnly:true,working:{weave:{studyId:'study'}},input:'input',base:'root:0',acceptedVersion:0,started:0,candidate:{},versions:{protocol:'protocol'},feedback:{scope:'field',label:'STRENGTH 80'}};
+ const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,acceptedVersion:0,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,store:{head:{currentRoot:'root'}},editGesture:{clear(){}},workerEvent:(type,data)=>events.push({type,...data}),renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){context.validated++},retainSourceTrace(){},renderCanvas(){context.rendered++},setEditFeedback(){},validated:0,rendered:0};
  vm.createContext(context);vm.runInContext(dispatch+'\ndispatchPending();',context);
  const message={...worker.sent,type:'success',resultCanonicalFingerprint:'payload',payload:{id:'payload'},result:{certified:true},workerMs:1};
  await worker.onmessage({data:message});

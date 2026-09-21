@@ -1,0 +1,526 @@
+✔ library presents field-force results as part of their parent weave (36.8527ms)
+✔ reusable weave fields adapt position and extent to a new boundary (1.1004ms)
+✔ triangular preset creates a visible three-family weave attached to the active boundary (3.4613ms)
+✔ preset picker applies immediately and reports local progress (1.2452ms)
+✔ a new preset field receives a fresh saved result name instead of stale hidden input (0.8955ms)
+✖ R1D shell has current labels and build identity (1.7669ms)
+✔ Add Influence follows Weave Pattern directly and creates its result automatically (0.2076ms)
+✔ one discoverable selector exposes all R1C influence types and deflector direction (0.1813ms)
+✔ all visible numeric editing uses sliders with value readouts (0.5047ms)
+✔ vertex editor uses selection and coordinate sliders instead of the raw text box (0.2556ms)
+✔ explicit enabled action replaces pending work and can dispatch re-enable (0.2314ms)
+✖ influence vertical slice exposes direct control automatic saving and visual check (0.1971ms)
+✔ right rail follows the settled workflow and keeps deferred stages noninteractive (0.1791ms)
+✔ reference shell exposes header actions workflow strip and paired drafting sliders (0.386ms)
+✔ display modes canvas legend and adjustable certified falloff are visible and functional (0.2908ms)
+✖ simple creation flow hides redundant Boundary save UI and reveals Pattern geometry before fields (0.5692ms)
+✔ Make Square exposes its save result and safely retries one stale-tab conflict (0.1991ms)
+✔ Original Grid replaces family style toggles and fades only with distortion (0.5299ms)
+✖ selected influence is highlighted and blank canvas clicks deselect it (0.5032ms)
+✖ post-influence Pattern gestures preserve the latest candidate and atomically finalize it (0.3166ms)
+✔ display presets expose real derived-only compare and construction behavior (0.3534ms)
+✖ family-specific force controls and bottom-right display menu are discoverable and live (0.4482ms)
+✔ R1D exposes a real influence list and deterministic variation controls (0.3339ms)
+✖ saved hierarchy labels every level, stays collapsible, and hides internal revisions (0.1858ms)
+✔ synchronous and native asynchronous SHA-256 match independent runtime exactly (4.4057ms)
+✔ identity geometry exactly matches default, rotated, translated, concave and reversed carriers (31.4343ms)
+✔ content is deterministic and independent of identity, labels and source metadata (4.0872ms)
+✔ preflight rejects unsafe work before allocating and accepts supported edge counts (0.6295ms)
+✖ zero selected strands remain complete and export empty groups (6.6298ms)
+✔ immutable source survives edits, named revisions, restore and working undo (7.0791ms)
+✔ boundary save and restore preserve active weave and regenerate identity (4.5054ms)
+✔ another study cannot silently append to an existing name (7.3909ms)
+✔ schema 4 validates entire output, source context, versions, hidden extras and chain (17.1954ms)
+✔ full backup round trip, changed-board fork, fork of fork and local references (64.4113ms)
+✖ schema 2/3 migration preserves raw originals and refuses recovery failure (1.6266ms)
+✔ quota and stale-tab failures preserve previous complete weave and history (10.8017ms)
+✔ backup size preflight rejects before canonical persistence (13.983ms)
+✖ raw SVG preserves concave gaps, round-trip numbers, Y conversion and safe metadata (5.6551ms)
+R1A identity benchmark {"runs":30,"p50":24.06059999999991,"p95":41.5012999999999,"max":47.9994999999999}
+✔ identity derive p95 meets inherited 400-line/100-edge target (868.6588ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 29
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1147.3873
+
+✖ failing tests:
+
+test at tests\r1b-ui.test.mjs:8:1
+✖ R1D shell has current labels and build identity (1.7669ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FIELDS \/ R1D/. Input:
+  
+  '<!doctype html>\r\n' +
+    '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\r\n' +
+    '<title>Weave Generator — Fields</title><meta name="description" content="A private drafting workspace for certified fields and versioned weave studies.">\r\n' +
+    `<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Cpath d='M8 3V29M24 3V29M3 8H29M3 24H29' stroke='black' stroke-width='2'/%3E%3C/svg%3E">\r\n` +
+    '<link rel="stylesheet" href="style.css"></head><body>\r\n' +
+    '<header><div class="brand">B.A.C: WEAVE GENERATOR..... V02</div><span class="header-build">BUILD <b>WF-R1D</b> / PROJECT LINEAGE</span><nav aria-label="Workspace panels"><button id="toggle-boards" aria-expanded="true">LIBRARY −</button><button id="new-board">NEW PROJECT</button><button id="toggle-controls" aria-expanded="true">CONTROLS −</button></nav></header>\n' +
+    '<main id="shell">\r\n' +
+    '<aside id="boards" aria-label="Project library"><div class="rail-title"><h1>PROJECT LIBRARY</h1><span class="rail-unit">SAVED WORK</span></div><section class="library-section"><div class="library-section-title"><span>PROJECTS</span><b id="library-project-name"></b></div><div class="library-actions"><button id="library-new-project">NEW</button><button id="library-rename-project">RENAME</button><button id="library-delete-project">DELETE</button></div><div id="board-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>BOUNDARIES</span><b id="library-boundary-count"></b></div><div class="library-actions"><button id="library-new-boundary">NEW</button><button id="library-rename-boundary">RENAME</button><button id="library-duplicate-boundary">DUPLICATE</button><button id="library-delete-boundary">DELETE</button></div><div id="boundary-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>WEAVES</span><b id="library-weave-count"></b></div><div class="library-actions"><button id="library-new-weave">NEW</button><button id="library-rename-weave">RENAME</button><button id="library-duplicate-weave">DUPLICATE</button><button id="library-delete-weave">DELETE</button></div><div id="weave-list" class="library-list"></div><button id="library-apply-weave" class="library-wide-action">APPLY SELECTED WEAVE TO THIS BOUNDARY</button><p class="micro library-help">A WEAVE INCLUDES ITS FAMILIES, THREAD SETTINGS, CROSSING RULES, AND FIELD FORCES. APPLYING IT TO ANOTHER BOUNDARY REGENERATES IT TO FIT.</p></section><p class="micro">SAVED IN THIS BROWSER.<br>BACK UP TO KEEP A PORTABLE COPY.</p><div class="rail-rule"></div><p class="micro">FIELD → WEAVE → ANALYZE → INTERPRET → EXTRACT → SYNTHESIZE → EXPORT</p></aside>\n' +
+    '<section class="workspace" aria-label="Boundary workspace"><div class="workspace-bar"><div class="stage-tabs" aria-label="Workflow stages"><span class="stage-tab active"><b>01</b> WEAVE FIELD</span><span class="stage-tab upcoming"><b>02</b> POINT EXTRACTION · UPCOMING</span><span class="stage-tab upcoming"><b>03</b> POLYLINE COMPOSER · UPCOMING</span></div><span id="library-breadcrumb" class="context-view">PROJECT / BOUNDARY / WEAVE</span></div><div class="toolbar"><div><button id="select-tool" class="active">SELECT / EDIT</button><button id="draw-tool">DRAW BOUNDARY</button><button id="pan-tool">PAN</button></div><div><button id="undo" disabled>UNDO</button><button id="redo" disabled>REDO</button><button id="fit">FIT</button></div></div>\r\n' +
+    '<div id="drawing"><div class="drawing-label"><span id="drawing-title">WORKING BOUNDARY</span><span>DOCUMENT UNITS · Y UP</span></div><svg id="canvas" role="img" aria-label="Boundary drafting canvas" tabindex="0"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none"/><circle cx="0" cy="0" r="1.2"/></pattern></defs><rect id="grid-layer" width="100%" height="100%" fill="url(#grid)"/><g id="frame-layer"></g><g id="source-lattice-layer"></g><g id="family-a-layer"></g><g id="family-b-layer"></g><g id="weave-source-layer"></g><g id="weave-derived-layer"></g><g id="geometry"></g><g id="draft-layer"></g></svg><div id="empty-hint">BOUNDARY HIDDEN <button id="reveal-boundary">SHOW BOUNDARY</button></div><details class="canvas-display-menu"><summary>DISPLAY</summary><div><p>PRESETS</p><button data-display-preset="derived-only">DISTORTED ONLY</button><button data-display-preset="compare">SOURCE + DISTORTED</button><button data-display-preset="construction">WEAVE PATTERN SOURCE</button><label><input type="checkbox" data-display-key="boundary"> BOUNDARY</label><label><input type="checkbox" data-display-key="grid"> GRID + FRAME</label><label><input type="checkbox" data-display-key="sourceLattice"> CONSTRUCTION LINES</label><label><input type="checkbox" data-display-key="originalGrid"> ORIGINAL GRID</label><label><input type="checkbox" data-display-key="weaveSource"> SOURCE WEAVE</label><label><input type="checkbox" data-display-key="weaveDerived"> DISTORTED WEAVE</label></div></details><div class="canvas-bottom"><div class="canvas-left"><div id="canvas-legend" class="canvas-legend" aria-label="Canvas legend"><span class="legend-source">SOURCE <b id="legend-source-count">0</b></span><span class="legend-derived">DERIVED <b id="legend-derived-count">0</b></span><span class="legend-guide">GUIDE <b id="legend-guide-state">OFF</b></span></div><div class="mode-tabs" aria-label="Display mode"><button data-theme="light" class="active">LIGHT</button><button data-theme="dark">DARK</button><button data-theme="neo">NEO</button></div></div><div class="canvas-readout"><span id="canvas-edit-state" aria-live="polite">READY</span><span id="pointer">X — / Y —</span><span id="zoom-label">100%</span></div></div></div>\r\n' +
+    '<div class="statusbar"><span id="status" role="status">SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.</span><span id="build">WF-STABILITY-S4-BOUNDED-AUTOSAVE-20260918</span></div></section>\n' +
+    '<aside id="controls" aria-label="Workflow controls"><details open id="project-section"><summary>PROJECT / STUDY <span>+</span></summary><div class="section-body"><p id="project-summary"></p><p class="micro">THE LIBRARY SHOWS PROJECTS, BOUNDARIES, AND WEAVES. RECOVERY HISTORY STAYS INTERNAL.</p><button id="reload-latest" hidden>RELOAD LATEST SAVED WORKSPACE</button><ol class="workflow-stages" aria-label="Workflow stages"><li class="complete">FIELD</li><li class="current">WEAVE</li><li>ANALYZE <em>UPCOMING</em></li><li>INTERPRET <em>UPCOMING</em></li><li>EXTRACT <em>UPCOMING</em></li><li>SYNTHESIZE <em>UPCOMING</em></li><li>EXPORT <em>UPCOMING</em></li></ol></div></details><details open id="boundary-section"><summary>BOUNDARY <span>+</span></summary><div class="section-body"><p id="boundary-summary"></p><p id="boundary-source" class="micro" hidden></p><div id="saved-boundary-picker" hidden><label>USE A SAVED BOUNDARY<select id="saved-boundary"></select></label><button id="open-saved-boundary">OPEN SAVED BOUNDARY</button><p class="micro">OPENS THE CHOSEN BOUNDARY WITHOUT A PATTERN OR FIELD FORCE, READY FOR A NEW WEAVE.</p></div><label class="slider-label" for="square-size-range"><span>SQUARE SIDE</span><output id="square-size-value">500</output></label><input id="square-size" type="number" value="500" hidden><input id="square-size-range" class="model-slider" type="range" min="10" max="2000" step="10" value="500"><button id="make-square">MAKE SQUARE</button><p id="boundary-action-status" class="micro" aria-live="polite">A NEW SQUARE SAVES AUTOMATICALLY.</p><div id="draw-actions" hidden><p>Click vertices on the canvas. Finish closes the polygon. Escape cancels.</p><button id="finish-drawing">FINISH BOUNDARY</button><button id="cancel-drawing">CANCEL</button></div><div hidden aria-hidden="true"><input id="boundary-name" value="BOUNDARY 01"><button id="save-boundary" type="button"></button></div><details id="vertex-section" class="subsection"><summary>VERTEX EDITOR <span>+</span></summary><div class="section-body"><p class="micro">Select a vertex on the canvas or with the first slider, then adjust X and Y. Each released slider movement is one undo step.</p><div class="vertex-slider-stack"><label class="slider-label"><span>VERTEX</span><output id="vertex-index-value"></output><input id="vertex-index-range" class="model-slider" type="range" min="1" step="1"></label><label class="slider-label"><span>X</span><output id="vertex-x-value"></output><input id="vertex-x-range" class="model-slider" type="range"></label><label class="slider-label"><span>Y</span><output id="vertex-y-value"></output><input id="vertex-y-range" class="model-slider" type="range"></label></div><textarea id="coordinates" hidden spellcheck="false"></textarea><button id="apply-coordinates" hidden>APPLY COORDINATES</button></div></details></div></details>\r\n' +
+    '<details id="carrier-section"><summary>WEAVE PATTERN <span>+</span></summary><div class="section-body"><label>PRESET<select id="stitch-preset"><option value="" selected disabled>Choose a preset or saved pattern...</option><option value="lines">Custom line families</option><option value="square-grid">Square grid</option><option value="diamond-grid">Diamond grid</option><option value="triangular-grid">Triangular grid</option><option value="double-herringbone-field">Double Herringbone — continuous field adaptation</option><option value="herringbone-square">Herringbone Square — foundation</option><optgroup id="saved-pattern-presets" label="MY SAVED PATTERNS"></optgroup></select></label><p id="preset-apply-state" class="apply-state" aria-live="polite">CHOOSE A PRESET · IT APPLIES AND SAVES IMMEDIATELY</p><p class="micro">SELECT TO APPLY AND SAVE ON THE CURRENT BOUNDARY. YOUR EXISTING PATTERNS STAY IN THE LIBRARY.</p><div id="stitch-controls" hidden><p id="stitch-title" class="micro"></p><button id="stitch-continuous" hidden>USE CONTINUOUS FIELD</button><p id="stitch-layout-he'... 16171 more characters
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:10:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `<!doctype html>\r\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\r\n<title>Weave Generator — Fields</title><meta name="description" content="A private drafting workspace for certified fields and versioned weave studies.">\r\n<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Cpath d='M8 3V29M24 3V29M3 8H29M3 24H29' stroke='black' stroke-width='2'/%3E%3C/svg%3E">\r\n<link rel="stylesheet" href="style.css"></head><body>\r\n<header><div class="brand">B.A.C: WEAVE GENERATOR..... V02</div><span class="header-build">BUILD <b>WF-R1D</b> / PROJECT LINEAGE</span><nav aria-label="Workspace panels"><button id="toggle-boards" aria-expanded="true">LIBRARY −</button><button id="new-board">NEW PROJECT</button><button id="toggle-controls" aria-expanded="true">CONTROLS −</button></nav></header>\n<main id="shell">\r\n<aside id="boards" aria-label="Project library"><div class="rail-title"><h1>PROJECT LIBRARY</h1><span class="rail-unit">SAVED WORK</span></div><section class="library-section"><div class="library-section-title"><span>PROJECTS</span><b id="library-project-name"></b></div><div class="library-actions"><button id="library-new-project">NEW</button><button id="library-rename-project">RENAME</button><button id="library-delete-project">DELETE</button></div><div id="board-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>BOUNDARIES</span><b id="library-boundary-count"></b></div><div class="library-actions"><button id="library-new-boundary">NEW</button><button id="library-rename-boundary">RENAME</button><button id="library-duplicate-boundary">DUPLICATE</button><button id="library-delete-boundary">DELETE</button></div><div id="boundary-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>WEAVES</span><b id="library-weave-count"></b></div><div class="library-actions"><button id="library-new-weave">NEW</button><button id="library-rename-weave">RENAME</button><button id="library-duplicate-weave">DUPLICATE</button><button id="library-delete-weave">DELETE</button></div><div id="weave-list" class="library-list"></div><button id="library-apply-weave" class="library-wide-action">APPLY SELECTED WEAVE TO THIS BOUNDARY</button><p class="micro library-help">A WEAVE INCLUDES ITS FAMILIES, THREAD SETTINGS, CROSSING RULES, AND FIELD FORCES. APPLYING IT TO ANOTHER BOUNDARY REGENERATES IT TO FIT.</p></section><p class="micro">SAVED IN THIS BROWSER.<br>BACK UP TO KEEP A PORTABLE COPY.</p><div class="rail-rule"></div><p class="micro">FIELD → WEAVE → ANALYZE → INTERPRET → EXTRACT → SYNTHESIZE → EXPORT</p></aside>\n<section class="workspace" aria-label="Boundary workspace"><div class="workspace-bar"><div class="stage-tabs" aria-label="Workflow stages"><span class="stage-tab active"><b>01</b> WEAVE FIELD</span><span class="stage-tab upcoming"><b>02</b> POINT EXTRACTION · UPCOMING</span><span class="stage-tab upcoming"><b>03</b> POLYLINE COMPOSER · UPCOMING</span></div><span id="library-breadcrumb" class="context-view">PROJECT / BOUNDARY / WEAVE</span></div><div class="toolbar"><div><button id="select-tool" class="active">SELECT / EDIT</button><button id="draw-tool">DRAW BOUNDARY</button><button id="pan-tool">PAN</button></div><div><button id="undo" disabled>UNDO</button><button id="redo" disabled>REDO</button><button id="fit">FIT</button></div></div>\r\n<div id="drawing"><div class="drawing-label"><span id="drawing-title">WORKING BOUNDARY</span><span>DOCUMENT UNITS · Y UP</span></div><svg id="canvas" role="img" aria-label="Boundary drafting canvas" tabindex="0"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none"/><circle cx="0" cy="0" r="1.2"/></pattern></defs><rect id="grid-layer" width="100%" height="100%" fill="url(#grid)"/><g id="frame-layer"></g><g id="source-lattice-layer"></g><g id="family-a-layer"></g><g id="family-b-layer"></g><g id="weave-source-layer"></g><g id="weave-derived-layer"></g><g id="geometry"></g><g id="draft-layer"></g></svg><div id="empty-hint">BOUNDARY HIDDEN <button id="reveal-boundary">SHOW BOUNDARY</button></div><details class="canvas-display-menu"><summary>DISPLAY</summary><div><p>PRESETS</p><button data-display-preset="derived-only">DISTORTED ONLY</button><button data-display-preset="compare">SOURCE + DISTORTED</button><button data-display-preset="construction">WEAVE PATTERN SOURCE</button><label><input type="checkbox" data-display-key="boundary"> BOUNDARY</label><label><input type="checkbox" data-display-key="grid"> GRID + FRAME</label><label><input type="checkbox" data-display-key="sourceLattice"> CONSTRUCTION LINES</label><label><input type="checkbox" data-display-key="originalGrid"> ORIGINAL GRID</label><label><input type="checkbox" data-display-key="weaveSource"> SOURCE WEAVE</label><label><input type="checkbox" data-display-key="weaveDerived"> DISTORTED WEAVE</label></div></details><div class="canvas-bottom"><div class="canvas-left"><div id="canvas-legend" class="canvas-legend" aria-label="Canvas legend"><span class="legend-source">SOURCE <b id="legend-source-count">0</b></span><span class="legend-derived">DERIVED <b id="legend-derived-count">0</b></span><span class="legend-guide">GUIDE <b id="legend-guide-state">OFF</b></span></div><div class="mode-tabs" aria-label="Display mode"><button data-theme="light" class="active">LIGHT</button><button data-theme="dark">DARK</button><button data-theme="neo">NEO</button></div></div><div class="canvas-readout"><span id="canvas-edit-state" aria-live="polite">READY</span><span id="pointer">X — / Y —</span><span id="zoom-label">100%</span></div></div></div>\r\n...`,
+    expected: /FIELDS \/ R1D/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\r1b-ui.test.mjs:62:1
+✖ influence vertical slice exposes direct control automatic saving and visual check (0.1971ms)
+  AssertionError [ERR_ASSERTION]: 1 ADD · 2 MANIPULATE · 3 SAVED AUTOMATICALLY
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:64:159)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\r1b-ui.test.mjs:105:1
+✖ simple creation flow hides redundant Boundary save UI and reveals Pattern geometry before fields (0.5692ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /display\.originalGrid=true;display\.weaveSource=false;display\.weaveDerived=false;display\.attractor=false;saveView\(\)/. Input:
+  
+  "import {readWeaveSource,weaveCalculationInput} from './weave-source.mjs';\n" +
+    "import {copyProjectForEdit,copyWorkingForEdit} from './edit-draft.mjs';\n" +
+    "import {validateWorkingEdit,WeaveEditGesture} from './weave-edit.mjs';\n" +
+    "import {CompactAutosave} from './compact-autosave.mjs';\n" +
+    'const editGesture=new WeaveEditGesture();\n' +
+    '\n' +
+    "import {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary} from './project-library.mjs';\n" +
+    "import {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';\r\r\n" +
+    "import {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';\r\r\n" +
+    "import {defaultRule,resolveWeaveRules,familyOf,namedRuleMode,applyNamedRuleMode,repeatSequence,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from './weave-rules.mjs';\r\r\n" +
+    "import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,indexCrossingFamilies} from './family-domain.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {threadStyle,threadPaths,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {influenceResponseChanges} from './influence-controls.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {LINE_PRESETS,createLinePreset} from './line-presets.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {STITCH_SOURCE,STITCH_RECIPES,createStitchSource,changeHerringboneLayout} from './stitch-source.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {STITCH_VERSIONS,stitchIdentity,validateStitchGeneration} from './stitch.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {createWorkspace,createProject,activeProject,clone,saveBoundary,saveBoundaryAndUpdatePatterns,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,createWeaveStudy,retargetWeaveSource,saveWeaveStudy,restoreWeaveStudy,findWeaveRevision,parseBackup,mergeBackup,addInfluence,duplicateInfluence,candidateInfluence,candidateVariation,removeInfluence,influenceOf,influencesOf,validateTrustedWorkspace,addWeaveFamily,removeWeaveFamily,renameLibraryItem,deleteLibraryItem,duplicateLibraryItem} from './document.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,canonical,digest} from './weave.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {INFLUENCE_VERSIONS,FAMILY_INFLUENCE_VERSIONS,validateGeneration as validateInfluenceGeneration,familySettings,isIdentityGeneration} from './influence.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {COMBINED_VERSIONS,COMBINED_LIMITS,validateCombinedGeneration,combinedIdentity} from './combined.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {createRectangularCarrier,carrierInputFingerprint,familyNames,FAMILY_LIMIT} from './carrier.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {square,validateBoundary,parseCoordinates,signedArea,bounds} from './boundary.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {History} from './history.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {IndexedStore,STORE_KEY,ADVISORY_KEY} from './storage.mjs?storage-epoch=20260918';\n" +
+    '\r\r\n' +
+    "import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {boundarySvg,boundaryDxf} from './exchange.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {parseSvgBoundary,svgImportSummary} from './svg-import.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {prepareIncrementalWorkspace,validatePreparedPayload,projectPortableByteLength} from './storage-codec.mjs';\n" +
+    '\r\r\n' +
+    "import {derivedFamilyPaths} from './weave-render.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {applyDisplayPreset,displayPresetName} from './display.mjs';\r\r\n" +
+    '\r\r\n' +
+    'let selectedCrossing=null,activeInterlaceTarget=null;\r\r\n' +
+    'const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;\r\r\n' +
+    "function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}\r\r\n" +
+    "const $=id=>document.getElementById(id),BUILD='WF-STABILITY-P3-COMPACT-AUTOSAVE-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';\n" +
+    '\r\r\n' +
+    "const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));\r\r\n" +
+    '\r\r\n' +
+    "document.querySelector('footer').innerHTML='STABILITY FOUNDATION · PHASE 3<br>Changes apply immediately; compact backup follows automatically.';\n" +
+    '\r\r\n' +
+    "const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';\r\r\n" +
+    '\r\r\n' +
+    "let workspace,loadError='';\n" +
+    '\n' +
+    'let libraryTemplateRevisionId=null;\n' +
+    '\r\r\n' +
+    'const histories=new Map();\r\r\n' +
+    '\r\r\n' +
+    'const workingRoots=new WeakMap();\r\r\n' +
+    '\r\r\n' +
+    'const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};\r\r\n' +
+    '\r\r\n' +
+    "let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0;\r\r\n" +
+    '\r\r\n' +
+    "let activePatternFamily='A',activeInfluenceFamily='A',activeInfluenceId=undefined;\r\r\n" +
+    '\r\r\n' +
+    'const treeOpenState=new Map();\r\r\n' +
+    '\r\r\n' +
+    'let pending=null,activeJob=null,workerSequence=0,workerTimer=0,workerUnavailable=false,enabledAction=false,influenceGesture=null,acceptedVersion=0;const sessionId=crypto.randomUUID(),workerEvents=[];\n' +
+    '\r\r\n' +
+    'function workerEvent(type,data={}){workerEvents.push({type,at:performance.now(),...data});if(workerEvents.length>300)workerEvents.splice(0,workerEvents.length-300);}\r\r\n' +
+    '\r\r\n' +
+    'function typedError(code,message){const error=Error(message);error.code=code;return error;}\r\r\n' +
+    '\r\r\n' +
+    'const carrierCache=new Map();\r\r\n' +
+    '\r\r\n' +
+    'const sourceTraces=new WeakMap();\r\r\n' +
+    '\r\r\n' +
+    "function retainSourceTrace(result,payloadId,trace){if(result?.versions?.derivation!==STITCH_VERSIONS.derivation)return;if(!trace||trace.version!=='stitch-source-trace-v1'||trace.derivedFingerprint!==payloadId)throw typedError('source-trace','Source trace fingerprint does not match geometry.');sourceTraces.set(result,trace);}\r\r\n" +
+    '\r\r\n' +
+    "let display={theme:'light',boundary:true,grid:true,sourceLattice:true,originalGrid:true,weaveSource:false,weaveDerived:true,attractor:true,isolatedFamilyId:null};\r\r\n" +
+    '\r\r\n' +
+    "try{const saved=JSON.parse(localStorage.getItem(VIEW_KEY));if(['light','dark','neo'].includes(saved?.theme))display={...display,theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true,sourceLattice:saved.sourceLattice===true,originalGrid:saved.originalGrid??(saved.familyA===true||saved.familyB===true),weaveSource:saved.weaveSource===true,weaveDerived:saved.weaveDerived===true,attractor:saved.attractor!==false,isolatedFamilyId:typeof saved.isolatedFamilyId==='string'?saved.isolatedFamilyId:null};}catch{}\r\r\n" +
+    '\r\r\n' +
+    'const project=()=>activeProject(workspace);\r\r\n' +
+    '\r\r\n' +
+    'const isCertifiedStudy=weave=>[ATTRACTOR_VERSIONS.study,INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study,COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(weave?.weaveVersion);\r\r\n' +
+    '\r\r\n' +
+    'const versionsForWeave=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?STITCH_VERSIONS:weave?.weaveVersion===COMBINED_VERSIONS.study?COMBINED_VERSIONS:weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study?FAMILY_INFLUENCE_VERSIONS:weave?.weaveVersion===INFLUENCE_VERSIONS.study?INFLUENCE_VERSIONS:ATTRACTOR_VERSIONS;\r\r\n' +
+    '\r\r\n' +
+    'const validateWeaveGeneration=weave=>(weave?.weaveVersion===STITCH_VERSIONS.study?validateStitchGeneration:weave?.weaveVersion===COMBINED_VERSIONS.study?validateCombinedGeneration:[INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(weave?.weaveVersion)?validateInfluenceGeneration:validateGeneration)(weave.generation);\r\r\n' +
+    '\r\r\n' +
+    'const identityGeneration=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?stitchIdentity(weave.generation):weave?.weaveVersion===COMBINED_VERSIONS.study?combinedIdentity(weave.generation):isIdentityGeneration(weave.generation);\r\r\n' +
+    '\r\r\n' +
+    "function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}\r\r\n" +
+    '\r\r\n' +
+    "function surfaceError(error){if($('field-section').open)setEditFeedback('field','error',`NOT APPLIED · ${error?.message||String(error)}`);if(['concurrent-change','storage-open','storage-blocked'].includes(error?.code)){$('reload-latest').hidden=false;$('project-section').open=true;}status(error?.message||String(error),true);}\n" +
+    '\r\r\n' +
+    "function setEditFeedback(scope,state,text){const ids=scope==='pattern'?['pattern-edit-state','canvas-edit-state']:scope==='field'?['field-edit-state','canvas-edit-state']:['canvas-edit-state'];for(const id of ids){const node=$(id);if(!node)continue;node.dataset.state=state;node.textContent=text;}}\r\r\n" +
+    '\r\r\n' +
+    "function resetEditFeedback(){const pattern=$('pattern-edit-state'),field=$('field-edit-state'),canvas=$('canvas-edit-state');if(pattern){pattern.dataset.state='ready';pattern.textContent='READY · CHANGES PREVIEW AND SAVE AUTOMATICALLY';}if(field){field.dataset.state='ready';field.textContent='READY · CHANGES CALCULATE AND SAVE AUTOMATICALLY';}if(canvas){canvas.dataset.state='ready';canvas.textContent='READY';}}\r\r\n" +
+    '\r\r\n' +
+    "function focusDerivedEditing(showGuide=false){const hasResult=Boolean((pending?.working||project().working).weave),next=hasResult?applyDisplayPreset(display,'derived-only'):{...display,sourceLattice:false,originalGrid:true,weaveSource:false,weaveDerived:true};next.attractor=showGuide||display.attractor;const changed=JSON.stringify(next)!==JSON.stringify(display);display=next;if(changed)saveView();}\r\r\n" +
+    '\r\r\n' +
+    "function renderProjectSummary(){const p=project(),savedBoundaries=p.boundaries.length,savedWeaves=p.carrierStudies.length;$('project-summary').textContent=`${p.name} · ${savedBoundaries} BOUNDAR${savedBoundaries===1?'Y':'IES'} · ${savedWeaves} WEAVE${savedWeaves===1?'':'S'}`;}\r\r\n" +
+    '\r\r\n' +
+    'function storageDiagnostics(){const packed=store.lastPacked;if(!packed)return null;const activeProjectBytes=projectPortableByteLength(packed,packed.manifest.act'... 124942 more characters
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:108:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "import {readWeaveSource,weaveCalculationInput} from './weave-source.mjs';\nimport {copyProjectForEdit,copyWorkingForEdit} from './edit-draft.mjs';\nimport {validateWorkingEdit,WeaveEditGesture} from './weave-edit.mjs';\nimport {CompactAutosave} from './compact-autosave.mjs';\nconst editGesture=new WeaveEditGesture();\n\nimport {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary} from './project-library.mjs';\nimport {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';\r\r\nimport {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';\r\r\nimport {defaultRule,resolveWeaveRules,familyOf,namedRuleMode,applyNamedRuleMode,repeatSequence,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from './weave-rules.mjs';\r\r\n...",
+    expected: /display\.originalGrid=true;display\.weaveSource=false;display\.weaveDerived=false;display\.attractor=false;saveView\(\)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\r1b-ui.test.mjs:132:1
+✖ selected influence is highlighted and blank canvas clicks deselect it (0.5032ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\.attractor-ring\.active\{stroke-width:3/. Input:
+  
+  `*{box-sizing:border-box} :root{font-family:"OCR-B","OCR B Std","OCRB",monospace;color:#000;background:#fff;--paper:#fff;--ink:#000;--muted:#555;--grid:#eaeaea;--accent:#000;--on-accent:#fff;--family-b:#666;--family-c:#8a4baf;--family-d:#2679a8;--family-e:#a35f15;--family-f:#1f8a70;--family-g:#b12d55;--family-h:#6f6f6f;font-synthesis:none}body{margin:0;font-size:14px}body[data-theme=dark]{--paper:#111;--ink:#fff;--muted:#bbb;--grid:#303030;--accent:#fff;--on-accent:#111}body[data-theme=neo]{--paper:#11140f;--ink:#f0f2e8;--muted:#9ca58c;--grid:#2b3026;--accent:#daff33;--on-accent:#11140f;--family-b:#d8ddcf;--family-c:#ff6bd6;--family-d:#61d8ff;--family-e:#ffb84d;--family-f:#67efb0;--family-g:#ff6a79;--family-h:#c6b5ff}body{background:var(--paper);color:var(--ink)}button,input,textarea{font:inherit;color:inherit}button,input,textarea,dialog{border:1px solid var(--ink);border-radius:0;background:var(--paper)}button{padding:9px 10px;cursor:pointer;font-size:12px;min-height:36px}button:hover{background:var(--grid)}button:disabled{opacity:.4;cursor:default}button.active,.primary{background:var(--accent);color:var(--on-accent)}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,svg:focus-visible{outline:2px solid var(--ink);outline-offset:3px}input{padding:8px;width:100%;min-width:0}textarea{width:100%;padding:8px;line-height:1.6;resize:vertical;font-size:13px}header{height:58px;border-bottom:1px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:16px}.brand{font-size:14px;font-weight:bold;letter-spacing:.06em}.brand span{font-size:11px;font-weight:normal;color:var(--muted);margin-left:18px}nav{display:flex;gap:6px}h1,h2{font-size:14px;letter-spacing:.06em;margin:0}h2{margin-bottom:20px}#shell{height:calc(100dvh - 58px);display:grid;grid-template-columns:250px minmax(0,1fr) 350px}#boards,#controls{overflow-y:auto;min-width:0;background:var(--paper)}#boards{padding:16px 14px;border-right:1px solid var(--ink)}#controls{border-left:1px solid var(--ink)}.rail-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.rail-title button{width:30px;padding:0;font-size:20px}.board{border-top:1px solid var(--ink);margin-bottom:16px}.board-title{width:100%;text-align:left;display:flex;justify-content:space-between;border:0}.board-title.active{background:var(--accent);color:var(--on-accent)}.board-content{padding:12px 0}.saved-entry{margin:0 0 14px}.saved-name{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}.revision{width:100%;text-align:left;display:flex;justify-content:space-between;margin-top:4px;font-size:12px}.micro{font-size:11px;line-height:1.6;color:var(--muted)}.backup-actions{display:grid;gap:7px;margin-top:20px}.rail-rule{border-top:1px solid var(--ink);margin-top:24px}.workspace{min-width:0;min-height:0;display:flex;flex-direction:column}.toolbar{display:flex;justify-content:space-between;gap:8px;padding:10px 16px;border-bottom:1px solid var(--ink);flex-wrap:wrap}.toolbar>div{display:flex;gap:0}.toolbar button+button{border-left:0}#drawing{position:relative;flex:1;min-height:220px;overflow:hidden}#canvas{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.drawing-label{position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted);pointer-events:none}#grid path{stroke:var(--grid)}#frame-layer{stroke:var(--muted);fill:none;stroke-width:1}.boundary-path{stroke:var(--ink);stroke-width:1.5;fill:none;vector-effect:non-scaling-stroke}.vertex{stroke:var(--ink);fill:var(--paper);stroke-width:1.5;cursor:grab}.vertex.selected{fill:var(--accent)}.draft-path{stroke:var(--muted);stroke-dasharray:5 4;fill:none}.canvas-bottom{position:absolute;left:20px;right:20px;bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;pointer-events:none}.mode-tabs{display:flex;pointer-events:auto}.mode-tabs button{min-height:28px;padding:5px 8px;font-size:10px}.mode-tabs button+button{border-left:0}.statusbar{border-top:1px solid var(--ink);padding:10px 16px;display:flex;justify-content:space-between;gap:15px;font-size:11px;line-height:1.5;min-height:40px}#status.error{text-decoration:underline;text-underline-offset:3px}#build{white-space:nowrap;color:var(--muted)}#empty-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;font-size:12px;color:var(--muted);pointer-events:none}#empty-hint button{pointer-events:auto}details{border-bottom:1px solid var(--ink)}summary{padding:19px 18px;cursor:pointer;display:flex;justify-content:space-between;list-style:none;font-size:13px}summary::-webkit-details-marker{display:none}details[open] summary span{font-size:0}details[open] summary span:after{content:'−';font-size:13px}.section-body{padding:0 18px 18px}.section-body>label,dialog label{display:block;margin:17px 0 8px;font-size:12px}.section-body>button{width:100%;margin-top:10px}.section-body p{font-size:12px;line-height:1.6}.row{display:flex;gap:7px}.row>*{flex:1}.row input{width:80px}.row button{white-space:nowrap}.check{display:flex!important;align-items:center;gap:10px;cursor:pointer}.check input{appearance:none;width:16px;height:16px;padding:0;border:1px solid var(--ink);flex:0 0 16px}.check input:checked{background:var(--accent);box-shadow:inset 0 0 0 3px var(--paper)}footer{padding:20px 18px;font-size:11px;color:var(--muted);line-height:1.6}dialog{color:var(--ink);width:min(580px,calc(100vw - 32px));padding:26px}dialog::backdrop{background:#0008}dialog p{font-size:13px;line-height:1.6}dialog .row{margin-top:20px}#import-message{min-height:20px}#shell.boards-hidden{grid-template-columns:0 minmax(0,1fr) 350px}#shell.controls-hidden{grid-template-columns:250px minmax(0,1fr) 0}#shell.boards-hidden.controls-hidden{grid-template-columns:0 minmax(0,1fr) 0}#shell.boards-hidden #boards,#shell.controls-hidden #controls{visibility:hidden;padding:0;border:0}[hidden]{display:none!important}\r\n` +
+    'body{height:100dvh;display:flex;flex-direction:column}header{flex:0 0 auto}#shell{flex:1;min-height:0}\r\n' +
+    '@media(max-width:1050px){.brand span{display:none}.toolbar{padding:8px}.toolbar button{font-size:10px;padding:7px}.drawing-label{flex-direction:column;gap:4px}.canvas-bottom #pointer{display:none}#build{display:none}}\r\n' +
+    '@media(max-width:760px){header{padding:8px 12px;height:auto;min-height:58px;flex-wrap:wrap}.brand{font-size:12px}#shell,#shell.boards-hidden,#shell.controls-hidden,#shell.boards-hidden.controls-hidden{height:calc(100dvh - 90px);display:flex;position:relative}.workspace{width:100%}#boards,#controls{position:absolute;top:0;bottom:0;z-index:4;width:min(350px,85vw);box-shadow:0 4px 20px #0003}#boards{left:0;width:min(250px,85vw)}#controls{right:0}.toolbar{gap:4px}.drawing-label{font-size:10px}.statusbar{font-size:10px}.brand span{display:none}}\r\n' +
+    '.import-stage{border:1px solid var(--ink);margin-top:12px;padding:10px}.import-stage-head{display:flex;justify-content:space-between;gap:8px;font-size:11px;overflow-wrap:anywhere}.import-stage-head span{color:var(--muted)}.import-stage-head span.error,#svg-import-message{color:var(--ink)}.import-stage-head span.error{text-decoration:underline}.import-stage svg{display:block;width:100%;height:150px;margin:10px 0;background:var(--grid);border:1px solid var(--ink)}.import-preview-path{fill:none;stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}.import-stage dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:10px 0;font-size:10px}.import-stage dt{color:var(--muted)}.import-stage dd{margin:0;text-align:right;overflow-wrap:anywhere}#svg-import-message{min-height:18px;font-size:11px}.import-stage .row{margin-top:8px}\r\n' +
+    '\r\n' +
+    '.carrier-source{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 5;opacity:.55;vector-effect:non-scaling-stroke}.carrier-family{stroke:var(--muted);stroke-width:1.25;opacity:.82;vector-effect:non-scaling-stroke}.distortion-active #family-a-layer .carrier-family,.distortion-active #family-b-layer .carrier-family{opacity:.24}.slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px}.slider-label{display:grid!important;grid-template-columns:1fr auto;align-items:center;gap:5px 10px;font-size:10px!important;line-height:1.5}.slider-label output{font-variant-numeric:tabular-nums;color:var(--muted);max-width:110px;overflow:hidden;text-overflow:ellipsis}.model-slider{grid-column:1/-1;border:0;padding:0;margin:0;width:100%;height:24px;accent-color:var(--accent);cursor:ew-resize}.vertex-slider-stack{display:grid;gap:16px}.section-body>#make-square{width:100%;margin-top:10px}\r\n' +
+    '.weave-derived-path{fill:none}\r\n' +
+    '.attractor-ring{fill:none;stroke:var(--accent);stroke-width:1;opacity:.4;stroke-dasharray:6 4;vector-effect:non-scaling-stroke;cursor:pointer}.attractor-ring.active{stroke-width:1;opacity:.5;filter:none;cursor:ew-resize}.attractor-ring.repeller{stroke-dasharray:2 3}.attractor-ring.deflector{stroke-dasharray:10 4}.attractor-center{fill:var(--accent);stroke:var(--paper);stroke-width:2;vector-effect:non-scaling-stroke;cursor:move}.attractor-center.active{stroke-width:3;filter:drop-shadow(0 0 3px var(--accent))}.influence-direction{stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke}.influence-direction.active{stroke-width:3;filter:drop-shadow(0 0 3px var(--accent))}.direction-handle{fill:var(--paper);stroke:var(--accent);stroke-width:2;cursor:grab;vector-effect:non-scaling-stroke}.direction-handle.active{fill:var(--accent);stroke-width:3}.attractor-ring.pending,.attractor-center.pending,.influence-direction.pending,.direction-handle.pending{stroke-dashoffset:4}.pending-result{opacity:1}#attractor-controls{border:1px solid var(--ink);margin:14px 0;padding:12px}.feature-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.feature-heading strong{font-size:12px;letter-spacing:.06em}.feature-heading spa'... 17288 more characters
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:134:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `*{box-sizing:border-box} :root{font-family:"OCR-B","OCR B Std","OCRB",monospace;color:#000;background:#fff;--paper:#fff;--ink:#000;--muted:#555;--grid:#eaeaea;--accent:#000;--on-accent:#fff;--family-b:#666;--family-c:#8a4baf;--family-d:#2679a8;--family-e:#a35f15;--family-f:#1f8a70;--family-g:#b12d55;--family-h:#6f6f6f;font-synthesis:none}body{margin:0;font-size:14px}body[data-theme=dark]{--paper:#111;--ink:#fff;--muted:#bbb;--grid:#303030;--accent:#fff;--on-accent:#111}body[data-theme=neo]{--paper:#11140f;--ink:#f0f2e8;--muted:#9ca58c;--grid:#2b3026;--accent:#daff33;--on-accent:#11140f;--family-b:#d8ddcf;--family-c:#ff6bd6;--family-d:#61d8ff;--family-e:#ffb84d;--family-f:#67efb0;--family-g:#ff6a79;--family-h:#c6b5ff}body{background:var(--paper);color:var(--ink)}button,input,textarea{font:inherit;color:inherit}button,input,textarea,dialog{border:1px solid var(--ink);border-radius:0;background:var(--paper)}button{padding:9px 10px;cursor:pointer;font-size:12px;min-height:36px}button:hover{background:var(--grid)}button:disabled{opacity:.4;cursor:default}button.active,.primary{background:var(--accent);color:var(--on-accent)}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,svg:focus-visible{outline:2px solid var(--ink);outline-offset:3px}input{padding:8px;width:100%;min-width:0}textarea{width:100%;padding:8px;line-height:1.6;resize:vertical;font-size:13px}header{height:58px;border-bottom:1px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:16px}.brand{font-size:14px;font-weight:bold;letter-spacing:.06em}.brand span{font-size:11px;font-weight:normal;color:var(--muted);margin-left:18px}nav{display:flex;gap:6px}h1,h2{font-size:14px;letter-spacing:.06em;margin:0}h2{margin-bottom:20px}#shell{height:calc(100dvh - 58px);display:grid;grid-template-columns:250px minmax(0,1fr) 350px}#boards,#controls{overflow-y:auto;min-width:0;background:var(--paper)}#boards{padding:16px 14px;border-right:1px solid var(--ink)}#controls{border-left:1px solid var(--ink)}.rail-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.rail-title button{width:30px;padding:0;font-size:20px}.board{border-top:1px solid var(--ink);margin-bottom:16px}.board-title{width:100%;text-align:left;display:flex;justify-content:space-between;border:0}.board-title.active{background:var(--accent);color:var(--on-accent)}.board-content{padding:12px 0}.saved-entry{margin:0 0 14px}.saved-name{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}.revision{width:100%;text-align:left;display:flex;justify-content:space-between;margin-top:4px;font-size:12px}.micro{font-size:11px;line-height:1.6;color:var(--muted)}.backup-actions{display:grid;gap:7px;margin-top:20px}.rail-rule{border-top:1px solid var(--ink);margin-top:24px}.workspace{min-width:0;min-height:0;display:flex;flex-direction:column}.toolbar{display:flex;justify-content:space-between;gap:8px;padding:10px 16px;border-bottom:1px solid var(--ink);flex-wrap:wrap}.toolbar>div{display:flex;gap:0}.toolbar button+button{border-left:0}#drawing{position:relative;flex:1;min-height:220px;overflow:hidden}#canvas{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.drawing-label{position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted);pointer-events:none}#grid path{stroke:var(--grid)}#frame-layer{stroke:var(--muted);fill:none;stroke-width:1}.boundary-path{stroke:var(--ink);stroke-width:1.5;fill:none;vector-effect:non-scaling-stroke}.vertex{stroke:var(--ink);fill:var(--paper);stroke-width:1.5;cursor:grab}.vertex.selected{fill:var(--accent)}.draft-path{stroke:var(--muted);stroke-dasharray:5 4;fill:none}.canvas-bottom{position:absolute;left:20px;right:20px;bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;pointer-events:none}.mode-tabs{display:flex;pointer-events:auto}.mode-tabs button{min-height:28px;padding:5px 8px;font-size:10px}.mode-tabs button+button{border-left:0}.statusbar{border-top:1px solid var(--ink);padding:10px 16px;display:flex;justify-content:space-between;gap:15px;font-size:11px;line-height:1.5;min-height:40px}#status.error{text-decoration:underline;text-underline-offset:3px}#build{white-space:nowrap;color:var(--muted)}#empty-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;font-size:12px;color:var(--muted);pointer-events:none}#empty-hint button{pointer-events:auto}details{border-bottom:1px solid var(--ink)}summary{padding:19px 18px;cursor:pointer;display:flex;justify-content:space-between;list-style:none;font-size:13px}summary::-webkit-details-marker{display:none}details[open] summary span{font-size:0}details[open] summary span:after{content:'−';font-size:13px}.section-body{padding:0 18px 18px}.section-body>label,dialog label{display:block;margin:17px 0 8px;font-size:12px}.section-body>button{width:100%;margin-top:10px}.section-body p{font-size:12px;line-height:1.6}.row{display:flex;gap:7px}.row>*{flex:1}.row input{width:80px}.row button{white-space:nowrap}.check{display:flex!important;align-items:center;gap:10px;cursor:pointer}.check input{appearance:none;width:16px;height:16px;padding:0;border:1px solid var(--ink);flex:0 0 16px}.check input:checked{background:var(--accent);box-shadow:inset 0 0 0 3px var(--paper)}footer{padding:20px 18px;font-size:11px;color:var(--muted);line-height:1.6}dialog{color:var(--ink);width:min(580px,calc(100vw - 32px));padding:26px}dialog::backdrop{background:#0008}dialog p{font-size:13px;line-height:1.6}dialog .row{margin-top:20px}#import-message{min-height:20px}#shell.boards-hidden{grid-template-columns:0 minmax(0,1fr) 350px}#shell.controls-hidden{grid-template-columns:250px minmax(0,1fr) 0}#shell.boards-hidden.controls-hidden{grid-template-columns:0 minmax(0,1fr) 0}#shell.boards-hidden #boards,#shell.controls-hidden #controls{visibility:hidden;padding:0;border:0}[hidden]{display:none!important}\r\nbody{height:100dvh;display:flex;flex-direction:column}header{flex:0 0 auto}#shell{flex:1;min-height:0}\r\n@media(max-width:1050px){.brand span{display:none}.toolbar{padding:8px}.toolbar button{font-size:10px;padding:7px}.drawing-label{flex-direction:column;gap:4px}.canvas-bottom #pointer{display:none}#build{display:none}}\r\n@media(max-width:760px){header{padding:8px 12px;height:auto;min-height:58px;flex-wrap:wrap}.brand{font-size:12px}#shell,#shell.boards-hidden,#shell.controls-hidden,#shell.boards-hidden.controls-hidden{height:calc(100dvh - 90px);display:flex;position:relative}.workspace{width:100%}#boards,#controls{position:absolute;top:0;bottom:0;z-index:4;width:min(350px,85vw);box-shadow:0 4px 20px #0003}#boards{left:0;width:min(250px,85vw)}#controls{right:0}.toolbar{gap:4px}.drawing-label{font-size:10px}.statusbar{font-size:10px}.brand span{display:none}}\r\n.import-stage{border:1px solid var(--ink);margin-top:12px;padding:10px}.import-stage-head{display:flex;justify-content:space-between;gap:8px;font-size:11px;overflow-wrap:anywhere}.import-stage-head span{color:var(--muted)}.import-stage-head span.error,#svg-import-message{color:var(--ink)}.import-stage-head span.error{text-decoration:underline}.import-stage svg{display:block;width:100%;height:150px;margin:10px 0;background:var(--grid);border:1px solid var(--ink)}.import-preview-path{fill:none;stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}.import-stage dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:10px 0;font-size:10px}.import-stage dt{color:var(--muted)}.import-stage dd{margin:0;text-align:right;overflow-wrap:anywhere}#svg-import-message{min-height:18px;font-size:11px}.import-stage .row{margin-top:8px}\r\n\r\n.carrier-source{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 5;opacity:.55;vector-effect:non-scaling-stroke}.carrier-family{stroke:var(--muted);stroke-width:1.25;opacity:.82;vector-effect:non-scaling-stroke}.distortion-active #family-a-layer .carrier-family,.distortion-active #family-b-layer .carrier-family{opacity:.24}.slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px}.slider-label{display:grid!important;grid-template-columns:1fr auto;align-items:center;gap:5px 10px;font-size:10px!important;line-height:1.5}.slider-label output{font-variant-numeric:tabular-nums;color:var(--muted);max-width:110px;overflow:hidden;text-overflow:ellipsis}.model-slider{grid-column:1/-1;border:0;padding:0;margin:0;width:100%;height:24px;accent-color:var(--accent);cursor:ew-resize}.vertex-slider-stack{display:grid;gap:16px}.section-body>#make-square{width:100%;margin-top:10px}\r\n.weave-derived-path{fill:none}\r\n.attractor-ring{fill:none;stroke:var(--accent);stroke-width:1;opacity:.4;stroke-dasharray:6 4;vector-effect:non-scaling-stroke;cursor:pointer}.attractor-ring.active{stroke-width:1;opacity:.5;filter:none;cursor:ew-resize}.attractor-ring.repeller{stroke-dasharray:2 3}.attractor-ring.deflector{stroke-dasharray:10 4}.attractor-center{fill:var(--accent);stroke:var(--paper);stroke-width:2;vector-effect:non-scaling-stroke;cursor:move}.attractor-center.active{stroke-width:3;filter:drop-shadow(0 0 3px var(--accent))}.influence-direction{stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke}.influence-direction.active{stroke-width:3;filter:drop-shadow(0 0 3px var(--accent))}.direction-handle{fill:var(--paper);stroke:var(--accent);stroke-width:2;cursor:grab;vector-effect:non-scaling-stroke}.direction-handle.active{fill:var(--accent);stroke-width:3}.attractor-ring.pending,.attractor-center.pending,.influence-direction.pending,.direction-handle.pending{stroke-dashoffset:4}.pending-result{opacity:1}#attractor-controls{border:1px solid var(--ink);margin:14px 0;padding:12px}.feature-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.feature-heading strong{font-size:12px;letter-spacing:.06em}.feature-heading spa`... 911 more characters,
+    expected: /\.attractor-ring\.active\{stroke-width:3/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\r1b-ui.test.mjs:142:1
+✖ post-influence Pattern gestures preserve the latest candidate and atomically finalize it (0.3166ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /function recipeFromControls\(owner=transientProject\(\)\)/. Input:
+  
+  "import {readWeaveSource,weaveCalculationInput} from './weave-source.mjs';\n" +
+    "import {copyProjectForEdit,copyWorkingForEdit} from './edit-draft.mjs';\n" +
+    "import {validateWorkingEdit,WeaveEditGesture} from './weave-edit.mjs';\n" +
+    "import {CompactAutosave} from './compact-autosave.mjs';\n" +
+    'const editGesture=new WeaveEditGesture();\n' +
+    '\n' +
+    "import {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary} from './project-library.mjs';\n" +
+    "import {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';\r\r\n" +
+    "import {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';\r\r\n" +
+    "import {defaultRule,resolveWeaveRules,familyOf,namedRuleMode,applyNamedRuleMode,repeatSequence,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from './weave-rules.mjs';\r\r\n" +
+    "import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,indexCrossingFamilies} from './family-domain.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {threadStyle,threadPaths,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {influenceResponseChanges} from './influence-controls.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {LINE_PRESETS,createLinePreset} from './line-presets.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {STITCH_SOURCE,STITCH_RECIPES,createStitchSource,changeHerringboneLayout} from './stitch-source.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {STITCH_VERSIONS,stitchIdentity,validateStitchGeneration} from './stitch.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {createWorkspace,createProject,activeProject,clone,saveBoundary,saveBoundaryAndUpdatePatterns,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,createWeaveStudy,retargetWeaveSource,saveWeaveStudy,restoreWeaveStudy,findWeaveRevision,parseBackup,mergeBackup,addInfluence,duplicateInfluence,candidateInfluence,candidateVariation,removeInfluence,influenceOf,influencesOf,validateTrustedWorkspace,addWeaveFamily,removeWeaveFamily,renameLibraryItem,deleteLibraryItem,duplicateLibraryItem} from './document.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,canonical,digest} from './weave.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {INFLUENCE_VERSIONS,FAMILY_INFLUENCE_VERSIONS,validateGeneration as validateInfluenceGeneration,familySettings,isIdentityGeneration} from './influence.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {COMBINED_VERSIONS,COMBINED_LIMITS,validateCombinedGeneration,combinedIdentity} from './combined.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {createRectangularCarrier,carrierInputFingerprint,familyNames,FAMILY_LIMIT} from './carrier.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {square,validateBoundary,parseCoordinates,signedArea,bounds} from './boundary.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {History} from './history.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {IndexedStore,STORE_KEY,ADVISORY_KEY} from './storage.mjs?storage-epoch=20260918';\n" +
+    '\r\r\n' +
+    "import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {boundarySvg,boundaryDxf} from './exchange.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {parseSvgBoundary,svgImportSummary} from './svg-import.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {prepareIncrementalWorkspace,validatePreparedPayload,projectPortableByteLength} from './storage-codec.mjs';\n" +
+    '\r\r\n' +
+    "import {derivedFamilyPaths} from './weave-render.mjs';\r\r\n" +
+    '\r\r\n' +
+    "import {applyDisplayPreset,displayPresetName} from './display.mjs';\r\r\n" +
+    '\r\r\n' +
+    'let selectedCrossing=null,activeInterlaceTarget=null;\r\r\n' +
+    'const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;\r\r\n' +
+    "function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}\r\r\n" +
+    "const $=id=>document.getElementById(id),BUILD='WF-STABILITY-P3-COMPACT-AUTOSAVE-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';\n" +
+    '\r\r\n' +
+    "const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));\r\r\n" +
+    '\r\r\n' +
+    "document.querySelector('footer').innerHTML='STABILITY FOUNDATION · PHASE 3<br>Changes apply immediately; compact backup follows automatically.';\n" +
+    '\r\r\n' +
+    "const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';\r\r\n" +
+    '\r\r\n' +
+    "let workspace,loadError='';\n" +
+    '\n' +
+    'let libraryTemplateRevisionId=null;\n' +
+    '\r\r\n' +
+    'const histories=new Map();\r\r\n' +
+    '\r\r\n' +
+    'const workingRoots=new WeakMap();\r\r\n' +
+    '\r\r\n' +
+    'const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};\r\r\n' +
+    '\r\r\n' +
+    "let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0;\r\r\n" +
+    '\r\r\n' +
+    "let activePatternFamily='A',activeInfluenceFamily='A',activeInfluenceId=undefined;\r\r\n" +
+    '\r\r\n' +
+    'const treeOpenState=new Map();\r\r\n' +
+    '\r\r\n' +
+    'let pending=null,activeJob=null,workerSequence=0,workerTimer=0,workerUnavailable=false,enabledAction=false,influenceGesture=null,acceptedVersion=0;const sessionId=crypto.randomUUID(),workerEvents=[];\n' +
+    '\r\r\n' +
+    'function workerEvent(type,data={}){workerEvents.push({type,at:performance.now(),...data});if(workerEvents.length>300)workerEvents.splice(0,workerEvents.length-300);}\r\r\n' +
+    '\r\r\n' +
+    'function typedError(code,message){const error=Error(message);error.code=code;return error;}\r\r\n' +
+    '\r\r\n' +
+    'const carrierCache=new Map();\r\r\n' +
+    '\r\r\n' +
+    'const sourceTraces=new WeakMap();\r\r\n' +
+    '\r\r\n' +
+    "function retainSourceTrace(result,payloadId,trace){if(result?.versions?.derivation!==STITCH_VERSIONS.derivation)return;if(!trace||trace.version!=='stitch-source-trace-v1'||trace.derivedFingerprint!==payloadId)throw typedError('source-trace','Source trace fingerprint does not match geometry.');sourceTraces.set(result,trace);}\r\r\n" +
+    '\r\r\n' +
+    "let display={theme:'light',boundary:true,grid:true,sourceLattice:true,originalGrid:true,weaveSource:false,weaveDerived:true,attractor:true,isolatedFamilyId:null};\r\r\n" +
+    '\r\r\n' +
+    "try{const saved=JSON.parse(localStorage.getItem(VIEW_KEY));if(['light','dark','neo'].includes(saved?.theme))display={...display,theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true,sourceLattice:saved.sourceLattice===true,originalGrid:saved.originalGrid??(saved.familyA===true||saved.familyB===true),weaveSource:saved.weaveSource===true,weaveDerived:saved.weaveDerived===true,attractor:saved.attractor!==false,isolatedFamilyId:typeof saved.isolatedFamilyId==='string'?saved.isolatedFamilyId:null};}catch{}\r\r\n" +
+    '\r\r\n' +
+    'const project=()=>activeProject(workspace);\r\r\n' +
+    '\r\r\n' +
+    'const isCertifiedStudy=weave=>[ATTRACTOR_VERSIONS.study,INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study,COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(weave?.weaveVersion);\r\r\n' +
+    '\r\r\n' +
+    'const versionsForWeave=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?STITCH_VERSIONS:weave?.weaveVersion===COMBINED_VERSIONS.study?COMBINED_VERSIONS:weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study?FAMILY_INFLUENCE_VERSIONS:weave?.weaveVersion===INFLUENCE_VERSIONS.study?INFLUENCE_VERSIONS:ATTRACTOR_VERSIONS;\r\r\n' +
+    '\r\r\n' +
+    'const validateWeaveGeneration=weave=>(weave?.weaveVersion===STITCH_VERSIONS.study?validateStitchGeneration:weave?.weaveVersion===COMBINED_VERSIONS.study?validateCombinedGeneration:[INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(weave?.weaveVersion)?validateInfluenceGeneration:validateGeneration)(weave.generation);\r\r\n' +
+    '\r\r\n' +
+    'const identityGeneration=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?stitchIdentity(weave.generation):weave?.weaveVersion===COMBINED_VERSIONS.study?combinedIdentity(weave.generation):isIdentityGeneration(weave.generation);\r\r\n' +
+    '\r\r\n' +
+    "function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}\r\r\n" +
+    '\r\r\n' +
+    "function surfaceError(error){if($('field-section').open)setEditFeedback('field','error',`NOT APPLIED · ${error?.message||String(error)}`);if(['concurrent-change','storage-open','storage-blocked'].includes(error?.code)){$('reload-latest').hidden=false;$('project-section').open=true;}status(error?.message||String(error),true);}\n" +
+    '\r\r\n' +
+    "function setEditFeedback(scope,state,text){const ids=scope==='pattern'?['pattern-edit-state','canvas-edit-state']:scope==='field'?['field-edit-state','canvas-edit-state']:['canvas-edit-state'];for(const id of ids){const node=$(id);if(!node)continue;node.dataset.state=state;node.textContent=text;}}\r\r\n" +
+    '\r\r\n' +
+    "function resetEditFeedback(){const pattern=$('pattern-edit-state'),field=$('field-edit-state'),canvas=$('canvas-edit-state');if(pattern){pattern.dataset.state='ready';pattern.textContent='READY · CHANGES PREVIEW AND SAVE AUTOMATICALLY';}if(field){field.dataset.state='ready';field.textContent='READY · CHANGES CALCULATE AND SAVE AUTOMATICALLY';}if(canvas){canvas.dataset.state='ready';canvas.textContent='READY';}}\r\r\n" +
+    '\r\r\n' +
+    "function focusDerivedEditing(showGuide=false){const hasResult=Boolean((pending?.working||project().working).weave),next=hasResult?applyDisplayPreset(display,'derived-only'):{...display,sourceLattice:false,originalGrid:true,weaveSource:false,weaveDerived:true};next.attractor=showGuide||display.attractor;const changed=JSON.stringify(next)!==JSON.stringify(display);display=next;if(changed)saveView();}\r\r\n" +
+    '\r\r\n' +
+    "function renderProjectSummary(){const p=project(),savedBoundaries=p.boundaries.length,savedWeaves=p.carrierStudies.length;$('project-summary').textContent=`${p.name} · ${savedBoundaries} BOUNDAR${savedBoundaries===1?'Y':'IES'} · ${savedWeaves} WEAVE${savedWeaves===1?'':'S'}`;}\r\r\n" +
+    '\r\r\n' +
+    'function storageDiagnostics(){const packed=store.lastPacked;if(!packed)return null;const activeProjectBytes=projectPortableByteLength(packed,packed.manifest.act'... 124942 more characters
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:143:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "import {readWeaveSource,weaveCalculationInput} from './weave-source.mjs';\nimport {copyProjectForEdit,copyWorkingForEdit} from './edit-draft.mjs';\nimport {validateWorkingEdit,WeaveEditGesture} from './weave-edit.mjs';\nimport {CompactAutosave} from './compact-autosave.mjs';\nconst editGesture=new WeaveEditGesture();\n\nimport {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary} from './project-library.mjs';\nimport {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';\r\r\nimport {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';\r\r\nimport {defaultRule,resolveWeaveRules,familyOf,namedRuleMode,applyNamedRuleMode,repeatSequence,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from './weave-rules.mjs';\r\r\n...",
+    expected: /function recipeFromControls\(owner=transientProject\(\)\)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\r1b-ui.test.mjs:156:1
+✖ family-specific force controls and bottom-right display menu are discoverable and live (0.4482ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /STRENGTH AND TENSION APPLY ONLY TO THE SELECTED FAMILY/. Input:
+  
+  '<!doctype html>\r\n' +
+    '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\r\n' +
+    '<title>Weave Generator — Fields</title><meta name="description" content="A private drafting workspace for certified fields and versioned weave studies.">\r\n' +
+    `<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Cpath d='M8 3V29M24 3V29M3 8H29M3 24H29' stroke='black' stroke-width='2'/%3E%3C/svg%3E">\r\n` +
+    '<link rel="stylesheet" href="style.css"></head><body>\r\n' +
+    '<header><div class="brand">B.A.C: WEAVE GENERATOR..... V02</div><span class="header-build">BUILD <b>WF-R1D</b> / PROJECT LINEAGE</span><nav aria-label="Workspace panels"><button id="toggle-boards" aria-expanded="true">LIBRARY −</button><button id="new-board">NEW PROJECT</button><button id="toggle-controls" aria-expanded="true">CONTROLS −</button></nav></header>\n' +
+    '<main id="shell">\r\n' +
+    '<aside id="boards" aria-label="Project library"><div class="rail-title"><h1>PROJECT LIBRARY</h1><span class="rail-unit">SAVED WORK</span></div><section class="library-section"><div class="library-section-title"><span>PROJECTS</span><b id="library-project-name"></b></div><div class="library-actions"><button id="library-new-project">NEW</button><button id="library-rename-project">RENAME</button><button id="library-delete-project">DELETE</button></div><div id="board-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>BOUNDARIES</span><b id="library-boundary-count"></b></div><div class="library-actions"><button id="library-new-boundary">NEW</button><button id="library-rename-boundary">RENAME</button><button id="library-duplicate-boundary">DUPLICATE</button><button id="library-delete-boundary">DELETE</button></div><div id="boundary-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>WEAVES</span><b id="library-weave-count"></b></div><div class="library-actions"><button id="library-new-weave">NEW</button><button id="library-rename-weave">RENAME</button><button id="library-duplicate-weave">DUPLICATE</button><button id="library-delete-weave">DELETE</button></div><div id="weave-list" class="library-list"></div><button id="library-apply-weave" class="library-wide-action">APPLY SELECTED WEAVE TO THIS BOUNDARY</button><p class="micro library-help">A WEAVE INCLUDES ITS FAMILIES, THREAD SETTINGS, CROSSING RULES, AND FIELD FORCES. APPLYING IT TO ANOTHER BOUNDARY REGENERATES IT TO FIT.</p></section><p class="micro">SAVED IN THIS BROWSER.<br>BACK UP TO KEEP A PORTABLE COPY.</p><div class="rail-rule"></div><p class="micro">FIELD → WEAVE → ANALYZE → INTERPRET → EXTRACT → SYNTHESIZE → EXPORT</p></aside>\n' +
+    '<section class="workspace" aria-label="Boundary workspace"><div class="workspace-bar"><div class="stage-tabs" aria-label="Workflow stages"><span class="stage-tab active"><b>01</b> WEAVE FIELD</span><span class="stage-tab upcoming"><b>02</b> POINT EXTRACTION · UPCOMING</span><span class="stage-tab upcoming"><b>03</b> POLYLINE COMPOSER · UPCOMING</span></div><span id="library-breadcrumb" class="context-view">PROJECT / BOUNDARY / WEAVE</span></div><div class="toolbar"><div><button id="select-tool" class="active">SELECT / EDIT</button><button id="draw-tool">DRAW BOUNDARY</button><button id="pan-tool">PAN</button></div><div><button id="undo" disabled>UNDO</button><button id="redo" disabled>REDO</button><button id="fit">FIT</button></div></div>\r\n' +
+    '<div id="drawing"><div class="drawing-label"><span id="drawing-title">WORKING BOUNDARY</span><span>DOCUMENT UNITS · Y UP</span></div><svg id="canvas" role="img" aria-label="Boundary drafting canvas" tabindex="0"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none"/><circle cx="0" cy="0" r="1.2"/></pattern></defs><rect id="grid-layer" width="100%" height="100%" fill="url(#grid)"/><g id="frame-layer"></g><g id="source-lattice-layer"></g><g id="family-a-layer"></g><g id="family-b-layer"></g><g id="weave-source-layer"></g><g id="weave-derived-layer"></g><g id="geometry"></g><g id="draft-layer"></g></svg><div id="empty-hint">BOUNDARY HIDDEN <button id="reveal-boundary">SHOW BOUNDARY</button></div><details class="canvas-display-menu"><summary>DISPLAY</summary><div><p>PRESETS</p><button data-display-preset="derived-only">DISTORTED ONLY</button><button data-display-preset="compare">SOURCE + DISTORTED</button><button data-display-preset="construction">WEAVE PATTERN SOURCE</button><label><input type="checkbox" data-display-key="boundary"> BOUNDARY</label><label><input type="checkbox" data-display-key="grid"> GRID + FRAME</label><label><input type="checkbox" data-display-key="sourceLattice"> CONSTRUCTION LINES</label><label><input type="checkbox" data-display-key="originalGrid"> ORIGINAL GRID</label><label><input type="checkbox" data-display-key="weaveSource"> SOURCE WEAVE</label><label><input type="checkbox" data-display-key="weaveDerived"> DISTORTED WEAVE</label></div></details><div class="canvas-bottom"><div class="canvas-left"><div id="canvas-legend" class="canvas-legend" aria-label="Canvas legend"><span class="legend-source">SOURCE <b id="legend-source-count">0</b></span><span class="legend-derived">DERIVED <b id="legend-derived-count">0</b></span><span class="legend-guide">GUIDE <b id="legend-guide-state">OFF</b></span></div><div class="mode-tabs" aria-label="Display mode"><button data-theme="light" class="active">LIGHT</button><button data-theme="dark">DARK</button><button data-theme="neo">NEO</button></div></div><div class="canvas-readout"><span id="canvas-edit-state" aria-live="polite">READY</span><span id="pointer">X — / Y —</span><span id="zoom-label">100%</span></div></div></div>\r\n' +
+    '<div class="statusbar"><span id="status" role="status">SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.</span><span id="build">WF-STABILITY-S4-BOUNDED-AUTOSAVE-20260918</span></div></section>\n' +
+    '<aside id="controls" aria-label="Workflow controls"><details open id="project-section"><summary>PROJECT / STUDY <span>+</span></summary><div class="section-body"><p id="project-summary"></p><p class="micro">THE LIBRARY SHOWS PROJECTS, BOUNDARIES, AND WEAVES. RECOVERY HISTORY STAYS INTERNAL.</p><button id="reload-latest" hidden>RELOAD LATEST SAVED WORKSPACE</button><ol class="workflow-stages" aria-label="Workflow stages"><li class="complete">FIELD</li><li class="current">WEAVE</li><li>ANALYZE <em>UPCOMING</em></li><li>INTERPRET <em>UPCOMING</em></li><li>EXTRACT <em>UPCOMING</em></li><li>SYNTHESIZE <em>UPCOMING</em></li><li>EXPORT <em>UPCOMING</em></li></ol></div></details><details open id="boundary-section"><summary>BOUNDARY <span>+</span></summary><div class="section-body"><p id="boundary-summary"></p><p id="boundary-source" class="micro" hidden></p><div id="saved-boundary-picker" hidden><label>USE A SAVED BOUNDARY<select id="saved-boundary"></select></label><button id="open-saved-boundary">OPEN SAVED BOUNDARY</button><p class="micro">OPENS THE CHOSEN BOUNDARY WITHOUT A PATTERN OR FIELD FORCE, READY FOR A NEW WEAVE.</p></div><label class="slider-label" for="square-size-range"><span>SQUARE SIDE</span><output id="square-size-value">500</output></label><input id="square-size" type="number" value="500" hidden><input id="square-size-range" class="model-slider" type="range" min="10" max="2000" step="10" value="500"><button id="make-square">MAKE SQUARE</button><p id="boundary-action-status" class="micro" aria-live="polite">A NEW SQUARE SAVES AUTOMATICALLY.</p><div id="draw-actions" hidden><p>Click vertices on the canvas. Finish closes the polygon. Escape cancels.</p><button id="finish-drawing">FINISH BOUNDARY</button><button id="cancel-drawing">CANCEL</button></div><div hidden aria-hidden="true"><input id="boundary-name" value="BOUNDARY 01"><button id="save-boundary" type="button"></button></div><details id="vertex-section" class="subsection"><summary>VERTEX EDITOR <span>+</span></summary><div class="section-body"><p class="micro">Select a vertex on the canvas or with the first slider, then adjust X and Y. Each released slider movement is one undo step.</p><div class="vertex-slider-stack"><label class="slider-label"><span>VERTEX</span><output id="vertex-index-value"></output><input id="vertex-index-range" class="model-slider" type="range" min="1" step="1"></label><label class="slider-label"><span>X</span><output id="vertex-x-value"></output><input id="vertex-x-range" class="model-slider" type="range"></label><label class="slider-label"><span>Y</span><output id="vertex-y-value"></output><input id="vertex-y-range" class="model-slider" type="range"></label></div><textarea id="coordinates" hidden spellcheck="false"></textarea><button id="apply-coordinates" hidden>APPLY COORDINATES</button></div></details></div></details>\r\n' +
+    '<details id="carrier-section"><summary>WEAVE PATTERN <span>+</span></summary><div class="section-body"><label>PRESET<select id="stitch-preset"><option value="" selected disabled>Choose a preset or saved pattern...</option><option value="lines">Custom line families</option><option value="square-grid">Square grid</option><option value="diamond-grid">Diamond grid</option><option value="triangular-grid">Triangular grid</option><option value="double-herringbone-field">Double Herringbone — continuous field adaptation</option><option value="herringbone-square">Herringbone Square — foundation</option><optgroup id="saved-pattern-presets" label="MY SAVED PATTERNS"></optgroup></select></label><p id="preset-apply-state" class="apply-state" aria-live="polite">CHOOSE A PRESET · IT APPLIES AND SAVES IMMEDIATELY</p><p class="micro">SELECT TO APPLY AND SAVE ON THE CURRENT BOUNDARY. YOUR EXISTING PATTERNS STAY IN THE LIBRARY.</p><div id="stitch-controls" hidden><p id="stitch-title" class="micro"></p><button id="stitch-continuous" hidden>USE CONTINUOUS FIELD</button><p id="stitch-layout-he'... 16171 more characters
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:158:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `<!doctype html>\r\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\r\n<title>Weave Generator — Fields</title><meta name="description" content="A private drafting workspace for certified fields and versioned weave studies.">\r\n<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Cpath d='M8 3V29M24 3V29M3 8H29M3 24H29' stroke='black' stroke-width='2'/%3E%3C/svg%3E">\r\n<link rel="stylesheet" href="style.css"></head><body>\r\n<header><div class="brand">B.A.C: WEAVE GENERATOR..... V02</div><span class="header-build">BUILD <b>WF-R1D</b> / PROJECT LINEAGE</span><nav aria-label="Workspace panels"><button id="toggle-boards" aria-expanded="true">LIBRARY −</button><button id="new-board">NEW PROJECT</button><button id="toggle-controls" aria-expanded="true">CONTROLS −</button></nav></header>\n<main id="shell">\r\n<aside id="boards" aria-label="Project library"><div class="rail-title"><h1>PROJECT LIBRARY</h1><span class="rail-unit">SAVED WORK</span></div><section class="library-section"><div class="library-section-title"><span>PROJECTS</span><b id="library-project-name"></b></div><div class="library-actions"><button id="library-new-project">NEW</button><button id="library-rename-project">RENAME</button><button id="library-delete-project">DELETE</button></div><div id="board-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>BOUNDARIES</span><b id="library-boundary-count"></b></div><div class="library-actions"><button id="library-new-boundary">NEW</button><button id="library-rename-boundary">RENAME</button><button id="library-duplicate-boundary">DUPLICATE</button><button id="library-delete-boundary">DELETE</button></div><div id="boundary-list" class="library-list"></div></section><section class="library-section"><div class="library-section-title"><span>WEAVES</span><b id="library-weave-count"></b></div><div class="library-actions"><button id="library-new-weave">NEW</button><button id="library-rename-weave">RENAME</button><button id="library-duplicate-weave">DUPLICATE</button><button id="library-delete-weave">DELETE</button></div><div id="weave-list" class="library-list"></div><button id="library-apply-weave" class="library-wide-action">APPLY SELECTED WEAVE TO THIS BOUNDARY</button><p class="micro library-help">A WEAVE INCLUDES ITS FAMILIES, THREAD SETTINGS, CROSSING RULES, AND FIELD FORCES. APPLYING IT TO ANOTHER BOUNDARY REGENERATES IT TO FIT.</p></section><p class="micro">SAVED IN THIS BROWSER.<br>BACK UP TO KEEP A PORTABLE COPY.</p><div class="rail-rule"></div><p class="micro">FIELD → WEAVE → ANALYZE → INTERPRET → EXTRACT → SYNTHESIZE → EXPORT</p></aside>\n<section class="workspace" aria-label="Boundary workspace"><div class="workspace-bar"><div class="stage-tabs" aria-label="Workflow stages"><span class="stage-tab active"><b>01</b> WEAVE FIELD</span><span class="stage-tab upcoming"><b>02</b> POINT EXTRACTION · UPCOMING</span><span class="stage-tab upcoming"><b>03</b> POLYLINE COMPOSER · UPCOMING</span></div><span id="library-breadcrumb" class="context-view">PROJECT / BOUNDARY / WEAVE</span></div><div class="toolbar"><div><button id="select-tool" class="active">SELECT / EDIT</button><button id="draw-tool">DRAW BOUNDARY</button><button id="pan-tool">PAN</button></div><div><button id="undo" disabled>UNDO</button><button id="redo" disabled>REDO</button><button id="fit">FIT</button></div></div>\r\n<div id="drawing"><div class="drawing-label"><span id="drawing-title">WORKING BOUNDARY</span><span>DOCUMENT UNITS · Y UP</span></div><svg id="canvas" role="img" aria-label="Boundary drafting canvas" tabindex="0"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none"/><circle cx="0" cy="0" r="1.2"/></pattern></defs><rect id="grid-layer" width="100%" height="100%" fill="url(#grid)"/><g id="frame-layer"></g><g id="source-lattice-layer"></g><g id="family-a-layer"></g><g id="family-b-layer"></g><g id="weave-source-layer"></g><g id="weave-derived-layer"></g><g id="geometry"></g><g id="draft-layer"></g></svg><div id="empty-hint">BOUNDARY HIDDEN <button id="reveal-boundary">SHOW BOUNDARY</button></div><details class="canvas-display-menu"><summary>DISPLAY</summary><div><p>PRESETS</p><button data-display-preset="derived-only">DISTORTED ONLY</button><button data-display-preset="compare">SOURCE + DISTORTED</button><button data-display-preset="construction">WEAVE PATTERN SOURCE</button><label><input type="checkbox" data-display-key="boundary"> BOUNDARY</label><label><input type="checkbox" data-display-key="grid"> GRID + FRAME</label><label><input type="checkbox" data-display-key="sourceLattice"> CONSTRUCTION LINES</label><label><input type="checkbox" data-display-key="originalGrid"> ORIGINAL GRID</label><label><input type="checkbox" data-display-key="weaveSource"> SOURCE WEAVE</label><label><input type="checkbox" data-display-key="weaveDerived"> DISTORTED WEAVE</label></div></details><div class="canvas-bottom"><div class="canvas-left"><div id="canvas-legend" class="canvas-legend" aria-label="Canvas legend"><span class="legend-source">SOURCE <b id="legend-source-count">0</b></span><span class="legend-derived">DERIVED <b id="legend-derived-count">0</b></span><span class="legend-guide">GUIDE <b id="legend-guide-state">OFF</b></span></div><div class="mode-tabs" aria-label="Display mode"><button data-theme="light" class="active">LIGHT</button><button data-theme="dark">DARK</button><button data-theme="neo">NEO</button></div></div><div class="canvas-readout"><span id="canvas-edit-state" aria-live="polite">READY</span><span id="pointer">X — / Y —</span><span id="zoom-label">100%</span></div></div></div>\r\n...`,
+    expected: /STRENGTH AND TENSION APPLY ONLY TO THE SELECTED FAMILY/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\r1b-ui.test.mjs:174:1
+✖ saved hierarchy labels every level, stays collapsible, and hides internal revisions (0.1858ms)
+  AssertionError [ERR_ASSERTION]: BOARD
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/r1b-ui.test.mjs:175:84)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "import {readWeaveSource,weaveCalculationInput} from './weave-source.mjs';\nimport {copyProjectForEdit,copyWorkingForEdit} from './edit-draft.mjs';\nimport {validateWorkingEdit,WeaveEditGesture} from './weave-edit.mjs';\nimport {CompactAutosave} from './compact-autosave.mjs';\nconst editGesture=new WeaveEditGesture();\n\nimport {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary} from './project-library.mjs';\nimport {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';\r\r\nimport {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';\r\r\nimport {defaultRule,resolveWeaveRules,familyOf,namedRuleMode,applyNamedRuleMode,repeatSequence,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from './weave-rules.mjs';\r\r\n...",
+    expected: /'BOARD'/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\weave.test.mjs:37:1
+✖ zero selected strands remain complete and export empty groups (6.6298ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(svg.includes('<g id="family-A"></g>'))
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/weave.test.mjs:41:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\weave.test.mjs:83:1
+✖ schema 2/3 migration preserves raw originals and refuses recovery failure (1.6266ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  6 !== 5
+  
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/weave.test.mjs:87:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 6,
+    expected: 5,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\weave.test.mjs:101:1
+✖ raw SVG preserves concave gaps, round-trip numbers, Y conversion and safe metadata (5.6551ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!match[1].includes('Z'))
+  
+      at file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/weave.test.mjs:104:106
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (file:///C:/Users/notbr/Documents/Codex/2026-09-14/confirm-you-have-editable-terminal-access/work/weave-rebuild/tests/weave.test.mjs:104:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,45 @@
+{
+  "build": "WF-STABILITY-P3-COMPACT-AUTOSAVE-20260921",
+  "date": "2026-09-21",
+  "project": "STABILITY PHASE 2 REVIEW",
+  "rapidFamilyEdit": {
+    "values": [25, 26, 27],
+    "storageGenerationBefore": 350,
+    "storageGenerationAfter": 351,
+    "result": "only the newest debounced candidate was persisted"
+  },
+  "finalFixture": {
+    "familyASpacing": 24,
+    "influence1FamilyAStrength": 71,
+    "storageGeneration": 355,
+    "storageBlocked": false,
+    "autosave": {
+      "pending": false,
+      "saving": false,
+      "failed": false
+    },
+    "render": {
+      "derivedGroups": 1,
+      "masks": 52,
+      "rawTopLevelFallbackPaths": 0
+    },
+    "reloadVerified": true
+  },
+  "influenceEdit": {
+    "from": 71,
+    "to": 72,
+    "acceptedBeforeBackup": true,
+    "savedGeneration": 354,
+    "restoredTo": 71,
+    "restoredGeneration": 355
+  },
+  "projectsPreserved": [
+    "WEAVE STUDIES",
+    "CONTROL DIAGNOSTIC",
+    "STABILITY PHASE 0 BASELINE",
+    "STABILITY PHASE 1 REVIEW",
+    "STABILITY PHASE 2 REVIEW"
+  ],
+  "earlyCorrection": "The first browser pass exposed an unbound injected timer callback. The coordinator now wraps timer functions; all final checks and browser verification ran after the fix."
+}
+
