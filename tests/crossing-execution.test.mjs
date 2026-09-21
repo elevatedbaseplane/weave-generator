@@ -30,3 +30,11 @@ test('pending woven redraw retains the last complete weave instead of exposing u
  w.boundary={different:true};scope.renderContinuousWeave({append:g=>groups.push(g)},w);assert.equal(groups.length,1,'never show another boundary’s old weave');
  w.interlacing.enabled=false;scope.renderContinuousWeave({append:g=>groups.push(g)},w);assert.equal(raw,1);
 });
+test('zoom redraw keeps the woven renderer even while a carrier preview flag exists',()=>{
+ const layer={replaceChildren(){},classList:{toggle(){} }},working={weave:{derived:{provenanceFingerprint:'preview'}}};let woven=0,marks=0;
+ const scope={working,pending:null,display:{weaveDerived:true},displayedWeaveWorking:()=>working,$:id=>{assert.equal(id,'weave-derived-layer');return layer;},renderContinuousWeave(_,value){assert.equal(value,working);woven++;},renderCrossingMarks(){marks++;}};
+ vm.createContext(scope);vm.runInContext(app.slice(app.indexOf('function renderDerivedWeaveLayer('),app.indexOf('function renderAttractorGuide('))+'\nrenderDerivedWeaveLayer(working,true);',scope);
+ assert.equal(woven,1,'viewport redraw must preserve woven masks');assert.equal(marks,0,'preview redraw can still omit editable marks');
+ const commit=app.slice(app.indexOf("p.phase='SAVING'"),app.indexOf("workerEvent('committed'"));
+ assert.match(commit,/workspace=nextWorkspace;carrierPreview=null;/,'successful calculation must clear the preview flag before later zoom/pan redraws');
+});

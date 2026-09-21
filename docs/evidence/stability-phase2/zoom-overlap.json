@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-21",
+  "trigger": "viewport zoom or Fit after a successful influenced-weave commit",
+  "hostedBuild": "WF-STABILITY-PHASE1-CANONICAL-SOURCE-20260921",
+  "hostedAfterRedraw": {
+    "continuousWeaveGroups": 0,
+    "masks": 0,
+    "rawFamilyPaths": 3,
+    "assignedCrossingsStillReported": 269
+  },
+  "localBuild": "WF-STABILITY-P2-UNIFIED-EDITS-20260921",
+  "localBeforeZoom": {
+    "zoomPercent": 189.4,
+    "continuousWeaveGroups": 1,
+    "masks": 18,
+    "rawFamilyPaths": 0
+  },
+  "localAfterZoom": {
+    "zoomPercent": 2411.6,
+    "continuousWeaveGroups": 1,
+    "masks": 18,
+    "rawFamilyPaths": 0,
+    "wovenPending": false
+  },
+  "result": "pass"
+}
