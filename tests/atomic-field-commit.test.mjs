@@ -19,15 +19,6 @@ function fixture(){
  return saveWeaveStudy(project,'FIELD',true).project;
 }
 
-test('one influence gesture keeps one base and captures the release value explicitly',()=>{
- assert.match(app,/function influenceGestureBase\(id\)/);
- assert.match(app,/base:transientProject\(\)/);
- assert.match(app,/const value=sliderEventNumber\(event,range\)/);
- assert.match(app,/attractorChanges\(base,id,influenceControlSnapshot\(id,value\)\)/);
- assert.match(app,/influenceGesture=null;requestWorking\(next\.working,'INFLUENCE UPDATED AND SAVED\.'/);
- assert.doesNotMatch(app,/candidateInfluence\(transientProject\(\),attractorChanges\(id\)\)/);
-});
-
 test('family A preview and release candidates are identical and save without changing family B',()=>{
  const project=fixture(),field=project.working.weave.generation.influences[0],baseB=structuredClone(field.families.B);
  const change={influenceId:field.id,...influenceResponseChanges(field,'A',false,'attractor-strength',{strength:81,tension:0}),influence:{kind:field.kind,center:{...field.center},radius:field.radius,enabled:field.enabled,falloff:field.falloff,direction:field.direction}};

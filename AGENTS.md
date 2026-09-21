@@ -1,3 +1,7 @@
+## Stability Foundation Phase 2 — 2026-09-21
+
+The user approved Phase 1 and its review corrections. Document 102 records the unified canonical update gateway, captured preview/release candidates for family/stitch/influence/canvas/appearance editing, preserved independent source decisions and ancestry, and the additional stale-worker check before storage preparation. 65 focused tests and eight preserved baseline checks pass. Managed local UI tests cover both line and stitch presets, rapid controls, independent influence/appearance edits, crossing overrides, reload and saved-weave return; all four pre-existing projects remain unchanged. Phase 0 evidence and the document-101 fixes are preserved. Phase 2 is locally complete and ready for user review; Phase 3 has not started. Publication remains blocked by session network permissions; consult `docs/evidence/stability-phase2/delivery.json`. Do not describe this local build as deployed.
+
 ## Phase 1 review corrections — 2026-09-21
 
 Document 101 fixes the reproduced hierarchy snap-back (duplicate content-addressed records retained outside the current compact index) and intermittent loss of woven presentation (preview bypass, committed-only crossing acceptance, and stale carrierPreview after commit). 56 focused checks and real-browser repeated setting/influence edits pass; the user's working design was restored exactly after testing. Preserve these fixes and the untouched Phase 0 fixtures. Phase 2 has not started. Consult review-fix delivery evidence for publication status.

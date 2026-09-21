@@ -1,0 +1,12 @@
+{
+  "build": "WF-STABILITY-P1-EDIT-REVIEW-FIX-20260921",
+  "localStatus": "verified",
+  "focusedTestsPassed": 56,
+  "browserRepeatedHierarchySave": true,
+  "browserWovenViewAfterInfluenceEdit": true,
+  "originalWorkingDesignRestored": true,
+  "publicationStatus": "blocked-before-push",
+  "reason": "Sandbox proxy connection failed; granular approval policy rejected escalated network execution because sandbox_approval and rules are disabled.",
+  "deploymentAttempted": false,
+  "phase2Started": false
+}

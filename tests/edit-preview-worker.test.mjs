@@ -5,9 +5,24 @@ import vm from 'node:vm';
 
 const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 const dispatch=app.slice(app.indexOf('function dispatchPending()'),app.indexOf('async function certifyWorking(')).replaceAll('import.meta.url',JSON.stringify(new URL('../dist/app.mjs',import.meta.url).href));
+test('a request superseded during freshness validation never starts its storage transaction',async()=>{
+ const worker={postMessage(m){this.sent=m},terminate(){}},p={previewOnly:false,working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root',started:0,versions:{protocol:'protocol'}},latest={newer:true},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}};
+ const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,workerTimer:0,sessionId:'session',BUILD:'build',performance:{now:()=>1,timeOrigin:0},project:()=>owner,workspace:{activeProjectId:'board',projects:[owner]},copyProjectForEdit:structuredClone,store:{head:{currentRoot:'root'},async assertCurrent(){context.pending=latest}},prepareIncrementalWorkspace(){throw Error('obsolete request must not reach storage preparation');},workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},digest:()=> 'input',typedError:(code,message)=>Object.assign(Error(message),{code}),validatePreparedPayload(){},retainSourceTrace(){},AbortController};
+ vm.createContext(context);vm.runInContext(dispatch+'\ndispatchPending();',context);
+ await worker.onmessage({data:{...worker.sent,type:'success',resultCanonicalFingerprint:'payload',payload:{id:'payload'},result:{certified:true}}});
+ assert.equal(context.pending,latest);assert.equal(context.activeJob,null);assert.deepEqual(owner.working.weave.derived,{old:true});assert.equal(context.idleDerivationWorker,worker);
+});
+
+test('failed newest calculation retains committed geometry and clears its edit gesture',async()=>{
+ const worker={postMessage(m){this.sent=m},terminate(){}},owner={id:'board',working:{weave:{studyId:'study',derived:{old:true}}}},p={working:{weave:{studyId:'study'}},candidate:{},input:'input',base:'root',started:0,versions:{protocol:'protocol'}};let cleared=false;
+ const context={pending:p,idleDerivationWorker:worker,activeJob:null,workerSequence:0,sessionId:'session',BUILD:'build',performance:{now:()=>1},project:()=>owner,workerEvent(){},renderR1BState(){},status(){},setTimeout:()=>1,clearTimeout(){},typedError:(code,message)=>Object.assign(Error(message),{code}),editGesture:{clear(){cleared=true}}};
+ vm.createContext(context);vm.runInContext(dispatch+'\ndispatchPending();',context);
+ await worker.onmessage({data:{...worker.sent,type:'failure',error:{code:'evaluator',message:'Rejected candidate'}}});
+ assert.equal(context.pending,null);assert.equal(context.carrierPreview,null);assert.equal(cleared,true);assert.deepEqual(owner.working.weave.derived,{old:true});
+});
 test('canceling a preview aborts its transaction and restores committed geometry',()=>{
  let aborted=false,terminated=false,redraw=false;
- const context={activeJob:{seq:1,requestId:'request',controller:{abort(){aborted=true}},worker:{terminate(){terminated=true}},timeout:1},pending:{feedback:{scope:'field'}},carrierPreview:{unsaved:true},workerTimer:1,clearTimeout(){},workerEvent(){},renderR1BState(value){redraw=value},setEditFeedback(){},status(){}};
+ const context={editGesture:{clear(){}},activeJob:{seq:1,requestId:'request',controller:{abort(){aborted=true}},worker:{terminate(){terminated=true}},timeout:1},pending:{feedback:{scope:'field'}},carrierPreview:{unsaved:true},workerTimer:1,clearTimeout(){},workerEvent(){},renderR1BState(value){redraw=value},setEditFeedback(){},status(){}};
  vm.createContext(context);vm.runInContext(app.slice(app.indexOf('function cancelPending('),app.indexOf('function requestWorking('))+'\ncancelPending();',context);
  assert.ok(aborted&&terminated&&redraw);assert.equal(context.pending,null);assert.equal(context.carrierPreview,null);
 });

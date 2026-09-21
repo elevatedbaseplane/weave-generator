@@ -1,0 +1,16 @@
+{
+  "phase": 2,
+  "build": "WF-STABILITY-P2-UNIFIED-EDITS-20260921",
+  "localImplementation": "complete",
+  "focusedChecksPassed": 65,
+  "frozenBaselineChecksPassed": 8,
+  "review": "ready for user review",
+  "phase3Started": false,
+  "publication": "blocked",
+  "reason": "Normal source-server access failed through the session proxy at 127.0.0.1. The existing automatic approval rejection disallows broader sandbox network access. No source push, version save or deployment was attempted after this connection check.",
+  "siteProject": "appgprj_6aa83001d03481918d4a13e46c9612fb",
+  "lastConfirmedHostedVersion": 5,
+  "hostedSiteChanged": false,
+  "audienceChanged": false,
+  "next": "User visual review; publish the exact verified source when network access is available; then approved Phase 3."
+}

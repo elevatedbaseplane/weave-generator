@@ -1,0 +1,23 @@
+{
+  "build": "WF-STABILITY-P2-UNIFIED-EDITS-20260921",
+  "surface": "http://127.0.0.1:43831/?phase1-startup-check=20260921",
+  "reviewProject": "STABILITY PHASE 2 REVIEW",
+  "existingProjectsCompared": 4,
+  "existingProjectsUnchanged": true,
+  "familyA": {"spacing": 65, "rotation": 12, "width": 5, "rank": 3},
+  "firstInfluenceStrength": {"A": 71, "B": 50},
+  "secondInfluence": {"kind": "repeller", "radius": 180, "familyATension": 15},
+  "crossingRule": {"over": 2, "under": 1},
+  "manualOverrideCount": 1,
+  "acceptedPartialDragCenter": {"x": 5.386011, "y": 3.375125},
+  "dragAdapterReportedErrorAfterPartialMove": true,
+  "applicationConfirmedDragCommit": true,
+  "undoRestoredExactWorking": true,
+  "reloadRestoredExactWorking": true,
+  "boundaryReturnRestoredExactNamedSavedWeave": true,
+  "undoLeavesNamedLibrarySnapshotUnchanged": true,
+  "secondBoundaryStitchWidth": 84,
+  "settledWovenGroupCount": 1,
+  "nativeFixture": false,
+  "note": "Summary of UI actions and read-only production WebMCP comparisons; not a substitute for frozen native portable fixtures."
+}
