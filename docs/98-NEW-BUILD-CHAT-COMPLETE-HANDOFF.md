@@ -57,15 +57,15 @@ There should be no Create Weave Pattern button after selecting a preset. Woven o
 
 - Checkout: `work/weave-rebuild`
 - Branch: `foundation`
-- Current local build identity: `WF-STRUCTURED-EXPORT-20260921`
-- Local preview path: `http://127.0.0.1:43831/?structured-export=20260921`
+- Current local build identity: `WF-TRANSPARENT-PNG-EXPORT-20260921`
+- Local preview path: `http://127.0.0.1:43831/?png-export=20260921`
 - The local server is ephemeral; restart `node scripts/serve.mjs 43831` when the URL refuses the connection.
 - Public output is `dist/`.
 - Hosting manifest: `.openai/hosting.json`.
 - Existing Sites project: `appgprj_6aa83001d03481918d4a13e46c9612fb`.
 - Existing production URL: `https://weave-foundation.notbrandon175.chatgpt.site/`.
-- The checkout contains substantial uncommitted development work. Do not reset, discard, or replace it. Inspect diffs narrowly before editing.
-- The local build may be newer than the deployed Site until the next verified build is published.
+- Current published Site version: `26`, from application commit `8a59c5e41f217b6c75f93e3b14fc61a9e8f544c8`.
+- Preserve the checkout and inspect diffs narrowly before editing. The working tree was clean after recording document 123.
 
 ## 5. Standing publication instruction
 
