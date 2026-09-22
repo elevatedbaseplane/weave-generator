@@ -64,3 +64,6 @@ test('workspace reload validates every saved revision through one warm worker',a
  vm.createContext(context);await vm.runInContext(source+'\ncertifyWorkspace(value)',context);
  assert.equal(workers.length,1);assert.equal(calls.length,3);assert.ok(calls.every(call=>call.worker===workers[0]));assert.equal(workers[0].terminated,true);
 });
+test('export validation borrows and returns the already-primed worker',()=>{
+ const source=app.slice(app.indexOf('async function certifyCurrentForExport('),app.indexOf('async function certifiedExportState('));assert.match(source,/const worker=idleDerivationWorker/);assert.match(source,/certifyWorking\(working,boardId,worker\)/);assert.match(source,/idleDerivationWorker=worker/);assert.match(source,/primeIdleDerivationWorker\(\)/);
+});

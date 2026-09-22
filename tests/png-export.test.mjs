@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {lineFieldFrame} from '../dist/png-export.mjs';
+import {lineFieldFrame,pngChunk} from '../dist/png-export.mjs';
 import {createWorkspace,saveBoundary,saveCarrierStudy,createWeaveStudy,saveWeaveStudy} from '../dist/document.mjs';
 import {createLinePreset} from '../dist/line-presets.mjs';
-import {derivedSvg} from '../dist/weave.mjs';
+import {derivedSvg,sourceLayerSvg} from '../dist/weave.mjs';
 
 function fixture(){const ws=createWorkspace();let project=saveBoundary(ws.projects[0],'PNG BOUNDARY').project;project.working.carrier=createLinePreset('square-grid','png-export');const pattern=saveCarrierStudy(project,'PNG PATTERN');project=createWeaveStudy(pattern.project,pattern.revisionId);return saveWeaveStudy(project,'PNG WEAVE',true).project;}
 
@@ -22,6 +22,14 @@ test('black and white PNG vector sources change only visible line color and cont
  const project=fixture(),black=derivedSvg(project.working,project.id,true,null,'black'),white=derivedSvg(project.working,project.id,true,null,'white');assert.match(black,/<g fill="none" stroke="black"/);assert.match(white,/<g fill="none" stroke="white"/);assert.doesNotMatch(black,/<rect/);assert.doesNotMatch(white,/<rect/);assert.equal(black.replace('stroke="black"','stroke="white"'),white);
 });
 
-test('PNG rasterizer uses a new alpha canvas and vector image without screen capture or background paint',()=>{
- const source=fs.readFileSync(new URL('../dist/png-export.mjs',import.meta.url),'utf8');assert.match(source,/document\.createElement\('canvas'\)/);assert.match(source,/getContext\('2d',\{alpha:true,colorSpace:'srgb'\}\)/);assert.match(source,/context\.clearRect/);assert.match(source,/context\.drawImage/);assert.match(source,/canvas\.toBlob/);assert.match(source,/image\/png/);assert.doesNotMatch(source,/fillRect|drawWindow|html2canvas|getDisplayMedia|toDataURL/);
+test('source-pattern PNG vector source contains the selected weave source layer without a background',()=>{
+ const project=fixture(),svg=sourceLayerSvg(project.working,project.id,'black');assert.match(svg,/data-weave-export="source-layer"/);assert.match(svg,/data-presentation-part="source"/);assert.match(svg,/data-weave-family="A"/);assert.doesNotMatch(svg,/<rect|<mask/);
+});
+
+test('PNG chunk encoder emits the standard CRC-protected IEND chunk',()=>{
+ assert.deepEqual([...pngChunk('IEND',new Uint8Array())],[0,0,0,0,73,69,78,68,174,66,96,130]);
+});
+
+test('PNG rasterizer encodes bounded alpha tiles without a full-size canvas, screen capture or background paint',()=>{
+ const source=fs.readFileSync(new URL('../dist/png-export.mjs',import.meta.url),'utf8');assert.match(source,/const TILE_ROWS=128/);assert.match(source,/canvas\.height=rowCount/);assert.match(source,/getContext\('2d',\{alpha:true,colorSpace:'srgb',willReadFrequently:true\}\)/);assert.match(source,/context\.clearRect/);assert.match(source,/context\.drawImage/);assert.match(source,/context\.getImageData/);assert.match(source,/new CompressionStream\('deflate'\)/);assert.match(source,/pngChunk\('IDAT'/);assert.doesNotMatch(source,/canvas\.height=prepared\.height|canvas\.toBlob|fillRect|drawWindow|html2canvas|getDisplayMedia|toDataURL/);
 });

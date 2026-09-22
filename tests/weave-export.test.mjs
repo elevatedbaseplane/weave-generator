@@ -39,7 +39,8 @@ test('PDF drawing uses vector strokes only and preserves line weight opacity and
 
 test('export tool exposes SVG, background-free PDF and transparent high-resolution PNG choices',()=>{
  const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8'),app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
- for(const id of ['weave-svg-mode','export-weave-svg','weave-pdf-color','export-weave-pdf','weave-png-color','weave-png-size','export-weave-png'])assert.match(html,new RegExp(`id="${id}"`));
+ for(const id of ['weave-svg-mode','export-weave-svg','weave-pdf-color','export-weave-pdf','weave-png-layer','weave-png-color','weave-png-size','export-weave-png'])assert.match(html,new RegExp(`id="${id}"`));
  assert.match(html,/CENTERLINES · INTERPRETER HANDOFF/);assert.match(html,/FULL WEAVE · AS DRAWN/);assert.match(html,/BLACK LINES/);assert.match(html,/WHITE LINES/);assert.match(html,/NO PAINTED BACKGROUND/);assert.match(html,/<option value="8192" selected>/);assert.match(html,/<option value="16384">/);assert.match(html,/NEVER FROM THE SCREEN/);assert.match(html,/FULLY TRANSPARENT CANVAS/);
- assert.match(app,/centerlineSvg/);assert.match(app,/derivedSvg/);assert.match(app,/weavePdf/);assert.match(app,/transparentWeavePng/);assert.doesNotMatch(html,/id="export-derived-svg"/);
+ assert.match(html,/SELECTED WEAVE · DISTORTED RESULT/);assert.match(html,/SELECTED WEAVE · SOURCE PATTERN/);assert.match(html,/AN ISOLATED FAMILY EXPORTS BY ITSELF/);
+ assert.match(app,/centerlineSvg/);assert.match(app,/derivedSvg/);assert.match(app,/sourceLayerSvg/);assert.match(app,/isolatedFamilyKey\(current\)/);assert.match(app,/transparentWeavePng/);assert.doesNotMatch(html,/id="export-derived-svg"/);
 });

@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8')
 const app=fs.readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
 
 test('edge refinement preserves bounded seeded crossing controls and current build identity',()=>{
- assert.match(html,/WF-TRANSPARENT-PNG-EXPORT-20260921/);
- assert.match(app,/BUILD='WF-TRANSPARENT-PNG-EXPORT-20260921'/);
+ assert.match(html,/WF-PNG-TILED-LAYER-EXPORT-20260921/);
+ assert.match(app,/BUILD='WF-PNG-TILED-LAYER-EXPORT-20260921'/);
  assert.match(html,/<option value="seeded">SEEDED STRUCTURED VARIATION<\/option>/);
  assert.match(html,/id="interlace-seed"[^>]+min="0"[^>]+max="65535"/);
  assert.match(html,/id="interlace-balance"[^>]+min="10"[^>]+max="90"[^>]+step="5"/);
