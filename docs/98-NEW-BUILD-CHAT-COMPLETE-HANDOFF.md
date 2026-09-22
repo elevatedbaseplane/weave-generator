@@ -57,15 +57,15 @@ There should be no Create Weave Pattern button after selecting a preset. Woven o
 
 - Checkout: `work/weave-rebuild`
 - Branch: `foundation`
-- Current local build identity: `WF-INFLUENCE-RADIUS-SVG-20260921`
-- Local preview path: `http://127.0.0.1:43831/?influence-radius-svg=20260921`
+- Current local build identity: `WF-WEAVE-FIELD-RADII-SVG-20260921`
+- Local preview path: `http://127.0.0.1:43831/?weave-field-radii-svg=20260921`
 - The local server is ephemeral; restart `node scripts/serve.mjs 43831` when the URL refuses the connection.
 - Public output is `dist/`.
 - Hosting manifest: `.openai/hosting.json`.
 - Existing Sites project: `appgprj_6aa83001d03481918d4a13e46c9612fb`.
 - Existing production URL: `https://weave-foundation.notbrandon175.chatgpt.site/`.
-- Current published Site version: `28`, from application commit `873bdc672309e32720c3284869d4e63fd5f1730e`.
-- Preserve the checkout and inspect diffs narrowly before editing. The working tree was clean after recording document 125.
+- Current published Site version: `29`, from application commit `89b05031349df51567579dbad447907161d8e433`.
+- Preserve the checkout and inspect diffs narrowly before editing. The working tree was clean after recording document 126.
 
 ## 5. Standing publication instruction
 
