@@ -29,6 +29,7 @@ import {createWorkspace,createProject,activeProject,clone,saveBoundary,saveBound
 
 import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,sourceLayerSvg,centerlineSvg,weavePdf,canonical,digest} from './weave.mjs';
 import {transparentWeavePng} from './png-export.mjs';
+import {influenceRadiusSvg} from './influence-export.mjs';
 
 import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';
 
@@ -59,7 +60,7 @@ import {applyDisplayPreset,displayPresetName} from './display.mjs';
 let selectedCrossing=null,activeInterlaceTarget=null;
 const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
 function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
-const $=id=>document.getElementById(id),BUILD='WF-PNG-TILED-LAYER-EXPORT-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
+const $=id=>document.getElementById(id),BUILD='WF-INFLUENCE-RADIUS-SVG-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
 
 const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
 
@@ -325,7 +326,7 @@ function renderWeaveControls(){
 
   renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);
 
-  for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf','export-weave-png']){const button=$(id);if(button)button.disabled=!!pending||!displayWeave;}
+  for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf','export-weave-png']){const button=$(id);if(button)button.disabled=!!pending||!displayWeave;}const radiusExport=$('export-influence-radius-svg');if(radiusExport)radiusExport.disabled=!!pending||!field;
 
  }else{activeInfluenceId=undefined;$('add-attractor').hidden=false;$('attractor-prompt').hidden=false;$('attractor-settings').hidden=true;syncAttractorState(null);}
 
@@ -371,7 +372,7 @@ function renderAttractorGuide(){const layer=$('attractor-layer');layer.replaceCh
 
 function syncInfluenceEditingAvailability(field,count){const disabled=!field;for(const id of ['influence-type','attractor-radius-range','attractor-strength-range','attractor-tension-range','attractor-falloff-range','influence-direction-range','toggle-attractor-enabled','reset-attractor','remove-attractor']){const control=$(id);if(control)control.disabled=disabled;}$('duplicate-influence').disabled=disabled||count>=COMBINED_LIMITS.influences;}
 
-function renderAttractorControls(){const displayWorking=pending?.working||project().working,displayWeave=displayWorking.weave,fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf','export-weave-png']){const button=$(id);if(button)button.disabled=!!pending||!displayWorking.weave;}}
+ function renderAttractorControls(){const displayWorking=pending?.working||project().working,displayWeave=displayWorking.weave,fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf','export-weave-png']){const button=$(id);if(button)button.disabled=!!pending||!displayWorking.weave;}const radiusExport=$('export-influence-radius-svg');if(radiusExport)radiusExport.disabled=!!pending||!field;}
 
 function renderR1BState(redrawDerived){$('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;targetedRenderCount++;renderInterlaceControls();renderThreadControls();if(redrawDerived)renderDerivedWeaveLayer();else $('weave-derived-layer').classList.toggle('pending-result',!!pending);renderAttractorControls();renderAttractorGuide();updateCanvasLegend();}
 
@@ -709,6 +710,7 @@ async function certifiedExportState(){if(pending)throw Error('Wait for certified
 $('export-weave-svg').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),centerlines=$('weave-svg-mode').value==='centerlines',svg=centerlines?centerlineSvg(current,project().id,trusted):derivedSvg(current,project().id,trusted,crossings);download(svg,centerlines?'weave-centerlines.svg':'weave-full.svg','image/svg+xml');status(centerlines?'CENTERLINE SVG EXPORTED.':'FULL WEAVE SVG EXPORTED.');}catch(error){status(error.message,true)}};
 $('export-weave-pdf').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),color=$('weave-pdf-color').value;download(weavePdf(current,project().id,color,trusted,crossings),`weave-drawing-${color}.pdf`,'application/pdf');status(`${color.toUpperCase()} LINE PDF EXPORTED · NO BACKGROUND.`);}catch(error){status(error.message,true)}};
 $('export-weave-png').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),color=$('weave-png-color').value,longEdge=Number($('weave-png-size').value),layer=$('weave-png-layer').value,family=isolatedFamilyKey(current),label=layer==='source'?'SOURCE PATTERN':'DISTORTED RESULT';status(`RASTERIZING SELECTED WEAVE · ${label} · ${longEdge.toLocaleString()} PX…`);const svg=layer==='source'?sourceLayerSvg(current,project().id,color):derivedSvg(current,project().id,trusted,crossings,color),result=await transparentWeavePng(svg,longEdge,{family,onProgress:progress=>status(`ENCODING SELECTED WEAVE · ${label} · ${Math.round(progress*100)}%…`)});download(result.blob,`weave-${layer}-${color}-${result.width}x${result.height}.png`,'image/png');status(`${label}${family?' · '+family:''} EXPORTED · ${result.width.toLocaleString()} × ${result.height.toLocaleString()} PX · TRANSPARENT.`);}catch(error){status(error.message,true)}};
+$('export-influence-radius-svg').onclick=()=>attempt(()=>{if(pending)throw Error('Wait for the current influence change to finish.');const fields=influencesOf(project().working.weave),index=fields.findIndex(field=>field.id===activeInfluenceId),field=index<0?null:fields[index];if(!field)throw Error('Select an influence to export.');download(influenceRadiusSvg(field),`influence-${index+1}-${field.kind}-radius.svg`,'image/svg+xml');status(`INFLUENCE ${index+1} ${field.kind.toUpperCase()} RADIUS EXPORTED · CIRCLE ONLY.`);});
 
 const transientProject=()=>{const p=copyProjectForEdit(pending?.projectUpdate||project());if(pending)p.working=copyWorkingForEdit(pending.working);return p;};
 
