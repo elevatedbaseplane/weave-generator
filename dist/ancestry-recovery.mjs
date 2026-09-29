@@ -19,7 +19,7 @@ export function recoverCarrierAncestry(workspace,history=[]){
    const found=findCarrierRevision(project,snapshot.id);if(found){if(canonical(found.revision)!==canonical(snapshot))throw Error('Recovery source conflicts with saved revision.');continue;}
    const parent=findCarrierRevision(project,snapshot.parentRevisionId);
    if(!parent||parent.entry.latestRevisionId!==snapshot.parentRevisionId||snapshot.number!==parent.entry.revisions.length+1)throw Error('Exact recovery ancestry is incomplete; saved data remains untouched.');
-   parent.entry.revisions.push(clone(snapshot));parent.entry.latestRevisionId=snapshot.id;count++;
+   parent.entry.revisions.push(clone(snapshot));parent.entry.latestRevisionId=snapshot.id;if(parent.entry.weaveId)parent.entry.modifiedAt=snapshot.createdAt;count++;
   }
  }
  validateTrustedWorkspace(repaired);

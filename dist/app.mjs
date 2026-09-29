@@ -6,128 +6,137 @@ import {dependencyPlan,presentationPlan} from './dependency-plan.mjs';
 const editGesture=new WeaveEditGesture();
 
 import {boundaryEntryForRevision,weaveResultForPattern,patternsForBoundary,activeLibraryItems,adaptGenerationToBoundary,reusableWeaves,latestReusableRevision} from './project-library.mjs';
-import {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';
-import {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';
+import {installNumericInputs,sliderEventNumber} from './numeric-inputs.mjs';
+import {bindCrossingMarker,crossingSelectionRecord,selectedCrossingEvent,editCrossingOverride} from './crossing-controls.mjs';
 import {defaultRule,resolveWeaveRules,effectiveWeaveRule,familyOf,namedRuleMode,applyNamedRuleMode,repeatSequence,seededVariationSequence,withStructuredVariation,familyRepeatRule,applyFamilyNamedRule,clearFamilyRule,pairRepeatRule,applyPairNamedRule,clearPairRule} from './weave-rules.mjs';
-import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,indexCrossingFamilies} from './family-domain.mjs';
-
+import {orderedFamilies,familyEntry,updateFamilyCatalog,indexDerivedFamilies,indexCrossingFamilies} from './family-domain.mjs';
+
 import {defaultInterlacing,validateInterlacing} from './interlacing.mjs';
 import {CONTACT_TENSION_DEFAULT,effectiveContactTension} from './contact-tension.mjs';
-
+
 import {threadStyle,threadPaths,threadStroke,threadOpacity,changeThreadAppearance} from './thread-appearance.mjs';
 import {FIELD_PRESENTATION_DEFAULT,effectiveFieldPresentation,changeFieldPresentation,presentationTailLayers} from './field-presentation.mjs';
-
+
 import {influenceResponseChanges,influenceResponsesLinked} from './influence-controls.mjs';
-
-import {LINE_PRESETS,createLinePreset} from './line-presets.mjs';
-
-import {STITCH_SOURCE,STITCH_RECIPES,createStitchSource,changeHerringboneLayout} from './stitch-source.mjs';
-
-import {STITCH_VERSIONS,stitchIdentity,validateStitchGeneration} from './stitch.mjs';
-
-import {createWorkspace,createProject,activeProject,clone,saveBoundary,saveBoundaryAndUpdatePatterns,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,createWeaveStudy,retargetWeaveSource,saveWeaveStudy,restoreWeaveStudy,findWeaveRevision,parseBackup,mergeBackup,addInfluence,duplicateInfluence,candidateInfluence,candidateVariation,removeInfluence,influenceOf,influencesOf,validateTrustedWorkspace,addWeaveFamily,removeWeaveFamily,renameLibraryItem,deleteLibraryItem,duplicateLibraryItem} from './document.mjs';
-
+
+import {LINE_PRESETS,createLinePreset} from './line-presets.mjs';
+
+import {STITCH_SOURCE,STITCH_RECIPES,createStitchSource,changeHerringboneLayout} from './stitch-source.mjs';
+
+import {STITCH_VERSIONS,stitchIdentity,validateStitchGeneration} from './stitch.mjs';
+
+import {createWorkspace,createProject,activeProject,clone,saveBoundary,saveBoundaryAndUpdatePatterns,restoreBoundary,findRevision,saveCarrierStudy,restoreCarrierStudy,findCarrierRevision,createWeaveStudy,retargetWeaveSource,saveWeaveStudy,restoreWeaveStudy,findWeaveRevision,parseBackup,mergeBackup,addInfluence,duplicateInfluence,candidateInfluence,candidateVariation,removeInfluence,influenceOf,influencesOf,validateTrustedWorkspace,addWeaveFamily,removeWeaveFamily,renameLibraryItem,deleteLibraryItem,duplicateLibraryItem,finalizeSavedWeaveRecord} from './document.mjs';
+import {readWeaveIdentity,readWeaveParent,shortWeaveId,formatWeaveCreatedDate,applyGeneratorSnapshot,inspectGeneratorRecord,generatorRecordNote,readEvaluationSummary,queryEvaluationRecords,listSavedGenerationSettings,readAnalysisStatus,readCriterionRecords,readGeometryReadiness,readEvaluationProvenance,readEvaluationHistory,compareEvaluationRecords,curateDesignerData,readWeaveLineage} from './weave-record.mjs';
+import {analyzeWeave,readAnalysisModules} from './analysis.mjs';
+import {evaluateWeave,reevaluateWeave,evaluateSelectedWeaves,listCriteria} from './evaluation.mjs';
+import {ADVISORY_BOUNDARY,evaluationDataset,parameterPattern,outcomeGroups,familyRolePattern} from './parameter-analysis.mjs';
+import {buildWeaveHandoff,recordWeaveHandoff} from './weave-handoff.mjs';
+import {applyGeneratorParameterControls} from './parameter-definitions.mjs';
+
 import {safeDeriveCarrier as deriveCarrier,refreshWeave,derivedSvg,sourceLayerSvg,centerlineSvg,weavePdf,canonical,digest} from './weave.mjs';
+import {weaveAppearanceMarkup} from './weave-preview.mjs';
 import {transparentWeavePng} from './png-export.mjs';
 import {influenceRadiiSvg} from './influence-export.mjs';
-
-import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';
-
-import {INFLUENCE_VERSIONS,FAMILY_INFLUENCE_VERSIONS,validateGeneration as validateInfluenceGeneration,familySettings,isIdentityGeneration} from './influence.mjs';
-
-import {COMBINED_VERSIONS,COMBINED_LIMITS,validateCombinedGeneration,combinedIdentity} from './combined.mjs';
-
-import {createRectangularCarrier,carrierInputFingerprint,familyNames,FAMILY_LIMIT} from './carrier.mjs';
-
-import {square,validateBoundary,parseCoordinates,signedArea,bounds} from './boundary.mjs';
-
-import {History} from './history.mjs';
-
+
+import {ATTRACTOR_VERSIONS,validateGeneration} from './attractor.mjs';
+
+import {INFLUENCE_VERSIONS,FAMILY_INFLUENCE_VERSIONS,validateGeneration as validateInfluenceGeneration,familySettings,isIdentityGeneration} from './influence.mjs';
+
+import {COMBINED_VERSIONS,COMBINED_LIMITS,validateCombinedGeneration,combinedIdentity} from './combined.mjs';
+
+import {createRectangularCarrier,carrierInputFingerprint,familyNames,FAMILY_LIMIT} from './carrier.mjs';
+
+import {square,validateBoundary,parseCoordinates,signedArea,bounds} from './boundary.mjs';
+
+import {History} from './history.mjs';
+
 import {IndexedStore,STORE_KEY,ADVISORY_KEY} from './storage.mjs?storage-epoch=20260918';
-
-import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';
-
-import {boundarySvg,boundaryDxf} from './exchange.mjs';
-
-import {parseSvgBoundary,svgImportSummary} from './svg-import.mjs';
-
+
+import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';
+
+import {boundarySvg,boundaryDxf} from './exchange.mjs';
+
+import {parseSvgBoundary,svgImportSummary} from './svg-import.mjs';
+
 import {prepareIncrementalWorkspace,validatePreparedPayload,projectPortableByteLength} from './storage-codec.mjs';
-
-import {derivedFamilyPaths} from './weave-render.mjs';
-
-import {applyDisplayPreset,displayPresetName} from './display.mjs';
-
-let selectedCrossing=null,activeInterlaceTarget=null;
-const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
-function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
+
+import {derivedFamilyPaths} from './weave-render.mjs';
+
+import {applyDisplayPreset,displayPresetName} from './display.mjs';
+
+let selectedCrossing=null,activeInterlaceTarget=null;
+const pairTarget=(first,second)=>`pair:${encodeURIComponent(first)}:${encodeURIComponent(second)}`;
+function parseInterlaceTarget(target,names){if(!target)return{kind:'default'};if(target.startsWith('pair:')){const parts=target.slice(5).split(':');if(parts.length===2){const first=decodeURIComponent(parts[0]),second=decodeURIComponent(parts[1]);if(first!==second&&names.includes(first)&&names.includes(second))return{kind:'pair',first,second};}}if(names.includes(target))return{kind:'family',family:target};return{kind:'default'};}
 const $=id=>document.getElementById(id),BUILD='WF-WEAVE-FIELD-RADII-SVG-20260921';$('build').textContent=BUILD;document.querySelector('.header-build b').textContent='PROJECT / BOUNDARY / WEAVE';
-
-const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
-
+
+const attractorLayer=document.createElementNS('http://www.w3.org/2000/svg','g');attractorLayer.id='attractor-layer';$('canvas').insertBefore(attractorLayer,$('geometry'));
+
 document.querySelector('footer').innerHTML='CONTACT RESPONSE · VISIBLE RANGE<br>Contact controls now produce a clear restrained-span change.';
-
-const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';
-
+
+const store=new IndexedStore(indexedDB,localStorage),VIEW_KEY='weave-foundation-view-v2';
+
 let workspace,loadError='';
 
 let libraryTemplateRevisionId=null;
-
-const histories=new Map();
-
-const workingRoots=new WeakMap();
-
-const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
-
-let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,fieldPresentationPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0;
-
-let activePatternFamily='A',activeInfluenceFamily='A',activeInfluenceId=undefined;
-
-const treeOpenState=new Map();
-
+
+const histories=new Map();
+
+const workingRoots=new WeakMap();
+
+const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
+
+let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,fieldPresentationPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0,savingWeave=false;
+
+let activePatternFamily='A',activeInfluenceFamily='A',activeInfluenceId=undefined;
+
+const treeOpenState=new Map();
+
 let pending=null,activeJob=null,workerSequence=0,workerTimer=0,workerUnavailable=false,enabledAction=false,influenceGesture=null,acceptedVersion=0;const sessionId=crypto.randomUUID(),workerEvents=[];
-
-function workerEvent(type,data={}){workerEvents.push({type,at:performance.now(),...data});if(workerEvents.length>300)workerEvents.splice(0,workerEvents.length-300);}
-
-function typedError(code,message){const error=Error(message);error.code=code;return error;}
-
-const carrierCache=new Map();
-
-const sourceTraces=new WeakMap();
-
-function retainSourceTrace(result,payloadId,trace){if(result?.versions?.derivation!==STITCH_VERSIONS.derivation)return;if(!trace||trace.version!=='stitch-source-trace-v1'||trace.derivedFingerprint!==payloadId)throw typedError('source-trace','Source trace fingerprint does not match geometry.');sourceTraces.set(result,trace);}
-
-let display={theme:'light',boundary:true,grid:true,sourceLattice:true,originalGrid:true,weaveSource:false,weaveDerived:true,attractor:true,isolatedFamilyId:null};
-
-try{const saved=JSON.parse(localStorage.getItem(VIEW_KEY));if(['light','dark','neo'].includes(saved?.theme))display={...display,theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true,sourceLattice:saved.sourceLattice===true,originalGrid:saved.originalGrid??(saved.familyA===true||saved.familyB===true),weaveSource:saved.weaveSource===true,weaveDerived:saved.weaveDerived===true,attractor:saved.attractor!==false,isolatedFamilyId:typeof saved.isolatedFamilyId==='string'?saved.isolatedFamilyId:null};}catch{}
-
-const project=()=>activeProject(workspace);
-
-const isCertifiedStudy=weave=>[ATTRACTOR_VERSIONS.study,INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study,COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(weave?.weaveVersion);
-
-const versionsForWeave=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?STITCH_VERSIONS:weave?.weaveVersion===COMBINED_VERSIONS.study?COMBINED_VERSIONS:weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study?FAMILY_INFLUENCE_VERSIONS:weave?.weaveVersion===INFLUENCE_VERSIONS.study?INFLUENCE_VERSIONS:ATTRACTOR_VERSIONS;
-
-const validateWeaveGeneration=weave=>(weave?.weaveVersion===STITCH_VERSIONS.study?validateStitchGeneration:weave?.weaveVersion===COMBINED_VERSIONS.study?validateCombinedGeneration:[INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(weave?.weaveVersion)?validateInfluenceGeneration:validateGeneration)(weave.generation);
-
-const identityGeneration=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?stitchIdentity(weave.generation):weave?.weaveVersion===COMBINED_VERSIONS.study?combinedIdentity(weave.generation):isIdentityGeneration(weave.generation);
-
-function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
-
-function surfaceError(error){if($('field-section').open)setEditFeedback('field','error',`NOT APPLIED · ${error?.message||String(error)}`);if(['concurrent-change','storage-open','storage-blocked'].includes(error?.code)){$('reload-latest').hidden=false;$('project-section').open=true;}status(error?.message||String(error),true);}
-
-function setEditFeedback(scope,state,text){const ids=scope==='pattern'?['pattern-edit-state','canvas-edit-state']:scope==='field'?['field-edit-state','canvas-edit-state']:['canvas-edit-state'];for(const id of ids){const node=$(id);if(!node)continue;node.dataset.state=state;node.textContent=text;}}
-
-function resetEditFeedback(){const pattern=$('pattern-edit-state'),field=$('field-edit-state'),canvas=$('canvas-edit-state');if(pattern){pattern.dataset.state='ready';pattern.textContent='READY · CHANGES PREVIEW AND SAVE AUTOMATICALLY';}if(field){field.dataset.state='ready';field.textContent='READY · CHANGES CALCULATE AND SAVE AUTOMATICALLY';}if(canvas){canvas.dataset.state='ready';canvas.textContent='READY';}}
-
-function focusDerivedEditing(showGuide=false){const hasResult=Boolean((pending?.working||project().working).weave),next=hasResult?applyDisplayPreset(display,'derived-only'):{...display,sourceLattice:false,originalGrid:true,weaveSource:false,weaveDerived:true};next.attractor=showGuide||display.attractor;const changed=JSON.stringify(next)!==JSON.stringify(display);display=next;if(changed)saveView();}
-
-function renderProjectSummary(){const p=project(),savedBoundaries=p.boundaries.length,savedWeaves=p.carrierStudies.length;$('project-summary').textContent=`${p.name} · ${savedBoundaries} BOUNDAR${savedBoundaries===1?'Y':'IES'} · ${savedWeaves} WEAVE${savedWeaves===1?'':'S'}`;}
-
+
+function workerEvent(type,data={}){workerEvents.push({type,at:performance.now(),...data});if(workerEvents.length>300)workerEvents.splice(0,workerEvents.length-300);}
+
+function typedError(code,message){const error=Error(message);error.code=code;return error;}
+
+const carrierCache=new Map();
+
+const sourceTraces=new WeakMap();
+
+function retainSourceTrace(result,payloadId,trace){if(result?.versions?.derivation!==STITCH_VERSIONS.derivation)return;if(!trace||trace.version!=='stitch-source-trace-v1'||trace.derivedFingerprint!==payloadId)throw typedError('source-trace','Source trace fingerprint does not match geometry.');sourceTraces.set(result,trace);}
+
+let display={theme:'light',boundary:true,grid:true,sourceLattice:true,originalGrid:true,weaveSource:false,weaveDerived:true,attractor:true,isolatedFamilyId:null};
+
+try{const saved=JSON.parse(localStorage.getItem(VIEW_KEY));if(['light','dark','neo'].includes(saved?.theme))display={...display,theme:saved.theme,boundary:saved.boundary===true,grid:saved.grid===true,sourceLattice:saved.sourceLattice===true,originalGrid:saved.originalGrid??(saved.familyA===true||saved.familyB===true),weaveSource:saved.weaveSource===true,weaveDerived:saved.weaveDerived===true,attractor:saved.attractor!==false,isolatedFamilyId:typeof saved.isolatedFamilyId==='string'?saved.isolatedFamilyId:null};}catch{}
+
+const project=()=>activeProject(workspace);
+
+const isCertifiedStudy=weave=>[ATTRACTOR_VERSIONS.study,INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study,COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(weave?.weaveVersion);
+
+const versionsForWeave=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?STITCH_VERSIONS:weave?.weaveVersion===COMBINED_VERSIONS.study?COMBINED_VERSIONS:weave?.weaveVersion===FAMILY_INFLUENCE_VERSIONS.study?FAMILY_INFLUENCE_VERSIONS:weave?.weaveVersion===INFLUENCE_VERSIONS.study?INFLUENCE_VERSIONS:ATTRACTOR_VERSIONS;
+
+const validateWeaveGeneration=weave=>(weave?.weaveVersion===STITCH_VERSIONS.study?validateStitchGeneration:weave?.weaveVersion===COMBINED_VERSIONS.study?validateCombinedGeneration:[INFLUENCE_VERSIONS.study,FAMILY_INFLUENCE_VERSIONS.study].includes(weave?.weaveVersion)?validateInfluenceGeneration:validateGeneration)(weave.generation);
+
+const identityGeneration=weave=>weave?.weaveVersion===STITCH_VERSIONS.study?stitchIdentity(weave.generation):weave?.weaveVersion===COMBINED_VERSIONS.study?combinedIdentity(weave.generation):isIdentityGeneration(weave.generation);
+
+function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
+function evaluationNotice(message,error=false){status(message,error);if(document.body.dataset.view!=='evaluation')return;const node=$('evaluation-message');if(!node)return;node.hidden=!message;node.textContent=message||'';node.classList.toggle('error',!!error);}
+function evaluationFailureText(entry){if(readEvaluationSummary(entry).status!=='evaluation-failed')return '';const name=readWeaveIdentity(entry).name||readWeaveIdentity(entry).weaveId;return `${name}: ${readGeometryReadiness(project(),entry).reasons.join(' ')||'Scoring failed. This is not a low rating.'}`;}
+
+function surfaceError(error){if($('field-section').open)setEditFeedback('field','error',`NOT APPLIED · ${error?.message||String(error)}`);if(['concurrent-change','storage-open','storage-blocked'].includes(error?.code)){$('reload-latest').hidden=false;$('project-section').open=true;}evaluationNotice(error?.message||String(error),true);}
+
+function setEditFeedback(scope,state,text){const ids=scope==='pattern'?['pattern-edit-state','canvas-edit-state']:scope==='field'?['field-edit-state','canvas-edit-state']:['canvas-edit-state'];for(const id of ids){const node=$(id);if(!node)continue;node.dataset.state=state;node.textContent=text;}}
+
+function resetEditFeedback(){const pattern=$('pattern-edit-state'),field=$('field-edit-state'),canvas=$('canvas-edit-state');if(pattern){pattern.dataset.state='ready';pattern.textContent='READY · CHANGES PREVIEW AND SAVE AUTOMATICALLY';}if(field){field.dataset.state='ready';field.textContent='READY · CHANGES CALCULATE AND SAVE AUTOMATICALLY';}if(canvas){canvas.dataset.state='ready';canvas.textContent='READY';}}
+
+function focusDerivedEditing(showGuide=false){const hasResult=Boolean((pending?.working||project().working).weave),next=hasResult?applyDisplayPreset(display,'derived-only'):{...display,sourceLattice:false,originalGrid:true,weaveSource:false,weaveDerived:true};next.attractor=showGuide||display.attractor;const changed=JSON.stringify(next)!==JSON.stringify(display);display=next;if(changed)saveView();}
+
+function renderProjectSummary(){const p=project(),savedBoundaries=p.boundaries.length,savedWeaves=p.carrierStudies.length;$('project-summary').textContent=`${p.name} · ${savedBoundaries} BOUNDAR${savedBoundaries===1?'Y':'IES'} · ${savedWeaves} WEAVE${savedWeaves===1?'':'S'}`;}
+
 function storageDiagnostics(){const packed=store.lastPacked;if(!packed)return null;const activeProjectBytes=projectPortableByteLength(packed,packed.manifest.activeProjectId),encoder=new TextEncoder(),bytes=value=>encoder.encode(JSON.stringify(value)).byteLength,records=new Map(packed.records.map(record=>[record.id,record])),referencedRecords=new Set(),referencedPayloads=new Set();for(const owner of packed.manifest.projects){const current=owner.working?.weave?.derived?.payloadId;if(current)referencedPayloads.add(current);for(const study of owner.weaveStudies)for(const revision of study.revisions){const recordId=revision.working?.recordId;if(recordId)referencedRecords.add(recordId);}}for(const recordId of referencedRecords){const payloadId=records.get(recordId)?.value?.weave?.derived?.payloadId;if(payloadId)referencedPayloads.add(payloadId);}const payloads=packed.payloads.map(payload=>{const binary=Object.values(payload.byteLengths).reduce((sum,value)=>sum+value,0),portable=bytes({...payload,f64:null,u32:null,i32:null,u16:null})-16+Object.values(payload.byteLengths).reduce((sum,value)=>sum+2+4*Math.ceil(value/3),0);return{id:payload.id,codec:payload.codec,portable,binary,counts:payload.counts,referenced:referencedPayloads.has(payload.id)}});const recordSizes=packed.records.map(record=>({id:record.id,bytes:bytes(record),referenced:referencedRecords.has(record.id)}));return{backupBytes:activeProjectBytes,workspaceBytes:packed.backupBytes,scope:'active-project',limit:10*1024*1024,remaining:10*1024*1024-activeProjectBytes,manifestBytes:bytes(packed.manifest),records:{total:recordSizes.length,referenced:referencedRecords.size,bytes:recordSizes.reduce((sum,item)=>sum+item.bytes,0),unreferencedBytes:recordSizes.filter(item=>!item.referenced).reduce((sum,item)=>sum+item.bytes,0)},payloads:{total:payloads.length,referenced:referencedPayloads.size,portableBytes:payloads.reduce((sum,item)=>sum+item.portable,0),unreferencedBytes:payloads.filter(item=>!item.referenced).reduce((sum,item)=>sum+item.portable,0),largest:payloads.sort((a,b)=>b.portable-a.portable).slice(0,12)},projects:packed.manifest.projects.map(owner=>({name:owner.name,boundaries:owner.boundaries.length,patterns:owner.carrierStudies.length,grids:owner.weaveStudies.length,revisions:owner.weaveStudies.reduce((sum,study)=>sum+study.revisions.length,0),portableBytes:projectPortableByteLength(packed,owner.id)}))};}
-
-function attempt(action){try{const result=action();if(result?.then)result.catch(surfaceError);}catch(error){surfaceError(error);}}
-
-function storageTask(message,signal){return new Promise((resolve,reject)=>{const worker=new Worker(new URL('./storage-worker.mjs',import.meta.url),{type:'module'}),requestId=crypto.randomUUID(),abort=()=>{worker.terminate();reject(typedError('completion-timeout','Storage preparation exceeded the completion deadline.'))};if(signal?.aborted){abort();return}signal?.addEventListener('abort',abort,{once:true});worker.onerror=e=>{signal?.removeEventListener('abort',abort);worker.terminate();reject(typedError('storage-worker',e.message||'Storage worker failed.'))};worker.onmessage=e=>{if(e.data?.requestId!==requestId)return;signal?.removeEventListener('abort',abort);worker.terminate();if(e.data.type==='failure'){reject(typedError(e.data.error?.code||'storage-worker',e.data.error?.message||'Storage preparation failed.'));return}resolve(e.data)};worker.postMessage({...message,requestId});});}
-
+
+function attempt(action){try{const result=action();if(result?.then)result.catch(surfaceError);}catch(error){surfaceError(error);}}
+
+function storageTask(message,signal){return new Promise((resolve,reject)=>{const worker=new Worker(new URL('./storage-worker.mjs',import.meta.url),{type:'module'}),requestId=crypto.randomUUID(),abort=()=>{worker.terminate();reject(typedError('completion-timeout','Storage preparation exceeded the completion deadline.'))};if(signal?.aborted){abort();return}signal?.addEventListener('abort',abort,{once:true});worker.onerror=e=>{signal?.removeEventListener('abort',abort);worker.terminate();reject(typedError('storage-worker',e.message||'Storage worker failed.'))};worker.onmessage=e=>{if(e.data?.requestId!==requestId)return;signal?.removeEventListener('abort',abort);worker.terminate();if(e.data.type==='failure'){reject(typedError(e.data.error?.code||'storage-worker',e.data.error?.message||'Storage preparation failed.'));return}resolve(e.data)};worker.postMessage({...message,requestId});});}
+
 async function prepareStorage(next,trusted=false,signal){return (await storageTask({type:'pack',workspace:next,trusted},signal)).packed;}
 
 async function persistSnapshot(candidate,signal){const next=candidate.workspace,trusted=candidate.trusted===true;if(store.blocked)throw typedError('storage-blocked','Saving is paused: '+(loadError||'Transactional storage could not be opened or validated.'));await store.assertCurrent();const active=next.projects.find(item=>item.id===next.activeProjectId),derived=active?.working?.weave?.derived;if(store.lastPacked&&derived?.strands){const payload=candidate.payload||(await storageTask({type:'encode-derived',derived},signal)).payload;validatePreparedPayload(payload,derived);const prepared=prepareIncrementalWorkspace(next,store.lastPacked,payload);await store.commitDelta(prepared,signal);return prepared.packed;}const packed=await prepareStorage(next,trusted,signal);await store.commit(packed,signal);return packed;}
@@ -135,70 +144,70 @@ async function persist(next,trusted=false,signal){await autosave.settle();const 
 function autosaveFeedback(event){const meta=event.item?.meta||{},settlementMs=Number.isFinite(meta.started)?performance.now()-meta.started:null;workerEvent(`autosave-${event.state}`,{autosaveSequence:event.item?.sequence||0,acceptedVersion,errorCode:event.error?.code||null,settlementMs});if(event.state==='saved'&&!event.queued&&event.item.sequence===autosave.sequence&&!pending&&!activeJob){if(meta.feedback)setEditFeedback(meta.feedback.scope,'applied',`APPLIED + SAVED · ${meta.feedback.label}`);status(meta.savedStatus||'LATEST ACCEPTED CHANGE SAVED.');}if(event.state==='failed'&&!event.queued&&event.item.sequence===autosave.sequence){const error=event.error;if(meta.feedback)setEditFeedback(meta.feedback.scope,'error',`APPLIED · BACKUP FAILED · ${error?.message||error}`);if(['concurrent-change','storage-open','storage-blocked'].includes(error?.code)){$('reload-latest').hidden=false;$('project-section').open=true;}status(`CHANGE APPLIED · BACKUP FAILED: ${error?.message||error}`,true);}}
 const autosave=new CompactAutosave({delay:180,persist:async(candidate,item)=>{const packed=await persistSnapshot(candidate);if(item.sequence===autosave.sequence&&candidate.workspace===workspace)workingRoots.set(activeProject(candidate.workspace).working,store.head.currentRoot);return packed;},onState:autosaveFeedback});
 function acceptWorkspace(next,{before=null,payload=null,feedback=null,savedStatus=null,recordHistory=true}={}){workspace=next;acceptedVersion++;if(before&&recordHistory)history().record(before,project().working);autosave.accept({workspace:next,payload},{feedback,savedStatus});}
-
-function deriveWorking(working=project().working,boardId=project().id){if(!working.carrier)return null;const fingerprint=carrierInputFingerprint(working.boundary,working.carrier),cacheKey=boardId+':'+working.carrier.id+':'+fingerprint,cached=carrierCache.get(cacheKey);if(cached?.inputFingerprint===fingerprint)return cached;const derived=deriveCarrier(working.boundary,working.carrier,boardId);carrierCache.set(cacheKey,derived);if(carrierCache.size>12)carrierCache.delete(carrierCache.keys().next().value);carrierDerivationCount++;return derived;}
-
+
+function deriveWorking(working=project().working,boardId=project().id){if(!working.carrier)return null;const fingerprint=carrierInputFingerprint(working.boundary,working.carrier),cacheKey=boardId+':'+working.carrier.id+':'+fingerprint,cached=carrierCache.get(cacheKey);if(cached?.inputFingerprint===fingerprint)return cached;const derived=deriveCarrier(working.boundary,working.carrier,boardId);carrierCache.set(cacheKey,derived);if(carrierCache.size>12)carrierCache.delete(carrierCache.keys().next().value);carrierDerivationCount++;return derived;}
+
 function cancelPending(message='PENDING CHANGE CANCELLED. LAST COMPLETE RESULT RESTORED.') {editGesture.clear();const feedback=pending?.feedback;clearTimeout(workerTimer);workerTimer=0;if(activeJob){workerEvent('cancelled',{seq:activeJob.seq,requestId:activeJob.requestId,reason:'user'});activeJob.controller?.abort();activeJob.worker.terminate();clearTimeout(activeJob.timeout);activeJob=null}pending=null;carrierPreview=null;renderR1BState(true);if(feedback)setEditFeedback(feedback.scope,'ready','READY · LAST SAVED RESULT RESTORED');status(message);}
-
+
 function requestWorking(working,label,immediate=false,options={}){return updateWorking(working,label,{...options,preview:!immediate});}
 
 function queueWorkingCalculation(working,label,immediate=false,options={}){
- if(workerUnavailable)throw Error('Certified nonlinear computation is unavailable in this browser session.');validateWeaveGeneration(working.weave);const versions=versionsForWeave(working.weave),candidate=weaveCalculationInput(readWeaveSource(working,project().id)),input=digest(candidate),base=`${store.head?.currentRoot||'unsaved'}:${acceptedVersion}`,current=project().working?.weave?.derived?weaveCalculationInput(readWeaveSource(project().working,project().id)):null,plan=dependencyPlan(current,candidate),nextPending={previewOnly:!immediate,working:copyWorkingForEdit(working),candidate,input,base,acceptedVersion,label,versions,plan,phase:'QUEUED',started:performance.now(),projectUpdate:options.projectUpdate?copyProjectForEdit(options.projectUpdate):null,saveWeaveName:options.saveWeaveName||null,feedback:options.feedback||null};pending=nextPending;workerEvent('queued',{input,immediate,plan});clearTimeout(workerTimer);workerTimer=0;if(pending.feedback)setEditFeedback(pending.feedback.scope,'working',`UPDATING · ${pending.feedback.label}`);renderR1BState(false);status('UPDATING WEAVE — SHOWING THE LAST COMPLETE RESULT.');if(activeJob){if(immediate&&activeJob.input===input&&activeJob.base===base&&activeJob.request.previewOnly){Object.assign(activeJob.request,nextPending,{previewOnly:false,phase:'CERTIFYING',started:activeJob.request.started});pending=activeJob.request;workerEvent('promoted-preview',{requestId:activeJob.requestId,input});return;}const obsolete=activeJob;clearTimeout(obsolete.timeout);obsolete.worker.onmessage=null;obsolete.worker.onerror=null;obsolete.worker.terminate();activeJob=null;primeIdleDerivationWorker();workerEvent('cancelled-obsolete',{requestId:obsolete.requestId,input:obsolete.input,replacement:input});}if(plan.reuse.geometry){const totalMs=performance.now()-pending.started,feedback=pending.feedback;pending=null;carrierPreview=null;editGesture.clear();renderR1BState(true);if(feedback)setEditFeedback(feedback.scope,'applied',`UNCHANGED · ${feedback.label}`);status('SOURCE RETURNED TO THE CURRENT CERTIFIED RESULT.');workerEvent('reused-current',{input,totalMs,plan});return;}workerTimer=setTimeout(dispatchPending,immediate?0:40);
+ if(workerUnavailable)throw Error('Certified nonlinear computation is unavailable in this browser session.');validateWeaveGeneration(working.weave);const versions=versionsForWeave(working.weave),candidate=weaveCalculationInput(readWeaveSource(working,project().id)),input=digest(candidate),base=`${store.head?.currentRoot||'unsaved'}:${acceptedVersion}`,current=project().working?.weave?.derived?weaveCalculationInput(readWeaveSource(project().working,project().id)):null,plan=dependencyPlan(current,candidate),nextPending={previewOnly:!immediate,working:copyWorkingForEdit(working),candidate,input,base,acceptedVersion,label,versions,plan,phase:'QUEUED',started:performance.now(),projectUpdate:options.projectUpdate?copyProjectForEdit(options.projectUpdate):null,saveWeaveName:options.saveWeaveName||null,feedback:options.feedback||null};pending=nextPending;workerEvent('queued',{input,immediate,plan});clearTimeout(workerTimer);workerTimer=0;if(pending.feedback)setEditFeedback(pending.feedback.scope,'working',`UPDATING · ${pending.feedback.label}`);renderR1BState(false);status('UPDATING WEAVE — SHOWING THE LAST COMPLETE RESULT.');if(activeJob){if(immediate&&activeJob.input===input&&activeJob.base===base&&activeJob.request.previewOnly){Object.assign(activeJob.request,nextPending,{previewOnly:false,phase:'CERTIFYING',started:activeJob.request.started});pending=activeJob.request;workerEvent('promoted-preview',{requestId:activeJob.requestId,input});return;}const obsolete=activeJob;clearTimeout(obsolete.timeout);obsolete.worker.onmessage=null;obsolete.worker.onerror=null;obsolete.worker.terminate();activeJob=null;primeIdleDerivationWorker();workerEvent('cancelled-obsolete',{requestId:obsolete.requestId,input:obsolete.input,replacement:input});}if(plan.reuse.geometry){const totalMs=performance.now()-pending.started,feedback=pending.feedback,sameRecord=working.carrierSourceRevisionId===project().working.carrierSourceRevisionId&&!options.projectUpdate;if(!sameRecord){const before=clone(project().working),changed=clone(workspace),updated=options.projectUpdate?clone(options.projectUpdate):clone(project());updated.working=clone(working);const committed=options.saveWeaveName?saveWeaveStudy(updated,options.saveWeaveName,isCertifiedStudy(working.weave),true).project:updated;changed.projects=changed.projects.map(p=>p.id===committed.id?committed:p);pending=null;carrierPreview=null;editGesture.clear();acceptWorkspace(changed,{before,feedback,savedStatus:label});render();status(`${label} BACKUP PENDING.`);workerEvent('reused-current',{input,totalMs,plan,opened:true});return;}pending=null;carrierPreview=null;editGesture.clear();renderR1BState(true);if(feedback)setEditFeedback(feedback.scope,'applied',`UNCHANGED · ${feedback.label}`);status('SOURCE RETURNED TO THE CURRENT CERTIFIED RESULT.');workerEvent('reused-current',{input,totalMs,plan});return;}workerTimer=setTimeout(dispatchPending,immediate?0:40);
 }
-
+
 let idleDerivationWorker=null;
 
 function primeIdleDerivationWorker(){if(idleDerivationWorker)return;try{const worker=new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'});idleDerivationWorker=worker;worker.onerror=()=>{if(idleDerivationWorker===worker)idleDerivationWorker=null;worker.terminate();};}catch{}}
 
 primeIdleDerivationWorker();
-
+
 window.addEventListener('pagehide',()=>{void autosave.flush();idleDerivationWorker?.terminate();activeJob?.worker.terminate();});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')void autosave.flush();});
-
+
 function dispatchPending(){workerTimer=0;if(!pending||activeJob)return;const p=pending,seq=++workerSequence,requestId=sessionId+':'+seq,worker=idleDerivationWorker||new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'}),job={worker,request:p,requestId,seq,input:p.input,base:p.base,attempt:p.retried?1:0,started:performance.now()};idleDerivationWorker=null;activeJob=job;p.phase='CERTIFYING';workerEvent('dispatched',{seq,requestId,input:p.input,attempt:job.attempt,requestStarted:p.started,plan:p.plan});renderR1BState(false);status('UPDATING WEAVE — SHOWING THE LAST COMPLETE RESULT.');const message={protocolVersion:p.versions.protocol,workerBuildId:BUILD,sessionId,requestSequence:seq,requestId,boardId:project().id,weaveStudyId:p.working.weave.studyId,baseCommittedFingerprint:p.base,candidateInputFingerprint:p.input,algorithmVersions:{...p.versions},dependencyPlan:p.plan,candidate:p.candidate};
-
+
  const fail=(error,reuseWorker=false)=>{if(activeJob!==job)return;if(reuseWorker){worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;}else{worker.terminate();primeIdleDerivationWorker();}clearTimeout(job.timeout);activeJob=null;const code=error?.code||'worker-failure',text=error?.message||'Worker failed.',totalMs=performance.now()-p.started;workerEvent('failed',{seq,requestId,code,message:text,totalMs,attempt:job.attempt});if(pending!==p){workerEvent('superseded-result',{seq,requestId,outcome:'failed'});setTimeout(dispatchPending,0);return}if(!p.retried&&(code==='worker-load'||code==='worker-crash')){p.retried=true;workerEvent('retrying',{seq,requestId,code});setTimeout(dispatchPending,0);return}if((code==='worker-load'||code==='worker-crash')&&p.retried)workerUnavailable=true;pending=null;carrierPreview=null;editGesture.clear();renderR1BState(true);if(p.feedback)setEditFeedback(p.feedback.scope,'error',`NOT APPLIED · ${text}`);if(code==='concurrent-change'){$('reload-latest').hidden=false;$('project-section').open=true;}status(`R1D ${code.toUpperCase()}: ${text}`,true)};
-
- worker.onerror=e=>fail(typedError('worker-load',e.message||'Certified worker failed to load.'));
-
- worker.onmessage=async e=>{
-
+
+ worker.onerror=e=>fail(typedError('worker-load',e.message||'Certified worker failed to load.'));
+
+ worker.onmessage=async e=>{
+
   if(activeJob!==job||e.data?.requestId!==requestId||e.data.requestSequence!==seq){workerEvent('stale-message',{seq,requestId});return}
-
+
   if(e.data.type==='failure'){fail(typedError(e.data.error?.code||'evaluator',e.data.error?.message||'Certified derivation failed.'),true);return}
-
-  let deadlineTimer;
-
-  try{
-
+
+  let deadlineTimer;
+
+  try{
+
    const m=e.data,receivedEpoch=performance.timeOrigin+performance.now(),validationStarted=performance.now();if(pending!==p){clearTimeout(job.timeout);worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;activeJob=null;workerEvent('superseded-result',{seq,requestId,outcome:'discarded'});setTimeout(dispatchPending,0);return}
-
+
    if(m.protocolVersion!==p.versions.protocol||m.workerBuildId!==BUILD||m.sessionId!==sessionId||m.boardId!==project().id||m.weaveStudyId!==p.working.weave.studyId||m.baseCommittedFingerprint!==p.base||m.candidateInputFingerprint!==p.input||p.acceptedVersion!==acceptedVersion||digest(p.candidate)!==p.input||m.resultCanonicalFingerprint!==m.payload?.id)throw typedError('result-validation','Stale or invalid certified worker result.');
-
-   validatePreparedPayload(m.payload,m);retainSourceTrace(m.result,m.payload.id,m.sourceTrace);const validationMs=performance.now()-validationStarted;clearTimeout(job.timeout);
-   if(p.previewOnly){worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;activeJob=null;p.phase='PREVIEW';p.working={...p.working,weave:{...p.working.weave,derived:m.result}};carrierPreview=p.working;renderCanvas();if(p.feedback)setEditFeedback(p.feedback.scope,'working',`PREVIEW · ${p.feedback.label} · RELEASE TO SAVE`);workerEvent('previewed',{seq,requestId,workerMs:m.workerMs,totalMs:performance.now()-p.started});return;}
+
+   validatePreparedPayload(m.payload,m);retainSourceTrace(m.result,m.payload.id,m.sourceTrace);const validationMs=performance.now()-validationStarted;clearTimeout(job.timeout);
+   if(p.previewOnly){worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;activeJob=null;p.phase='PREVIEW';p.working={...p.working,weave:{...p.working.weave,derived:m.result}};carrierPreview=p.working;renderCanvas();if(p.feedback)setEditFeedback(p.feedback.scope,'working',`PREVIEW · ${p.feedback.label} · RELEASE TO SAVE`);workerEvent('previewed',{seq,requestId,workerMs:m.workerMs,totalMs:performance.now()-p.started});return;}
  p.phase='ACCEPTING';status('UPDATING WEAVE — APPLYING THE LATEST RESULT.');
-
+
    if(performance.now()-p.started>750)throw typedError('completion-timeout','Certified influence computation exceeded the 750 ms completion maximum.');
-
+
    const before=project().working,nextWorking={...p.working,weave:{...p.working.weave,derived:m.result}},updatedProject=p.projectUpdate?copyProjectForEdit(p.projectUpdate):copyProjectForEdit(project());updatedProject.working=nextWorking;const committedProject=p.saveWeaveName?saveWeaveStudy(updatedProject,p.saveWeaveName,true,true).project:updatedProject,nextWorkspace={...workspace,projects:workspace.projects.map(x=>x.id===workspace.activeProjectId?committedProject:x)};if(activeJob!==job||pending!==p)return;
-
-   workspace=nextWorkspace;acceptedVersion++;carrierPreview=null;retainSourceTrace(project().working.weave.derived,m.payload.id,m.sourceTrace);const historyStarted=performance.now();history().recordImmutable(before);const historyMs=performance.now()-historyStarted;weaveDerivationCount++;worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;activeJob=null;pending=null;const renderStarted=performance.now();if(p.projectUpdate&&p.working.carrier?.kind===STITCH_SOURCE){renderStitchControls(project().working.carrier);renderCanvas();}renderR1BState(true);if(p.projectUpdate){renderBoards();renderSavedChoices();if(before.carrier?.id!==nextWorking.carrier?.id){renderWeaveControls();renderCanvas();}}renderProjectSummary();if(p.feedback)setEditFeedback(p.feedback.scope,'applied',`APPLIED · BACKUP PENDING · ${p.feedback.label}`);status(`CERTIFIED CHANGE APPLIED · ${m.workerMs.toFixed(1)} MS WORKER · BACKUP PENDING.`);autosave.accept({workspace:nextWorkspace,payload:m.payload},{feedback:p.feedback,started:p.started,savedStatus:`CERTIFIED CHANGE SAVED · ${m.workerMs.toFixed(1)} MS WORKER.`});await new Promise(resolve=>requestAnimationFrame(()=>resolve()));const renderMs=performance.now()-renderStarted,totalMs=performance.now()-p.started,phases={dispatchMs:(m.timing?.receivedEpoch||performance.timeOrigin+job.started)-(performance.timeOrigin+p.started),deriveMs:m.timing?.deriveMs,encodeMs:m.timing?.encodeMs,transferMs:receivedEpoch-(m.timing?.postedEpoch||receivedEpoch),validationMs,historyMs,renderMs};
-
+
+   workspace=nextWorkspace;acceptedVersion++;carrierPreview=null;retainSourceTrace(project().working.weave.derived,m.payload.id,m.sourceTrace);const historyStarted=performance.now();history().recordImmutable(before);const historyMs=performance.now()-historyStarted;weaveDerivationCount++;worker.onmessage=null;worker.onerror=null;idleDerivationWorker=worker;activeJob=null;pending=null;const renderStarted=performance.now();if(p.projectUpdate&&p.working.carrier?.kind===STITCH_SOURCE){renderStitchControls(project().working.carrier);renderCanvas();}renderR1BState(true);if(p.projectUpdate){renderBoards();renderSavedChoices();if(before.carrier?.id!==nextWorking.carrier?.id){syncBoundaryName();syncCarrierName();syncPatternEditors();renderWeaveControls();renderCanvas();fit();}}renderProjectSummary();if(p.feedback)setEditFeedback(p.feedback.scope,'applied',`APPLIED · BACKUP PENDING · ${p.feedback.label}`);status(`CERTIFIED CHANGE APPLIED · ${m.workerMs.toFixed(1)} MS WORKER · BACKUP PENDING.`);autosave.accept({workspace:nextWorkspace,payload:m.payload},{feedback:p.feedback,started:p.started,savedStatus:`CERTIFIED CHANGE SAVED · ${m.workerMs.toFixed(1)} MS WORKER.`});await new Promise(resolve=>requestAnimationFrame(()=>resolve()));const renderMs=performance.now()-renderStarted,totalMs=performance.now()-p.started,phases={dispatchMs:(m.timing?.receivedEpoch||performance.timeOrigin+job.started)-(performance.timeOrigin+p.started),deriveMs:m.timing?.deriveMs,encodeMs:m.timing?.encodeMs,transferMs:receivedEpoch-(m.timing?.postedEpoch||receivedEpoch),validationMs,historyMs,renderMs};
+
    workerEvent('accepted',{seq,requestId,workerMs:m.workerMs,totalMs,acceptedVersion,phases,plan:p.plan,reused:m.reused||[]});if(totalMs>750){workerEvent('performance-failed',{seq,requestId,totalMs,phases});status(`R1D COMPLETION-TIMEOUT: result applied at ${totalMs.toFixed(1)} ms, above 750 ms; backup remains pending.`,true);return}
-
-  }catch(error){clearTimeout(deadlineTimer);if(!error.code)error.code='commit';fail(error)}
-
- };
-
- job.timeout=setTimeout(()=>fail(typedError('completion-timeout','Certified influence computation exceeded the 750 ms completion maximum.')),Math.max(0,750-(performance.now()-p.started)));worker.postMessage(message);
-
-}
-
+
+  }catch(error){clearTimeout(deadlineTimer);if(!error.code)error.code='commit';fail(error)}
+
+ };
+
+ job.timeout=setTimeout(()=>fail(typedError('completion-timeout','Certified influence computation exceeded the 750 ms completion maximum.')),Math.max(0,750-(performance.now()-p.started)));worker.postMessage(message);
+
+}
+
 async function certifyWorking(working,boardId,validationWorker=null){const w=working.weave;if(!isCertifiedStudy(w))return;const f=influenceOf(w),versions=versionsForWeave(w),identity=w.weaveVersion===ATTRACTOR_VERSIONS.study?(!f?.enabled||f.strength===0||w.generation.tension===100):identityGeneration(w);if(identity&&w.weaveVersion!==STITCH_VERSIONS.study){const expected=refreshWeave(working,boardId).weave.derived;if(canonical(expected)!==canonical(w.derived))throw Error('Saved identity geometry failed validation.');return}const candidate=weaveCalculationInput(readWeaveSource(working,boardId)),input=digest(candidate),seq=++workerSequence,requestId=sessionId+':validate:'+seq;await new Promise((resolve,reject)=>{let worker=validationWorker,owned=false;try{if(!worker){worker=new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'});owned=true}}catch(e){reject(e);return}const finish=(action,value)=>{clearTimeout(timer);worker.onmessage=null;worker.onerror=null;if(owned)worker.terminate();action(value)},timer=setTimeout(()=>{worker.terminate();reject(Error('Saved study validation exceeded 750 ms.'))},750);worker.onerror=e=>finish(reject,Error(e.message||'Saved study worker failed.'));worker.onmessage=e=>{const m=e.data;if(m.type==='failure')finish(reject,typedError(m.error?.code||'validation-worker',`Saved study worker failed: ${m.error?.message||'Unknown worker failure'}`));else if(m.type!=='success'||m.requestId!==requestId||m.candidateInputFingerprint!==input)finish(reject,typedError('validation-protocol','Saved study worker response did not match its validation request.'));else if(canonical(m.result)!==canonical(w.derived))finish(reject,typedError('validation-geometry',`Saved certified geometry failed validation (${w.weaveVersion}, study ${w.studyId}).`));else {try{retainSourceTrace(w.derived,m.payload.id,m.sourceTrace);finish(resolve)}catch(error){finish(reject,error)}}};worker.postMessage({protocolVersion:versions.protocol,workerBuildId:BUILD,sessionId,requestSequence:seq,requestId,boardId,weaveStudyId:w.studyId,baseCommittedFingerprint:'validation',candidateInputFingerprint:input,algorithmVersions:{...versions},candidate})});}
-
+
 async function certifyWorkspace(value){validateTrustedWorkspace(value);let worker;try{worker=new Worker(new URL('./r1b-worker.mjs',import.meta.url),{type:'module'});for(const p of value.projects){await certifyWorking(p.working,p.id,worker);for(const entry of p.weaveStudies)for(const revision of entry.revisions)await certifyWorking(revision.working,p.id,worker)}return value}finally{worker?.terminate()}}
-
+
 function editWorking(next,label,options={}){editGesture.clear();return updateWorking(next,label,options);}
 
 function updateWorking(next,label,options={}){
@@ -212,150 +221,156 @@ function updateWorking(next,label,options={}){
  acceptWorkspace(changed,{before,feedback:options.feedback,savedStatus:label});render();if(options.feedback)setEditFeedback(options.feedback.scope,'applied',`APPLIED · BACKUP PENDING · ${options.feedback.label}`);status(`${label} BACKUP PENDING.`);return Promise.resolve();
 }
 
-async function setBoundary(boundary,label){const found=findRevision(project(),project().working.sourceRevisionId);if(!found){await editWorking({...clone(project().working),boundary},label);return}const base=clone(project());base.working.boundary=boundary;const result=saveBoundaryAndUpdatePatterns(base,found.entry.name),saveWeaveName=result.project.working.weave?currentWeaveName(result.project.working,result.project):null;await editWorking(result.project.working,`${label} SAVED AND ATTACHED PATTERNS UPDATED.`,{projectUpdate:result.project,saveWeaveName});}
-
-function syncDisplayPresets(){const name=displayPresetName(display),labels={'derived-only':'DISTORTED ONLY','compare':'SOURCE + DISTORTED','construction':'CARRIER CONSTRUCTION',custom:'CUSTOM LAYER VIEW'};for(const [id,preset] of [['display-derived-only','derived-only'],['display-compare','compare'],['display-construction','construction']])$(id).classList.toggle('active',name===preset);document.querySelectorAll('[data-display-preset]').forEach(button=>button.classList.toggle('active',button.dataset.displayPreset===name));document.querySelectorAll('[data-display-key]').forEach(input=>input.checked=display[input.dataset.displayKey]===true);$('display-mode-status').textContent=labels[name];}
-
-function saveView(){try{localStorage.setItem(VIEW_KEY,JSON.stringify(display));}catch{}document.body.dataset.theme=display.theme;document.querySelectorAll('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme===display.theme));for(const [id,key] of [['boundary','boundary'],['grid','grid'],['source-lattice','sourceLattice'],['original-grid','originalGrid'],['weave-source','weaveSource'],['weave-derived','weaveDerived'],['attractor','attractor']]){const input=$(`show-${id}`);if(input)input.checked=display[key];}syncDisplayPresets();renderCanvas();}
-
-function element(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
-
-function readableNumber(value){return Number(value).toLocaleString(undefined,{maximumFractionDigits:3,useGrouping:false});}
-
-function syncSlider(id,value,limits){const model=$(id),range=$(`${id}-range`),output=$(`${id}-value`);if(limits){range.min=limits.min;range.max=limits.max;range.step=limits.step;}model.value=value;if(document.activeElement!==range)range.value=value;if(output)output.value=readableNumber(value);}
-
-function boundarySliderLimits(boundary){const b=bounds(boundary.points),extent=Math.max(b.maxX-b.minX,b.maxY-b.minY,1),pad=extent;return{x:{min:b.minX-pad,max:b.maxX+pad,step:extent/500},y:{min:b.minY-pad,max:b.maxY+pad,step:extent/500},radius:{min:Math.max(extent/500,0.001),max:extent*2,step:extent/500}};}
-
-function renderVertexControls(boundary){const points=vertexPreview?.points||boundary.points;if(selected===null||selected<0||selected>=points.length)selected=0;const index=$('vertex-index-range');index.max=points.length;index.value=selected+1;$('vertex-index-value').value=`${selected+1} / ${points.length}`;const limits=boundarySliderLimits({points}),point=points[selected];for(const axis of ['x','y']){const control=$(`vertex-${axis}-range`),limit=limits[axis];control.min=limit.min;control.max=limit.max;control.step=limit.step;if(document.activeElement!==control)control.value=point[axis];$(`vertex-${axis}-value`).value=readableNumber(point[axis]);}}
-
-function itemActions(type,item){const box=element('div','tree-actions');for(const [action,label] of [['rename','RENAME'],['duplicate','COPY'],['delete','DELETE']]){const b=element('button','tree-action',label);b.type='button';b.dataset.libraryAction=action;b.dataset.libraryType=type;b.dataset.libraryId=item.id;b.title=`${action} ${item.name}`;box.append(b);}return box;}
-
-function setTreeOpen(details,key,fallback){details.dataset.treeKey=key;details.open=treeOpenState.has(key)?treeOpenState.get(key):fallback;return details;}
-
-function treeIdentity(type){return type==='boundary'?'BOUNDARY':type==='pattern'?'WEAVE PATTERN':'INFLUENCED GRID';}
-
-function treeEntry(entry,type,activeId,children=[]){const active=entry.latestRevisionId===activeId,details=setTreeOpen(element('details',`tree-node tree-${type}`),`${type}:${entry.id}`,children.length>0||active),summary=element('summary','tree-node-summary'),identity=element('div','tree-node-identity'),kind=element('b','tree-node-kind',treeIdentity(type)),label=element('button',`tree-node-label${active?' active':''}`,entry.name),count=element('div','tree-node-count',active?'OPEN NOW':children.length?`${children.length} SAVED RESULT${children.length===1?'':'S'}`:'SELECT TO OPEN');label.type='button';label.dataset[type==='boundary'?'revision':type==='pattern'?'carrierRevision':'weaveRevision']=entry.latestRevisionId;identity.append(kind,label,count);summary.append(identity,itemActions(type,entry));details.append(summary,...children);return details;}
-
-function libraryRow({name,kind,count='',active=false,dataset={},thumbnail=''}){const button=element('button',`library-row${active?' active':''}`);button.type='button';for(const [key,value] of Object.entries(dataset))button.dataset[key]=value;const mark=element('span','library-select',active?'■':'□'),preview=element('span','library-thumb');preview.innerHTML=thumbnail||'<span aria-hidden="true">◇</span>';const copy=element('span','library-row-copy'),title=element('b','',name),meta=element('small','',kind);copy.append(title,meta);button.append(mark,preview,copy,element('span','library-count',String(count)));return button;}
+async function setBoundary(boundary,label){const found=findRevision(project(),project().working.sourceRevisionId);if(!found){await editWorking({...clone(project().working),boundary},label);return}const base=clone(project());base.working.boundary=boundary;const result=saveBoundaryAndUpdatePatterns(base,found.entry.name),saveWeaveName=result.project.working.weave?currentWeaveName(result.project.working,result.project):null;await editWorking(result.project.working,`${label} SAVED AND ATTACHED PATTERNS UPDATED.`,{projectUpdate:result.project,saveWeaveName});}
+
+function syncDisplayPresets(){const name=displayPresetName(display),labels={'derived-only':'DISTORTED ONLY','compare':'SOURCE + DISTORTED','construction':'CARRIER CONSTRUCTION',custom:'CUSTOM LAYER VIEW'};for(const [id,preset] of [['display-derived-only','derived-only'],['display-compare','compare'],['display-construction','construction']])$(id).classList.toggle('active',name===preset);document.querySelectorAll('[data-display-preset]').forEach(button=>button.classList.toggle('active',button.dataset.displayPreset===name));document.querySelectorAll('[data-display-key]').forEach(input=>input.checked=display[input.dataset.displayKey]===true);$('display-mode-status').textContent=labels[name];}
+
+function saveView(){try{localStorage.setItem(VIEW_KEY,JSON.stringify(display));}catch{}document.body.dataset.theme=display.theme;document.querySelectorAll('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme===display.theme));for(const [id,key] of [['boundary','boundary'],['grid','grid'],['source-lattice','sourceLattice'],['original-grid','originalGrid'],['weave-source','weaveSource'],['weave-derived','weaveDerived'],['attractor','attractor']]){const input=$(`show-${id}`);if(input)input.checked=display[key];}syncDisplayPresets();renderCanvas();}
+
+function element(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
+
+function readableNumber(value){return Number(value).toLocaleString(undefined,{maximumFractionDigits:3,useGrouping:false});}
+
+function syncSlider(id,value,limits){const model=$(id),range=$(`${id}-range`),output=$(`${id}-value`);if(limits){range.min=limits.min;range.max=limits.max;range.step=limits.step;}model.value=value;if(document.activeElement!==range)range.value=value;if(output)output.value=readableNumber(value);}
+
+function boundarySliderLimits(boundary){const b=bounds(boundary.points),extent=Math.max(b.maxX-b.minX,b.maxY-b.minY,1),pad=extent;return{x:{min:b.minX-pad,max:b.maxX+pad,step:extent/500},y:{min:b.minY-pad,max:b.maxY+pad,step:extent/500},radius:{min:Math.max(extent/500,0.001),max:extent*2,step:extent/500}};}
+
+function renderVertexControls(boundary){const points=vertexPreview?.points||boundary.points;if(selected===null||selected<0||selected>=points.length)selected=0;const index=$('vertex-index-range');index.max=points.length;index.value=selected+1;$('vertex-index-value').value=`${selected+1} / ${points.length}`;const limits=boundarySliderLimits({points}),point=points[selected];for(const axis of ['x','y']){const control=$(`vertex-${axis}-range`),limit=limits[axis];control.min=limit.min;control.max=limit.max;control.step=limit.step;if(document.activeElement!==control)control.value=point[axis];$(`vertex-${axis}-value`).value=readableNumber(point[axis]);}}
+
+function itemActions(type,item){const box=element('div','tree-actions');for(const [action,label] of [['rename','RENAME'],['duplicate','COPY'],['delete','DELETE']]){const b=element('button','tree-action',label);b.type='button';b.dataset.libraryAction=action;b.dataset.libraryType=type;b.dataset.libraryId=item.id;b.title=`${action} ${item.name}`;box.append(b);}return box;}
+
+function setTreeOpen(details,key,fallback){details.dataset.treeKey=key;details.open=treeOpenState.has(key)?treeOpenState.get(key):fallback;return details;}
+
+function treeIdentity(type){return type==='boundary'?'BOUNDARY':type==='pattern'?'WEAVE PATTERN':'INFLUENCED GRID';}
+
+function treeEntry(entry,type,activeId,children=[]){const active=entry.latestRevisionId===activeId,details=setTreeOpen(element('details',`tree-node tree-${type}`),`${type}:${entry.id}`,children.length>0||active),summary=element('summary','tree-node-summary'),identity=element('div','tree-node-identity'),kind=element('b','tree-node-kind',treeIdentity(type)),label=element('button',`tree-node-label${active?' active':''}`,entry.name),count=element('div','tree-node-count',active?'OPEN NOW':children.length?`${children.length} SAVED RESULT${children.length===1?'':'S'}`:'SELECT TO OPEN');label.type='button';label.dataset[type==='boundary'?'revision':type==='pattern'?'carrierRevision':'weaveRevision']=entry.latestRevisionId;identity.append(kind,label,count);summary.append(identity,itemActions(type,entry));details.append(summary,...children);return details;}
+
+function weaveLibraryRow(entry,{kind,active,dataset}){const identity=readWeaveIdentity(entry),note=generatorRecordNote(entry.revisions.at(-1));return libraryRow({name:identity.name||identity.weaveId,kind,idLabel:shortWeaveId(identity.weaveId),created:formatWeaveCreatedDate(identity.createdAt),note,count:familyNames(entry.revisions.at(-1).carrier).length,active,dataset:{...dataset,weaveId:identity.weaveId},thumbnail:weaveThumbnail(entry),hint:identity.weaveId,openRevision:entry.latestRevisionId});}
+function showRecordNotices(revision){const box=$('record-completeness');if(!box)return;const note=revision?generatorRecordNote(revision):'';box.hidden=!note;box.textContent=note;}
+function libraryRow({name,kind,count='',active=false,dataset={},thumbnail='',hint='',idLabel='',created='',note='',openRevision=''}){const row=element(openRevision?'div':'button',`library-row${active?' active':''}`);if(!openRevision)row.type='button';if(hint)row.title=hint;for(const [key,value] of Object.entries(dataset))row.dataset[key]=value;const mark=element('span','library-select',active?'■':'□'),preview=element('span','library-thumb');preview.innerHTML=thumbnail||'<span aria-hidden="true">◇</span>';const copy=element('span','library-row-copy'),title=element('b','',name),meta=element('small','',kind);if(idLabel){const line=element('span','library-meta');line.append(meta,element('span','library-weave-id',idLabel));copy.append(title,line);if(created)copy.append(element('span','library-created',created));if(note)copy.append(element('span','library-record-note',note));}else copy.append(title,meta);if(openRevision){const open=element('button','library-open','OPEN IN GENERATOR');open.type='button';open.dataset.weaveOpen='1';open.dataset.carrierRevision=openRevision;copy.append(open);row.append(mark,preview,copy);}else row.append(mark,preview,copy,element('span','library-count',String(count)));return row;}
 
 function boundaryThumbnail(entry){const points=entry.revisions.at(-1).boundary.points,b=bounds(points),width=b.maxX-b.minX||1,height=b.maxY-b.minY||1,coords=points.map(point=>`${4+(point.x-b.minX)/width*44},${34-(point.y-b.minY)/height*30}`).join(' ');return `<svg viewBox="0 0 52 38" aria-hidden="true"><polygon points="${coords}"/></svg>`;}
 
-function weaveThumbnail(pattern){const revision=pattern.revisions.at(-1),families=familyNames(revision.carrier),lines=families.slice(0,4).map((_,index)=>{const y=8+index*7;return `<path d="M3 ${y+8} L20 ${y-3} L49 ${y+8}"/>`;}).join('');return `<svg viewBox="0 0 52 38" aria-hidden="true">${lines}</svg>`;}
+const weaveThumbnailCache=new Map();
+function weaveThumbnail(pattern){const revision=pattern.revisions.at(-1);if(!revision?.boundary||!revision.carrier)return '';const field=weaveResultForPattern(project(),pattern)?.revisions.at(-1)?.working||null,key=`${revision.id}:${field?.weave?.studyId||'pattern'}`;const cached=weaveThumbnailCache.get(key);if(cached)return cached;const markup=weavePreviewMarkup(revision,field);weaveThumbnailCache.set(key,markup);if(weaveThumbnailCache.size>48)weaveThumbnailCache.delete(weaveThumbnailCache.keys().next().value);return markup;}
+function weavePreviewMarkup(revision,working){try{const stored=working?.weave?.derived?.strands,strands=stored?.length?stored:(deriveCarrier(revision.boundary,revision.carrier,'library-thumb').paths||[]).filter(path=>path.selected!==false).map(path=>({family:path.family||path.identity?.roleId,fragments:(path.intervals||[]).map(interval=>({points:interval.points||[interval.start,interval.end].filter(Boolean)}))}));return weaveAppearanceMarkup(strands,working?.threadAppearance,working?.weave?influencesOf(working.weave):[]);}catch{return '';}}
 
-function renderBoards(){const p=project(),selection=activeLibraryItems(p),projects=$('board-list'),boundaries=$('boundary-list'),weaves=$('weave-list'),templates=$('library-template-list'),patterns=patternsForBoundary(p,selection.boundary),library=reusableWeaves(p);libraryTemplateRevisionId=latestReusableRevision(p,libraryTemplateRevisionId)||selection.pattern?.latestRevisionId||null;projects.replaceChildren(...workspace.projects.map(board=>libraryRow({name:board.name,kind:'PROJECT',count:board.boundaries.length,active:board.id===workspace.activeProjectId,dataset:{board:board.id}})));boundaries.replaceChildren(...p.boundaries.map(entry=>libraryRow({name:entry.name,kind:'BOUNDARY',count:patternsForBoundary(p,entry).length,active:entry.id===selection.boundary?.id,dataset:{revision:entry.latestRevisionId},thumbnail:boundaryThumbnail(entry)})));weaves.replaceChildren(...patterns.map(entry=>libraryRow({name:entry.name,kind:weaveResultForPattern(p,entry)?'APPLIED WEAVE · FIELD FORCES SAVED':'APPLIED WEAVE',count:familyNames(entry.revisions.at(-1).carrier).length,active:entry.id===selection.pattern?.id,dataset:{carrierRevision:entry.latestRevisionId},thumbnail:weaveThumbnail(entry)})));templates.replaceChildren(...library.map(({pattern,boundaryName})=>libraryRow({name:pattern.name,kind:`REUSABLE · FROM ${boundaryName}`,count:familyNames(pattern.revisions.at(-1).carrier).length,active:pattern.latestRevisionId===libraryTemplateRevisionId,dataset:{templateRevision:pattern.latestRevisionId},thumbnail:weaveThumbnail(pattern)})));$('library-project-name').textContent=p.name;$('library-boundary-count').textContent=String(p.boundaries.length).padStart(2,'0');$('library-weave-count').textContent=String(patterns.length).padStart(2,'0');$('library-template-count').textContent=String(library.length).padStart(2,'0');$('library-apply-weave').disabled=!libraryTemplateRevisionId||!selection.boundary;$('context-project').textContent=p.name;$('context-boundary').textContent=selection.boundary?.name||'CHOOSE BOUNDARY';$('context-weave').textContent=selection.pattern?.name||'CHOOSE WEAVE';}
-
-function renderSavedChoices(){const p=project(),boundarySelect=$('saved-boundary'),priorBoundary=boundarySelect.value;$('saved-boundary-picker').hidden=!p.boundaries.length;boundarySelect.replaceChildren(...p.boundaries.map(entry=>{const option=document.createElement('option');option.value=entry.latestRevisionId;option.textContent=entry.name;return option;}));boundarySelect.value=[...boundarySelect.options].some(option=>option.value===priorBoundary)?priorBoundary:p.working.sourceRevisionId||p.boundaries[0]?.latestRevisionId||'';const group=$('saved-pattern-presets'),priorPattern=$('stitch-preset').value;group.replaceChildren(...p.carrierStudies.map(entry=>{const option=document.createElement('option');option.value='saved:'+entry.latestRevisionId;option.textContent=entry.name;return option;}));if([...$('stitch-preset').options].some(option=>option.value===priorPattern))$('stitch-preset').value=priorPattern;}
-
-function render(){
-
+function renderBoards(){const p=project(),selection=activeLibraryItems(p),projects=$('board-list'),boundaries=$('boundary-list'),weaves=$('weave-list'),templates=$('library-template-list'),patterns=patternsForBoundary(p,selection.boundary),library=reusableWeaves(p);libraryTemplateRevisionId=latestReusableRevision(p,libraryTemplateRevisionId)||selection.pattern?.latestRevisionId||null;projects.replaceChildren(...workspace.projects.map(board=>libraryRow({name:board.name,kind:'PROJECT',count:board.boundaries.length,active:board.id===workspace.activeProjectId,dataset:{board:board.id}})));boundaries.replaceChildren(...p.boundaries.map(entry=>libraryRow({name:entry.name,kind:'BOUNDARY',count:patternsForBoundary(p,entry).length,active:entry.id===selection.boundary?.id,dataset:{revision:entry.latestRevisionId},thumbnail:boundaryThumbnail(entry)})));weaves.replaceChildren(...patterns.map(entry=>weaveLibraryRow(entry,{kind:weaveResultForPattern(p,entry)?'APPLIED WEAVE · FIELD FORCES SAVED':'APPLIED WEAVE',active:entry.id===selection.pattern?.id,dataset:{carrierRevision:entry.latestRevisionId}})));templates.replaceChildren(...library.map(({pattern,boundaryName})=>weaveLibraryRow(pattern,{kind:`REUSABLE · FROM ${boundaryName}`,active:pattern.latestRevisionId===libraryTemplateRevisionId,dataset:{templateRevision:pattern.latestRevisionId}})));$('library-project-name').textContent=p.name;$('library-boundary-count').textContent=String(p.boundaries.length).padStart(2,'0');$('library-weave-count').textContent=String(patterns.length).padStart(2,'0');$('library-template-count').textContent=String(library.length).padStart(2,'0');$('library-apply-weave').disabled=!libraryTemplateRevisionId||!selection.boundary;$('context-project').textContent=p.name;$('context-boundary').textContent=selection.boundary?.name||'CHOOSE BOUNDARY';$('context-weave').textContent=selection.pattern?.name||'CHOOSE WEAVE';$('context-weave').title=selection.pattern?readWeaveIdentity(selection.pattern).weaveId:'';}
+
+function renderSavedChoices(){const p=project(),boundarySelect=$('saved-boundary'),priorBoundary=boundarySelect.value;$('saved-boundary-picker').hidden=!p.boundaries.length;boundarySelect.replaceChildren(...p.boundaries.map(entry=>{const option=document.createElement('option');option.value=entry.latestRevisionId;option.textContent=entry.name;return option;}));boundarySelect.value=[...boundarySelect.options].some(option=>option.value===priorBoundary)?priorBoundary:p.working.sourceRevisionId||p.boundaries[0]?.latestRevisionId||'';const group=$('saved-pattern-presets'),priorPattern=$('stitch-preset').value;group.replaceChildren(...p.carrierStudies.map(entry=>{const option=document.createElement('option');option.value='saved:'+entry.latestRevisionId;option.textContent=entry.name;return option;}));if([...$('stitch-preset').options].some(option=>option.value===priorPattern))$('stitch-preset').value=priorPattern;}
+
+function syncPatternEditors(){const carrier=project().working.carrier;if(!carrier||carrier.kind===STITCH_SOURCE)return;const names=familyEntries().map(entry=>entry.key);if(!names.includes(activePatternFamily))activePatternFamily=names[0];renderPatternFamilyTabs(carrier);const f=carrier.families[activePatternFamily],angle=carrier.generatorVersion==='rect-v1'?carrier.angleDegrees+(activePatternFamily==='B'?90:0):f.angleDegrees;for(const [id,value] of [['family-spacing',f.spacing],['family-angle',angle],['family-offset',f.offset],['family-density',f.density]])syncSlider(id,value);const d=deriveWorking();if(d?.diagnostics?.counts)$('carrier-counts').textContent=names.map(n=>`${familyLabel(n)} ${d.diagnostics.counts[n].retained}/${d.diagnostics.counts[n].available} RETAINED`).join(' · ');$('add-pattern-family').disabled=names.length>=FAMILY_LIMIT;$('remove-pattern-family').disabled=names.length<=2;}
+
+function render(){
+
   fullRenderCount++;if(!pending)resetEditFeedback();threadPreview=null;fieldPresentationPreview=null;renderInterlaceControls();renderThreadControls();renderBoards();renderSavedChoices();renderWeaveControls();const b=project().working.boundary;
-
-  const p=project();renderProjectSummary();
-
-  $('boundary-summary').textContent=`${b.points.length} VERTICES · AREA ${Math.abs(signedArea(b.points)).toLocaleString(undefined,{maximumFractionDigits:3})} U²`;
-
-  $('boundary-source').hidden=!b.source;$('boundary-source').textContent=b.source?`SOURCE ${b.source.filename} · SVG · Y NEGATED${b.source.viewBox?` · VIEWBOX ${b.source.viewBox}`:''}`:'';
-
-  $('coordinates').value=b.points.map(p=>`${p.x}, ${p.y}`).join('\n');
-
-  renderVertexControls(b);
-
-  $('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;
-
-  const source=findRevision(project(),project().working.sourceRevisionId),carrierSource=findCarrierRevision(project(),project().working.carrierSourceRevisionId);
-
-  if(carrierSource)$('carrier-name').value=carrierSource.entry.name;
-
-  const changed=carrierSource?JSON.stringify({boundary:carrierSource.revision.boundary,carrier:carrierSource.revision.carrier})!==JSON.stringify({boundary:b,carrier:project().working.carrier}):(!source||JSON.stringify(source.revision.boundary)!==JSON.stringify(b)||project().working.carrier!==null);
-
-  $('drawing-title').textContent=`${project().name}${changed?' · UNSAVED CHANGES':''}`;renderCanvas();
-
-  const carrier=project().working.carrier;$('carrier-controls').hidden=!carrier||carrier.kind===STITCH_SOURCE;renderStitchControls(carrier);ensureFamilyIdentityControls();
-
-  if(carrier&&carrier.kind!==STITCH_SOURCE){const names=familyEntries().map(entry=>entry.key);if(!names.includes(activePatternFamily))activePatternFamily=names[0];renderPatternFamilyTabs(carrier);const f=carrier.families[activePatternFamily],angle=carrier.generatorVersion==='rect-v1'?carrier.angleDegrees+(activePatternFamily==='B'?90:0):f.angleDegrees;for(const [id,value] of [['family-spacing',f.spacing],['family-angle',angle],['family-offset',f.offset],['family-density',f.density]])syncSlider(id,value);const d=deriveWorking();$('carrier-counts').textContent=names.map(n=>`${familyLabel(n)} ${d.diagnostics.counts[n].retained}/${d.diagnostics.counts[n].available} RETAINED`).join(' · ');$('add-pattern-family').disabled=names.length>=FAMILY_LIMIT;$('remove-pattern-family').disabled=names.length<=2;}
-
-  updateCanvasLegend();
-
-}
-
-
-
-function updateCanvasLegend(){const p=project(),w=p.working.weave,fields=influencesOf(pending?.working.weave||w),carrier=p.working.carrier?deriveWorking():null,source=carrier?carrier.paths.filter(path=>path.selected).length:0,derived=w?Object.values(w.derived.diagnostics.counts).reduce((a,b)=>a+b,0):0;$('legend-source-count').textContent=String(source);$('legend-derived-count').textContent=String(derived);$('legend-guide-state').textContent=fields.length&&display.attractor?`${fields.length} FIELD${fields.length===1?'':'S'}`:'OFF';}
-
-
-
-function familyEntries(working=project().working){return working.carrier?orderedFamilies(working.carrier,working.familyCatalog):[];}
-function familyLabel(key,working=project().working){return familyEntries(working).find(entry=>entry.key===key)?.label||key;}
-function isolatedFamilyKey(working=project().working){return familyEntries(working).find(entry=>entry.id===display.isolatedFamilyId)?.key||null;}
-
-function ensureFamilyIdentityControls(){if($('family-identity'))return;const controls=$('carrier-controls'),counts=$('carrier-counts'),details=element('details','subsection family-identity');details.id='family-identity';const heading=element('summary','', 'FAMILY DETAILS');heading.append(element('span','','+'));const box=element('div','section-body'),label=document.createElement('label');label.htmlFor='family-label';label.textContent='FAMILY NAME';const input=document.createElement('input');input.id='family-label';input.maxLength=40;const identity=element('p','micro');identity.id='family-id';const actions=element('div','feature-actions');for(const [id,text]of [['family-move-left','MOVE LEFT'],['family-move-right','MOVE RIGHT']]){const button=element('button','',text);button.id=id;actions.append(button);}const exportLabel=element('label','check'),exportBox=document.createElement('input');exportBox.id='family-export';exportBox.type='checkbox';exportLabel.append(exportBox,document.createTextNode(' INCLUDE IN FUTURE FAMILY EXPORTS'));const isolate=element('button','','ISOLATE THIS FAMILY');isolate.id='family-isolate';isolate.setAttribute('aria-pressed','false');const summary=element('p','micro');summary.id='family-export-summary';box.append(label,input,identity,actions,exportLabel,isolate,summary);details.append(heading,box);counts.insertAdjacentElement('afterend',details);input.onchange=()=>attempt(()=>commitFamilyMetadata({label:input.value},'FAMILY RENAMED AND SAVED.'));exportBox.onchange=()=>attempt(()=>commitFamilyMetadata({includeInExport:exportBox.checked},'FAMILY EXPORT SETTING SAVED.'));$('family-move-left').onclick=()=>attempt(()=>commitFamilyMetadata({move:-1},'FAMILY ORDER UPDATED AND SAVED.'));$('family-move-right').onclick=()=>attempt(()=>commitFamilyMetadata({move:1},'FAMILY ORDER UPDATED AND SAVED.'));isolate.onclick=()=>{const entry=familyEntry(project().working.carrier,project().working.familyCatalog,activePatternFamily);display.isolatedFamilyId=display.isolatedFamilyId===entry.id?null:entry.id;saveView();render();status(display.isolatedFamilyId?`${entry.label} ISOLATED. GEOMETRY UNCHANGED.`:'ALL FAMILIES SHOWN.');};}
-
-function renderFamilyTabs(containerId,names,active,onSelect){const box=$(containerId),labels=new Map(familyEntries().map(entry=>[entry.key,entry.label]));box.replaceChildren();for(const name of names){const button=element('button',name===active?'active':'',labels.get(name)||(project().working.carrier?.kind===STITCH_SOURCE?`ROLE ${name}`:`FAMILY ${name}`));button.type='button';button.dataset.family=name;button.title=`ENGINE KEY ${name}`;button.onclick=()=>onSelect(name);box.append(button);}}
-
-function renderPatternFamilyTabs(carrier){const entries=familyEntries(),names=entries.map(entry=>entry.key);renderFamilyTabs('pattern-family-tabs',names,activePatternFamily,name=>{activePatternFamily=name;render();status(`EDITING ${familyLabel(name)}.`);});const entry=entries.find(item=>item.key===activePatternFamily);if(!entry)return;$('family-label').value=entry.label;$('family-id').textContent=`PERMANENT ID ${entry.id} · ENGINE KEY ${entry.key}`;$('family-export').checked=entry.includeInExport;const index=indexDerivedFamilies(project().working),view=index.families.find(item=>item.id===entry.id);$('family-export-summary').textContent=view?.strandCount?`EXPORT-READY VIEW · ${view.strandCount} STRANDS · ${view.fragmentCount} FRAGMENTS · ${view.segmentCount} SEGMENTS`:'EXPORT-READY VIEW · SAVES WITH THIS FAMILY';$('family-move-left').disabled=entry.order===0;$('family-move-right').disabled=entry.order===entries.length-1;const isolated=display.isolatedFamilyId===entry.id;$('family-isolate').textContent=isolated?'SHOW ALL FAMILIES':'ISOLATE THIS FAMILY';$('family-isolate').setAttribute('aria-pressed',String(isolated));}
-
+
+  const p=project();renderProjectSummary();
+
+  $('boundary-summary').textContent=`${b.points.length} VERTICES · AREA ${Math.abs(signedArea(b.points)).toLocaleString(undefined,{maximumFractionDigits:3})} U²`;
+
+  $('boundary-source').hidden=!b.source;$('boundary-source').textContent=b.source?`SOURCE ${b.source.filename} · SVG · Y NEGATED${b.source.viewBox?` · VIEWBOX ${b.source.viewBox}`:''}`:'';
+
+  $('coordinates').value=b.points.map(p=>`${p.x}, ${p.y}`).join('\n');
+
+  renderVertexControls(b);
+
+  $('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;
+
+  const source=findRevision(project(),project().working.sourceRevisionId),carrierSource=findCarrierRevision(project(),project().working.carrierSourceRevisionId);
+
+  if(carrierSource)$('carrier-name').value=carrierSource.entry.name;showRecordNotices(carrierSource?.revision);
+
+  const changed=carrierSource?JSON.stringify({boundary:carrierSource.revision.boundary,carrier:carrierSource.revision.carrier})!==JSON.stringify({boundary:b,carrier:project().working.carrier}):(!source||JSON.stringify(source.revision.boundary)!==JSON.stringify(b)||project().working.carrier!==null);
+
+  $('drawing-title').textContent=`${project().name}${changed?' · UNSAVED CHANGES':''}`;renderCanvas();
+
+  const carrier=project().working.carrier;$('carrier-controls').hidden=!carrier||carrier.kind===STITCH_SOURCE;if(!savingWeave)$('save-carrier').disabled=!carrier;renderStitchControls(carrier);ensureFamilyIdentityControls();
+
+  if(carrier&&carrier.kind!==STITCH_SOURCE)syncPatternEditors();
+
+  updateCanvasLegend();
+
+}
+
+
+
+function updateCanvasLegend(){const p=project(),w=p.working.weave,fields=influencesOf(pending?.working.weave||w),carrier=p.working.carrier?deriveWorking():null,source=carrier?carrier.paths.filter(path=>path.selected).length:0,derived=w?.derived?.diagnostics?Object.values(w.derived.diagnostics.counts).reduce((a,b)=>a+b,0):0;$('legend-source-count').textContent=String(source);$('legend-derived-count').textContent=String(derived);$('legend-guide-state').textContent=fields.length&&display.attractor?`${fields.length} FIELD${fields.length===1?'':'S'}`:'OFF';}
+
+
+
+function familyEntries(working=project().working){return working.carrier?orderedFamilies(working.carrier,working.familyCatalog):[];}
+function familyLabel(key,working=project().working){return familyEntries(working).find(entry=>entry.key===key)?.label||key;}
+function isolatedFamilyKey(working=project().working){return familyEntries(working).find(entry=>entry.id===display.isolatedFamilyId)?.key||null;}
+
+function ensureFamilyIdentityControls(){if($('family-identity'))return;const controls=$('carrier-controls'),counts=$('carrier-counts'),details=element('details','subsection family-identity');details.id='family-identity';const heading=element('summary','', 'FAMILY DETAILS');heading.append(element('span','','+'));const box=element('div','section-body'),label=document.createElement('label');label.htmlFor='family-label';label.textContent='FAMILY NAME';const input=document.createElement('input');input.id='family-label';input.maxLength=40;const identity=element('p','micro');identity.id='family-id';const actions=element('div','feature-actions');for(const [id,text]of [['family-move-left','MOVE LEFT'],['family-move-right','MOVE RIGHT']]){const button=element('button','',text);button.id=id;actions.append(button);}const exportLabel=element('label','check'),exportBox=document.createElement('input');exportBox.id='family-export';exportBox.type='checkbox';exportLabel.append(exportBox,document.createTextNode(' INCLUDE IN FUTURE FAMILY EXPORTS'));const isolate=element('button','','ISOLATE THIS FAMILY');isolate.id='family-isolate';isolate.setAttribute('aria-pressed','false');const summary=element('p','micro');summary.id='family-export-summary';box.append(label,input,identity,actions,exportLabel,isolate,summary);details.append(heading,box);counts.insertAdjacentElement('afterend',details);input.onchange=()=>attempt(()=>commitFamilyMetadata({label:input.value},'FAMILY RENAMED AND SAVED.'));exportBox.onchange=()=>attempt(()=>commitFamilyMetadata({includeInExport:exportBox.checked},'FAMILY EXPORT SETTING SAVED.'));$('family-move-left').onclick=()=>attempt(()=>commitFamilyMetadata({move:-1},'FAMILY ORDER UPDATED AND SAVED.'));$('family-move-right').onclick=()=>attempt(()=>commitFamilyMetadata({move:1},'FAMILY ORDER UPDATED AND SAVED.'));isolate.onclick=()=>{const entry=familyEntry(project().working.carrier,project().working.familyCatalog,activePatternFamily);display.isolatedFamilyId=display.isolatedFamilyId===entry.id?null:entry.id;saveView();render();status(display.isolatedFamilyId?`${entry.label} ISOLATED. GEOMETRY UNCHANGED.`:'ALL FAMILIES SHOWN.');};}
+
+function renderFamilyTabs(containerId,names,active,onSelect){const box=$(containerId),labels=new Map(familyEntries().map(entry=>[entry.key,entry.label]));box.replaceChildren();for(const name of names){const button=element('button',name===active?'active':'',labels.get(name)||(project().working.carrier?.kind===STITCH_SOURCE?`ROLE ${name}`:`FAMILY ${name}`));button.type='button';button.dataset.family=name;button.title=`ENGINE KEY ${name}`;button.onclick=()=>onSelect(name);box.append(button);}}
+
+function renderPatternFamilyTabs(carrier){const entries=familyEntries(),names=entries.map(entry=>entry.key);renderFamilyTabs('pattern-family-tabs',names,activePatternFamily,name=>{activePatternFamily=name;render();status(`EDITING ${familyLabel(name)}.`);});const entry=entries.find(item=>item.key===activePatternFamily);if(!entry)return;$('family-label').value=entry.label;$('family-id').textContent=`PERMANENT ID ${entry.id} · ENGINE KEY ${entry.key}`;$('family-export').checked=entry.includeInExport;const index=indexDerivedFamilies(project().working),view=index.families.find(item=>item.id===entry.id);$('family-export-summary').textContent=view?.strandCount?`EXPORT-READY VIEW · ${view.strandCount} STRANDS · ${view.fragmentCount} FRAGMENTS · ${view.segmentCount} SEGMENTS`:'EXPORT-READY VIEW · SAVES WITH THIS FAMILY';$('family-move-left').disabled=entry.order===0;$('family-move-right').disabled=entry.order===entries.length-1;const isolated=display.isolatedFamilyId===entry.id;$('family-isolate').textContent=isolated?'SHOW ALL FAMILIES':'ISOLATE THIS FAMILY';$('family-isolate').setAttribute('aria-pressed',String(isolated));}
+
 function syncAttractorField(working,field){const limits=boundarySliderLimits(working.boundary),names=familyNames(working.carrier);if(!names.includes(activeInfluenceFamily))activeInfluenceFamily=names[0];renderFamilyTabs('influence-family-tabs',names,activeInfluenceFamily,name=>{activeInfluenceFamily=name;renderAttractorControls();status(`EDITING FAMILY ${name} INFLUENCE RESPONSE.`);});const q=working.weave.weaveVersion===ATTRACTOR_VERSIONS.study?{strength:field.strength,tension:working.weave.generation.tension}:[COMBINED_VERSIONS.study,STITCH_VERSIONS.study].includes(working.weave.weaveVersion)?field.families[activeInfluenceFamily]:familySettings(working.weave.generation,activeInfluenceFamily);syncSlider('attractor-radius',field.radius,limits.radius);syncSlider('attractor-strength',q.strength);syncSlider('attractor-tension',q.tension);syncSlider('attractor-falloff',field.falloff??3);syncSlider('influence-direction',field.direction??0);$('influence-type').value=field.kind;$('direction-control').hidden=field.kind!=='deflector';$('family-control-label').textContent=`EDITING FAMILY ${activeInfluenceFamily}`;$('link-influence-roles').checked=influenceResponsesLinked(field);$('attractor-enabled').checked=field.enabled;$('toggle-attractor-enabled').textContent=field.enabled?'DISABLE INFLUENCE':'ENABLE INFLUENCE';$('toggle-attractor-enabled').setAttribute('aria-pressed',String(field.enabled));}
-
-function syncAttractorState(field,count=0){$('attractor-state').textContent=!field?(count?`${count} FIELD${count===1?'':'S'} · NONE SELECTED`:'READY TO ADD'):pending?'CALCULATING':`${field.enabled?'ACTIVE':'DISABLED'} ${field.kind.toUpperCase()}`;}
-
-function renderInfluenceList(weave){const fields=influencesOf(weave),list=$('influence-list');list.replaceChildren();$('influence-count').textContent=`${fields.length} / ${COMBINED_LIMITS.influences}`;for(let i=0;i<fields.length;i++){const f=fields[i],button=element('button',`influence-item${f.id===activeInfluenceId?' active':''}${f.enabled?'':' disabled'}`);button.dataset.influenceId=f.id;button.setAttribute('role','option');button.setAttribute('aria-selected',String(f.id===activeInfluenceId));button.append(element('span','field-dot'),element('span','',`${i+1}. ${f.kind.toUpperCase()}`),element('span','micro',f.enabled?'ON':'OFF'));button.onclick=()=>{activeInfluenceId=f.id;renderAttractorControls();renderAttractorGuide();status(`ACTIVE ${f.kind.toUpperCase()} SELECTED.`);};list.append(button);}$('add-another-influence').disabled=fields.length>=COMBINED_LIMITS.influences;$('duplicate-influence').disabled=!fields.length||fields.length>=COMBINED_LIMITS.influences;}
-
-function syncVariation(weave){const combined=weave?.weaveVersion===COMBINED_VERSIONS.study,g=combined?weave.generation:null;syncSlider('variation-family',g?.variation.families[activeInfluenceFamily]?.amount??0);syncSlider('variation-seed',g?.variation.seed??1042);document.querySelector('.variation-controls').hidden=!combined;}
-
-function renderWeaveControls(){
-
- const p=project(),w=p.working.weave,displayWorking=pending?.working||p.working,displayWeave=displayWorking.weave,patternReady=Boolean(p.working.carrier&&p.working.carrierSourceRevisionId);
-
- $('field-section').hidden=!patternReady;
-
- $('display-derived-only').disabled=!w;$('display-compare').disabled=!w;$('display-construction').disabled=!p.working.carrier;
-
- if(w){
-
-  const source=w.sourceContext.snapshot;
-
-  const changed=canonical({boundary:source.boundary,carrier:source.carrier})!==canonical({boundary:p.working.boundary,carrier:p.working.carrier});
-
-   $('weave-summary').textContent='SOURCE '+w.sourceName+' · P'+source.number+(changed?' · MODIFIED INPUT':' · ORIGINAL INPUT')+' · '+Object.entries(w.derived.diagnostics.counts).map(([n,c])=>`${n} ${c}`).join(' / ');
-
-  const entry=p.weaveStudies.find(e=>e.id===w.studyId);if(entry)$('weave-name').value=entry.name;
-
-  deriveWorking(source,p.id); // Prime source display data independently of visibility.
-
-  const fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;
-
-  renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);
-
+
+function syncAttractorState(field,count=0){$('attractor-state').textContent=!field?(count?`${count} FIELD${count===1?'':'S'} · NONE SELECTED`:'READY TO ADD'):pending?'CALCULATING':`${field.enabled?'ACTIVE':'DISABLED'} ${field.kind.toUpperCase()}`;}
+
+function renderInfluenceList(weave){const fields=influencesOf(weave),list=$('influence-list');list.replaceChildren();$('influence-count').textContent=`${fields.length} / ${COMBINED_LIMITS.influences}`;for(let i=0;i<fields.length;i++){const f=fields[i],button=element('button',`influence-item${f.id===activeInfluenceId?' active':''}${f.enabled?'':' disabled'}`);button.dataset.influenceId=f.id;button.setAttribute('role','option');button.setAttribute('aria-selected',String(f.id===activeInfluenceId));button.append(element('span','field-dot'),element('span','',`${i+1}. ${f.kind.toUpperCase()}`),element('span','micro',f.enabled?'ON':'OFF'));button.onclick=()=>{activeInfluenceId=f.id;renderAttractorControls();renderAttractorGuide();status(`ACTIVE ${f.kind.toUpperCase()} SELECTED.`);};list.append(button);}$('add-another-influence').disabled=fields.length>=COMBINED_LIMITS.influences;$('duplicate-influence').disabled=!fields.length||fields.length>=COMBINED_LIMITS.influences;}
+
+function syncVariation(weave){const combined=weave?.weaveVersion===COMBINED_VERSIONS.study,g=combined?weave.generation:null;syncSlider('variation-family',g?.variation.families[activeInfluenceFamily]?.amount??0);syncSlider('variation-seed',g?.variation.seed??1042);document.querySelector('.variation-controls').hidden=!combined;}
+
+function renderWeaveControls(){
+
+ const p=project(),w=p.working.weave,displayWorking=pending?.working||p.working,displayWeave=displayWorking.weave,patternReady=Boolean(p.working.carrier&&p.working.carrierSourceRevisionId);
+
+ $('field-section').hidden=!patternReady;
+
+ $('display-derived-only').disabled=!w;$('display-compare').disabled=!w;$('display-construction').disabled=!p.working.carrier;
+
+ if(w){
+
+  const source=w.sourceContext.snapshot;
+
+  const changed=canonical({boundary:source.boundary,carrier:source.carrier})!==canonical({boundary:p.working.boundary,carrier:p.working.carrier});
+
+   $('weave-summary').textContent='SOURCE '+w.sourceName+' · P'+source.number+(changed?' · MODIFIED INPUT':' · ORIGINAL INPUT')+' · '+Object.entries(w.derived?.diagnostics?.counts||{}).map(([n,c])=>`${n} ${c}`).join(' / ');
+
+  const entry=p.weaveStudies.find(e=>e.id===w.studyId);if(entry)$('weave-name').value=entry.name;
+
+  deriveWorking(source,p.id); // Prime source display data independently of visibility.
+
+  const fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;
+
+  renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);
+
   for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf','export-weave-png']){const button=$(id);if(button)button.disabled=!!pending||!displayWeave;}const radiusExport=$('export-influence-radius-svg');if(radiusExport)radiusExport.disabled=!!pending||!fields.length;
-
- }else{activeInfluenceId=undefined;$('add-attractor').hidden=false;$('attractor-prompt').hidden=false;$('attractor-settings').hidden=true;syncAttractorState(null);}
-
-}
-
-function familyClass(name){return `carrier-family family-${name.toLowerCase()}`;}
-
-function drawWeaveLayer(id,paths,source=false){
-
- const layer=$(id);
-
- for(const p of paths)for(const f of (p.fragments||p.intervals)){
-
-   const points=f.points||[f.start,f.end];for(let i=0;i<points.length-1;i++){const a=toScreen(points[i],view,width,height),b=toScreen(points[i+1],view,width,height);layer.append(svgElement('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:source?'weave-source':familyClass(p.family)}));}
-
- }
-
-}
-
-
-
+
+ }else{activeInfluenceId=undefined;$('add-attractor').hidden=false;$('attractor-prompt').hidden=false;$('attractor-settings').hidden=true;syncAttractorState(null);}
+
+}
+
+function familyClass(name){return `carrier-family family-${name.toLowerCase()}`;}
+
+function drawWeaveLayer(id,paths,source=false){
+
+ const layer=$(id);
+
+ for(const p of paths)for(const f of (p.fragments||p.intervals)){
+
+   const points=f.points||[f.start,f.end];for(let i=0;i<points.length-1;i++){const a=toScreen(points[i],view,width,height),b=toScreen(points[i+1],view,width,height);layer.append(svgElement('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:source?'weave-source':familyClass(p.family)}));}
+
+ }
+
+}
+
+
+
 function renderThreadLayer(layer,strands,appearance,source=false){const isolated=isolatedFamilyKey();for(const record of threadPaths(strands,appearance,p=>toScreen(p,view,width,height))){if(isolated&&record.family!==isolated)continue;const path=svgElement('path',{d:record.d,class:source?'weave-source':familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-fragments':record.fragments,'data-segments':record.segments});path.style.strokeWidth=String(threadStroke(record)*view.scale);path.style.setProperty('--thread-opacity',String(threadOpacity(record)));path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';layer.append(path);}}
 
 function appendPresentationTails(layer,w,appearance,transform,scaled=false){const settings=fieldPresentationPreview||w.fieldPresentation,isolated=isolatedFamilyKey(w);for(const [layerIndex,presentation] of presentationTailLayers(w.weave.derived.strands,w.boundary,settings).entries())for(const record of threadPaths(presentation.strands,appearance,transform)){if(isolated&&record.family!==isolated)continue;const opacity=threadOpacity(record)*presentation.opacity,path=svgElement('path',{d:record.d,class:familyClass(record.family)+' weave-derived-path','data-weave-family':record.family,'data-boundary-continuation':'true','data-presentation-layer':layerIndex,opacity,'stroke-width':threadStroke(record)*(scaled?view.scale:1)});path.style.setProperty('--thread-opacity',String(opacity));path.style.fill='none';path.style.strokeDasharray='none';path.style.strokeLinejoin='round';layer.append(path);}}
-
+
 function updateThreadClip(){let defs=$('thread-defs');if(!defs){defs=svgElement('defs',{id:'thread-defs'});$('canvas').prepend(defs);}defs.replaceChildren();const clip=svgElement('clipPath',{id:'thread-boundary-clip',clipPathUnits:'userSpaceOnUse'});clip.append(svgElement('polygon',{points:project().working.boundary.points.map(p=>{const q=toScreen(p,view,width,height);return q.x+','+q.y}).join(' ')}));defs.append(clip);for(const id of ['family-a-layer','family-b-layer','weave-source-layer'])$(id).setAttribute('clip-path','url(#thread-boundary-clip)');$('weave-derived-layer').removeAttribute('clip-path');}
-
-
-
+
+
+
 function renderContinuousWeave(layer,w){
  ensureCrossings(w);const appearance=threadPreview||w.threadAppearance;
  if(!w.interlacing?.enabled){renderThreadLayer(layer,w.weave.derived.strands,appearance);appendPresentationTails(layer,w,appearance,p=>toScreen(p,view,width,height),true);return;}
@@ -367,145 +382,149 @@ function renderContinuousWeave(layer,w){
 }
 
 function renderDerivedWeaveLayer(working=displayedWeaveWorking(),preview=false){const layer=$('weave-derived-layer');layer.replaceChildren();if(working.weave&&display.weaveDerived)renderContinuousWeave(layer,working);if(!preview)renderCrossingMarks(layer,working);layer.classList.toggle('pending-result',!!pending);}
-
-function renderAttractorGuide(){const layer=$('attractor-layer');layer.replaceChildren();const weave=pending?.working.weave||project().working.weave,fields=influencesOf(weave);if(display.attractor)for(const guide of fields){const active=guide.id===activeInfluenceId,c=toScreen(guide.center,view,width,height),r=guide.radius*view.scale,common=(pending&&active?' pending':'')+(active?' active':' inactive'),base={'data-influence-id':guide.id};layer.append(svgElement('circle',{...base,cx:c.x,cy:c.y,r,class:`attractor-ring ${guide.kind}${common}`,...(active?{'data-attractor-handle':'radius'}:{})}),svgElement('circle',{...base,cx:c.x,cy:c.y,r:active?7:5,class:`attractor-center ${guide.kind}${common}`,...(active?{'data-attractor-handle':'center'}:{})}));if(guide.kind==='deflector'){const a=guide.direction*Math.PI/180,end={x:c.x+Math.cos(a)*r*.72,y:c.y-Math.sin(a)*r*.72};layer.append(svgElement('line',{...base,x1:c.x,y1:c.y,x2:end.x,y2:end.y,class:`influence-direction${common}`}),svgElement('circle',{...base,cx:end.x,cy:end.y,r:active?7:5,class:`direction-handle${common}`,...(active?{'data-attractor-handle':'direction'}:{})}));}}}
-
-function syncInfluenceEditingAvailability(field,count){const disabled=!field;for(const id of ['influence-type','attractor-radius-range','attractor-strength-range','attractor-tension-range','attractor-falloff-range','influence-direction-range','toggle-attractor-enabled','reset-attractor','remove-attractor']){const control=$(id);if(control)control.disabled=disabled;}$('duplicate-influence').disabled=disabled||count>=COMBINED_LIMITS.influences;}
-
+
+function renderAttractorGuide(){const layer=$('attractor-layer');layer.replaceChildren();const weave=pending?.working.weave||project().working.weave,fields=influencesOf(weave);if(display.attractor)for(const guide of fields){const active=guide.id===activeInfluenceId,c=toScreen(guide.center,view,width,height),r=guide.radius*view.scale,common=(pending&&active?' pending':'')+(active?' active':' inactive'),base={'data-influence-id':guide.id};layer.append(svgElement('circle',{...base,cx:c.x,cy:c.y,r,class:`attractor-ring ${guide.kind}${common}`,...(active?{'data-attractor-handle':'radius'}:{})}),svgElement('circle',{...base,cx:c.x,cy:c.y,r:active?7:5,class:`attractor-center ${guide.kind}${common}`,...(active?{'data-attractor-handle':'center'}:{})}));if(guide.kind==='deflector'){const a=guide.direction*Math.PI/180,end={x:c.x+Math.cos(a)*r*.72,y:c.y-Math.sin(a)*r*.72};layer.append(svgElement('line',{...base,x1:c.x,y1:c.y,x2:end.x,y2:end.y,class:`influence-direction${common}`}),svgElement('circle',{...base,cx:end.x,cy:end.y,r:active?7:5,class:`direction-handle${common}`,...(active?{'data-attractor-handle':'direction'}:{})}));}}}
+
+function syncInfluenceEditingAvailability(field,count){const disabled=!field;for(const id of ['influence-type','attractor-radius-range','attractor-strength-range','attractor-tension-range','attractor-falloff-range','influence-direction-range','toggle-attractor-enabled','reset-attractor','remove-attractor']){const control=$(id);if(control)control.disabled=disabled;}$('duplicate-influence').disabled=disabled||count>=COMBINED_LIMITS.influences;}
+
  function renderAttractorControls(){const displayWorking=pending?.working||project().working,displayWeave=displayWorking.weave,fields=influencesOf(displayWeave);if(activeInfluenceId===undefined||(activeInfluenceId!==null&&!fields.some(f=>f.id===activeInfluenceId)))activeInfluenceId=fields[0]?.id||null;const field=activeInfluenceId===null?null:influenceOf(displayWeave,activeInfluenceId);$('add-attractor').hidden=fields.length>0;$('attractor-prompt').hidden=fields.length>0;$('attractor-settings').hidden=!fields.length;$('cancel-attractor').hidden=!pending;renderInfluenceList(displayWeave);syncVariation(displayWeave);syncAttractorState(field,fields.length);if(field)syncAttractorField(displayWorking,field);syncInfluenceEditingAvailability(field,fields.length);for(const id of ['save-weave','save-influence','export-weave-svg','export-weave-pdf','export-weave-png']){const button=$(id);if(button)button.disabled=!!pending||!displayWorking.weave;}const radiusExport=$('export-influence-radius-svg');if(radiusExport)radiusExport.disabled=!!pending||!fields.length;}
-
-function renderR1BState(redrawDerived){$('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;targetedRenderCount++;renderInterlaceControls();renderThreadControls();if(redrawDerived)renderDerivedWeaveLayer();else $('weave-derived-layer').classList.toggle('pending-result',!!pending);renderAttractorControls();renderAttractorGuide();updateCanvasLegend();}
-
-
-
-function syncBoundaryName(){const found=findRevision(project(),project().working.sourceRevisionId);$('boundary-name').value=found?.entry.name||'BOUNDARY 01';}
-
-function syncCarrierName(){const found=findCarrierRevision(project(),project().working.carrierSourceRevisionId);$('carrier-name').value=found?.entry.name||'WEAVE PATTERN 01';}
-
-function nextLibraryName(items,prefix){let n=items.length+1,name;do{name=`${prefix} ${String(n++).padStart(2,'0')}`}while(items.some(x=>x.name===name));return name;}
-
-function currentPatternName(owner=project()){return findCarrierRevision(owner,owner.working.carrierSourceRevisionId)?.entry.name||$('carrier-name').value||nextLibraryName(owner.carrierStudies,'WEAVE PATTERN');}
-
+
+function renderR1BState(redrawDerived){$('undo').disabled=!history().past.length;$('redo').disabled=!history().future.length;targetedRenderCount++;renderInterlaceControls();renderThreadControls();if(redrawDerived)renderDerivedWeaveLayer();else $('weave-derived-layer').classList.toggle('pending-result',!!pending);renderAttractorControls();renderAttractorGuide();updateCanvasLegend();}
+
+
+
+function syncBoundaryName(){const found=findRevision(project(),project().working.sourceRevisionId);$('boundary-name').value=found?.entry.name||'BOUNDARY 01';}
+
+function syncCarrierName(){const found=findCarrierRevision(project(),project().working.carrierSourceRevisionId);$('carrier-name').value=found?.entry.name||'WEAVE PATTERN 01';}
+
+function nextLibraryName(items,prefix){let n=items.length+1,name;do{name=`${prefix} ${String(n++).padStart(2,'0')}`}while(items.some(x=>x.name===name));return name;}
+
+function currentPatternName(owner=project()){return findCarrierRevision(owner,owner.working.carrierSourceRevisionId)?.entry.name||$('carrier-name').value||nextLibraryName(owner.carrierStudies,'WEAVE PATTERN');}
+
 function currentWeaveName(working=project().working,owner=project()){return owner.weaveStudies.find(x=>x.id===working.weave?.studyId)?.name||nextLibraryName(owner.weaveStudies,'INFLUENCED GRID');}
-
-function weaveSaveOptions(owner=transientProject(),feedbackLabel='FIELD CHANGE'){return{projectUpdate:owner,saveWeaveName:currentWeaveName(owner.working,owner),feedback:{scope:'field',label:feedbackLabel}};}
-
-function preparePatternUpdate(carrier,sourceProject=project()){let base=copyProjectForEdit(sourceProject);base.working.carrier=clone(carrier);if(!base.working.sourceRevisionId)base=saveBoundary(base,$('boundary-name').value||nextLibraryName(base.boundaries,'BOUNDARY')).project;const saved=saveCarrierStudy(base,currentPatternName(base));let updated=saved.project;if(base.working.weave)updated=retargetWeaveSource(updated,saved.revisionId);return{project:updated,revisionId:saved.revisionId};}
-
-async function commitPatternCarrier(carrier,label,sourceProject=project(),feedbackLabel='WEAVE PATTERN'){const prepared=preparePatternUpdate(carrier,sourceProject),updated=prepared.project,saveWeaveName=updated.working.weave?currentWeaveName(updated.working,updated):null;$('carrier-name').value=findCarrierRevision(updated,prepared.revisionId).entry.name;await editWorking(updated.working,label,{projectUpdate:updated,saveWeaveName,feedback:{scope:'pattern',label:feedbackLabel}});}
-
-async function commitFamilyMetadata(patch,label){if(pending||threadSaving)throw Error('Wait for the current change to finish.');const base=clone(project());base.working.familyCatalog=updateFamilyCatalog(base.working.carrier,base.working.familyCatalog,activePatternFamily,patch);const prepared=preparePatternUpdate(base.working.carrier,base),updated=prepared.project,saveWeaveName=updated.working.weave?currentWeaveName(updated.working,updated):null;await editWorking(updated.working,label,{projectUpdate:updated,saveWeaveName});}
-
-function hasVisibleDistortion(weave){if(!weave)return false;if(weave.weaveVersion===STITCH_VERSIONS.study)return !stitchIdentity(weave.generation);if(weave.weaveVersion===COMBINED_VERSIONS.study){if(Object.values(weave.generation.variation.families).some(x=>x.amount>0))return true;return weave.generation.influences.some(f=>f.enabled&&Object.values(f.families).some(x=>x.strength>0&&x.tension<100));}const field=influenceOf(weave);if(!field?.enabled)return false;if(weave.weaveVersion===ATTRACTOR_VERSIONS.study)return field.strength>0&&weave.generation.tension<100;return !identityGeneration(weave);}
-
-function svgElement(tag,attributes){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value] of Object.entries(attributes))el.setAttribute(key,String(value));return el;}
-
-function renderCanvas(){
-
-  if(!view)return;updateThreadClip();
-
-  const geometry=$('geometry'),preview=$('draft-layer');geometry.replaceChildren();preview.replaceChildren();
-
-  for(const id of ['source-lattice-layer','family-a-layer','family-b-layer','weave-source-layer'])$(id).replaceChildren();
-
-  const working=carrierPreview||pending?.working||project().working,derived=working.carrier?deriveWorking(working):null;
-
-  if(derived){for(const path of derived.paths){for(const interval of path.intervals){const a=toScreen(interval.start,view,width,height),b=toScreen(interval.end,view,width,height),attrs={x1:a.x,y1:a.y,x2:b.x,y2:b.y};if(display.sourceLattice)$('source-lattice-layer').append(svgElement('line',{...attrs,class:'carrier-source'}));const primary=path.family==='A';}}}
-
-  if(derived&&display.originalGrid)renderThreadLayer($('family-a-layer'),derived.paths.filter(p=>p.selected).map(p=>({family:p.family||p.identity?.roleId,fragments:p.intervals.map(f=>({points:[f.start,f.end]}))})),threadPreview||working.threadAppearance);
-
-  const weave=working.weave;
-
-  $('canvas').classList.toggle('distortion-active',hasVisibleDistortion(weave));
-
-  if(weave&&display.weaveSource)renderThreadLayer($('weave-source-layer'),deriveWorking(weave.sourceContext.snapshot).paths.filter(p=>p.selected).map(p=>({family:p.family||p.identity?.roleId,fragments:p.intervals.map(f=>({points:[f.start,f.end]}))})),threadPreview||working.threadAppearance,true);renderDerivedWeaveLayer(working.weave&&!working.weave.derived?project().working:working,Boolean(carrierPreview));renderAttractorGuide();
-
+
+function weaveSaveOptions(owner=transientProject(),feedbackLabel='FIELD CHANGE'){return{projectUpdate:owner,saveWeaveName:currentWeaveName(owner.working,owner),feedback:{scope:'field',label:feedbackLabel}};}
+
+function preparePatternUpdate(carrier,sourceProject=project()){let base=copyProjectForEdit(sourceProject);base.working.carrier=clone(carrier);if(!base.working.sourceRevisionId)base=saveBoundary(base,$('boundary-name').value||nextLibraryName(base.boundaries,'BOUNDARY')).project;const saved=saveCarrierStudy(base,currentPatternName(base),{generatorVersion:BUILD});let updated=saved.project;if(base.working.weave)updated=retargetWeaveSource(updated,saved.revisionId);return{project:updated,revisionId:saved.revisionId};}
+
+async function commitPatternCarrier(carrier,label,sourceProject=project(),feedbackLabel='WEAVE PATTERN'){const prepared=preparePatternUpdate(carrier,sourceProject),updated=prepared.project,saveWeaveName=updated.working.weave?currentWeaveName(updated.working,updated):null;$('carrier-name').value=findCarrierRevision(updated,prepared.revisionId).entry.name;await editWorking(updated.working,label,{projectUpdate:updated,saveWeaveName,feedback:{scope:'pattern',label:feedbackLabel}});}
+
+async function commitFamilyMetadata(patch,label){if(pending||threadSaving)throw Error('Wait for the current change to finish.');const base=clone(project());base.working.familyCatalog=updateFamilyCatalog(base.working.carrier,base.working.familyCatalog,activePatternFamily,patch);const prepared=preparePatternUpdate(base.working.carrier,base),updated=prepared.project,saveWeaveName=updated.working.weave?currentWeaveName(updated.working,updated):null;await editWorking(updated.working,label,{projectUpdate:updated,saveWeaveName});}
+
+function hasVisibleDistortion(weave){if(!weave)return false;if(weave.weaveVersion===STITCH_VERSIONS.study)return !stitchIdentity(weave.generation);if(weave.weaveVersion===COMBINED_VERSIONS.study){if(Object.values(weave.generation.variation.families).some(x=>x.amount>0))return true;return weave.generation.influences.some(f=>f.enabled&&Object.values(f.families).some(x=>x.strength>0&&x.tension<100));}const field=influenceOf(weave);if(!field?.enabled)return false;if(weave.weaveVersion===ATTRACTOR_VERSIONS.study)return field.strength>0&&weave.generation.tension<100;return !identityGeneration(weave);}
+
+function svgElement(tag,attributes){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value] of Object.entries(attributes))el.setAttribute(key,String(value));return el;}
+
+function renderCanvas(){
+
+  if(!view)return;updateThreadClip();
+
+  const geometry=$('geometry'),preview=$('draft-layer');geometry.replaceChildren();preview.replaceChildren();
+
+  for(const id of ['source-lattice-layer','family-a-layer','family-b-layer','weave-source-layer'])$(id).replaceChildren();
+
+  const working=carrierPreview||pending?.working||project().working,derived=working.carrier?deriveWorking(working):null;
+
+  if(derived){for(const path of derived.paths){for(const interval of path.intervals){const a=toScreen(interval.start,view,width,height),b=toScreen(interval.end,view,width,height),attrs={x1:a.x,y1:a.y,x2:b.x,y2:b.y};if(display.sourceLattice)$('source-lattice-layer').append(svgElement('line',{...attrs,class:'carrier-source'}));const primary=path.family==='A';}}}
+
+  if(derived&&display.originalGrid)renderThreadLayer($('family-a-layer'),derived.paths.filter(p=>p.selected).map(p=>({family:p.family||p.identity?.roleId,fragments:p.intervals.map(f=>({points:[f.start,f.end]}))})),threadPreview||working.threadAppearance);
+
+  const weave=working.weave;
+
+  $('canvas').classList.toggle('distortion-active',hasVisibleDistortion(weave));
+
+  if(weave&&display.weaveSource)renderThreadLayer($('weave-source-layer'),deriveWorking(weave.sourceContext.snapshot).paths.filter(p=>p.selected).map(p=>({family:p.family||p.identity?.roleId,fragments:p.intervals.map(f=>({points:[f.start,f.end]}))})),threadPreview||working.threadAppearance,true);renderDerivedWeaveLayer(working.weave&&!working.weave.derived?project().working:working,Boolean(carrierPreview));renderAttractorGuide();
+
   const points=drag?.points||vertexPreview?.points||project().working.boundary.points,presentation=effectiveFieldPresentation(fieldPresentationPreview||working.fieldPresentation);
-
-  if(display.boundary){
-
-    const screen=points.map(p=>toScreen(p,view,width,height));
-
+
+  if(display.boundary){
+
+    const screen=points.map(p=>toScreen(p,view,width,height));
+
     geometry.append(svgElement('polygon',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:`boundary-path boundary-${presentation.boundaryEmphasis}`,'data-boundary-emphasis':presentation.boundaryEmphasis}));
-
-    if(tool==='select')screen.forEach((p,i)=>{const vertex=svgElement('circle',{cx:p.x,cy:p.y,r:selected===i?6:4,class:`vertex${selected===i?' selected':''}`,'data-vertex':i});geometry.append(vertex);});
-
-  }
-
-  if(draft.length){const screen=draft.map(p=>toScreen(p,view,width,height));preview.append(svgElement('polyline',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:'draft-path'}));screen.forEach(p=>preview.append(svgElement('circle',{cx:p.x,cy:p.y,r:4,class:'vertex'})));}
-
-  $('grid-layer').hidden=!display.grid;$('grid-layer').style.display=display.grid?'':'none';
-
-  $('frame-layer').replaceChildren();if(display.grid)$('frame-layer').append(svgElement('rect',{x:40,y:50,width:Math.max(1,width-80),height:Math.max(1,height-100)}));
-
-  $('empty-hint').hidden=display.boundary||display.sourceLattice||display.originalGrid||(weave&&(display.weaveSource||display.weaveDerived))||tool==='draw';$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
-
-}
-
-function fit(){view=fitView(project().working.boundary.points,width,height);renderCanvas();}
-
-function setTool(next){tool=next;draft=[];selected=null;drag=null;vertexPreview=null;['select','draw','pan'].forEach(name=>$(`${name}-tool`).classList.toggle('active',name===next));$('draw-actions').hidden=next!=='draw';if(next==='draw')$('boundary-section').open=true;renderCanvas();status(next==='draw'?'CLICK VERTICES. FINISH CLOSES THE BOUNDARY. ESC CANCELS.':next==='pan'?'DRAG TO PAN. SCROLL TO ZOOM.':'CLICK A VERTEX TO SELECT. DRAG TO EDIT.');}
-
+
+    if(tool==='select')screen.forEach((p,i)=>{const vertex=svgElement('circle',{cx:p.x,cy:p.y,r:selected===i?6:4,class:`vertex${selected===i?' selected':''}`,'data-vertex':i});geometry.append(vertex);});
+
+  }
+
+  if(draft.length){const screen=draft.map(p=>toScreen(p,view,width,height));preview.append(svgElement('polyline',{points:screen.map(p=>`${p.x},${p.y}`).join(' '),class:'draft-path'}));screen.forEach(p=>preview.append(svgElement('circle',{cx:p.x,cy:p.y,r:4,class:'vertex'})));}
+
+  $('grid-layer').hidden=!display.grid;$('grid-layer').style.display=display.grid?'':'none';
+
+  $('frame-layer').replaceChildren();if(display.grid)$('frame-layer').append(svgElement('rect',{x:40,y:50,width:Math.max(1,width-80),height:Math.max(1,height-100)}));
+
+  $('empty-hint').hidden=display.boundary||display.sourceLattice||display.originalGrid||(weave&&(display.weaveSource||display.weaveDerived))||tool==='draw';$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
+
+}
+
+function fit(){view=fitView(project().working.boundary.points,width,height);renderCanvas();}
+
+function setTool(next){tool=next;draft=[];selected=null;drag=null;vertexPreview=null;['select','draw','pan'].forEach(name=>$(`${name}-tool`).classList.toggle('active',name===next));$('draw-actions').hidden=next!=='draw';if(next==='draw')$('boundary-section').open=true;renderCanvas();status(next==='draw'?'CLICK VERTICES. FINISH CLOSES THE BOUNDARY. ESC CANCELS.':next==='pan'?'DRAG TO PAN. SCROLL TO ZOOM.':'CLICK A VERTEX TO SELECT. DRAG TO EDIT.');}
+
 function download(content,name,type='application/json'){const blob=content instanceof Blob?content:new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-
-function clearSvgStage(){stagedSvg=null;$('import-svg').value='';$('svg-import-stage').hidden=true;$('svg-import-preview').hidden=false;$('svg-import-preview').replaceChildren();$('svg-import-facts').replaceChildren();$('svg-import-message').textContent='';}
-
-function stageFact(label,value){const term=element('dt','',label),detail=element('dd','',value);$('svg-import-facts').append(term,detail);}
-
-function showSvgStage(file,boundary,error=''){
-
-  const stage=$('svg-import-stage'),preview=$('svg-import-preview');stage.hidden=false;preview.replaceChildren();$('svg-import-facts').replaceChildren();$('svg-import-name').textContent=file.name;$('svg-import-message').textContent=error;
-
-  $('svg-import-result').textContent=error?'REJECTED':'VALID';$('svg-import-result').classList.toggle('error',Boolean(error));$('apply-svg-import').disabled=Boolean(error);preview.hidden=Boolean(error);
-
-  if(error){stagedSvg=null;stageFact('FILE',file.name);return;}
-
-  const summary=svgImportSummary(boundary),b=bounds(boundary.points),pad=Math.max(summary.width,summary.height)*.08||10;
-
-  preview.setAttribute('viewBox',`${b.minX-pad} ${-b.maxY-pad} ${summary.width+pad*2} ${summary.height+pad*2}`);
-
-  preview.append(svgElement('polygon',{points:boundary.points.map(point=>`${point.x},${-point.y}`).join(' '),class:'import-preview-path'}));
-
-  stageFact('VERTICES',String(summary.vertices));stageFact('BOUNDARY SIZE',`${summary.width} × ${summary.height}`);stageFact('SVG WIDTH',boundary.source.width??'UNSPECIFIED');stageFact('SVG HEIGHT',boundary.source.height??'UNSPECIFIED');stageFact('VIEWBOX',boundary.source.viewBox??'UNSPECIFIED');
-
-  stagedSvg={boundary:clone(boundary),filename:file.name};
-
-}
-
-async function initializeStorage(){
-
- try{const packed=await store.readPacked();if(packed){store.lastPacked=packed;let loaded;try{loaded=await storageTask({type:'unpack',packed});}catch(error){if(!error.message.includes('Exact recovery ancestry is incomplete'))throw error;loaded=await storageTask({type:'unpack',packed,recoveryManifests:await store.recoveryManifests()});}workspace=loaded.workspace;await certifyWorkspace(workspace);if(loaded.migratedPacked&&!loaded.recoveredAncestry)await store.commit(loaded.migratedPacked);if(loaded.recoveredAncestry){const repaired=await prepareStorage(workspace,true);await store.commit(repaired);}return}const raw=localStorage.getItem(STORE_KEY),entries=store.legacyEntries();if(raw!==null){store.lastRaw=raw;const migrated=await storageTask({type:'legacy',raw});await certifyWorkspace(migrated.workspace);if(localStorage.getItem(STORE_KEY)!==raw)throw typedError('concurrent-change','Another legacy tab changed the workspace during migration. Close other tabs and reload.');await store.initialize(migrated.packed,entries,digest(raw));workspace=migrated.workspace;return}workspace=createWorkspace();const fresh=await prepareStorage(workspace);await store.initialize(fresh);}
-
- catch(error){store.blocked=true;loadError=error.message;workspace=createWorkspace();try{const previous=await store.readPreviousPacked();if(previous){const recovered=(await storageTask({type:'unpack',packed:previous})).workspace;await certifyWorkspace(recovered);store.recoveryPacked=previous;workspace=recovered;loadError+=' A validated previous snapshot is available for recovery download.';}}catch(recoveryError){loadError+=` Previous recovery also failed validation: ${recoveryError.message}`;}if(!store.recoveryPacked)for(const root of await store.historicalRoots()){try{const historical=await store.readRoot(root,'historical recovery'),recovered=(await storageTask({type:'unpack',packed:historical})).workspace;await certifyWorkspace(recovered);store.blocked=false;await store.switchRoot(root);store.recoveryPacked=historical;workspace=recovered;loadError='RECOVERED THE NEWEST VALID HISTORICAL SNAPSHOT AFTER TWO INVALID STORAGE ROOTS.';break}catch{}}}
-
-}
-
-await initializeStorage();
-
-$('board-list').addEventListener('toggle',event=>{const details=event.target;if(details instanceof HTMLDetailsElement&&details.dataset.treeKey)treeOpenState.set(details.dataset.treeKey,details.open);},true);
-
+
+function clearSvgStage(){stagedSvg=null;$('import-svg').value='';$('svg-import-stage').hidden=true;$('svg-import-preview').hidden=false;$('svg-import-preview').replaceChildren();$('svg-import-facts').replaceChildren();$('svg-import-message').textContent='';}
+
+function stageFact(label,value){const term=element('dt','',label),detail=element('dd','',value);$('svg-import-facts').append(term,detail);}
+
+function showSvgStage(file,boundary,error=''){
+
+  const stage=$('svg-import-stage'),preview=$('svg-import-preview');stage.hidden=false;preview.replaceChildren();$('svg-import-facts').replaceChildren();$('svg-import-name').textContent=file.name;$('svg-import-message').textContent=error;
+
+  $('svg-import-result').textContent=error?'REJECTED':'VALID';$('svg-import-result').classList.toggle('error',Boolean(error));$('apply-svg-import').disabled=Boolean(error);preview.hidden=Boolean(error);
+
+  if(error){stagedSvg=null;stageFact('FILE',file.name);return;}
+
+  const summary=svgImportSummary(boundary),b=bounds(boundary.points),pad=Math.max(summary.width,summary.height)*.08||10;
+
+  preview.setAttribute('viewBox',`${b.minX-pad} ${-b.maxY-pad} ${summary.width+pad*2} ${summary.height+pad*2}`);
+
+  preview.append(svgElement('polygon',{points:boundary.points.map(point=>`${point.x},${-point.y}`).join(' '),class:'import-preview-path'}));
+
+  stageFact('VERTICES',String(summary.vertices));stageFact('BOUNDARY SIZE',`${summary.width} × ${summary.height}`);stageFact('SVG WIDTH',boundary.source.width??'UNSPECIFIED');stageFact('SVG HEIGHT',boundary.source.height??'UNSPECIFIED');stageFact('VIEWBOX',boundary.source.viewBox??'UNSPECIFIED');
+
+  stagedSvg={boundary:clone(boundary),filename:file.name};
+
+}
+
+async function initializeStorage(){
+
+ try{const packed=await store.readPacked();if(packed){store.lastPacked=packed;let loaded;try{loaded=await storageTask({type:'unpack',packed});}catch(error){if(!error.message.includes('Exact recovery ancestry is incomplete'))throw error;loaded=await storageTask({type:'unpack',packed,recoveryManifests:await store.recoveryManifests()});}workspace=loaded.workspace;await certifyWorkspace(workspace);if(loaded.migratedPacked&&!loaded.recoveredAncestry)await store.commit(loaded.migratedPacked);if(loaded.recoveredAncestry){const repaired=await prepareStorage(workspace,true);await store.commit(repaired);}return}const raw=localStorage.getItem(STORE_KEY),entries=store.legacyEntries();if(raw!==null){store.lastRaw=raw;const migrated=await storageTask({type:'legacy',raw});await certifyWorkspace(migrated.workspace);if(localStorage.getItem(STORE_KEY)!==raw)throw typedError('concurrent-change','Another legacy tab changed the workspace during migration. Close other tabs and reload.');await store.initialize(migrated.packed,entries,digest(raw));workspace=migrated.workspace;return}workspace=createWorkspace();const fresh=await prepareStorage(workspace);await store.initialize(fresh);}
+
+ catch(error){store.blocked=true;loadError=error.message;workspace=createWorkspace();try{const previous=await store.readPreviousPacked();if(previous){const recovered=(await storageTask({type:'unpack',packed:previous})).workspace;await certifyWorkspace(recovered);store.blocked=false;await store.switchRoot(previous.root);workspace=recovered;loadError='';}}catch(recoveryError){store.blocked=true;loadError+=` Previous recovery also failed validation: ${recoveryError.message}`;}if(store.blocked)for(const root of await store.historicalRoots()){try{const historical=await store.readRoot(root,'historical recovery'),recovered=(await storageTask({type:'unpack',packed:historical})).workspace;await certifyWorkspace(recovered);store.blocked=false;await store.switchRoot(root);store.recoveryPacked=historical;workspace=recovered;loadError='RECOVERED THE NEWEST VALID HISTORICAL SNAPSHOT AFTER TWO INVALID STORAGE ROOTS.';break}catch{}}}
+
+}
+
+await initializeStorage();
+
+$('board-list').addEventListener('toggle',event=>{const details=event.target;if(details instanceof HTMLDetailsElement&&details.dataset.treeKey)treeOpenState.set(details.dataset.treeKey,details.open);},true);
+
+async function openSavedWeaveRecord(revisionId){const found=findCarrierRevision(project(),revisionId);if(!found)throw Error('This weave record is missing.');const pinnedId=found.entry.generatorRevisionId&&findCarrierRevision(project(),found.entry.generatorRevisionId)?found.entry.generatorRevisionId:revisionId,savedRevision=findCarrierRevision(project(),pinnedId).revision,savedGeneration=savedRevision.generation?canonical(savedRevision.generation):null,savedRevisionCount=found.entry.revisions.length;libraryTemplateRevisionId=pinnedId;const patternIds=new Set(found.entry.revisions.map(r=>r.id)),children=project().weaveStudies.filter(entry=>entry.revisions.some(r=>patternIds.has(r.working.weave.sourceContext.sourceCarrierRevisionId))).sort((a,b)=>String(a.revisions.at(-1).createdAt).localeCompare(String(b.revisions.at(-1).createdAt))),child=children.at(-1);let restored=restoreCarrierStudy(project(),pinnedId);if(child){const study=restoreWeaveStudy(project(),child.latestRevisionId);restored.working.weave=clone(study.working.weave);if(study.working.interlacing)restored.working.interlacing=clone(study.working.interlacing);else delete restored.working.interlacing;if(study.working.threadAppearance)restored.working.threadAppearance=clone(study.working.threadAppearance);if(study.working.fieldPresentation)restored.working.fieldPresentation=clone(study.working.fieldPresentation);restored=retargetWeaveSource(restored,pinnedId);display=applyDisplayPreset(display,'derived-only');display.attractor=true;saveView();}else{display.originalGrid=true;display.weaveDerived=false;display.attractor=false;saveView();}if(inspectGeneratorRecord(savedRevision).applicable)restored.working=applyGeneratorSnapshot(restored.working,savedRevision.generation);if(child){await editWorking(restored.working,'WEAVE RECORD OPENED.',{projectUpdate:restored});$('weave-name').value=child.name;$('field-section').open=true;}else await editWorking(restored.working,'WEAVE RECORD OPENED.',{projectUpdate:restored});const opened=findCarrierRevision(project(),pinnedId);if(opened.entry.revisions.length!==savedRevisionCount||(savedGeneration&&canonical(opened.revision.generation)!==savedGeneration))throw Error('Opening this weave changed its saved record.');$('carrier-section').open=true;selected=null;if(!pending){syncBoundaryName();syncCarrierName();fit();}}
+
 const libraryClick=event=>attempt(async()=>{
-
-  const action=event.target.closest('[data-library-action]');if(action){event.preventDefault();event.stopPropagation();const type=action.dataset.libraryType,itemId=action.dataset.libraryId;if(type==='board'){const entry=workspace.projects.find(x=>x.id===itemId);if(!entry)throw Error('Board is missing.');let next=clone(workspace);if(action.dataset.libraryAction==='rename'){const name=prompt('Rename board',entry.name);if(name===null)return;const clean=name.trim().toUpperCase().slice(0,80);if(!clean)throw Error('Give this board a name.');next.projects.find(x=>x.id===itemId).name=clean;}else if(action.dataset.libraryAction==='duplicate'){const incoming={schemaVersion:workspace.schemaVersion,activeProjectId:itemId,projects:[{...clone(entry),name:entry.name+' COPY'}]};next=mergeBackup(workspace,incoming,true,true);}else{if(next.projects.length===1)throw Error('Keep at least one board.');if(!confirm(`Delete ${entry.name} and its complete saved tree?`))return;next.projects=next.projects.filter(x=>x.id!==itemId);if(next.activeProjectId===itemId)next.activeProjectId=next.projects[0].id;}await persist(next,true);histories.clear();render();status(`BOARD ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}const entry=(type==='boundary'?project().boundaries:type==='pattern'?project().carrierStudies:project().weaveStudies).find(x=>x.id===itemId);if(!entry)throw Error('Saved item is missing.');let updated;if(action.dataset.libraryAction==='rename'){const name=prompt(`Rename ${type}`,entry.name);if(name===null)return;updated=renameLibraryItem(project(),type,itemId,name);}else if(action.dataset.libraryAction==='duplicate')updated=duplicateLibraryItem(project(),type,itemId);else{if(!confirm(`Delete ${entry.name}${type==='boundary'?' and every nested Weave Pattern and Influenced Grid':type==='pattern'?' and every nested Influenced Grid':''}?`))return;updated=deleteLibraryItem(project(),type,itemId);}const next=clone(workspace);next.projects=next.projects.map(p=>p.id===updated.id?updated:p);await persist(next,true);render();status(`${type.toUpperCase()} ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}
-
+
+  const action=event.target.closest('[data-library-action]');if(action){event.preventDefault();event.stopPropagation();const type=action.dataset.libraryType,itemId=action.dataset.libraryId;if(type==='board'){const entry=workspace.projects.find(x=>x.id===itemId);if(!entry)throw Error('Board is missing.');let next=clone(workspace);if(action.dataset.libraryAction==='rename'){const name=prompt('Rename board',entry.name);if(name===null)return;const clean=name.trim().toUpperCase().slice(0,80);if(!clean)throw Error('Give this board a name.');next.projects.find(x=>x.id===itemId).name=clean;}else if(action.dataset.libraryAction==='duplicate'){const incoming={schemaVersion:workspace.schemaVersion,activeProjectId:itemId,projects:[{...clone(entry),name:entry.name+' COPY'}]};next=mergeBackup(workspace,incoming,true,true);}else{if(next.projects.length===1)throw Error('Keep at least one board.');if(!confirm(`Delete ${entry.name} and its complete saved tree?`))return;next.projects=next.projects.filter(x=>x.id!==itemId);if(next.activeProjectId===itemId)next.activeProjectId=next.projects[0].id;}await persist(next,true);histories.clear();render();status(`BOARD ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}const entry=(type==='boundary'?project().boundaries:type==='pattern'?project().carrierStudies:project().weaveStudies).find(x=>x.id===itemId);if(!entry)throw Error('Saved item is missing.');let updated;if(action.dataset.libraryAction==='rename'){const name=prompt(`Rename ${type}`,entry.name);if(name===null)return;updated=renameLibraryItem(project(),type,itemId,name);}else if(action.dataset.libraryAction==='duplicate')updated=duplicateLibraryItem(project(),type,itemId);else{if(!confirm(`Delete ${entry.name}${type==='boundary'?' and every nested Weave Pattern and Influenced Grid':type==='pattern'?' and every nested Influenced Grid':''}?`))return;updated=deleteLibraryItem(project(),type,itemId);}const next=clone(workspace);next.projects=next.projects.map(p=>p.id===updated.id?updated:p);await persist(next,true);render();status(`${type.toUpperCase()} ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}
+
+  const weaveOpen=event.target.closest('[data-weave-open]');if(weaveOpen){event.preventDefault();event.stopPropagation();await openSavedWeaveRecord(weaveOpen.dataset.carrierRevision);return;}
+
   const board=event.target.closest('[data-board]'),revision=event.target.closest('[data-revision]'),carrierRevision=event.target.closest('[data-carrier-revision]'),templateRevision=event.target.closest('[data-template-revision]'),weaveRevision=event.target.closest('[data-weave-revision]');
 
   if(templateRevision){event.preventDefault();event.stopPropagation();libraryTemplateRevisionId=templateRevision.dataset.templateRevision;renderBoards();status('REUSABLE WEAVE SELECTED. CHOOSE A BOUNDARY, THEN USE IT ON THAT BOUNDARY.');return;}
-
-  if(board){event.preventDefault();event.stopPropagation();treeOpenState.set(`board:${board.dataset.board}`,true);const next=clone(workspace);next.activeProjectId=board.dataset.board;await persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
-
+
+  if(board){event.preventDefault();event.stopPropagation();treeOpenState.set(`board:${board.dataset.board}`,true);const next=clone(workspace);next.activeProjectId=board.dataset.board;await persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
+
   if(revision){event.preventDefault();event.stopPropagation();if(pending)cancelPending('OPENING BOUNDARY.');const found=findRevision(project(),revision.dataset.revision);if(!found)throw Error('This boundary is missing.');const updated=clone(project());updated.working={boundary:clone(found.revision.boundary),sourceRevisionId:revision.dataset.revision,carrier:null,carrierSourceRevisionId:null,weave:null};delete updated.working.familyCatalog;delete updated.working.threadAppearance;delete updated.working.interlacing;delete updated.working.fieldPresentation;await editWorking(updated.working,'BOUNDARY OPENED. SELECT NEW OR APPLY THE PREVIOUSLY SELECTED WEAVE.',{projectUpdate:updated});$('boundary-name').value=found.entry.name;display.boundary=true;display.originalGrid=false;display.weaveSource=false;display.weaveDerived=false;display.attractor=false;saveView();selected=null;fit();}
-
-  if(weaveRevision){event.preventDefault();event.stopPropagation();const found=findWeaveRevision(project(),weaveRevision.dataset.weaveRevision),restored=restoreWeaveStudy(project(),weaveRevision.dataset.weaveRevision),sourceId=restored.working.weave.sourceContext.sourceCarrierRevisionId,pattern=restored.carrierStudies.find(x=>x.revisions.some(r=>r.id===sourceId));$('weave-name').value=found.entry.name;if(pattern&&pattern.latestRevisionId!==sourceId){const updated=retargetWeaveSource(restored,pattern.latestRevisionId);await editWorking(updated.working,'INFLUENCED GRID OPENED AND UPDATED TO THE CURRENT PATTERN.',{projectUpdate:updated,saveWeaveName:found.entry.name});}else await editWorking(restored.working,'INFLUENCED GRID OPENED.');$('field-section').open=true;selected=null;}
-
-  if(carrierRevision){event.preventDefault();event.stopPropagation();const revisionId=carrierRevision.dataset.carrierRevision;libraryTemplateRevisionId=revisionId;const found=findCarrierRevision(project(),revisionId),patternIds=new Set(found.entry.revisions.map(r=>r.id)),children=project().weaveStudies.filter(entry=>entry.revisions.some(r=>patternIds.has(r.working.weave.sourceContext.sourceCarrierRevisionId))).sort((a,b)=>String(a.revisions.at(-1).createdAt).localeCompare(String(b.revisions.at(-1).createdAt))),child=children.at(-1);display.originalGrid=true;display.weaveDerived=Boolean(child);display.attractor=Boolean(child);saveView();if(child){const restored=restoreWeaveStudy(project(),child.latestRevisionId),sourceId=restored.working.weave.sourceContext.sourceCarrierRevisionId;if(restored.working.interlacing?.enabled){display=applyDisplayPreset(display,'derived-only');saveView();}if(sourceId!==revisionId){const updated=retargetWeaveSource(restored,revisionId);await editWorking(updated.working,'WEAVE AND SAVED FIELD FORCES OPENED AND UPDATED.',{projectUpdate:updated,saveWeaveName:child.name});}else await editWorking(restored.working,'WEAVE AND SAVED FIELD FORCES OPENED.');$('weave-name').value=child.name;$('field-section').open=true;}else{const restored=restoreCarrierStudy(project(),revisionId);await editWorking(restored.working,'WEAVE OPENED FOR EDITING.');}syncBoundaryName();syncCarrierName();selected=null;fit();}
-
+
+  if(weaveRevision){event.preventDefault();event.stopPropagation();const found=findWeaveRevision(project(),weaveRevision.dataset.weaveRevision),restored=restoreWeaveStudy(project(),weaveRevision.dataset.weaveRevision),sourceId=restored.working.weave.sourceContext.sourceCarrierRevisionId,pattern=restored.carrierStudies.find(x=>x.revisions.some(r=>r.id===sourceId));$('weave-name').value=found.entry.name;if(pattern&&pattern.latestRevisionId!==sourceId){const updated=retargetWeaveSource(restored,pattern.latestRevisionId);await editWorking(updated.working,'INFLUENCED GRID OPENED AND UPDATED TO THE CURRENT PATTERN.',{projectUpdate:updated,saveWeaveName:found.entry.name});}else await editWorking(restored.working,'INFLUENCED GRID OPENED.');$('field-section').open=true;selected=null;}
+
+  if(carrierRevision){event.preventDefault();event.stopPropagation();await openSavedWeaveRecord(carrierRevision.dataset.carrierRevision);}
+
 });
 
 for(const id of ['board-list','boundary-list','weave-list','library-template-list'])$(id).addEventListener('click',libraryClick);
-
-$('new-board').onclick=()=>$('board-dialog').showModal();
-
+
+$('new-board').onclick=()=>$('board-dialog').showModal();
+
 $('board-form').onsubmit=event=>{event.preventDefault();attempt(async()=>{const next=clone(workspace),board=createProject($('board-name').value);next.projects.push(board);next.activeProjectId=board.id;await persist(next);$('board-dialog').close();setTool('select');render();fit();status('NEW BOARD CREATED.');});};
 
 $('library-new-project').onclick=$('new-board').onclick;
@@ -520,65 +539,66 @@ $('library-new-weave').onclick=()=>{if(!project().working.sourceRevisionId){stat
 for(const [id,type,action] of [['library-rename-boundary','boundary','rename'],['library-duplicate-boundary','boundary','duplicate'],['library-delete-boundary','boundary','delete'],['library-rename-weave','pattern','rename'],['library-duplicate-weave','pattern','duplicate'],['library-delete-weave','pattern','delete']])$(id).onclick=()=>attempt(async()=>{const selection=activeLibraryItems(project()),entry=type==='boundary'?selection.boundary:selection.pattern;if(!entry)throw Error(`Select a ${type==='boundary'?'boundary':'weave'} first.`);let updated;if(action==='rename'){const name=prompt(`Rename ${type==='boundary'?'boundary':'weave'}`,entry.name);if(name===null)return;updated=renameLibraryItem(project(),type,entry.id,name);}else if(action==='duplicate')updated=duplicateLibraryItem(project(),type,entry.id);else{if(!confirm(`Delete ${entry.name}${type==='boundary'?' and its attached weaves':''}?`))return;updated=deleteLibraryItem(project(),type,entry.id);if(type==='pattern')libraryTemplateRevisionId=null;}await persistLibraryProject(updated,`${type==='boundary'?'BOUNDARY':'WEAVE'} ${action.toUpperCase()} COMPLETE.`);});
 
 $('library-apply-weave').onclick=()=>attempt(async()=>{if(!libraryTemplateRevisionId)throw Error('Select a weave first, then select its destination boundary.');if(!findCarrierRevision(project(),libraryTemplateRevisionId))throw Error('The selected weave is not available in this project.');$('stitch-preset').value='saved:'+libraryTemplateRevisionId;$('stitch-preset').dispatchEvent(new Event('change'));});
-
-document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
-
-$('square-size-range').oninput=event=>{syncSlider('square-size',Number(event.target.value));};
-
-async function reloadLatestForBoundaryCreate(boardId){const packed=await store.readPacked();if(!packed)throw typedError('storage-state','The latest committed workspace could not be found.');store.lastPacked=packed;const latest=(await storageTask({type:'unpack',packed})).workspace;validateTrustedWorkspace(latest);if(!latest.projects.some(p=>p.id===boardId))throw typedError('concurrent-change','This Board was removed in another tab. Reload and choose an available Board.');latest.activeProjectId=boardId;workspace=latest;histories.clear();}
-
-async function createSquareBoundary(){const boardId=workspace.activeProjectId,size=Number($('square-size').value),notice=$('boundary-action-status');notice.textContent='SAVING NEW BOUNDARY…';for(let attemptNumber=0;attemptNumber<2;attemptNumber++){const before=clone(project().working),base=clone(project()),name=nextLibraryName(base.boundaries,'BOUNDARY');base.working={boundary:square(size),sourceRevisionId:null,carrier:null,carrierSourceRevisionId:null,weave:null};const saved=saveBoundary(base,name),next=clone(workspace);next.projects=next.projects.map(p=>p.id===saved.project.id?saved.project:p);try{await persist(next);history().record(before,saved.project.working);$('boundary-name').value=name;setTool('select');display.boundary=true;saveView();fit();render();notice.textContent=`${name} SAVED. CREATE WEAVE PATTERN IS READY.`;status(`${name} CREATED AND SAVED${attemptNumber?' AFTER SYNCING THE LATEST TAB':''}.`);return;}catch(error){if(error.code!=='concurrent-change'||attemptNumber>0){notice.textContent=`SAVE FAILED: ${error.message}`;throw error;}notice.textContent='A NEWER TAB WAS FOUND. SYNCING AND RETRYING SAFELY…';await reloadLatestForBoundaryCreate(boardId);}}}
-
-$('make-square').onclick=()=>attempt(createSquareBoundary);
-
-$('open-saved-boundary').onclick=()=>attempt(async()=>{const revisionId=$('saved-boundary').value,found=findRevision(project(),revisionId);if(!found)throw Error('Choose a saved boundary.');const updated=clone(project());updated.working={boundary:clone(found.revision.boundary),sourceRevisionId:revisionId,carrier:null,carrierSourceRevisionId:null,weave:null};await editWorking(updated.working,`${found.entry.name} OPENED. CHOOSE A PRESET OR A SAVED PATTERN NEXT.`,{projectUpdate:updated});$('boundary-name').value=found.entry.name;display.boundary=true;display.originalGrid=false;display.weaveSource=false;display.weaveDerived=false;display.attractor=false;saveView();selected=null;fit();$('carrier-section').open=true;});
-
-$('apply-coordinates').onclick=()=>attempt(async()=>{await setBoundary(parseCoordinates($('coordinates').value),'COORDINATES APPLIED.');display.boundary=true;saveView();selected=null;});
-
-$('vertex-index-range').oninput=event=>{selected=Number(event.target.value)-1;vertexPreview=null;renderVertexControls(project().working.boundary);renderCanvas();};
-
+
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
+
+$('square-size-range').oninput=event=>{syncSlider('square-size',Number(event.target.value));};
+
+async function reloadLatestForBoundaryCreate(boardId){const packed=await store.readPacked();if(!packed)throw typedError('storage-state','The latest committed workspace could not be found.');store.lastPacked=packed;const latest=(await storageTask({type:'unpack',packed})).workspace;validateTrustedWorkspace(latest);if(!latest.projects.some(p=>p.id===boardId))throw typedError('concurrent-change','This Board was removed in another tab. Reload and choose an available Board.');latest.activeProjectId=boardId;workspace=latest;histories.clear();}
+
+async function createSquareBoundary(){const boardId=workspace.activeProjectId,size=Number($('square-size').value),notice=$('boundary-action-status');notice.textContent='SAVING NEW BOUNDARY…';for(let attemptNumber=0;attemptNumber<2;attemptNumber++){const before=clone(project().working),base=clone(project()),name=nextLibraryName(base.boundaries,'BOUNDARY');base.working={boundary:square(size),sourceRevisionId:null,carrier:null,carrierSourceRevisionId:null,weave:null};const saved=saveBoundary(base,name),next=clone(workspace);next.projects=next.projects.map(p=>p.id===saved.project.id?saved.project:p);try{await persist(next);history().record(before,saved.project.working);$('boundary-name').value=name;setTool('select');display.boundary=true;saveView();fit();render();notice.textContent=`${name} SAVED. CREATE WEAVE PATTERN IS READY.`;status(`${name} CREATED AND SAVED${attemptNumber?' AFTER SYNCING THE LATEST TAB':''}.`);return;}catch(error){if(error.code!=='concurrent-change'||attemptNumber>0){notice.textContent=`SAVE FAILED: ${error.message}`;throw error;}notice.textContent='A NEWER TAB WAS FOUND. SYNCING AND RETRYING SAFELY…';await reloadLatestForBoundaryCreate(boardId);}}}
+
+$('make-square').onclick=()=>attempt(createSquareBoundary);
+
+$('open-saved-boundary').onclick=()=>attempt(async()=>{const revisionId=$('saved-boundary').value,found=findRevision(project(),revisionId);if(!found)throw Error('Choose a saved boundary.');const updated=clone(project());updated.working={boundary:clone(found.revision.boundary),sourceRevisionId:revisionId,carrier:null,carrierSourceRevisionId:null,weave:null};await editWorking(updated.working,`${found.entry.name} OPENED. CHOOSE A PRESET OR A SAVED PATTERN NEXT.`,{projectUpdate:updated});$('boundary-name').value=found.entry.name;display.boundary=true;display.originalGrid=false;display.weaveSource=false;display.weaveDerived=false;display.attractor=false;saveView();selected=null;fit();$('carrier-section').open=true;});
+
+$('apply-coordinates').onclick=()=>attempt(async()=>{await setBoundary(parseCoordinates($('coordinates').value),'COORDINATES APPLIED.');display.boundary=true;saveView();selected=null;});
+
+$('vertex-index-range').oninput=event=>{selected=Number(event.target.value)-1;vertexPreview=null;renderVertexControls(project().working.boundary);renderCanvas();};
+
 for(const axis of ['x','y']){const control=$(`vertex-${axis}-range`);control.oninput=event=>{const points=clone(vertexPreview?.points||project().working.boundary.points);if(selected===null)selected=0;points[selected][axis]=sliderEventNumber(event,control);vertexPreview={points};$(`vertex-${axis}-value`).value=readableNumber(event.target.value);renderCanvas();};control.onchange=()=>attempt(async()=>{if(!vertexPreview)return;const points=clone(vertexPreview.points);vertexPreview=null;await setBoundary(validateBoundary(points),'VERTEX UPDATED. ONE UNDO RESTORES THE SLIDER MOVE.');renderVertexControls(project().working.boundary);});}
-
-$('save-boundary').onclick=()=>attempt(async()=>{const weaveName=project().working.weave?currentWeaveName():null,result=saveBoundaryAndUpdatePatterns(project(),$('boundary-name').value);if(result.weaveNeedsRefresh)await editWorking(result.project.working,'BOUNDARY AND ATTACHED PATTERN UPDATED.',{projectUpdate:result.project,saveWeaveName:weaveName});else{const next=clone(workspace);next.projects=next.projects.map(p=>p.id===result.project.id?result.project:p);await persist(next);render();status(result.updatedPatternIds.length?'BOUNDARY REPLACED; ATTACHED WEAVE PATTERNS RECLIPPED.':'BOUNDARY SAVED.');}});
-
-const stitchControlSpec={rowStep:['ROW SPACING (%)',.55,.9,.01],pitch:['HORIZONTAL SPACING',40,300,1],height:['HEIGHT',20,240,1],rowGap:['ROW GAP',10,200,1],overlap:['STITCH OVERLAP (%)',.1,.4,.01],rotation:['ROTATION',-180,180,1],width:['WIDTH',20,240,1],gapX:['GAP X',10,200,1],gapY:['GAP Y',10,200,1],extension:['EXTENSION',.05,.25,.005]};
-
+
+$('save-boundary').onclick=()=>attempt(async()=>{const weaveName=project().working.weave?currentWeaveName():null,result=saveBoundaryAndUpdatePatterns(project(),$('boundary-name').value);if(result.weaveNeedsRefresh)await editWorking(result.project.working,'BOUNDARY AND ATTACHED PATTERN UPDATED.',{projectUpdate:result.project,saveWeaveName:weaveName});else{const next=clone(workspace);next.projects=next.projects.map(p=>p.id===result.project.id?result.project:p);await persist(next);render();status(result.updatedPatternIds.length?'BOUNDARY REPLACED; ATTACHED WEAVE PATTERNS RECLIPPED.':'BOUNDARY SAVED.');}});
+
+const stitchControlSpec={rowStep:['ROW SPACING (%)',.55,.9,.01],pitch:['HORIZONTAL SPACING',40,300,1],height:['HEIGHT',20,240,1],rowGap:['ROW GAP',10,200,1],overlap:['STITCH OVERLAP (%)',.1,.4,.01],rotation:['ROTATION',-180,180,1],width:['WIDTH',20,240,1],gapX:['GAP X',10,200,1],gapY:['GAP Y',10,200,1],extension:['EXTENSION',.05,.25,.005]};
+
 function renderStitchControls(source){const box=$('stitch-controls');box.hidden=source?.kind!==STITCH_SOURCE;if(box.hidden)return;$('stitch-title').textContent=STITCH_RECIPES[source.recipeId].label;$('stitch-continuous').hidden=source.recipeId!=='double-herringbone';$('stitch-layout-help').textContent=source.recipeId==='double-herringbone-field'?'CONTINUOUS FIELD. ROW SPACING IS A PERCENTAGE OF PATTERN HEIGHT: LOWER VALUES OVERLAP MORE. CONTROL THREAD ORDER IN OVER / UNDER.':source.recipeId==='double-herringbone'?'SAVED LEGACY PATTERN. USE CONTINUOUS FIELD TO UPDATE ITS LAYOUT.':'SQUARE FOUNDATION WITH PRESET OVER / UNDER RULES.';$('stitch-sliders').replaceChildren();for(const [key,value]of Object.entries(source.parameters)){const [label,min,max,step]=stitchControlSpec[key],row=element('label','slider-label'),title=element('span','',key==='height'&&source.recipeId.startsWith('double-herringbone')?'PATTERN HEIGHT':label),scale=['rowStep','overlap'].includes(key)?100:1,out=element('output','',String(Number((value*scale).toFixed(6)))),input=document.createElement('input');input.id=`stitch-${key}`;input.type='range';input.min=Math.min(min,value)*scale;input.max=Math.max(max,value)*scale;input.step=step*scale;input.value=value*scale;input.setAttribute('aria-label',title.textContent);row.append(title,out,input);const apply=(event,commit)=>attempt(()=>{const raw=sliderEventNumber(event,input);out.value=String(raw);focusDerivedEditing(false);return patternParameterEdit('stitch:'+key,raw/scale,commit,(recipe,value)=>{recipe.parameters[key]=value;return recipe;},`${title.textContent} ${raw}`);});input.oninput=event=>apply(event,false);input.onchange=event=>apply(event,true);$('stitch-sliders').append(row);}}
-
-$('stitch-continuous').onclick=()=>attempt(async()=>{const base=transientProject(),recipe=changeHerringboneLayout(base.working.carrier,'field');if(pending)cancelPending('CHANGING FOUNDATION LAYOUT.');await commitPatternCarrier(recipe,'FOUNDATION LAYOUT UPDATED AND SAVED.',base);});
-
-$('reset-stitch').onclick=()=>attempt(async()=>{const base=transientProject(),source=base.working.carrier;if(source?.kind!==STITCH_SOURCE)return;const recipe=clone(source);recipe.parameters=clone(STITCH_RECIPES[source.recipeId].defaults);if(pending)cancelPending('RESETTING FOUNDATION.');await commitPatternCarrier(recipe,'FOUNDATION PARAMETERS RESET AND SAVED.',base);});
-
-
-
+
+$('stitch-continuous').onclick=()=>attempt(async()=>{const base=transientProject(),recipe=changeHerringboneLayout(base.working.carrier,'field');if(pending)cancelPending('CHANGING FOUNDATION LAYOUT.');await commitPatternCarrier(recipe,'FOUNDATION LAYOUT UPDATED AND SAVED.',base);});
+
+$('reset-stitch').onclick=()=>attempt(async()=>{const base=transientProject(),source=base.working.carrier;if(source?.kind!==STITCH_SOURCE)return;const recipe=clone(source);recipe.parameters=clone(STITCH_RECIPES[source.recipeId].defaults);if(pending)cancelPending('RESETTING FOUNDATION.');await commitPatternCarrier(recipe,'FOUNDATION PARAMETERS RESET AND SAVED.',base);});
+
+
+
 let applyingPreset=false;
 const applyPresetSelection=event=>{const select=event.currentTarget,choice=select.value;if(applyingPreset||!choice)return;applyingPreset=true;select.disabled=true;$('preset-apply-state').textContent='APPLYING PRESET · BUILDING AND SAVING WEAVE…';attempt(async()=>{try{if(pending)cancelPending('APPLYING SELECTED PRESET.');await store.assertCurrent();
  let base=clone(project());if(!base.working.sourceRevisionId){const boundaryName=$('boundary-name').value||nextLibraryName(base.boundaries,'BOUNDARY');base=saveBoundary(base,boundaryName).project;$('boundary-name').value=boundaryName;}
  const savedChoice=choice.startsWith('saved:'),source=savedChoice?findCarrierRevision(base,choice.slice(6)):null,sourceResult=savedChoice&&source?weaveResultForPattern(base,source.entry):null;
- if(savedChoice&&!source)throw Error('That saved Weave Pattern is no longer available.');
- const carrier=savedChoice?clone(source.revision.carrier):choice==='lines'?createRectangularCarrier():LINE_PRESETS[choice]?createLinePreset(choice):createStitchSource(choice,undefined,2);carrier.id='carrier-'+crypto.randomUUID();
- base.working={...base.working,carrier,carrierSourceRevisionId:null,weave:null};
- if(savedChoice&&source.revision.familyCatalog)base.working.familyCatalog=clone(source.revision.familyCatalog);else delete base.working.familyCatalog;
+ if(savedChoice&&!source)throw Error('That saved Weave Pattern is no longer available.');
+ const carrier=savedChoice?clone(source.revision.carrier):choice==='lines'?createRectangularCarrier():LINE_PRESETS[choice]?createLinePreset(choice):createStitchSource(choice,undefined,2);carrier.id='carrier-'+crypto.randomUUID();
+ base.working={...base.working,carrier,carrierSourceRevisionId:null,weave:null};
+ if(savedChoice&&source.revision.familyCatalog)base.working.familyCatalog=clone(source.revision.familyCatalog);else delete base.working.familyCatalog;
  if(savedChoice&&source.revision.threadAppearance)base.working.threadAppearance=clone(source.revision.threadAppearance);else delete base.working.threadAppearance;
  if(savedChoice&&source.revision.fieldPresentation)base.working.fieldPresentation=clone(source.revision.fieldPresentation);else delete base.working.fieldPresentation;
- delete base.working.interlacing;
- const name=nextLibraryName(base.carrierStudies,savedChoice?source.entry.name+' COPY':'WEAVE PATTERN'),saved=saveCarrierStudy(base,name),instantWeave=true;
+ delete base.working.interlacing;
+ const name=nextLibraryName(base.carrierStudies,savedChoice?source.entry.name+' COPY':'WEAVE PATTERN'),saved=saveCarrierStudy(base,name,{generatorVersion:BUILD}),instantWeave=true;
  if(instantWeave){saved.project=createWeaveStudy(saved.project,saved.revisionId);saved.project.working.interlacing={...defaultInterlacing(),version:'interlacing-v2',enabled:true,rule:defaultRule(carrier.recipeId||'')};if(sourceResult){const sourceWorking=sourceResult.revisions.at(-1).working,created=saved.project.working.weave,sourceBounds=bounds(sourceWorking.boundary.points),targetBounds=bounds(saved.project.working.boundary.points);saved.project.working.weave={...clone(sourceWorking.weave),studyId:created.studyId,sourceName:created.sourceName,sourceContext:created.sourceContext,generation:adaptGenerationToBoundary(sourceWorking.weave.generation,sourceBounds,targetBounds),derived:created.derived};if(sourceWorking.threadAppearance)saved.project.working.threadAppearance=clone(sourceWorking.threadAppearance);if(sourceWorking.fieldPresentation)saved.project.working.fieldPresentation=clone(sourceWorking.fieldPresentation);if(sourceWorking.interlacing)saved.project.working.interlacing=clone(sourceWorking.interlacing);}}
  $('carrier-name').value=name;display.originalGrid=true;display.weaveSource=false;display.weaveDerived=!!saved.project.working.weave;display.attractor=Boolean(sourceResult);if(saved.project.working.interlacing?.enabled)display=applyDisplayPreset(display,'derived-only');saveView();carrierPreview=saved.project.working;renderCanvas();$('preset-apply-state').textContent=`PREVIEW · ${name} · SAVING…`;await new Promise(resolve=>requestAnimationFrame(resolve));await editWorking(saved.project.working,`${name} CREATED FROM ${savedChoice?'YOUR SAVED WEAVE':'PRESET'}, FIT TO THIS BOUNDARY, SHOWN, AND SAVED.`,{projectUpdate:saved.project,saveWeaveName:sourceResult?nextLibraryName(base.weaveStudies,'WEAVE RESULT'):null});libraryTemplateRevisionId=saved.revisionId;$('carrier-section').open=true;$('field-section').open=true;$('preset-apply-state').textContent=`APPLIED + SAVED · ${name}`;
  }catch(error){$('preset-apply-state').textContent=`NOT APPLIED · ${error.message}`;throw error;}finally{applyingPreset=false;select.disabled=false;select.value='';}});};
 $('stitch-preset').oninput=applyPresetSelection;
 $('stitch-preset').onchange=applyPresetSelection;
-
-$('save-carrier').onclick=()=>attempt(()=>commitPatternCarrier(project().working.carrier,'WEAVE PATTERN UPDATED AUTOMATICALLY.'));
-
+
+function confirmWeaveSaved(){const notice=$('save-weave-state');notice.dataset.state='applied';notice.textContent='SAVED';status('SAVED');}
+$('save-carrier').onclick=()=>attempt(async()=>{if(savingWeave)return;const current=project();if(!current.working.carrier)throw new Error('Create a weave before saving.');savingWeave=true;$('save-carrier').disabled=true;try{let base=current;if(!base.working.sourceRevisionId)base=saveBoundary(clone(base),$('boundary-name').value||nextLibraryName(base.boundaries,'BOUNDARY')).project;const saved=finalizeSavedWeaveRecord(base,currentPatternName(base),{generatorVersion:BUILD});if(!saved.created){if(saved.project!==base)await editWorking(saved.project.working,'SAVED',{projectUpdate:saved.project,feedback:{scope:'pattern',label:'SAVED'}});confirmWeaveSaved();return;}const saveWeaveName=saved.project.working.weave?currentWeaveName(saved.project.working,saved.project):null;$('carrier-name').value=findCarrierRevision(saved.project,saved.revisionId).entry.name;await editWorking(saved.project.working,'SAVED',{projectUpdate:saved.project,saveWeaveName,feedback:{scope:'pattern',label:'SAVED'}});confirmWeaveSaved();}finally{savingWeave=false;$('save-carrier').disabled=!project().working.carrier;}});
+
 async function saveCurrentWeaveRevision(){const trusted=isCertifiedStudy(project().working.weave),result=saveWeaveStudy(project(),$('weave-name').value,trusted,true),next={...workspace,projects:workspace.projects.map(p=>p.id===result.project.id?result.project:p)},savedStatus='INFLUENCED GRID SAVED. INFLUENCES, FAMILY RESPONSES, GEOMETRY, AND LINEAGE RETAINED.';workspace=next;acceptedVersion++;autosave.accept({workspace:next,trusted},{savedStatus});render();status(`${savedStatus} BACKUP PENDING.`);}
-
-$('save-weave').onclick=()=>attempt(saveCurrentWeaveRevision);$('save-influence').onclick=()=>attempt(saveCurrentWeaveRevision);
-
-
-
-
-
+
+$('save-weave').onclick=()=>attempt(saveCurrentWeaveRevision);$('save-influence').onclick=()=>attempt(saveCurrentWeaveRevision);
+
+
+
+
+
 let crossingJob=null,crossingCache=null,crossingFailure=null,crossingSequence=0,lastWovenPresentation=null,primedCrossingWorker=null;
 
 function primeCrossingWorker(){if(primedCrossingWorker)return;try{const worker=new Worker(new URL('./crossing-worker.mjs',import.meta.url),{type:'module'});primedCrossingWorker=worker;worker.onerror=()=>{if(primedCrossingWorker===worker){primedCrossingWorker=null;worker.terminate();}};}catch{primedCrossingWorker=null;}}
@@ -587,53 +607,53 @@ primeCrossingWorker();
 function displayedWeaveWorking(){const w=carrierPreview||pending?.working||project().working;return w.weave&&!w.weave.derived?project().working:w;}
 function crossingPaintKey(w){return w.weave?.derived?.provenanceFingerprint+JSON.stringify([w.interlacing,threadPreview||w.threadAppearance,fieldPresentationPreview||w.fieldPresentation]);}
 function wovenPresentationIdentity(w){return JSON.stringify([project().id,w.weave?.studyId,w.boundary]);}
-
+
 function renderInterlaceControls(){const w=project().working,names=w.carrier?familyEntries(w).map(entry=>entry.key):[],v=w.interlacing||defaultInterlacing();$('interlace-controls').hidden=!names.length;$('interlace-prerequisite').hidden=!!names.length;$('interlace-enabled').checked=v.enabled;$('interlace-family').replaceChildren(...names.map(name=>{const o=document.createElement('option');o.value=name;o.textContent=familyLabel(name,w);return o}));$('interlace-family').value=names.includes(v.topFamily)?v.topFamily:names[0]||'';renderRuleControls(v,names,w.carrier);$('interlace-gap').value=v.clearance;$('interlace-gap-value').value=v.clearance;const contact=effectiveContactTension(v);$('contact-tension-enabled').checked=contact.enabled;for(const key of ['base','adaptive']){$('contact-tension-'+key).value=contact[key];$('contact-tension-'+key+'-value').value=contact[key]+'%';}$('contact-tension-status').textContent=contact.enabled?'ACTIVE · '+contact.base+'% BASE · '+contact.adaptive+'% ADAPTIVE':'OFF · CURRENT CLEAN CROSSING CLEARANCE';for(const id of ['interlace-enabled','interlace-family','interlace-gap','interlace-reset','interlace-upper','interlace-swap','interlace-clear','contact-tension-enabled','contact-tension-base','contact-tension-adaptive','contact-tension-reset'])$(id).disabled=!!pending||threadSaving;if(pending)$('interlace-status').textContent='GEOMETRY PENDING — SHOWING LAST COMMITTED WEAVE';}
-function renderRuleControls(v,names,carrier){
- const rule=v.rule||{...defaultRule(carrier?.recipeId||''),mode:'priority'},current=parseInterlaceTarget(activeInterlaceTarget,names);
- if(activeInterlaceTarget===null||current.kind==='default'&&activeInterlaceTarget)activeInterlaceTarget='';
- const pairs=[];for(let i=0;i<names.length;i++)for(let j=i+1;j<names.length;j++)pairs.push([pairTarget(names[i],names[j]),`ONLY ${familyLabel(names[i])} WITH ${familyLabel(names[j])}`]);
- const targetOptions=[['','THE WHOLE WEAVE'],...names.map(name=>[name,`CROSSINGS INVOLVING ${familyLabel(name)}`]),...pairs];$('interlace-target').replaceChildren(...targetOptions.map(([value,text])=>{const option=document.createElement('option');option.value=value;option.textContent=text;return option;}));if(!targetOptions.some(([value])=>value===activeInterlaceTarget))activeInterlaceTarget='';$('interlace-target').value=activeInterlaceTarget;
- const target=parseInterlaceTarget(activeInterlaceTarget,names),targetValues=target.kind==='family'?familyRepeatRule(rule,target.family,names):target.kind==='pair'?pairRepeatRule(rule,target.first,target.second):null,inherited=target.kind!=='default'&&!targetValues,mode=targetValues?(targetValues.over===1&&targetValues.under===1?'alternating':targetValues.over===2&&targetValues.under===1?'two-over-one':'grouped'):namedRuleMode(rule),values=targetValues||rule;
-
+function renderRuleControls(v,names,carrier){
+ const rule=v.rule||{...defaultRule(carrier?.recipeId||''),mode:'priority'},current=parseInterlaceTarget(activeInterlaceTarget,names);
+ if(activeInterlaceTarget===null||current.kind==='default'&&activeInterlaceTarget)activeInterlaceTarget='';
+ const pairs=[];for(let i=0;i<names.length;i++)for(let j=i+1;j<names.length;j++)pairs.push([pairTarget(names[i],names[j]),`ONLY ${familyLabel(names[i])} WITH ${familyLabel(names[j])}`]);
+ const targetOptions=[['','THE WHOLE WEAVE'],...names.map(name=>[name,`CROSSINGS INVOLVING ${familyLabel(name)}`]),...pairs];$('interlace-target').replaceChildren(...targetOptions.map(([value,text])=>{const option=document.createElement('option');option.value=value;option.textContent=text;return option;}));if(!targetOptions.some(([value])=>value===activeInterlaceTarget))activeInterlaceTarget='';$('interlace-target').value=activeInterlaceTarget;
+ const target=parseInterlaceTarget(activeInterlaceTarget,names),targetValues=target.kind==='family'?familyRepeatRule(rule,target.family,names):target.kind==='pair'?pairRepeatRule(rule,target.first,target.second):null,inherited=target.kind!=='default'&&!targetValues,mode=targetValues?(targetValues.over===1&&targetValues.under===1?'alternating':targetValues.over===2&&targetValues.under===1?'two-over-one':'grouped'):namedRuleMode(rule),values=targetValues||rule;
+
  $('interlace-rule').value=mode;for(const option of $('interlace-rule').options)option.disabled=names.length<2||(target.kind!=='default'&&['preset','seeded','priority'].includes(option.value));$('interlace-invert').checked=rule.inverted;$('interlace-invert').parentElement.hidden=target.kind!=='default';$('interlace-preset').hidden=target.kind!=='default';$('interlace-clear-family').hidden=target.kind==='default'||!targetValues;
- $('interlace-clear-family').textContent=target.kind==='pair'?'USE ALL-FAMILIES DEFAULT FOR THIS PAIR':'REMOVE THIS FAMILY’S SPECIAL RULES';
-
+ $('interlace-clear-family').textContent=target.kind==='pair'?'USE ALL-FAMILIES DEFAULT FOR THIS PAIR':'REMOVE THIS FAMILY’S SPECIAL RULES';
+
  for(const k of ['over','under','phase']){$('interlace-'+k).value=values[k];$('interlace-'+k+'-value').value=values[k];}const structured=withStructuredVariation(rule);for(const k of ['seed','balance','max-run']){const key=k==='max-run'?'maxRun':k;$('interlace-'+k).value=structured[key];$('interlace-'+k+'-value').value=structured[key];}
-
+
  $('interlace-repeat-controls').hidden=!['alternating','two-over-one','grouped'].includes(mode);$('interlace-seeded-controls').hidden=mode!=='seeded'||target.kind!=='default';$('interlace-family').parentElement.hidden=mode!=='priority'||target.kind!=='default';$('interlace-over-row').hidden=mode!=='grouped';$('interlace-under-row').hidden=mode!=='grouped';
-
+
  const descriptions={preset:rule.recipe?'USES THE WEAVING RHYTHM SAVED WITH THIS PATTERN. UNCLEAR MEETINGS STAY UNWOVEN.':'NO PRESET RHYTHM IS SAVED, SO THIS ALTERNATES OVER AND UNDER.',alternating:'ONE OVER, THEN ONE UNDER.', 'two-over-one':'TWO OVER, THEN ONE UNDER.',grouped:'SET HOW MANY CROSSINGS STAY OVER AND UNDER BEFORE REPEATING.',seeded:'A REPEATABLE SEED VARIES THE ORDER WHILE BALANCE AND MAXIMUM RUN KEEP IT CONTROLLED.',priority:'THE CHOSEN FAMILY STAYS ABOVE THE OTHERS.'};
- const targetLabel=target.kind==='family'?`CROSSINGS INVOLVING ${familyLabel(target.family)}`:target.kind==='pair'?`${familyLabel(target.first)} WITH ${familyLabel(target.second)}`:'THE WHOLE WEAVE';
- const inheritance=target.kind==='family'?`${familyLabel(target.family)} CURRENTLY USES THE WHOLE-WEAVE RULE. `:target.kind==='pair'?`THIS PAIR CURRENTLY USES THE WHOLE-WEAVE RULE. `:'';
- $('interlace-rule-help').textContent=(inherited?inheritance:'')+descriptions[mode]+(target.kind==='default'&&rule.pairs.length?' PAIR-SPECIFIC RULES STILL WIN WHERE THEY EXIST.':'');
+ const targetLabel=target.kind==='family'?`CROSSINGS INVOLVING ${familyLabel(target.family)}`:target.kind==='pair'?`${familyLabel(target.first)} WITH ${familyLabel(target.second)}`:'THE WHOLE WEAVE';
+ const inheritance=target.kind==='family'?`${familyLabel(target.family)} CURRENTLY USES THE WHOLE-WEAVE RULE. `:target.kind==='pair'?`THIS PAIR CURRENTLY USES THE WHOLE-WEAVE RULE. `:'';
+ $('interlace-rule-help').textContent=(inherited?inheritance:'')+descriptions[mode]+(target.kind==='default'&&rule.pairs.length?' PAIR-SPECIFIC RULES STILL WIN WHERE THEY EXIST.':'');
  if(['alternating','two-over-one','grouped'].includes(mode)){$('interlace-sequence').textContent='SEQUENCE · '+repeatSequence(values.over,values.under,values.phase).join(' · ')+' · '+targetLabel;}
  else if(mode==='seeded'){$('interlace-sequence').textContent='SEEDED SAMPLE · '+seededVariationSequence(structured.seed,structured.balance,structured.maxRun,12).map(value=>value?'OVER':'UNDER').join(' · ')+' · '+targetLabel;}
  else $('interlace-sequence').textContent=mode==='preset'?(rule.recipe?'SEQUENCE · AUTHORED BY PRESET':'SEQUENCE · FALLBACK · OVER · UNDER'):mode==='priority'?'SEQUENCE · SELECTED FAMILY ALWAYS ABOVE':'SEQUENCE · NOT APPLICABLE';
-
- $('interlace-effective').textContent=target.kind==='default'?'START WITH ONE RULE FOR THE WHOLE WEAVE. CHOOSE A FAMILY OR PAIR ABOVE ONLY WHEN IT NEEDS A DIFFERENT RHYTHM.':'THIS SPECIAL RULE REPLACES THE WHOLE-WEAVE RULE ONLY FOR THE SELECTED CROSSINGS.';
-
+
+ $('interlace-effective').textContent=target.kind==='default'?'START WITH ONE RULE FOR THE WHOLE WEAVE. CHOOSE A FAMILY OR PAIR ABOVE ONLY WHEN IT NEEDS A DIFFERENT RHYTHM.':'THIS SPECIAL RULE REPLACES THE WHOLE-WEAVE RULE ONLY FOR THE SELECTED CROSSINGS.';
+
  for(const id of ['rule','target','over','under','phase','seed','balance','max-run','new-seed','invert','preset','clear-family'])$('interlace-'+id).disabled=!!pending||threadSaving;
-
-}
-
-async function editSelectedCrossing(action){const w=project().working,key=w.weave?.derived.provenanceFingerprint;if(pending||threadSaving||crossingCache?.key!==key||crossingJob)throw Error('Select a current crossing and wait for the current change.');const e=selectedCrossingEvent(selectedCrossing,key,crossingCache.result.events);if(!e)throw Error('This crossing is no longer editable.');const before=resolveWeaveRules(w.weave.derived.strands,crossingCache.result,w.interlacing,key).get(e.id),choice=$('interlace-upper').value===''?null:$('interlace-upper').value==='true',v=editCrossingOverride(w.interlacing,key,e.id,before,action,choice);validateInterlacing(v);selectedCrossing=crossingSelectionRecord(key,e);await commitThreadAppearance(null,v);}
-$('interlace-upper').onchange=()=>attempt(()=>editSelectedCrossing('choose'));
-$('interlace-swap').onclick=()=>attempt(()=>editSelectedCrossing('swap'));
-$('interlace-clear').onclick=()=>attempt(()=>editSelectedCrossing('clear'));
-
-$('interlace-target').onchange=()=>{activeInterlaceTarget=$('interlace-target').value;renderInterlaceControls();};
-
+
+}
+
+async function editSelectedCrossing(action){const w=project().working,key=w.weave?.derived.provenanceFingerprint;if(pending||threadSaving||crossingCache?.key!==key||crossingJob)throw Error('Select a current crossing and wait for the current change.');const e=selectedCrossingEvent(selectedCrossing,key,crossingCache.result.events);if(!e)throw Error('This crossing is no longer editable.');const before=resolveWeaveRules(w.weave.derived.strands,crossingCache.result,w.interlacing,key).get(e.id),choice=$('interlace-upper').value===''?null:$('interlace-upper').value==='true',v=editCrossingOverride(w.interlacing,key,e.id,before,action,choice);validateInterlacing(v);selectedCrossing=crossingSelectionRecord(key,e);await commitThreadAppearance(null,v);}
+$('interlace-upper').onchange=()=>attempt(()=>editSelectedCrossing('choose'));
+$('interlace-swap').onclick=()=>attempt(()=>editSelectedCrossing('swap'));
+$('interlace-clear').onclick=()=>attempt(()=>editSelectedCrossing('clear'));
+
+$('interlace-target').onchange=()=>{activeInterlaceTarget=$('interlace-target').value;renderInterlaceControls();};
+
 function previewRuleSequence(){const mode=$('interlace-rule').value;if(mode==='seeded'){$('interlace-sequence').textContent='SEEDED SAMPLE · '+seededVariationSequence(Number($('interlace-seed').value),Number($('interlace-balance').value),Number($('interlace-max-run').value),12).map(value=>value?'OVER':'UNDER').join(' · ');return}if(!['alternating','two-over-one','grouped'].includes(mode))return;const values=mode==='alternating'?{over:1,under:1}:mode==='two-over-one'?{over:2,under:1}:{over:Number($('interlace-over').value),under:Number($('interlace-under').value)};$('interlace-sequence').textContent='SEQUENCE · '+repeatSequence(values.over,values.under,Number($('interlace-phase').value)).join(' · ');}
 for(const k of ['over','under','phase']){$('interlace-'+k).oninput=()=>{$('interlace-'+k+'-value').value=$('interlace-'+k).value;previewRuleSequence();};$('interlace-'+k).onchange=()=>attempt(()=>updateInterlacing(false,true));}
 for(const k of ['seed','balance','max-run']){$('interlace-'+k).oninput=()=>{$('interlace-'+k+'-value').value=$('interlace-'+k).value;previewRuleSequence();};$('interlace-'+k).onchange=()=>attempt(()=>updateInterlacing(false,true));}
 $('interlace-new-seed').onclick=()=>attempt(()=>{const next=(Math.imul(Number($('interlace-seed').value),1664525)+1013904223)>>>0;$('interlace-seed').value=next%65536;$('interlace-seed-value').value=next%65536;return updateInterlacing(false,true);});
-
-$('interlace-rule').onchange=()=>attempt(()=>updateInterlacing(false,true));$('interlace-invert').onchange=()=>attempt(()=>updateInterlacing(false,true));
-
-$('interlace-preset').onclick=()=>attempt(()=>updateInterlacing(false,true,true));
-$('interlace-clear-family').onclick=()=>attempt(()=>updateInterlacing(false,true,false,true));
-
+
+$('interlace-rule').onchange=()=>attempt(()=>updateInterlacing(false,true));$('interlace-invert').onchange=()=>attempt(()=>updateInterlacing(false,true));
+
+$('interlace-preset').onclick=()=>attempt(()=>updateInterlacing(false,true,true));
+$('interlace-clear-family').onclick=()=>attempt(()=>updateInterlacing(false,true,false,true));
+
 function ensureCrossings(w){
  if(!w.interlacing?.enabled||!w.weave?.derived)return;
  const key=w.weave.derived.provenanceFingerprint,paintKey=crossingPaintKey(w);
@@ -662,28 +682,28 @@ function ensureCrossings(w){
 
 function effectiveRuleText(detail,w){const mode={priority:'KEEP ONE FAMILY ABOVE',preset:'PATTERN PRESET',alternating:'ALTERNATING 1 / 1','two-over-one':'REPEAT 2 OVER / 1 UNDER',grouped:'CUSTOM REPEAT',seeded:'SEEDED STRUCTURED VARIATION',manual:'MANUAL CROSSING OVERRIDE'}[detail.mode],suffix=detail.inverted?' · INVERTED':'';if(detail.kind==='manual')return'CONTROLLING RULE · '+mode;if(detail.kind==='pair'){const x=detail.relationship;return`CONTROLLING RULE · FAMILY-PAIR RULE · ${familyLabel(x.first,w)} WITH ${familyLabel(x.second,w)} · ${mode}${suffix}`;}if(detail.kind==='preset')return'CONTROLLING RULE · PATTERN PRESET'+(detail.assigned?'':' · NO AUTHORED ORDER FOR THIS MEETING')+suffix;return'CONTROLLING RULE · WHOLE WEAVE · '+mode+suffix;}
 function renderCrossingMarks(layer,w){if(!w.weave||!w.interlacing?.enabled){$('interlace-status').textContent='OFF';return;}const key=w.weave.derived.provenanceFingerprint,paintKey=crossingPaintKey(w);if(crossingFailure?.paintKey===paintKey){$('interlace-status').textContent='INTERLACING UNAVAILABLE: '+crossingFailure.message;return;}if(crossingCache?.paintKey!==paintKey||crossingJob){$('interlace-status').textContent='UPDATING WOVEN VIEW — KEEPING LAST COMPLETE PRESENTATION';return;}const r=crossingCache.result,stale=w.interlacing.overrides.length&&w.interlacing.source!==key;$('interlace-status').textContent=r.counts.crossings+' CROSSINGS · '+r.counts.contacts+' CONTACT PAIRS · '+r.counts.overlaps+' OVERLAP PAIRS · '+r.counts.multiway+' AMBIGUOUS · '+crossingCache.workerMs.toFixed(1)+' MS WORKER'+(stale?' · PREVIOUS OVERRIDES INACTIVE':'')+' · '+(stale?0:w.interlacing.overrides.length)+' LOCAL OVERRIDES · REPRESENTED PATHS';const assignments=resolveWeaveRules(w.weave.derived.strands,r,w.interlacing,key);$('interlace-status').textContent+='  |  '+assignments.size+' ASSIGNED  |  '+(r.events.length-assignments.size)+' UNRESOLVED';const chosen=selectedCrossingEvent(selectedCrossing,key,r.events);$('interlace-choice').hidden=!chosen;$('interlace-local-actions').hidden=!chosen;if(chosen){const description=s=>s.identity?s.identity.roleId+' / '+s.identity.runKey+' / ROW '+s.identity.row+' COL '+s.identity.column:familyOf(s)+' / LINE '+s.k;const a=description(w.weave.derived.strands[chosen.a.si]),b=description(w.weave.derived.strands[chosen.b.si]),assigned=assignments.has(chosen.id),detail=effectiveWeaveRule(w.weave.derived.strands,r,w.interlacing,key,chosen,assignments);$('interlace-selected').textContent='SELECTED: '+a+' WITH '+b+(assigned?' · UPPER: '+(assignments.get(chosen.id)?a:b):' · UNASSIGNED');$('interlace-rule-source').textContent=effectiveRuleText(detail,w);$('interlace-upper').replaceChildren(...[['','UNASSIGNED - CHOOSE UPPER THREAD'],[true,a],[false,b]].map(([value,text])=>{const o=document.createElement('option');o.value=String(value);o.textContent=text;return o;}));$('interlace-upper').value=assigned?String(assignments.get(chosen.id)):'';$('interlace-swap').disabled=!!pending||threadSaving||!assigned;$('interlace-swap').title=assigned?'Reverse this crossing.':'Choose an upper thread before swapping.';}else{$('interlace-selected').textContent='CLICK A MARK TO SELECT IT. CHOOSE ITS UPPER THREAD OR USE SWAP BELOW.';$('interlace-rule-source').textContent='SELECT A CROSSING TO SEE WHICH RULE CONTROLS IT.';}if(!$('interlace-marks').checked)return;const events=r.events.filter(e=>!e.ambiguous).map(e=>({e,q:toScreen(e,view,width,height)})).filter(({q})=>q.x>=0&&q.x<=width&&q.y>=0&&q.y<=height);if(events.length>1000)$('interlace-status').textContent+=' | FIRST 1000 VISIBLE MARKS SHOWN';for(const {e,q} of events.slice(0,1000)){const active=chosen?.id===e.id,mark=svgElement('circle',{cx:q.x,cy:q.y,r:active?8:6,fill:active?'var(--accent)':'var(--paper)',stroke:'var(--ink)','stroke-width':active?2:1,'data-crossing':e.id,tabindex:0,role:'button','aria-label':'Select crossing','aria-pressed':String(active),style:'cursor:pointer;pointer-events:all'});bindCrossingMarker(mark,()=>{if(pending||threadSaving)return;selectedCrossing=crossingSelectionRecord(key,e);renderDerivedWeaveLayer();$('interlace-section').open=true;});layer.append(mark);}}
-
-
+
+
 async function updateInterlacing(reset=false,ruleEdit=false,preset=false,clearTarget=false){if(pending||threadSaving)throw Error('Wait for the pending save.');const w=project().working,v=clone(w.interlacing||defaultInterlacing()),names=familyNames(w.carrier),target=parseInterlaceTarget(activeInterlaceTarget,names);v.enabled=$('interlace-enabled').checked;v.topFamily=$('interlace-family').value;v.clearance=Number($('interlace-gap').value);if(ruleEdit){const selectedMode=$('interlace-rule').value;v.version=v.version==='interlacing-v4'?'interlacing-v4':v.version==='interlacing-v3'||selectedMode==='seeded'?'interlacing-v3':'interlacing-v2';v.rule=clone(v.rule||{...defaultRule(w.carrier?.recipeId||''),mode:'priority'});if(v.version==='interlacing-v3')v.rule=withStructuredVariation(v.rule);if(clearTarget){v.rule=target.kind==='pair'?clearPairRule(v.rule,target.first,target.second):clearFamilyRule(v.rule,target.family,names);}else if(preset){v.rule=defaultRule(w.carrier?.recipeId||'');if(v.version==='interlacing-v3')v.rule=withStructuredVariation(v.rule);v.enabled=true;v.overrides=[];v.source='';activeInterlaceTarget='';}else if(target.kind!=='default'){if(selectedMode==='seeded')throw Error('Seeded variation applies to the whole weave; pair and family rules remain explicit.');const current=target.kind==='pair'?pairRepeatRule(v.rule,target.first,target.second):familyRepeatRule(v.rule,target.family,names),currentMode=current?(current.over===1&&current.under===1?'alternating':current.over===2&&current.under===1?'two-over-one':'grouped'):null,freshGrouped=selectedMode==='grouped'&&currentMode!=='grouped',values={over:selectedMode==='alternating'?1:selectedMode==='two-over-one'?2:freshGrouped?2:Number($('interlace-over').value),under:selectedMode==='alternating'||selectedMode==='two-over-one'?1:freshGrouped?2:Number($('interlace-under').value),phase:['alternating','two-over-one'].includes(selectedMode)||freshGrouped?0:Number($('interlace-phase').value)};v.rule=target.kind==='pair'?applyPairNamedRule(v.rule,target.first,target.second,selectedMode,values):applyFamilyNamedRule(v.rule,target.family,names,selectedMode,values);}else {const priorMode=namedRuleMode(v.rule);v.rule=applyNamedRuleMode(v.rule,selectedMode);v.rule.inverted=$('interlace-invert').checked;const mode=namedRuleMode(v.rule),freshGrouped=selectedMode==='grouped'&&priorMode!=='grouped',values={over:mode==='alternating'?1:mode==='two-over-one'?2:freshGrouped?v.rule.over:Number($('interlace-over').value),under:mode==='alternating'||mode==='two-over-one'?1:freshGrouped?v.rule.under:Number($('interlace-under').value),phase:Number($('interlace-phase').value)};if(v.rule.mode==='repeat')Object.assign(v.rule,values);if(v.rule.mode==='seeded')Object.assign(v.rule,{seed:Number($('interlace-seed').value),balance:Number($('interlace-balance').value),maxRun:Number($('interlace-max-run').value)});}}if(reset){v.overrides=[];v.source='';}validateInterlacing(v);if(v.enabled)display=applyDisplayPreset(display,'derived-only');if(!w.weave){let base=createWeaveStudy(project(),w.carrierSourceRevisionId);base.working.interlacing=v;await editWorking(base.working,'INTERLACING CREATED AND SAVED.',{projectUpdate:base,saveWeaveName:nextLibraryName(base.weaveStudies,'WEAVE')});}else await commitThreadAppearance(null,v);if(v.enabled)saveView();}
-
+
 async function updateContactTension(reset=false){if(pending||threadSaving)throw Error('Wait for the pending save.');const w=project().working,v=clone(w.interlacing||defaultInterlacing());v.version='interlacing-v4';v.rule=clone(v.rule||{...defaultRule(w.carrier?.recipeId||''),mode:'priority'});v.contact=reset?{...CONTACT_TENSION_DEFAULT}:{enabled:$('contact-tension-enabled').checked,base:Number($('contact-tension-base').value),adaptive:Number($('contact-tension-adaptive').value)};validateInterlacing(v);if(!w.weave){let created=createWeaveStudy(project(),w.carrierSourceRevisionId);created.working.interlacing=v;await editWorking(created.working,'CONTACT RESPONSE CREATED AND SAVED.',{projectUpdate:created,saveWeaveName:nextLibraryName(created.weaveStudies,'WEAVE')});}else await commitThreadAppearance(null,v);}
 for(const key of ['base','adaptive']){$('contact-tension-'+key).oninput=()=>{$('contact-tension-enabled').checked=true;$('contact-tension-'+key+'-value').value=$('contact-tension-'+key).value+'%';$('contact-tension-status').textContent='RELEASE TO APPLY CONTACT RESPONSE';};$('contact-tension-'+key).onchange=()=>attempt(()=>updateContactTension());}$('contact-tension-enabled').onchange=()=>{if($('contact-tension-enabled').checked&&Number($('contact-tension-base').value)===100){$('contact-tension-base').value=40;$('contact-tension-base-value').value='40%';}attempt(()=>updateContactTension());};$('contact-tension-reset').onclick=()=>attempt(()=>updateContactTension(true));
-$('interlace-enabled').onchange=()=>attempt(()=>updateInterlacing());$('interlace-family').onchange=()=>attempt(()=>updateInterlacing());$('interlace-gap').oninput=()=>{$('interlace-gap-value').value=$('interlace-gap').value;};$('interlace-gap').onchange=()=>attempt(()=>updateInterlacing());$('interlace-marks').onchange=()=>renderDerivedWeaveLayer();$('interlace-reset').onclick=()=>attempt(()=>updateInterlacing(true));$('interlace-retry').onclick=()=>attempt(()=>{if(pending)throw Error('Wait for geometry to finish.');if(crossingJob){crossingJob.worker.terminate();clearTimeout(crossingJob.timer);crossingJob=null;}crossingCache=null;crossingFailure=null;renderDerivedWeaveLayer();});
-
-
-
+$('interlace-enabled').onchange=()=>attempt(()=>updateInterlacing());$('interlace-family').onchange=()=>attempt(()=>updateInterlacing());$('interlace-gap').oninput=()=>{$('interlace-gap-value').value=$('interlace-gap').value;};$('interlace-gap').onchange=()=>attempt(()=>updateInterlacing());$('interlace-marks').onchange=()=>renderDerivedWeaveLayer();$('interlace-reset').onclick=()=>attempt(()=>updateInterlacing(true));$('interlace-retry').onclick=()=>attempt(()=>{if(pending)throw Error('Wait for geometry to finish.');if(crossingJob){crossingJob.worker.terminate();clearTimeout(crossingJob.timer);crossingJob=null;}crossingCache=null;crossingFailure=null;renderDerivedWeaveLayer();});
+
+
+
 let threadPreview=null,threadSaving=false;
 
 function renderFieldPresentationControls(){const settings=effectiveFieldPresentation(fieldPresentationPreview||project().working.fieldPresentation),disabled=threadSaving||!!pending;$('field-edge-mode').value=settings.mode;$('field-recovery').value=Math.round(settings.recoveryLength*100);$('field-recovery-value').value=Math.round(settings.recoveryLength*100)+'%';$('field-variation').value=Math.round(settings.endVariation*100);$('field-variation-value').value=Math.round(settings.endVariation*100)+'%';$('field-relaxation').value=Math.round(settings.relaxation*100);$('field-relaxation-value').value=Math.round(settings.relaxation*100)+'%';$('field-boundary-emphasis').value=settings.boundaryEmphasis;$('field-presentation-status').textContent=settings.mode.toUpperCase()+' · '+Math.round(settings.recoveryLength*100)+'% EXTENT · '+Math.round(settings.endVariation*100)+'% VARIATION';for(const id of ['field-edge-mode','field-recovery','field-variation','field-relaxation','field-boundary-emphasis','field-presentation-reset'])$(id).disabled=disabled;}
-
+
 function renderThreadControls(){const w=project().working,names=w.carrier?familyEntries(w).map(entry=>entry.key):[];$('thread-controls').hidden=!names.length;$('thread-prerequisite').hidden=!!names.length;const selected=$('thread-family').value;$('thread-family').replaceChildren(...names.map(name=>{const o=document.createElement('option');o.value=name;o.textContent=familyLabel(name,w);return o}));$('thread-family').value=names.includes(selected)?selected:names[0]||'';if(names.length){const q=threadStyle(w.threadAppearance,$('thread-family').value);$('thread-width').value=q.width;$('thread-width-value').value=q.width;$('thread-rank').value=q.rank||1;$('thread-rank-value').value=q.rank||1;$('thread-edge').value=q.edgeWidth??1;$('thread-edge-value').value=q.edgeWidth??1;$('thread-edge-row').hidden=false;}renderFieldPresentationControls();for(const id of ['thread-width','thread-rank','thread-edge','thread-reset','thread-family','thread-linked'])$(id).disabled=threadSaving||!!pending;}
-
-function appearanceFromControls(patch){return changeThreadAppearance(project().working.threadAppearance,familyNames(project().working.carrier),$('thread-family').value,$('thread-linked').checked,patch);}
-
+
+function appearanceFromControls(patch){return changeThreadAppearance(project().working.threadAppearance,familyNames(project().working.carrier),$('thread-family').value,$('thread-linked').checked,patch);}
+
 function commitThreadAppearance(appearance,interlacePatch=null){const next=copyWorkingForEdit(project().working);if(appearance)next.threadAppearance=appearance;if(interlacePatch)next.interlacing=interlacePatch;return updateWorking(next,'APPEARANCE UPDATED.',{presentation:true,interlacePatch});}
 function previewFieldPresentation(patch,commit=false){const value=changeFieldPresentation(project().working.fieldPresentation,patch);if(!commit){fieldPresentationPreview=value;renderThreadControls();renderCanvas();return;}const next=copyWorkingForEdit(project().working);next.fieldPresentation=value;fieldPresentationPreview=null;return updateWorking(next,'FIELD PRESENTATION UPDATED.',{presentation:true});}
-async function savePresentationEdit(working,interlacePatch=null){if(pending||threadSaving)throw Error('Wait for the current change to finish.');const started=performance.now(),plan=presentationPlan(interlacePatch?'crossing-rules':'appearance'),fieldChanged=JSON.stringify(working.fieldPresentation)!==JSON.stringify(project().working.fieldPresentation);threadPreview=null;fieldPresentationPreview=null;threadSaving=true;renderThreadControls();try{const before=project().working,base=copyProjectForEdit(project());base.working=working;const saved=base.working.weave?saveWeaveStudy(base,currentWeaveName(base.working,base),true,true).project:saveCarrierStudy(base,currentPatternName(base)).project,next={...workspace,projects:workspace.projects.map(p=>p.id===saved.id?saved:p)},savedStatus=interlacePatch?'INTERLACING RULE SAVED. GEOMETRY UNCHANGED.':fieldChanged?'FIELD PRESENTATION SAVED. GEOMETRY UNCHANGED.':'THREAD APPEARANCE SAVED. GEOMETRY UNCHANGED.';workspace=next;acceptedVersion++;history().recordImmutable(before);autosave.accept({workspace:next},{savedStatus,started});status(`${savedStatus} BACKUP PENDING.`);}finally{threadSaving=false;render();workerEvent('presentation-applied',{totalMs:performance.now()-started,plan});}}
-
+async function savePresentationEdit(working,interlacePatch=null){if(pending||threadSaving)throw Error('Wait for the current change to finish.');const started=performance.now(),plan=presentationPlan(interlacePatch?'crossing-rules':'appearance'),fieldChanged=JSON.stringify(working.fieldPresentation)!==JSON.stringify(project().working.fieldPresentation);threadPreview=null;fieldPresentationPreview=null;threadSaving=true;renderThreadControls();try{const before=project().working,base=copyProjectForEdit(project());base.working=working;const saved=base.working.weave?saveWeaveStudy(base,currentWeaveName(base.working,base),true,true).project:saveCarrierStudy(base,currentPatternName(base),{generatorVersion:BUILD}).project,next={...workspace,projects:workspace.projects.map(p=>p.id===saved.id?saved:p)},savedStatus=interlacePatch?'INTERLACING RULE SAVED. GEOMETRY UNCHANGED.':fieldChanged?'FIELD PRESENTATION SAVED. GEOMETRY UNCHANGED.':'THREAD APPEARANCE SAVED. GEOMETRY UNCHANGED.';workspace=next;acceptedVersion++;history().recordImmutable(before);autosave.accept({workspace:next},{savedStatus,started});status(`${savedStatus} BACKUP PENDING.`);}finally{threadSaving=false;render();workerEvent('presentation-applied',{totalMs:performance.now()-started,plan});}}
+
 function appearanceParameterEdit(id,key,event,commit){
  if(pending||threadSaving)throw Error('Wait for the current change to finish.');
  const value=sliderEventNumber(event,$(id)),family=$('thread-family').value,linked=$('thread-linked').checked;$(id+'-value').value=value;
@@ -702,30 +722,30 @@ $('field-edge-mode').onchange=event=>attempt(()=>previewFieldPresentation({mode:
 $('field-boundary-emphasis').onchange=event=>attempt(()=>previewFieldPresentation({boundaryEmphasis:event.target.value},true));
 for(const [id,key] of [['field-recovery','recoveryLength'],['field-variation','endVariation'],['field-relaxation','relaxation']]){const control=$(id);control.oninput=event=>attempt(()=>{const value=sliderEventNumber(event,control)/100;$(`${id}-value`).value=Math.round(value*100)+'%';return previewFieldPresentation({[key]:value});});control.onchange=event=>attempt(()=>previewFieldPresentation({[key]:sliderEventNumber(event,control)/100},true));}
 $('field-presentation-reset').onclick=()=>attempt(()=>previewFieldPresentation({...FIELD_PRESENTATION_DEFAULT},true));
-
-
-
+
+
+
 async function certifyCurrentForExport(working,boardId){if(!idleDerivationWorker)primeIdleDerivationWorker();const worker=idleDerivationWorker;idleDerivationWorker=null;try{await certifyWorking(working,boardId,worker);idleDerivationWorker=worker;}catch(error){worker?.terminate();primeIdleDerivationWorker();throw error;}}
 async function certifiedExportState(){if(pending)throw Error('Wait for certified geometry or cancel the pending change.');const trusted=isCertifiedStudy(project().working.weave);if(trusted){status('VALIDATING CERTIFIED GEOMETRY FOR EXPORT…');await certifyCurrentForExport(project().working,project().id)}const current=project().working;if(!current.weave)throw Error('Create a Weave Study first.');if(current.interlacing?.enabled&&crossingCache?.key!==current.weave.derived.provenanceFingerprint)throw Error('Wait for complete interlacing before export.');return{current,trusted,crossings:current.interlacing?.enabled?crossingCache.result:null};}
 $('export-weave-svg').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),centerlines=$('weave-svg-mode').value==='centerlines',svg=centerlines?centerlineSvg(current,project().id,trusted):derivedSvg(current,project().id,trusted,crossings);download(svg,centerlines?'weave-centerlines.svg':'weave-full.svg','image/svg+xml');status(centerlines?'CENTERLINE SVG EXPORTED.':'FULL WEAVE SVG EXPORTED.');}catch(error){status(error.message,true)}};
 $('export-weave-pdf').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),color=$('weave-pdf-color').value;download(weavePdf(current,project().id,color,trusted,crossings),`weave-drawing-${color}.pdf`,'application/pdf');status(`${color.toUpperCase()} LINE PDF EXPORTED · NO BACKGROUND.`);}catch(error){status(error.message,true)}};
 $('export-weave-png').onclick=async()=>{try{const{current,trusted,crossings}=await certifiedExportState(),color=$('weave-png-color').value,longEdge=Number($('weave-png-size').value),layer=$('weave-png-layer').value,family=isolatedFamilyKey(current),label=layer==='source'?'SOURCE PATTERN':'DISTORTED RESULT';status(`RASTERIZING SELECTED WEAVE · ${label} · ${longEdge.toLocaleString()} PX…`);const svg=layer==='source'?sourceLayerSvg(current,project().id,color):derivedSvg(current,project().id,trusted,crossings,color),result=await transparentWeavePng(svg,longEdge,{family,onProgress:progress=>status(`ENCODING SELECTED WEAVE · ${label} · ${Math.round(progress*100)}%…`)});download(result.blob,`weave-${layer}-${color}-${result.width}x${result.height}.png`,'image/png');status(`${label}${family?' · '+family:''} EXPORTED · ${result.width.toLocaleString()} × ${result.height.toLocaleString()} PX · TRANSPARENT.`);}catch(error){status(error.message,true)}};
 $('export-influence-radius-svg').onclick=()=>attempt(()=>{if(pending)throw Error('Wait for the current influence change to finish.');const fields=influencesOf(project().working.weave);if(!fields.length)throw Error('The selected weave has no influence radii to export.');download(influenceRadiiSvg(fields),'weave-influence-radii.svg','image/svg+xml');status(`${fields.length} WEAVE FIELD RADII EXPORTED · CIRCLES ONLY.`);});
-
+
 const transientProject=()=>{const p=copyProjectForEdit(pending?.projectUpdate||project());if(pending)p.working=copyWorkingForEdit(pending.working);return p;};
-
-async function addField(kind='attractor'){await store.assertCurrent();let base=transientProject(),name;if(!base.working.weave){if(!base.working.carrierSourceRevisionId)throw Error('Create a Weave Pattern first.');base=createWeaveStudy(base,base.working.carrierSourceRevisionId);name=nextLibraryName(base.weaveStudies,'INFLUENCED GRID');$('weave-name').value=name;}else name=currentWeaveName(base.working);const next=addInfluence(base,kind),field=next.working.weave.generation.influences.at(-1);if(pending)cancelPending('PENDING CHANGE REPLACED BY ADD.');activeInfluenceId=field.id;focusDerivedEditing(true);requestWorking(next.working,'INFLUENCE ADDED AND SAVED.',true,{projectUpdate:next,saveWeaveName:name,feedback:{scope:'field',label:'INFLUENCE ADDED'}});$('field-section').open=true;}
-
-$('add-attractor').onclick=()=>attempt(()=>addField());$('add-another-influence').onclick=()=>attempt(()=>addField());
-
-$('duplicate-influence').onclick=()=>attempt(()=>{const base=transientProject();if(activeInfluenceId===null||!influenceOf(base.working.weave,activeInfluenceId))throw Error('Select an influence to duplicate.');const next=duplicateInfluence(base,activeInfluenceId),field=next.working.weave.generation.influences.at(-1);if(pending)cancelPending('PENDING CHANGE REPLACED BY DUPLICATE.');activeInfluenceId=field.id;focusDerivedEditing(true);requestWorking(next.working,'ACTIVE INFLUENCE DUPLICATED AND SAVED.',true,weaveSaveOptions(next,'INFLUENCE DUPLICATED'));});
-
-$('remove-attractor').onclick=()=>attempt(async()=>{if(activeInfluenceId===null)throw Error('Select an influence to remove.');if(pending)cancelPending();const next=removeInfluence(project(),activeInfluenceId),fields=influencesOf(next.working.weave);activeInfluenceId=fields[0]?.id||null;await editWorking(next.working,'INFLUENCE REMOVED AND SAVED.',weaveSaveOptions(next));});
-
-$('reset-attractor').onclick=()=>attempt(()=>{const base=transientProject(),field=activeInfluenceId===null?null:influenceOf(base.working.weave,activeInfluenceId);if(!field)throw Error('Select an influence to reset.');const b=bounds(base.working.boundary.points),extent=Math.max(b.maxX-b.minX,b.maxY-b.minY),families=Object.fromEntries(familyNames(base.working.carrier).map(n=>[n,{strength:50,tension:0}])),changes={influenceId:activeInfluenceId,families,influence:{kind:field.kind,center:{x:(b.minX+b.maxX)/2,y:(b.minY+b.maxY)/2},radius:.3*extent,enabled:true,falloff:3,direction:0}};if(pending)cancelPending('PENDING CHANGE REPLACED BY RESET.');const next=candidateInfluence(base,changes);focusDerivedEditing(true);requestWorking(next.working,'ACTIVE INFLUENCE RESET AND SAVED.',true,weaveSaveOptions(next,'INFLUENCE RESET'));});
-
-$('cancel-attractor').onclick=()=>cancelPending();$('show-attractor').onchange=e=>{display.attractor=e.target.checked;saveView();};
-
+
+async function addField(kind='attractor'){await store.assertCurrent();let base=transientProject(),name;if(!base.working.weave){if(!base.working.carrierSourceRevisionId)throw Error('Create a Weave Pattern first.');base=createWeaveStudy(base,base.working.carrierSourceRevisionId);name=nextLibraryName(base.weaveStudies,'INFLUENCED GRID');$('weave-name').value=name;}else name=currentWeaveName(base.working);const next=addInfluence(base,kind),field=next.working.weave.generation.influences.at(-1);if(pending)cancelPending('PENDING CHANGE REPLACED BY ADD.');activeInfluenceId=field.id;focusDerivedEditing(true);requestWorking(next.working,'INFLUENCE ADDED AND SAVED.',true,{projectUpdate:next,saveWeaveName:name,feedback:{scope:'field',label:'INFLUENCE ADDED'}});$('field-section').open=true;}
+
+$('add-attractor').onclick=()=>attempt(()=>addField());$('add-another-influence').onclick=()=>attempt(()=>addField());
+
+$('duplicate-influence').onclick=()=>attempt(()=>{const base=transientProject();if(activeInfluenceId===null||!influenceOf(base.working.weave,activeInfluenceId))throw Error('Select an influence to duplicate.');const next=duplicateInfluence(base,activeInfluenceId),field=next.working.weave.generation.influences.at(-1);if(pending)cancelPending('PENDING CHANGE REPLACED BY DUPLICATE.');activeInfluenceId=field.id;focusDerivedEditing(true);requestWorking(next.working,'ACTIVE INFLUENCE DUPLICATED AND SAVED.',true,weaveSaveOptions(next,'INFLUENCE DUPLICATED'));});
+
+$('remove-attractor').onclick=()=>attempt(async()=>{if(activeInfluenceId===null)throw Error('Select an influence to remove.');if(pending)cancelPending();const next=removeInfluence(project(),activeInfluenceId),fields=influencesOf(next.working.weave);activeInfluenceId=fields[0]?.id||null;await editWorking(next.working,'INFLUENCE REMOVED AND SAVED.',weaveSaveOptions(next));});
+
+$('reset-attractor').onclick=()=>attempt(()=>{const base=transientProject(),field=activeInfluenceId===null?null:influenceOf(base.working.weave,activeInfluenceId);if(!field)throw Error('Select an influence to reset.');const b=bounds(base.working.boundary.points),extent=Math.max(b.maxX-b.minX,b.maxY-b.minY),families=Object.fromEntries(familyNames(base.working.carrier).map(n=>[n,{strength:50,tension:0}])),changes={influenceId:activeInfluenceId,families,influence:{kind:field.kind,center:{x:(b.minX+b.maxX)/2,y:(b.minY+b.maxY)/2},radius:.3*extent,enabled:true,falloff:3,direction:0}};if(pending)cancelPending('PENDING CHANGE REPLACED BY RESET.');const next=candidateInfluence(base,changes);focusDerivedEditing(true);requestWorking(next.working,'ACTIVE INFLUENCE RESET AND SAVED.',true,weaveSaveOptions(next,'INFLUENCE RESET'));});
+
+$('cancel-attractor').onclick=()=>cancelPending();$('show-attractor').onchange=e=>{display.attractor=e.target.checked;saveView();};
+
 function influenceControlSnapshot(changed,value){const values={strength:Number($('attractor-strength').value),tension:Number($('attractor-tension').value),radius:Number($('attractor-radius').value),falloff:Number($('attractor-falloff').value),direction:Number($('influence-direction').value)};if(changed==='attractor-strength')values.strength=value;else if(changed==='attractor-tension')values.tension=value;else if(changed==='attractor-radius')values.radius=value;else if(changed==='attractor-falloff')values.falloff=value;else if(changed==='influence-direction')values.direction=value;return values;}
 
 function attractorChanges(base,changed,values){const field=activeInfluenceId===null?null:influenceOf(base.working.weave,activeInfluenceId);if(!field)throw Error('Select an influence to edit.');return{influenceId:activeInfluenceId,...influenceResponseChanges(field,activeInfluenceFamily,$('link-influence-roles').checked,changed,values),influence:{kind:$('influence-type').value,center:{...field.center},radius:values.radius,enabled:$('attractor-enabled').checked,falloff:values.falloff,direction:values.direction}}}
@@ -741,17 +761,17 @@ for(const [id,key] of [['attractor-radius','radius'],['attractor-strength','stre
 
 
 $('influence-type').onchange=()=>attempt(()=>{focusDerivedEditing(true);const base=transientProject(),next=candidateInfluence(base,attractorChanges(base,undefined,influenceControlSnapshot()));requestWorking(next.working,'INFLUENCE TYPE CHANGED AND SAVED.',true,weaveSaveOptions(next,`TYPE ${$('influence-type').value.toUpperCase()}`));});
-
+
 $('toggle-attractor-enabled').onclick=()=>attempt(async()=>{if(enabledAction)return;enabledAction=true;const button=$('toggle-attractor-enabled');button.disabled=true;try{const base=transientProject(),field=activeInfluenceId===null?null:influenceOf(base.working.weave,activeInfluenceId);if(!field)throw Error('Select an influence first.');const desired=!field.enabled;$('attractor-enabled').checked=desired;const changes=attractorChanges(base,undefined,influenceControlSnapshot());changes.influence.enabled=desired;if(pending)cancelPending('PENDING CHANGE REPLACED BY ENABLED STATE.');const next=candidateInfluence(base,changes);focusDerivedEditing(true);await editWorking(next.working,desired?'INFLUENCE ENABLED AND SAVED.':'INFLUENCE DISABLED AND SAVED.',weaveSaveOptions(next,desired?'INFLUENCE ENABLED':'INFLUENCE DISABLED'));}finally{enabledAction=false;button.disabled=false;}});
-
-$('variation-family-range').addEventListener('input',event=>syncSlider('variation-family',Number(event.target.value)));$('variation-family-range').addEventListener('change',event=>attempt(()=>{const base=transientProject(),next=candidateVariation(base,{family:activeInfluenceFamily,amount:Number(event.target.value)});requestWorking(next.working,`FAMILY ${activeInfluenceFamily} VARIATION UPDATED AND SAVED.`,true,weaveSaveOptions(next));}));
-
-$('variation-seed-range').addEventListener('input',event=>syncSlider('variation-seed',Number(event.target.value)));$('variation-seed-range').addEventListener('change',event=>attempt(()=>{const next=candidateVariation(transientProject(),{seed:Number(event.target.value)});requestWorking(next.working,'VARIATION SEED UPDATED AND SAVED.',true,weaveSaveOptions(next));}));
-
-$('new-variation-seed').onclick=()=>attempt(()=>{const base=transientProject(),seed=(Math.imul(base.working.weave.generation.variation.seed,1664525)+1013904223)>>>0,next=candidateVariation(base,{seed:seed%65536});requestWorking(next.working,'NEW REPEATABLE VARIATION SEED SAVED.',true,weaveSaveOptions(next));});
-
-$('reset-variation').onclick=()=>attempt(async()=>{if(pending)cancelPending('PENDING CHANGE REPLACED BY VARIATION RESET.');const families=Object.fromEntries(familyNames(project().working.carrier).map(n=>[n,{amount:0}])),next=candidateVariation(project(),{seed:1042,families});await editWorking(next.working,'VARIATION RESET AND SAVED.',weaveSaveOptions(next));});
-
+
+$('variation-family-range').addEventListener('input',event=>syncSlider('variation-family',Number(event.target.value)));$('variation-family-range').addEventListener('change',event=>attempt(()=>{const base=transientProject(),next=candidateVariation(base,{family:activeInfluenceFamily,amount:Number(event.target.value)});requestWorking(next.working,`FAMILY ${activeInfluenceFamily} VARIATION UPDATED AND SAVED.`,true,weaveSaveOptions(next));}));
+
+$('variation-seed-range').addEventListener('input',event=>syncSlider('variation-seed',Number(event.target.value)));$('variation-seed-range').addEventListener('change',event=>attempt(()=>{const next=candidateVariation(transientProject(),{seed:Number(event.target.value)});requestWorking(next.working,'VARIATION SEED UPDATED AND SAVED.',true,weaveSaveOptions(next));}));
+
+$('new-variation-seed').onclick=()=>attempt(()=>{const base=transientProject(),seed=(Math.imul(base.working.weave.generation.variation.seed,1664525)+1013904223)>>>0,next=candidateVariation(base,{seed:seed%65536});requestWorking(next.working,'NEW REPEATABLE VARIATION SEED SAVED.',true,weaveSaveOptions(next));});
+
+$('reset-variation').onclick=()=>attempt(async()=>{if(pending)cancelPending('PENDING CHANGE REPLACED BY VARIATION RESET.');const families=Object.fromEntries(familyNames(project().working.carrier).map(n=>[n,{amount:0}])),next=candidateVariation(project(),{seed:1042,families});await editWorking(next.working,'VARIATION RESET AND SAVED.',weaveSaveOptions(next));});
+
 function patternParameterEdit(key,value,commit,change,feedback){
  const prepared=editGesture.capture(JSON.stringify([project().id,project().working.carrier?.id,key]),value,transientProject,(base,raw)=>preparePatternUpdate(change(clone(base.working.carrier),raw),base),commit),owner=prepared.project;
  return updateWorking(owner.working,'WEAVE PATTERN UPDATED AND SAVED.',{preview:!commit,projectUpdate:owner,saveWeaveName:owner.working.weave?currentWeaveName(owner.working,owner):null,feedback:{scope:'pattern',label:feedback}});
@@ -763,146 +783,205 @@ for(const [id,key] of [['family-spacing','spacing'],['family-angle','angleDegree
 }
 
 
-$('add-pattern-family').onclick=()=>attempt(async()=>{const result=addWeaveFamily(project());activePatternFamily=result.family;await commitPatternCarrier(result.project.working.carrier,`FAMILY ${result.family} ADDED AND SAVED.`,result.project);});
-
-$('duplicate-pattern-family').onclick=()=>attempt(async()=>{const source=activePatternFamily,result=addWeaveFamily(project(),source);activePatternFamily=result.family;await commitPatternCarrier(result.project.working.carrier,`FAMILY ${result.family} DUPLICATED FROM FAMILY ${source} AND SAVED.`,result.project);});
-
-$('remove-pattern-family').onclick=()=>attempt(async()=>{const prior=activePatternFamily,next=removeWeaveFamily(project(),prior);activePatternFamily=orderedFamilies(next.working.carrier,next.working.familyCatalog)[0].key;if(!familyEntries(next.working).some(entry=>entry.id===display.isolatedFamilyId))display.isolatedFamilyId=null;await commitPatternCarrier(next.working.carrier,`FAMILY ${prior} DELETED; PATTERN UPDATED AND SAVED.`,next);});
-
-for(const name of ['select','draw','pan'])$(`${name}-tool`).onclick=()=>setTool(name);
-
-$('cancel-drawing').onclick=()=>setTool('select');
-
-$('finish-drawing').onclick=()=>attempt(async()=>{await setBoundary(validateBoundary(draft),'DRAWN BOUNDARY CREATED.');setTool('select');display.boundary=true;saveView();});
-
-$('fit').onclick=fit;
-
-for(const action of ['undo','redo'])$(action).onclick=()=>attempt(async()=>{
-
-  if(pending){cancelPending();return;}
-
+$('add-pattern-family').onclick=()=>attempt(async()=>{const result=addWeaveFamily(project());activePatternFamily=result.family;await commitPatternCarrier(result.project.working.carrier,`FAMILY ${result.family} ADDED AND SAVED.`,result.project);});
+
+$('duplicate-pattern-family').onclick=()=>attempt(async()=>{const source=activePatternFamily,result=addWeaveFamily(project(),source);activePatternFamily=result.family;await commitPatternCarrier(result.project.working.carrier,`FAMILY ${result.family} DUPLICATED FROM FAMILY ${source} AND SAVED.`,result.project);});
+
+$('remove-pattern-family').onclick=()=>attempt(async()=>{const prior=activePatternFamily,next=removeWeaveFamily(project(),prior);activePatternFamily=orderedFamilies(next.working.carrier,next.working.familyCatalog)[0].key;if(!familyEntries(next.working).some(entry=>entry.id===display.isolatedFamilyId))display.isolatedFamilyId=null;await commitPatternCarrier(next.working.carrier,`FAMILY ${prior} DELETED; PATTERN UPDATED AND SAVED.`,next);});
+
+for(const name of ['select','draw','pan'])$(`${name}-tool`).onclick=()=>setTool(name);
+
+$('cancel-drawing').onclick=()=>setTool('select');
+
+$('finish-drawing').onclick=()=>attempt(async()=>{await setBoundary(validateBoundary(draft),'DRAWN BOUNDARY CREATED.');setTool('select');display.boundary=true;saveView();});
+
+$('fit').onclick=fit;
+
+for(const action of ['undo','redo'])$(action).onclick=()=>attempt(async()=>{
+
+  if(pending){cancelPending();return;}
+
   const h=history(),current=project().working,next=clone(workspace);activeProject(next).working=h[action](current);workspace=next;acceptedVersion++;autosave.accept({workspace:next},{savedStatus:`${action.toUpperCase()} SAVED.`});status(`${action.toUpperCase()} APPLIED · BACKUP PENDING.`);
-
 
-
 
-
+
+
+
   selected=null;render();status(action.toUpperCase()+' APPLIED · BACKUP PENDING. SAVED REVISIONS RETAINED.');
-
-});
-
-for(const [id,key] of [['boundary','boundary'],['grid','grid'],['source-lattice','sourceLattice'],['original-grid','originalGrid'],['weave-source','weaveSource'],['weave-derived','weaveDerived']])$(`show-${id}`).onchange=event=>{display[key]=event.target.checked;saveView();status(`${event.target.nextSibling?.textContent?.trim()||id} ${event.target.checked?'SHOWN':'HIDDEN'}.`);};
-
-for(const [id,preset,label] of [['display-derived-only','derived-only','DISTORTED WEAVE ONLY'],['display-compare','compare','SOURCE AND DISTORTED WEAVE'],['display-construction','construction','CARRIER CONSTRUCTION']])$(id).onclick=()=>{display=applyDisplayPreset(display,preset);saveView();status(`${label} DISPLAYED. VIEW STATE DOES NOT CHANGE GEOMETRY.`);};
-
-document.querySelectorAll('[data-display-preset]').forEach(button=>button.onclick=()=>{display=applyDisplayPreset(display,button.dataset.displayPreset);saveView();status(`${button.textContent.trim()} DISPLAYED.`);});document.querySelectorAll('[data-display-key]').forEach(input=>input.onchange=()=>{display[input.dataset.displayKey]=input.checked;saveView();status(`${input.parentElement.textContent.trim()} ${input.checked?'SHOWN':'HIDDEN'}.`);});
-
-$('reveal-boundary').onclick=()=>{display.boundary=true;saveView();$('boundary-section').open=true;};
-
-document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{display.theme=b.dataset.theme;saveView();});
-
+
+});
+
+for(const [id,key] of [['boundary','boundary'],['grid','grid'],['source-lattice','sourceLattice'],['original-grid','originalGrid'],['weave-source','weaveSource'],['weave-derived','weaveDerived']])$(`show-${id}`).onchange=event=>{display[key]=event.target.checked;saveView();status(`${event.target.nextSibling?.textContent?.trim()||id} ${event.target.checked?'SHOWN':'HIDDEN'}.`);};
+
+for(const [id,preset,label] of [['display-derived-only','derived-only','DISTORTED WEAVE ONLY'],['display-compare','compare','SOURCE AND DISTORTED WEAVE'],['display-construction','construction','CARRIER CONSTRUCTION']])$(id).onclick=()=>{display=applyDisplayPreset(display,preset);saveView();status(`${label} DISPLAYED. VIEW STATE DOES NOT CHANGE GEOMETRY.`);};
+
+document.querySelectorAll('[data-display-preset]').forEach(button=>button.onclick=()=>{display=applyDisplayPreset(display,button.dataset.displayPreset);saveView();status(`${button.textContent.trim()} DISPLAYED.`);});document.querySelectorAll('[data-display-key]').forEach(input=>input.onchange=()=>{display[input.dataset.displayKey]=input.checked;saveView();status(`${input.parentElement.textContent.trim()} ${input.checked?'SHOWN':'HIDDEN'}.`);});
+
+$('reveal-boundary').onclick=()=>{display.boundary=true;saveView();$('boundary-section').open=true;};
+
+document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{display.theme=b.dataset.theme;saveView();});
+
 for(const rail of ['boards','controls'])$(`toggle-${rail}`).onclick=()=>{const hidden=$('shell').classList.toggle(`${rail}-hidden`),label=rail==='boards'?'LIBRARY':'CONTROLS';$(`toggle-${rail}`).textContent=`${label} ${hidden?'+':'−'}`;$(`toggle-${rail}`).setAttribute('aria-expanded',String(!hidden));};
-
+let evaluationSelection=null,evaluationSelectedIds=new Set(),evaluationDetailWeaveId=null;
+function fillEvaluationFilterChoices(){const component=$('evaluation-filter-component'),safeguard=$('evaluation-filter-safeguard');if(component?.dataset.ready!=='true'){for(const item of listCriteria())for(const name of item.components){const option=document.createElement('option');option.value=name;option.textContent=`${item.criterionId} ${name}`;component?.append(option);}if(component)component.dataset.ready='true';}if(safeguard?.dataset.ready!=='true'){for(const item of listCriteria())for(const name of item.safeguards){const option=document.createElement('option');option.value=name;option.textContent=`${item.criterionId} ${name}`;safeguard?.append(option);}if(safeguard)safeguard.dataset.ready='true';}}
+function evaluationLibraryQuery(){const number=id=>{const value=$(id)?.value??'';if(value==='')return null;const parsed=Number(value);return Number.isFinite(parsed)?parsed:null;};return {search:$('evaluation-search')?.value||'',sort:$('evaluation-sort')?.value||'newest',filter:$('evaluation-filter')?.value||'all',criterion:$('evaluation-filter-criterion')?.value||'',criterionStatus:$('evaluation-filter-criterion-status')?.value||'all',ratingMin:number('evaluation-filter-rating-min'),ratingMax:number('evaluation-filter-rating-max'),component:$('evaluation-filter-component')?.value||'',componentMin:number('evaluation-filter-component-min'),componentMax:number('evaluation-filter-component-max'),safeguard:$('evaluation-filter-safeguard')?.value||'',capActive:$('evaluation-filter-cap')?.checked?true:null,analysis:$('evaluation-filter-analysis')?.value||'all',familyMin:number('evaluation-filter-family-min'),familyMax:number('evaluation-filter-family-max'),source:$('evaluation-filter-source')?.value||'',parameter:$('evaluation-filter-parameter')?.value||'',parameterMin:number('evaluation-filter-parameter-min'),parameterMax:number('evaluation-filter-parameter-max')};}
+function renderEvaluationLibrary(){const list=$('evaluation-library');if(!list)return;fillEvaluationFilterChoices();const records=project().carrierStudies,visible=queryEvaluationRecords(records,evaluationLibraryQuery()),known=new Set(records.map(entry=>readWeaveIdentity(entry).weaveId));for(const id of evaluationSelectedIds)if(!known.has(id))evaluationSelectedIds.delete(id);$('evaluation-count').textContent=visible.length===records.length?String(records.length).padStart(2,'0'):`${String(visible.length).padStart(2,'0')} / ${String(records.length).padStart(2,'0')}`;$('evaluation-selected').textContent=`${String(evaluationSelectedIds.size).padStart(2,'0')} SELECTED`;updateEvaluationCompareButton();list.replaceChildren(...visible.map(entry=>{const identity=readWeaveIdentity(entry),summary=readEvaluationSummary(entry),card=element('article','evaluation-card'),pick=element('input','evaluation-select'),preview=element('span','library-thumb'),copy=element('div','evaluation-copy'),actions=element('div','evaluation-actions'),open=element('button','','OPEN'),generate=element('button','','OPEN IN GENERATOR');card.dataset.weaveId=identity.weaveId;if(identity.weaveId===evaluationSelection)card.classList.add('active');if(summary.status==='needs-reevaluation')card.classList.add('needs-reevaluation');pick.type='checkbox';pick.dataset.evaluationSelect=identity.weaveId;pick.checked=evaluationSelectedIds.has(identity.weaveId);pick.setAttribute('aria-label',`SELECT ${identity.name||identity.weaveId}`);if(pick.checked)card.classList.add('selected');preview.innerHTML=weaveThumbnail(entry)||'<span aria-hidden="true">◇</span>';const criteria=readCriterionRecords(entry);copy.append(element('b','',identity.name||identity.weaveId),element('span','evaluation-id',identity.weaveId),element('span','library-created',formatWeaveCreatedDate(identity.createdAt)),element('span','evaluation-status',summary.statusLabel),element('span','evaluation-ratings',criteria.map(item=>`${item.criterionId} ${item.showRating?item.ratingText:'—'}`).join(' · ')),element('span','evaluation-score',summary.score===null?'SCORE —':`SCORE ${summary.score}`));const curation=curateDesignerData(entry.designerData),marks=['favorite','shortlist','advance','reject'].filter(flag=>curation[flag]===true).map(flag=>flag.toUpperCase());if(curation.note)marks.push('NOTE');if(marks.length)copy.append(element('span','evaluation-designer',marks.join(' · ')));const failedReason=summary.status==='evaluation-failed'?readGeometryReadiness(project(),entry).reasons.join(' '):'';if(failedReason)copy.append(element('span','evaluation-reason',failedReason));const parent=readWeaveParent(entry);if(parent){const parentEntry=evaluationRecord(parent.weaveId);copy.append(element('span','evaluation-lineage',`DERIVED FROM ${parentEntry?.name||parent.weaveId}`));}open.type='button';open.dataset.evaluationOpen=entry.latestRevisionId;generate.type='button';generate.dataset.evaluationGenerate=entry.latestRevisionId;actions.append(open,generate);card.append(pick,preview,copy,actions);return card;}));if(!records.length)list.append(element('p','micro','NO SAVED WEAVES.'));else if(!visible.length)list.append(element('p','micro','NO MATCHING WEAVES.'));renderEvaluationResearch();}
+function evaluationRecord(weaveId){return project().carrierStudies.find(entry=>readWeaveIdentity(entry).weaveId===weaveId)||null;}
+function savedWeaveRevision(entry){const pinned=entry.generatorRevisionId&&findCarrierRevision(project(),entry.generatorRevisionId);return (pinned||findCarrierRevision(project(),entry.latestRevisionId))?.revision||entry.revisions.at(-1);}
+function updateEvaluationCompareButton(){const selected=evaluationSelectedIds.size>=1,comparing=evaluationSelectedIds.size>=2;const compare=$('evaluation-compare-open');if(compare)compare.disabled=!comparing;for(const id of ['evaluation-evaluate-selected','evaluation-reevaluate-outdated']){const button=$(id);if(button)button.disabled=!selected;}}
+function setEvaluationPane(detail){const compare=detail==='compare',open=detail===true;$('evaluation-library').hidden=open||compare;$('evaluation-tools').hidden=open||compare;$('evaluation-advanced').hidden=open||compare;$('evaluation-research').hidden=open||compare;$('evaluation-count').hidden=open||compare;$('evaluation-selected').hidden=open||compare;for(const id of ['evaluation-compare-open','evaluation-evaluate-selected','evaluation-reevaluate-outdated'])$(id).hidden=open||compare;$('evaluation-detail').hidden=!open;$('evaluation-compare').hidden=!compare;}
+function renderCompareRows(title,rows){const block=element('section','compare-block');if(title)block.append(element('h2','',title));for(const row of rows){const line=element('div',row.different?'compare-row compare-different':'compare-row');line.append(element('span','',row.label));for(const cell of row.cells)line.append(element('b','',cell));block.append(line);}return block;}
+function renderEvaluationCompare(){const body=$('evaluation-compare-body');if(!body)return;const records=[...evaluationSelectedIds].map(id=>evaluationRecord(id)).filter(Boolean);const compared=compareEvaluationRecords(records);const note=$('evaluation-compare-note');if(note)note.textContent=records.length<2?'SELECT AT LEAST TWO WEAVES.':compared.cohortWarning;const current=$('evaluation-compare-current');if(current)current.hidden=!(compared.cohortWarning||records.some(entry=>readEvaluationSummary(entry).status==='needs-reevaluation'));const heads=element('div','compare-row compare-head');heads.append(element('span','','WEAVE'));for(const column of compared.columns){const card=element('div','compare-identity');card.append(element('b','',column.name||column.weaveId),element('span','',column.weaveId),element('span','',column.status));const entry=evaluationRecord(column.weaveId);const thumb=element('span','library-thumb');thumb.innerHTML=entry?weaveThumbnail(entry)||'':'';card.prepend(thumb);heads.append(card);}const different=compared.settings.filter(row=>row.different),matching=compared.settings.filter(row=>!row.different);const evidence=element('details','compare-evidence');evidence.append(element('summary','','EVIDENCE'));for(const row of compared.criteria){const line=element('div','compare-row');line.append(element('span','',row.id));for(const text of compared.evidence[row.id]||[])line.append(element('b','',text));evidence.append(line);}const same=element('details','compare-matching');same.append(element('summary','',`MATCHING SETTINGS · ${String(matching.length).padStart(2,'0')}`));same.append(renderCompareRows('',matching));body.replaceChildren(heads,renderCompareRows('CRITERIA',compared.criteria),renderCompareRows('COMPONENTS',compared.components),renderCompareRows('SAFEGUARDS',compared.safeguards),renderCompareRows('DIFFERENT SETTINGS',different),same,renderCompareRows('VERSIONS',compared.versions),renderCompareRows('DESIGNER', [compared.designer]),evidence);}
+function showEvaluationCompare(){setEvaluationPane('compare');renderEvaluationCompare();status('COMPARE.');}
+function showEvaluationLibrary(){evaluationDetailWeaveId=null;setEvaluationPane(false);if(document.body.dataset.view==='evaluation')renderEvaluationLibrary();}
+function appendEvaluationFields(node,pairs){node.replaceChildren(...pairs.map(([label,value])=>{const row=element('div','evaluation-field');row.append(element('span','',label),element('b','',value||'—'));return row;}));}
+function renderEvaluationSetting(row){const line=element('div','evaluation-field');line.append(element('span','',row.label));const shown=element('b','',row.value||'—');if(row.readOnly&&row.control==='slider'&&row.type==='number'&&Number.isFinite(row.raw)){const bar=document.createElement('input');bar.type='range';bar.className='evaluation-parameter-bar';bar.min=String(row.min);bar.max=String(row.max);bar.step=String(row.step??1);bar.value=String(row.raw);bar.disabled=true;bar.tabIndex=-1;bar.setAttribute('aria-hidden','true');const wrap=element('div','evaluation-parameter');wrap.append(shown,bar);line.append(wrap);}else line.append(shown);return line;}
+function renderCriterionLabels(){for(const item of listCriteria()){const summary=document.querySelector(`[data-criterion-id="${item.criterionId}"] summary`);if(summary)summary.textContent=`${item.criterionId} — ${item.name}`;}}
+function renderCriterionPanels(criteria){for(const item of criteria){const shell=document.querySelector(`[data-criterion-id="${item.criterionId}"]`);if(!shell)continue;const slot=shell.querySelector(`[data-criterion-status="${item.criterionId}"]`);if(slot)slot.textContent=item.statusLabel;shell.querySelector('.criterion-body')?.remove();const body=element('div','criterion-body');if(item.showRating){body.append(element('p','criterion-rating',`${item.ratingText} / 5`));if(item.score!==null)body.append(element('p','record-note',`NORMALIZED ${item.score.toFixed(2)}`));}if(item.notice)body.append(element('p','record-note',item.notice));if(item.explanation)body.append(element('p','criterion-explanation',item.explanation));const addLines=(rows)=>{if(!rows.length)return;const block=element('div','criterion-lines');for(const [label,value] of rows){const line=element('div','criterion-line');line.append(element('span','',label),element('b','',value));block.append(line);}body.append(block);};if(item.components.length)body.append(element('p','micro','COMPONENTS'));addLines(item.components);if(item.safeguards.length)body.append(element('p','micro','SAFEGUARD'));addLines(item.safeguards);if(item.evidence.length||item.reason){const details=element('details','criterion-evidence');details.open=Boolean(item.reason);details.append(element('summary','','EVIDENCE'));if(item.reason)details.append(element('p','criterion-reason',item.reason));const block=element('div','criterion-lines');for(const [label,value] of item.evidence){const line=element('div','criterion-line');line.append(element('span','',label),element('b','',value));block.append(line);}if(item.evidence.length)details.append(block);body.append(details);}if(item.reasons?.length){const retry=element('button','','REEVALUATE');retry.type='button';retry.dataset.reevaluate=item.criterionId;body.append(retry);}shell.append(body);}}
+function renderEvaluationHistory(entry,criteria){const node=$('evaluation-detail-history');if(!node)return;const history=readEvaluationHistory(entry);if(!history.length){node.textContent='NONE';return;}node.replaceChildren(...history.map(item=>{const block=element('details','evaluation-history');if(item.current)block.open=true;block.append(element('summary','',`${formatWeaveCreatedDate(item.createdAt)||item.createdAt} · ${item.current?'CURRENT':'SUPERSEDED'}`));if(item.supersession)block.append(element('p','record-note',item.supersession));const lines=element('div','criterion-lines');for(const [id,rating] of Object.entries(item.ratings)){const line=element('div','criterion-line');line.append(element('span','',id),element('b','',rating===null?'—':`${Number(rating).toFixed(1)} / 5`));lines.append(line);const stale=item.current?criteria.find(criterion=>criterion.criterionId===id):null;if(stale?.reasons?.length)lines.append(element('p','record-note',stale.notice));}block.append(lines);const versions=element('details','criterion-evidence');versions.append(element('summary','','VERSIONS'));const versionLines=element('div','criterion-lines');for(const [id,logic] of Object.entries(item.logicVersions)){const line=element('div','criterion-line');line.append(element('span','',id),element('b','',`${logic||'—'} · ${item.calibrationVersions[id]||'—'}`));versionLines.append(line);}versions.append(versionLines);block.append(versions);return block;}));}
+function renderEvaluationEvidence(entry,revision,summary){renderCriterionLabels();const readiness=readGeometryReadiness(project(),entry),analysis=readAnalysisStatus(entry),criteria=readCriterionRecords(entry);$('evaluation-detail-geometry').textContent=readiness.label;$('evaluation-detail-geometry-note').textContent=readiness.reasons.join(' · ');$('evaluation-detail-analysis').textContent=analysis.statusLabel;$('evaluation-detail-evaluation').textContent=summary.statusLabel;$('evaluation-detail-score').textContent=summary.score===null?'SCORE —':`SCORE ${summary.score}`;$('evaluation-detail-criteria').replaceChildren(...criteria.map(item=>{const line=element('div','evaluation-field');line.append(element('span','',`${item.criterionId} — ${item.title}`),element('b','',item.statusLabel));return line;}));renderCriterionPanels(criteria);const staleButton=$('evaluation-detail-reevaluate-stale');if(staleButton)staleButton.disabled=!criteria.some(item=>item.reasons?.length);renderEvaluationHistory(entry,criteria);const shared=$('evaluation-detail-shared');if(shared)shared.textContent=analysis.statusLabel;const moduleList=$('evaluation-detail-modules');if(moduleList)moduleList.replaceChildren(...readAnalysisModules(entry).map(item=>{const line=element('div','evaluation-field');line.append(element('span','',item.label),element('b','',item.statusLabel));return line;}));const stored=readEvaluationProvenance(entry,revision);appendEvaluationFields($('evaluation-detail-provenance'),[['WEAVE ID',stored.weaveId||''],['GEOMETRY VERSION',stored.geometryVersion||''],['GEOMETRY FINGERPRINT',stored.geometryFingerprint||''],['SEED',stored.seed===null||stored.seed===undefined?'NONE':String(stored.seed)],['GENERATOR VERSION',stored.generatorVersion||'']]);}
+function designerMarks(data){const curation=curateDesignerData(data);return ['favorite','shortlist','advance','reject'].filter(flag=>curation[flag]===true);}
+function renderDesignerPanel(entry){const panel=$('evaluation-detail-designer'),note=$('evaluation-designer-note');if(!panel)return;const curation=curateDesignerData(entry.designerData);if(note&&document.activeElement!==note)note.value=curation.note||'';for(const flag of ['favorite','shortlist','advance','reject']){const button=document.querySelector(`[data-curation="${flag}"]`);if(button)button.classList.toggle('active',curation[flag]===true);}const marks=designerMarks(entry.designerData).map(flag=>flag.toUpperCase());panel.replaceChildren(element('p','micro',marks.length?marks.join(' · '):'NO CURATION'));if(curation.note)panel.append(element('p','criterion-reason',curation.note));}
+async function storeDesignerChange(entry,change){const revisions=canonical(entry.revisions),scores=canonical(entry.evaluations),analysis=canonical(entry.derivedAnalysis),lineage=canonical(entry.lineage);entry.designerData=curateDesignerData(entry.designerData,change);if(canonical(entry.revisions)!==revisions||canonical(entry.evaluations)!==scores||canonical(entry.derivedAnalysis)!==analysis||canonical(entry.lineage)!==lineage)throw Error('A designer note changed the saved weave.');await persistLibraryProject(project(),'DESIGNER NOTE SAVED.');renderEvaluationDetail();}
+function renderEvaluationLineage(entry){const node=$('evaluation-detail-lineage');if(!node)return;const identity=readWeaveIdentity(entry),chain=readWeaveLineage(entry),parent=chain.parent?evaluationRecord(chain.parent.weaveId):null,children=project().carrierStudies.filter(item=>readWeaveParent(item)?.weaveId===identity.weaveId&&item!==entry);const steps=[['GENERATED',formatWeaveCreatedDate(chain.generated)||'SAVED'],['SAVED',chain.saved?'SAVED REVISION':'NOT SAVED'],['ANALYZED',chain.analyzed],['EVALUATED',chain.evaluated],['VARIATION',parent?.name||chain.parent?.weaveId||'NONE'],['SENT TO INTERPRETER',chain.handoffs.length?`${String(chain.handoffs.length).padStart(2,'0')} SENT`: 'NOT SENT'],['DOWNSTREAM',children.length||chain.downstream.length?`${String(children.length).padStart(2,'0')} VARIATION${children.length===1?'':'S'} · ${String(chain.downstream.length).padStart(2,'0')} HANDED OFF`:'NONE']];node.replaceChildren(...steps.map(([label,value],index)=>{const line=element('div','lineage-step');line.append(element('span','',index?`↓ ${label}`:label),element('b','',value));return line;}));if(parent){const open=element('button','','OPEN PARENT');open.type='button';open.dataset.lineageOpen=readWeaveIdentity(parent).weaveId;node.append(open);}for(const child of children){const open=element('button','',`OPEN ${child.name||readWeaveIdentity(child).weaveId}`);open.type='button';open.dataset.lineageOpen=readWeaveIdentity(child).weaveId;node.append(open);}const latest=chain.handoffs.at(-1);if(latest)node.append(element('p','record-note',`LATEST HANDOFF ${latest.handoffId}`));}
+function renderEvaluationDetail(){const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry){showEvaluationLibrary();status('THIS WEAVE RECORD IS MISSING.');return;}const identity=readWeaveIdentity(entry),revision=savedWeaveRevision(entry),summary=readEvaluationSummary(entry),listed=listSavedGenerationSettings(revision);$('evaluation-detail-preview').innerHTML=weaveThumbnail(entry)||'<span aria-hidden="true">◇</span>';const parent=readWeaveParent(entry),parentEntry=parent?evaluationRecord(parent.weaveId):null,identityRows=[['NAME',identity.name||''],['WEAVE ID',identity.weaveId],['CREATED AT',formatWeaveCreatedDate(identity.createdAt)||identity.createdAt||''],['GENERATOR VERSION',identity.generatorVersion||'']];if(parent)identityRows.push(['DERIVED FROM',parentEntry?.name||parent.weaveId]);appendEvaluationFields($('evaluation-detail-identity'),identityRows);const compareParent=$('evaluation-detail-compare-parent');if(compareParent)compareParent.hidden=!parentEntry;const settings=$('evaluation-detail-generation');settings.replaceChildren();if(listed.rows.length)for(const row of listed.rows)settings.append(renderEvaluationSetting(row));for(const group of listed.groups||[]){const block=element('div','evaluation-group');block.append(element('h3','',group.title));for(const row of group.rows)block.append(renderEvaluationSetting(row));settings.append(block);}if(listed.note)settings.append(element('p','record-note',listed.note));if(!listed.rows.length&&!listed.groups?.length&&!listed.note)settings.append(element('p','micro','UNAVAILABLE'));renderEvaluationEvidence(entry,revision,summary);renderDesignerPanel(entry);renderEvaluationLineage(entry);$('evaluation-detail-generate').dataset.revisionId=revision?.id||'';status('EVALUATION RECORD OPENED.');}
+function researchOption(label,value){const option=document.createElement('option');option.value=value;option.textContent=label;return option;}
+function researchNumber(value){return Number.isFinite(value)?String(Math.round(value*100)/100):'—';}
+function researchWords(name){return String(name).replace(/([a-z])([A-Z])/g,'$1 $2');}
+function researchFinding(criterionId,groups){const scored=groups.high.sampleSize+groups.low.sampleSize+groups.mid.sampleSize;if(!scored)return `${criterionId} has no rating in this sample.`;const names=group=>group.names.join(', ');const sentences=[];if(groups.high.sampleSize&&!groups.low.sampleSize&&!groups.mid.sampleSize)sentences.push(`${criterionId} is high on all ${groups.high.sampleSize}: ${names(groups.high)}.`);else if(groups.low.sampleSize&&!groups.high.sampleSize&&!groups.mid.sampleSize)sentences.push(`${criterionId} is low on all ${groups.low.sampleSize}: ${names(groups.low)}.`);else{if(groups.high.sampleSize)sentences.push(`${criterionId} is high on ${groups.high.sampleSize}: ${names(groups.high)}.`);if(groups.low.sampleSize)sentences.push(`${criterionId} is low on ${groups.low.sampleSize}: ${names(groups.low)}.`);if(groups.mid.sampleSize)sentences.push(`${criterionId} is in the middle on ${groups.mid.sampleSize}: ${names(groups.mid)}.`);}if(groups.cap.sampleSize)sentences.push(groups.cap.sampleSize===scored?`The cap held the score down on all ${groups.cap.sampleSize}.`:`The cap held the score down on ${groups.cap.sampleSize}: ${names(groups.cap)}.`);return sentences.join(' ');}
+function researchSettings(parameter,parameterB,groups){if(!groups.length)return '';const label=parameterB?`${parameter} and ${parameterB}`:parameter;const same=groups.every(group=>group.average===groups[0].average);if(same)return `${label} changes across these weaves, but the result stays ${researchNumber(groups[0].average)}.`;return `${label}: ${groups.map(group=>`${group.label} on ${group.sampleSize}, average ${researchNumber(group.average)}`).join('; ')}.`;}
+function renderEvaluationResearch(){const body=$('evaluation-research-body');if(!body)return;const dataset=evaluationDataset(project().carrierStudies),criterion=$('evaluation-research-criterion'),outcome=$('evaluation-research-outcome'),parameter=$('evaluation-research-parameter'),second=$('evaluation-research-parameter-b');const labels=[...new Set(dataset.rows.flatMap(row=>row.parameters.map(item=>item.label)))].sort();const selectedParameter=parameter.value;parameter.replaceChildren(...labels.map(label=>researchOption(label,label)));if(labels.includes(selectedParameter))parameter.value=selectedParameter;const selectedSecond=second.value;second.replaceChildren(researchOption('NONE',''),...labels.map(label=>researchOption(label,label)));if(selectedSecond&&labels.includes(selectedSecond)&&selectedSecond!==parameter.value)second.value=selectedSecond;const definition=listCriteria().find(item=>item.criterionId===criterion.value)||listCriteria()[0];const outcomes=[['rating','RATING'],['normalized','NORMALIZED'],...definition.components.map(name=>[`component:${name}`,researchWords(name)]),...definition.safeguards.map(name=>[`safeguard:${name}`,`${researchWords(name)} cap`])];const selectedOutcome=outcome.value;outcome.replaceChildren(...outcomes.map(([value,label])=>researchOption(label,value)));if(outcomes.some(([value])=>value===selectedOutcome))outcome.value=selectedOutcome;const pattern=parameterPattern(dataset,{criterionId:criterion.value,outcome:outcome.value,parameter:parameter.value,parameterB:second.value});const groups=outcomeGroups(dataset,criterion.value);const advisory=$('evaluation-research-advisory');if(advisory)advisory.textContent=ADVISORY_BOUNDARY;const sample=dataset.excludedCount?`${dataset.includedCount} scored weaves. ${dataset.excludedCount} have no current score, so they are not in this sample.`:`${dataset.includedCount} scored weaves.`;const patternNote=pattern.sampleSize<5?'There are not enough weaves to see a pattern.':pattern.correlationNote;body.replaceChildren(element('p','criterion-reason',sample),element('p','criterion-reason',researchFinding(criterion.value,groups)));const setting=researchSettings(parameter.value,second.value,pattern.groups);if(setting)body.append(element('p','criterion-reason',`${setting} ${patternNote}`));else body.append(element('p','criterion-reason',patternNote));if(typeof pattern.correlation==='number')body.append(element('p','criterion-reason',`In this sample the setting and the result move together (${researchNumber(pattern.correlation)}). This does not score a weave.`));if(criterion.value==='WV-05'){const roles=familyRolePattern(dataset,{parameter:parameter.value,metric:'consequence'});body.append(element('p','criterion-reason',`Across ${roles.familyCount} families, ${roles.lowConsequence} would barely be missed and ${roles.strongInterstitial} open a strong gap.`));}if(dataset.cohort){const versions=element('details','criterion-evidence');versions.append(element('summary','','VERSIONS'),element('p','record-note',dataset.cohort));body.append(versions);}}
+function showEvaluationDetail(weaveId){evaluationDetailWeaveId=weaveId;evaluationSelection=weaveId;setEvaluationPane(true);renderEvaluationDetail();}
+function setWorkspaceView(view){const evaluation=view==='evaluation';document.body.dataset.view=evaluation?'evaluation':'generator';$('evaluation-page').hidden=!evaluation;$('open-evaluation').hidden=evaluation;$('open-generator').hidden=!evaluation;for(const id of ['toggle-boards','new-board','toggle-controls'])$(id).hidden=evaluation;if(!evaluation)evaluationDetailWeaveId=null;setEvaluationPane(false);if(evaluation)renderEvaluationLibrary();status(evaluation?'EVALUATION.':'GENERATOR.');}
+$('open-evaluation').onclick=()=>setWorkspaceView('evaluation');
+$('open-generator').onclick=()=>setWorkspaceView('generator');
+$('evaluation-back').onclick=()=>setWorkspaceView('generator');
+$('evaluation-library').onclick=event=>attempt(async()=>{if(event.target.closest('[data-evaluation-select]'))return;const generate=event.target.closest('[data-evaluation-generate]');if(generate){setWorkspaceView('generator');await openSavedWeaveRecord(generate.dataset.evaluationGenerate);return;}const open=event.target.closest('[data-evaluation-open]');if(!open)return;showEvaluationDetail(open.closest('.evaluation-card')?.dataset.weaveId);});
+$('evaluation-detail-back').onclick=()=>{showEvaluationLibrary();status('EVALUATION.');};
+$('evaluation-detail-generate').onclick=()=>attempt(async()=>{const revisionId=$('evaluation-detail-generate').dataset.revisionId;if(!revisionId)throw Error('This weave record is missing.');setWorkspaceView('generator');await openSavedWeaveRecord(revisionId);});
+$('evaluation-detail-duplicate').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');await persistLibraryProject(duplicateLibraryItem(project(),'pattern',entry.id,{recordsOnly:true}),'WEAVE DUPLICATED.');showEvaluationLibrary();});
+function handoffNote(message,error=false){const note=$('evaluation-detail-handoff-note');if(!note)return;note.hidden=!message;note.textContent=message||'';note.classList.toggle('error',!!error);}
+$('evaluation-detail-handoff').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');const revisions=canonical(entry.revisions),scores=canonical(entry.evaluations);const packageObject=buildWeaveHandoff(project(),entry);recordWeaveHandoff(entry,packageObject);if(canonical(entry.revisions)!==revisions||canonical(entry.evaluations)!==scores){handoffNote('THE PACKAGE WAS NOT SENT.',true);throw Error('The handoff changed the saved weave.');}download(JSON.stringify(packageObject,null,2),`weave-handoff-${shortWeaveId(packageObject.identity.sourceWeaveId)}.json`);handoffNote('PACKAGE DOWNLOADED. THIS WEAVE WAS NOT CHANGED.');try{await persistLibraryProject(project(),'INTERPRETER PACKAGE SAVED.');}catch(error){handoffNote('PACKAGE DOWNLOADED. THE HANDOFF NOTE COULD NOT BE SAVED.',true);throw error;}renderEvaluationDetail();handoffNote('PACKAGE DOWNLOADED. THIS WEAVE WAS NOT CHANGED.');evaluationNotice('PACKAGE DOWNLOADED. THIS WEAVE WAS NOT CHANGED.');});
+$('evaluation-detail-compare-parent').onclick=()=>attempt(()=>{const entry=evaluationRecord(evaluationDetailWeaveId),parent=readWeaveParent(entry),parentEntry=parent?evaluationRecord(parent.weaveId):null;if(!entry||!parentEntry)throw Error('The parent weave is missing.');evaluationSelectedIds=new Set([readWeaveIdentity(parentEntry).weaveId,readWeaveIdentity(entry).weaveId]);showEvaluationCompare();});
+$('evaluation-detail-delete').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');if(!confirm(`Delete ${entry.name}?`))return;const weaveId=readWeaveIdentity(entry).weaveId,updated=deleteLibraryItem(project(),'pattern',entry.id);evaluationSelectedIds.delete(weaveId);if(evaluationSelection===weaveId)evaluationSelection=null;evaluationDetailWeaveId=null;await persistLibraryProject(updated,'WEAVE DELETED.');showEvaluationLibrary();});
+$('evaluation-detail-analyze').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');analyzeWeave(project(),entry);await persistLibraryProject(project(),'ANALYSIS SAVED.');renderEvaluationDetail();evaluationNotice('ANALYSIS SAVED.');});
+$('evaluation-detail-evaluate').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');const button=$('evaluation-detail-evaluate');button.disabled=true;$('evaluation-detail-evaluation').textContent='EVALUATING';evaluationNotice('EVALUATING.');await new Promise(resolve=>setTimeout(resolve,0));try{evaluateWeave(project(),entry);await persistLibraryProject(project(),'EVALUATION SAVED.');renderEvaluationDetail();evaluationNotice(evaluationFailureText(entry)||'EVALUATION SAVED.',Boolean(evaluationFailureText(entry)));}finally{button.disabled=false;}});
+$('evaluation-detail-reevaluate-stale').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');const button=$('evaluation-detail-reevaluate-stale');button.disabled=true;$('evaluation-detail-evaluation').textContent='EVALUATING';evaluationNotice('EVALUATING.');await new Promise(resolve=>setTimeout(resolve,0));try{const result=reevaluateWeave(project(),entry,{stale:true});if(!result.updated.length){$('evaluation-detail-evaluation').textContent=readEvaluationSummary(entry).statusLabel;evaluationNotice('NO STALE CRITERIA.');return;}await persistLibraryProject(project(),'EVALUATION SAVED.');renderEvaluationDetail();evaluationNotice(evaluationFailureText(entry)||'EVALUATION SAVED.',Boolean(evaluationFailureText(entry)));}finally{if(document.body.contains(button))button.disabled=!readCriterionRecords(entry).some(item=>item.reasons?.length);}});
+$('evaluation-designer-save').onclick=()=>attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');await storeDesignerChange(entry,{note:$('evaluation-designer-note').value});});
+$('evaluation-detail').addEventListener('click',event=>{const curation=event.target.closest('[data-curation]');if(curation){attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');const flag=curation.dataset.curation,on=curateDesignerData(entry.designerData)[flag]!==true;await storeDesignerChange(entry,{[flag]:on});});return;}const open=event.target.closest('[data-lineage-open]');if(open){showEvaluationDetail(open.dataset.lineageOpen);return;}const button=event.target.closest('[data-reevaluate]');if(!button)return;attempt(async()=>{const entry=evaluationRecord(evaluationDetailWeaveId);if(!entry)throw Error('This weave record is missing.');button.disabled=true;$('evaluation-detail-evaluation').textContent='EVALUATING';evaluationNotice('EVALUATING.');await new Promise(resolve=>setTimeout(resolve,0));try{reevaluateWeave(project(),entry,{criterionId:button.dataset.reevaluate});await persistLibraryProject(project(),'EVALUATION SAVED.');renderEvaluationDetail();evaluationNotice(evaluationFailureText(entry)||'EVALUATION SAVED.',Boolean(evaluationFailureText(entry)));}finally{if(document.body.contains(button))button.disabled=false;}});});
+$('evaluation-library').addEventListener('change',event=>{const pick=event.target.closest('[data-evaluation-select]');if(!pick)return;const weaveId=pick.closest('.evaluation-card')?.dataset.weaveId;if(!weaveId)return;if(pick.checked)evaluationSelectedIds.add(weaveId);else evaluationSelectedIds.delete(weaveId);pick.closest('.evaluation-card')?.classList.toggle('selected',pick.checked);$('evaluation-selected').textContent=`${String(evaluationSelectedIds.size).padStart(2,'0')} SELECTED`;updateEvaluationCompareButton();status(evaluationSelectedIds.size?`${String(evaluationSelectedIds.size).padStart(2,'0')} WEAVES SELECTED.`:'EVALUATION.');});
+$('evaluation-compare-open').onclick=()=>{if(evaluationSelectedIds.size>=2)showEvaluationCompare();};
+$('evaluation-compare-back').onclick=()=>{showEvaluationLibrary();status('EVALUATION.');};
+async function runSelectedEvaluation(outdated){const records=[...evaluationSelectedIds].map(id=>evaluationRecord(id)).filter(Boolean);if(!records.length){evaluationNotice('SELECT A WEAVE.',true);return;}for(const id of ['evaluation-evaluate-selected','evaluation-reevaluate-outdated','evaluation-compare-current']){const button=$(id);if(button)button.disabled=true;}const updated=[],failed=[];try{for(let index=0;index<records.length;index++){const name=readWeaveIdentity(records[index]).name||readWeaveIdentity(records[index]).weaveId;evaluationNotice(`EVALUATING ${name}.`);await new Promise(resolve=>setTimeout(resolve,0));const result=evaluateSelectedWeaves(project(),[records[index]],{outdated});updated.push(...result.updated);failed.push(...result.failed);}if(updated.length)await persistLibraryProject(project(),'EVALUATION SAVED.');const failureText=records.map(evaluationFailureText).filter(Boolean).join(' ');if(failureText)evaluationNotice(failureText,true);else if(updated.length)evaluationNotice(failed.length?`EVALUATION SAVED. ${String(failed.length).padStart(2,'0')} FAILED.`:'EVALUATION SAVED.');else if(failed.length)evaluationNotice(failed.map(item=>item.message).join(' · '),true);else evaluationNotice('NO OUTDATED WEAVES.');if(!$('evaluation-compare').hidden)renderEvaluationCompare();else if(document.body.dataset.view==='evaluation')renderEvaluationLibrary();}finally{updateEvaluationCompareButton();const current=$('evaluation-compare-current');if(current)current.disabled=false;}}
+$('evaluation-evaluate-selected').onclick=()=>attempt(()=>runSelectedEvaluation(false));
+$('evaluation-reevaluate-outdated').onclick=()=>attempt(()=>runSelectedEvaluation(true));
+$('evaluation-compare-current').onclick=()=>attempt(()=>runSelectedEvaluation(true));
+for(const [id,eventName] of [['evaluation-search','input'],['evaluation-sort','change'],['evaluation-filter','change']])$(id).addEventListener(eventName,()=>{if(document.body.dataset.view==='evaluation')renderEvaluationLibrary();});
+$('evaluation-advanced')?.addEventListener('input',()=>{if(document.body.dataset.view==='evaluation')renderEvaluationLibrary();});
+$('evaluation-advanced')?.addEventListener('change',()=>{if(document.body.dataset.view==='evaluation')renderEvaluationLibrary();});
+for(const id of ['evaluation-research-criterion','evaluation-research-outcome','evaluation-research-parameter','evaluation-research-parameter-b'])$(id)?.addEventListener('change',()=>{if(document.body.dataset.view==='evaluation'&&$('evaluation-detail').hidden&&$('evaluation-compare').hidden)renderEvaluationResearch();});
+
 $('backup').onclick=()=>attempt(async()=>{const active=project(),name=active.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'weave-project',text=(await storageTask({type:'export',packed:store.lastPacked,projectId:active.id})).text;download(text,`${name}-backup.json`);status(`${active.name} PROJECT BACKUP EXPORTED · ${(projectPortableByteLength(store.lastPacked,active.id)/1024).toFixed(1)} KIB.`);});
-
-$('reload-latest').onclick=()=>location.reload();
-
-window.addEventListener('storage',event=>{if(event.key!==ADVISORY_KEY||!event.newValue||!store.head)return;try{const latest=JSON.parse(event.newValue);if(latest.generation===store.head.generation&&latest.currentRoot===store.head.currentRoot)return;$('reload-latest').hidden=false;$('project-section').open=true;setEditFeedback('field','error','PAUSED · ANOTHER TAB SAVED NEWER WORK');status('ANOTHER TAB SAVED A NEWER WORKSPACE. RELOAD LATEST BEFORE EDITING.',true);}catch{}});
-
-$('raw-backup').onclick=()=>attempt(async()=>{if(store.recoveryPacked)download((await storageTask({type:'export',packed:store.recoveryPacked})).text,'weave-foundation-previous-recovery.json');else download(store.raw(),'weave-foundation-raw-recovery.json','text/plain');});
-
-$('import-backup').onclick=()=>{$('import-message').textContent='';$('backup-dialog').showModal();};
-
-$('backup-file').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;$('backup-json').value=await file.text();};
-
-$('confirm-import').onclick=async()=>{try{$('confirm-import').disabled=true;$('import-message').textContent='VALIDATING SAVED STUDIES…';const text=$('backup-json').value,header=JSON.parse(text),decoded=[2,3].includes(header?.version)?(await storageTask({type:'portable',text})).workspace:parseBackup(text),incoming=await certifyWorkspace(decoded),next=mergeBackup(workspace,incoming,true,true);await persist(next,true);histories.clear();$('backup-dialog').close();setTool('select');render();fit();status('BACKUP IMPORTED. EXISTING BOARDS RETAINED.');}catch(error){$('import-message').textContent=error.message;}finally{$('confirm-import').disabled=false;}};
-
-$('import-svg').onchange=async event=>{const file=event.target.files?.[0];if(!file){clearSvgStage();return;}try{const boundary=parseSvgBoundary(await file.text(),file.name);showSvgStage(file,boundary);status('SVG VALIDATED. REVIEW THE STAGED BOUNDARY BEFORE APPLY.');}catch(error){showSvgStage(file,null,error.message);status(error.message,true);}};
-
-$('cancel-svg-import').onclick=()=>{clearSvgStage();status('SVG IMPORT CANCELLED. THE WORKING BOUNDARY IS UNCHANGED.');};
-
-$('apply-svg-import').onclick=()=>attempt(async()=>{if(!stagedSvg)throw new Error('Choose and validate an SVG boundary first.');const filename=stagedSvg.filename;await setBoundary(stagedSvg.boundary,`SVG BOUNDARY APPLIED FROM ${filename}. ONE UNDO RESTORES THE PRIOR BOUNDARY.`);clearSvgStage();display.boundary=true;saveView();selected=null;fit();});
-
-$('export-svg').onclick=()=>attempt(()=>download(boundarySvg(project().working.boundary),'weave-boundary.svg','image/svg+xml'));
-
-$('export-dxf').onclick=()=>attempt(()=>download(boundaryDxf(project().working.boundary),'weave-boundary.dxf','application/dxf'));
-
-const localPoint=event=>{const rect=$('canvas').getBoundingClientRect();return {x:event.clientX-rect.left,y:event.clientY-rect.top};};
-
-function deselectActiveInfluence(){if(activeInfluenceId===null||activeInfluenceId===undefined)return;activeInfluenceId=null;renderAttractorControls();renderAttractorGuide();status('INFLUENCE DESELECTED. SELECT A GUIDE OR LIST ITEM TO EDIT IT.');}
-
-document.querySelector('.workspace').addEventListener('pointerdown',event=>{if(!event.target.closest('[data-influence-id]'))deselectActiveInfluence();});
-
-$('canvas').onpointerdown=event=>{
-
-  if(event.button!==0&&event.button!==1)return;
-
-  const p=localPoint(event),influenceId=event.target.dataset.influenceId;
-
-  if(influenceId){const field=influenceOf(pending?.working.weave||project().working.weave,influenceId);if(field){activeInfluenceId=field.id;renderAttractorControls();renderAttractorGuide();status(`ACTIVE ${field.kind.toUpperCase()} SELECTED.`);}}
-
-  else deselectActiveInfluence();
-
-  if(tool==='draw'&&event.button===0){draft.push(toDocument(p,view,width,height));renderCanvas();return;}
-
-  if(tool==='pan'||event.button===1){event.preventDefault();drag={type:'pan',start:p,view:clone(view)};}
-
-  else if(event.target.dataset.attractorHandle){const fieldId=event.target.dataset.influenceId||activeInfluenceId,field=influenceOf(pending?.working.weave||project().working.weave,fieldId);if(field){activeInfluenceId=field.id;drag={type:'attractor',handle:event.target.dataset.attractorHandle,field:clone(field)};}}
-
-  else if(event.target.dataset.vertex!==undefined){selected=Number(event.target.dataset.vertex);vertexPreview=null;drag={type:'vertex',index:selected,points:clone(project().working.boundary.points)};renderVertexControls(project().working.boundary);renderCanvas();}
-
-  else {selected=null;renderCanvas();}
-
-  if(drag)$('canvas').setPointerCapture(event.pointerId);
-
-};
-
-$('canvas').onpointermove=event=>{
-
-  const p=localPoint(event),doc=toDocument(p,view,width,height);$('pointer').textContent=`X ${doc.x.toFixed(2)} / Y ${doc.y.toFixed(2)}`;
-
-  if(drag?.type==='pan'){view={...drag.view,cx:drag.view.cx-(p.x-drag.start.x)/drag.view.scale,cy:drag.view.cy+(p.y-drag.start.y)/drag.view.scale};renderCanvas();}
-
-  else if(drag?.type==='vertex'){drag.points[drag.index]={x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))};renderCanvas();}
-
+
+$('reload-latest').onclick=()=>location.reload();
+
+window.addEventListener('storage',event=>{if(event.key!==ADVISORY_KEY||!event.newValue||!store.head)return;try{const latest=JSON.parse(event.newValue);if(latest.generation===store.head.generation&&latest.currentRoot===store.head.currentRoot)return;$('reload-latest').hidden=false;$('project-section').open=true;setEditFeedback('field','error','PAUSED · ANOTHER TAB SAVED NEWER WORK');status('ANOTHER TAB SAVED A NEWER WORKSPACE. RELOAD LATEST BEFORE EDITING.',true);}catch{}});
+
+$('raw-backup').onclick=()=>attempt(async()=>{if(store.recoveryPacked)download((await storageTask({type:'export',packed:store.recoveryPacked})).text,'weave-foundation-previous-recovery.json');else download(store.raw(),'weave-foundation-raw-recovery.json','text/plain');});
+
+$('import-backup').onclick=()=>{$('import-message').textContent='';$('backup-dialog').showModal();};
+
+$('backup-file').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;$('backup-json').value=await file.text();};
+
+$('confirm-import').onclick=async()=>{try{$('confirm-import').disabled=true;$('import-message').textContent='VALIDATING SAVED STUDIES…';const text=$('backup-json').value,header=JSON.parse(text),decoded=[2,3].includes(header?.version)?(await storageTask({type:'portable',text})).workspace:parseBackup(text),incoming=await certifyWorkspace(decoded),next=mergeBackup(workspace,incoming,true,true);await persist(next,true);histories.clear();$('backup-dialog').close();setTool('select');render();fit();status('BACKUP IMPORTED. EXISTING BOARDS RETAINED.');}catch(error){$('import-message').textContent=error.message;}finally{$('confirm-import').disabled=false;}};
+
+$('import-svg').onchange=async event=>{const file=event.target.files?.[0];if(!file){clearSvgStage();return;}try{const boundary=parseSvgBoundary(await file.text(),file.name);showSvgStage(file,boundary);status('SVG VALIDATED. REVIEW THE STAGED BOUNDARY BEFORE APPLY.');}catch(error){showSvgStage(file,null,error.message);status(error.message,true);}};
+
+$('cancel-svg-import').onclick=()=>{clearSvgStage();status('SVG IMPORT CANCELLED. THE WORKING BOUNDARY IS UNCHANGED.');};
+
+$('apply-svg-import').onclick=()=>attempt(async()=>{if(!stagedSvg)throw new Error('Choose and validate an SVG boundary first.');const filename=stagedSvg.filename;await setBoundary(stagedSvg.boundary,`SVG BOUNDARY APPLIED FROM ${filename}. ONE UNDO RESTORES THE PRIOR BOUNDARY.`);clearSvgStage();display.boundary=true;saveView();selected=null;fit();});
+
+$('export-svg').onclick=()=>attempt(()=>download(boundarySvg(project().working.boundary),'weave-boundary.svg','image/svg+xml'));
+
+$('export-dxf').onclick=()=>attempt(()=>download(boundaryDxf(project().working.boundary),'weave-boundary.dxf','application/dxf'));
+
+const localPoint=event=>{const rect=$('canvas').getBoundingClientRect();return {x:event.clientX-rect.left,y:event.clientY-rect.top};};
+
+function deselectActiveInfluence(){if(activeInfluenceId===null||activeInfluenceId===undefined)return;activeInfluenceId=null;renderAttractorControls();renderAttractorGuide();status('INFLUENCE DESELECTED. SELECT A GUIDE OR LIST ITEM TO EDIT IT.');}
+
+document.querySelector('.workspace').addEventListener('pointerdown',event=>{if(!event.target.closest('[data-influence-id]'))deselectActiveInfluence();});
+
+$('canvas').onpointerdown=event=>{
+
+  if(event.button!==0&&event.button!==1)return;
+
+  const p=localPoint(event),influenceId=event.target.dataset.influenceId;
+
+  if(influenceId){const field=influenceOf(pending?.working.weave||project().working.weave,influenceId);if(field){activeInfluenceId=field.id;renderAttractorControls();renderAttractorGuide();status(`ACTIVE ${field.kind.toUpperCase()} SELECTED.`);}}
+
+  else deselectActiveInfluence();
+
+  if(tool==='draw'&&event.button===0){draft.push(toDocument(p,view,width,height));renderCanvas();return;}
+
+  if(tool==='pan'||event.button===1){event.preventDefault();drag={type:'pan',start:p,view:clone(view)};}
+
+  else if(event.target.dataset.attractorHandle){const fieldId=event.target.dataset.influenceId||activeInfluenceId,field=influenceOf(pending?.working.weave||project().working.weave,fieldId);if(field){activeInfluenceId=field.id;drag={type:'attractor',handle:event.target.dataset.attractorHandle,field:clone(field)};}}
+
+  else if(event.target.dataset.vertex!==undefined){selected=Number(event.target.dataset.vertex);vertexPreview=null;drag={type:'vertex',index:selected,points:clone(project().working.boundary.points)};renderVertexControls(project().working.boundary);renderCanvas();}
+
+  else {selected=null;renderCanvas();}
+
+  if(drag)$('canvas').setPointerCapture(event.pointerId);
+
+};
+
+$('canvas').onpointermove=event=>{
+
+  const p=localPoint(event),doc=toDocument(p,view,width,height);$('pointer').textContent=`X ${doc.x.toFixed(2)} / Y ${doc.y.toFixed(2)}`;
+
+  if(drag?.type==='pan'){view={...drag.view,cx:drag.view.cx-(p.x-drag.start.x)/drag.view.scale,cy:drag.view.cy+(p.y-drag.start.y)/drag.view.scale};renderCanvas();}
+
+  else if(drag?.type==='vertex'){drag.points[drag.index]={x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))};renderCanvas();}
+
   else if(drag?.type==='attractor'){const influence=drag.handle==='center'?{center:{x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))}}:drag.handle==='direction'?{direction:Number((Math.atan2(doc.y-drag.field.center.y,doc.x-drag.field.center.x)*180/Math.PI).toFixed(3))}:{radius:Math.hypot(doc.x-drag.field.center.x,doc.y-drag.field.center.y)};attempt(()=>{focusDerivedEditing(true);return influenceParameterEdit(['canvas',drag.field.id,drag.handle],influence,false,(_base,raw)=>({influenceId:drag.field.id,influence:raw}),`DIRECT ${drag.handle.toUpperCase()} MOVE`)});}
-
-};
-
+
+};
+
 $('canvas').onpointerup=event=>{if(event.target.closest('[data-crossing]'))return;const completed=drag;drag=null;if(completed?.type==='vertex')attempt(async()=>{await setBoundary(validateBoundary(completed.points),'VERTEX MOVED. ONE UNDO RESTORES THE DRAG.');renderVertexControls(project().working.boundary);});if(completed?.type==='attractor')attempt(()=>{const doc=toDocument(localPoint(event),view,width,height),influence=completed.handle==='center'?{center:{x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))}}:completed.handle==='direction'?{direction:Number((Math.atan2(doc.y-completed.field.center.y,doc.x-completed.field.center.x)*180/Math.PI).toFixed(3))}:{radius:Math.hypot(doc.x-completed.field.center.x,doc.y-completed.field.center.y)};focusDerivedEditing(true);return influenceParameterEdit(['canvas',completed.field.id,completed.handle],influence,true,(_base,raw)=>({influenceId:completed.field.id,influence:raw}),`DIRECT ${completed.handle.toUpperCase()} MOVE`)});renderCanvas();};
-
-$('canvas').onpointercancel=()=>{drag=null;if(pending)cancelPending();else renderCanvas();};
-
-$('canvas').addEventListener('wheel',event=>{event.preventDefault();view=zoomAt(view,Math.exp(-event.deltaY*.001),localPoint(event),width,height);renderCanvas();},{passive:false});
-
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&pending){cancelPending();return;}if(event.target.closest('input,textarea,dialog'))return;if(event.key==='Escape'){setTool('select');return;}if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();$(event.shiftKey?'redo':'undo').click();}if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='y'){event.preventDefault();$('redo').click();}});
-
-new ResizeObserver(entries=>{const r=entries[0].contentRect;width=r.width;height=r.height;$('canvas').setAttribute('viewBox',`0 0 ${width} ${height}`);if(!view)fit();renderCanvas();}).observe($('drawing'));
-
-// Keep the workflow visible while every editing section remains opt-in.
-
-document.querySelectorAll('#controls > details').forEach(d=>d.open=d.id==='project-section');
-
-if(matchMedia('(max-width:760px)').matches){$('toggle-boards').click();$('toggle-controls').click();}
-
-syncBoundaryName();render();saveView();if(loadError){$('boundary-action-status').textContent='SAVING PAUSED: '+loadError;status(loadError,true);$('raw-backup').hidden=!(store.lastRaw||store.recoveryPacked);if(store.recoveryPacked)$('raw-backup').textContent='DOWNLOAD VALIDATED PREVIOUS ↓';}else status(store.head?.generation>1||store.lastRaw?'WORKSPACE RESTORED. SAVED REVISIONS ARE AVAILABLE IN BOARDS.':'SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.');
-
-if(document.modelContext?.registerTool){
-
-  const lifecycle=new AbortController();
-
+
+$('canvas').onpointercancel=()=>{drag=null;if(pending)cancelPending();else renderCanvas();};
+
+$('canvas').addEventListener('wheel',event=>{event.preventDefault();view=zoomAt(view,Math.exp(-event.deltaY*.001),localPoint(event),width,height);renderCanvas();},{passive:false});
+
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&pending){cancelPending();return;}if(event.target.closest('input,textarea,dialog'))return;if(event.key==='Escape'){setTool('select');return;}if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();$(event.shiftKey?'redo':'undo').click();}if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='y'){event.preventDefault();$('redo').click();}});
+
+new ResizeObserver(entries=>{const r=entries[0].contentRect;width=r.width;height=r.height;$('canvas').setAttribute('viewBox',`0 0 ${width} ${height}`);if(!view)fit();renderCanvas();}).observe($('drawing'));
+
+// Keep the workflow visible while every editing section remains opt-in.
+
+document.querySelectorAll('#controls > details').forEach(d=>d.open=d.id==='project-section');
+
+if(matchMedia('(max-width:760px)').matches){$('toggle-boards').click();$('toggle-controls').click();}
+
+syncBoundaryName();render();renderCriterionLabels();saveView();if(loadError){$('boundary-action-status').textContent='SAVING PAUSED: '+loadError;status(loadError,true);$('raw-backup').hidden=!(store.lastRaw||store.recoveryPacked);if(store.recoveryPacked)$('raw-backup').textContent='DOWNLOAD VALIDATED PREVIOUS ↓';}else status(store.head?.generation>1||store.lastRaw?'WORKSPACE RESTORED. SAVED REVISIONS ARE AVAILABLE IN BOARDS.':'SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.');
+
+if(document.modelContext?.registerTool){
+
+  const lifecycle=new AbortController();
+
   const tool={name:'read_weave_foundation',description:'Read the working boundary and carrier, immutable saved revisions, display state and build identity without editing.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');const derived=deriveWorking();return {build:BUILD,sourceTrace:sourceTraces.has(project().working.weave?.derived)?{version:'stitch-source-trace-v1',runs:sourceTraces.get(project().working.weave.derived).runs.length}:null,workspace:clone(workspace),display:clone(display),view:clone(view),carrier:derived?{inputFingerprint:derived.inputFingerprint,counts:clone(derived.diagnostics.counts),paths:clone(derived.paths),complete:derived.complete}:null,carrierDerivationCount,weaveDerivationCount,renderTelemetry:{full:fullRenderCount,targeted:targetedRenderCount},storageBlocked:store.blocked,autosave:autosave.state(),storage:store.head?{version:store.head.storageVersion,generation:store.head.generation,currentRoot:store.head.currentRoot,previousRoot:store.head.previousRoot,lastTransactionId:store.head.lastTransactionId,migrationComplete:store.head.migrationComplete}:null,workerTelemetry:{sequence:workerSequence,pending:pending?{phase:pending.phase,input:pending.input,started:pending.started,retried:pending.retried===true}:null,active:activeJob?{seq:activeJob.seq,requestId:activeJob.requestId,input:activeJob.input,attempt:activeJob.attempt}:null,events:clone(workerEvents)}};}};
-
-  const storageTool={name:'read_weave_storage_capacity',description:'Read compact portable-backup capacity accounting without returning workspace geometry.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');return{build:BUILD,storageBlocked:store.blocked,capacity:storageDiagnostics()};}};
-
-  try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
-  try{Promise.resolve(document.modelContext.registerTool(storageTool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
-
-  window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
-
-}
-
-
-
-
-installNumericInputs(document.getElementById('controls'));
+
+  const storageTool={name:'read_weave_storage_capacity',description:'Read compact portable-backup capacity accounting without returning workspace geometry.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('No input properties are accepted.');return{build:BUILD,storageBlocked:store.blocked,capacity:storageDiagnostics()};}};
+
+  try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
+  try{Promise.resolve(document.modelContext.registerTool(storageTool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
+
+  window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
+
+}
+
+
+
+
+applyGeneratorParameterControls(document);
+installNumericInputs(document.getElementById('controls'));

@@ -1,0 +1,67 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createWorkspace,finalizeSavedWeaveRecord,validateTrustedWorkspace} from '../dist/document.mjs';
+import {createRectangularCarrier} from '../dist/carrier.mjs';
+import {clearAnalysisCache} from '../dist/analysis.mjs';
+import {evaluateWeave} from '../dist/evaluation.mjs';
+import {scoreWV02} from '../dist/wv02.mjs';
+
+const near=(actual,expected)=>assert.ok(Math.abs(actual-expected)<1e-12,`${actual} is not ${expected}`);
+const map=(overrides)=>({m75:0,coverage:0,contrast:0,coordinationMedian:null,overlapCount:0,orientationRetention:1,...overrides});
+
+test('weak, target, uniform, conflicting, and destructive modulation follow the WV-02 handoff',()=>{
+ const weak=scoreWV02(map());
+ near(weak.effective,0);
+ near(weak.spatial,0);
+ near(weak.coordination,1);
+ near(weak.normalized,0);
+ assert.equal(weak.rating,1);
+ const target=scoreWV02(map({m75:.45,coverage:.5,contrast:.6,orientationRetention:.9}));
+ near(target.effective,1);
+ near(target.spatial,1);
+ near(target.coordination,1);
+ near(target.normalized,1);
+ assert.equal(target.rating,5);
+ const uniform=scoreWV02(map({m75:.45,coverage:1,contrast:.05,orientationRetention:.9}));
+ near(uniform.effective,1);
+ near(uniform.spatial,0);
+ near(uniform.normalized,0);
+ assert.ok(uniform.rating<target.rating);
+ const conflict=scoreWV02(map({m75:.45,coverage:.5,contrast:.6,overlapCount:4,coordinationMedian:.1,orientationRetention:.9}));
+ const coherent=scoreWV02(map({m75:.45,coverage:.5,contrast:.6,overlapCount:4,coordinationMedian:.8,orientationRetention:.9}));
+ near(conflict.coordination,0);
+ near(conflict.normalized,0);
+ near(coherent.coordination,1);
+ assert.ok(coherent.normalized>conflict.normalized);
+ const destroyed=scoreWV02(map({m75:.45,coverage:.5,contrast:.6,orientationRetention:.2}));
+ near(destroyed.base,1);
+ near(destroyed.retentionCap,.3);
+ near(destroyed.normalized,.3);
+ assert.equal(destroyed.rating,2.2);
+ assert.ok(destroyed.normalized<target.normalized);
+ near(scoreWV02(map({m75:2,coverage:.5,contrast:.6,orientationRetention:.9})).effective,0);
+ assert.equal(scoreWV02(map({m75:null})).status,'evaluation-failed');
+ assert.equal(scoreWV02(map({orientationRetention:null})).status,'evaluation-failed');
+});
+
+test('a weave without a field force stores a low WV-02 score and no overall score',()=>{
+ clearAnalysisCache();
+ const ws=createWorkspace();
+ let project=ws.projects[0];
+ project.working.carrier=createRectangularCarrier();
+ project=finalizeSavedWeaveRecord(project,'WEAVE A',{now:'2026-09-27T12:00:00.000Z',generatorVersion:'TEST-BUILD'}).project;
+ const entry=project.carrierStudies[0];
+ const result=evaluateWeave(project,entry,{evaluationId:'evaluation-wv02',createdAt:'2026-09-27T12:11:00.000Z'});
+ const scored=result.evaluation.criterionResults['WV-02'];
+ assert.equal(scored.status,'evaluated');
+ assert.equal(scored.rating<=1.9,true);
+ assert.equal(scored.evidenceRefs.length,1);
+ assert.equal(result.evaluation.criterionResults['WV-03'].status,'evaluated');
+ assert.equal(result.evaluation.criterionResults['WV-04'].status,'evaluated');
+ assert.equal(result.evaluation.criterionResults['WV-05'].status,'evaluated');
+ assert.equal(Object.hasOwn(result.evaluation,'overallScore'),false);
+ assert.equal(scored.explanation.includes('WV-02 scored'),true);
+ assert.equal(Object.hasOwn(scored.components,'effectiveModulation'),true);
+ ws.projects[0]=project;
+ validateTrustedWorkspace(ws);
+});

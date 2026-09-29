@@ -1,0 +1,37 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createWorkspace,finalizeSavedWeaveRecord,validateTrustedWorkspace} from '../dist/document.mjs';
+import {createRectangularCarrier} from '../dist/carrier.mjs';
+
+test('one Save Weave action creates one complete record and a repeat does not add another',()=>{
+ const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+ assert.match(html,/<button id="save-carrier" class="primary">SAVE WEAVE<\/button>/);
+ const ws=createWorkspace();
+ let project=ws.projects[0];
+ project.working.carrier=createRectangularCarrier();
+ const first=finalizeSavedWeaveRecord(project,'WEAVE A',{now:'2026-09-26T12:00:00.000Z',generatorVersion:'TEST-BUILD'});
+ assert.equal(first.created,true);
+ assert.equal(first.project.carrierStudies.length,1);
+ const entry=first.project.carrierStudies[0];
+ assert.equal(entry.revisions.length,1);
+ assert.equal(entry.generatorRevisionId,first.revisionId);
+ assert.equal(entry.weaveId.startsWith('weave-'),true);
+ assert.equal(entry.generatorVersion,'TEST-BUILD');
+ assert.ok(entry.revisions[0].generation);
+ assert.equal(entry.revisions[0].generation.seed,null);
+ assert.ok(entry.revisions[0].geometryRef);
+ assert.deepEqual(entry.derivedAnalysis,{});
+ assert.deepEqual(entry.evaluations,[]);
+ assert.deepEqual(entry.designerData,{});
+ assert.deepEqual(entry.lineage,{});
+ const second=finalizeSavedWeaveRecord(first.project,'WEAVE A',{now:'2026-09-26T13:00:00.000Z',generatorVersion:'TEST-BUILD'});
+ assert.equal(second.created,false);
+ assert.equal(second.project.carrierStudies.length,1);
+ assert.equal(second.project.carrierStudies[0].revisions.length,1);
+ assert.equal(second.revisionId,first.revisionId);
+ assert.equal(second.project.carrierStudies[0].weaveId,entry.weaveId);
+ ws.projects[0]=first.project;
+ validateTrustedWorkspace(ws);
+ assert.throws(()=>finalizeSavedWeaveRecord({...first.project,working:{...first.project.working,carrier:null}},'WEAVE A'),/Create a weave before saving/);
+});

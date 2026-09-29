@@ -1,0 +1,67 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createWorkspace,saveCarrierStudy,duplicateLibraryItem,restoreCarrierStudy,finalizeSavedWeaveRecord,validateTrustedWorkspace} from '../dist/document.mjs';
+import {createRectangularCarrier} from '../dist/carrier.mjs';
+import {canonical} from '../dist/weave.mjs';
+import {readWeaveIdentity,readWeaveParent,readEvaluationSummary,readAnalysisStatus} from '../dist/weave-record.mjs';
+
+const FIRST='2026-09-27T12:00:00.000Z',LATER='2026-09-27T13:00:00.000Z';
+
+test('a duplicate keeps the parent link and starts without the parent scores',()=>{
+ const ws=createWorkspace();
+ let project=ws.projects[0];
+ project.working.carrier=createRectangularCarrier();
+ project=saveCarrierStudy(project,'WEAVE',{now:FIRST,generatorVersion:'TEST-BUILD'}).project;
+ const parent=project.carrierStudies[0];
+ parent.evaluations.push({id:'parent-score'});
+ parent.designerData={note:'parent note'};
+ const parentRevision=canonical(parent.revisions[0]);
+ const parentFingerprint=parent.revisions[0].geometryRef.geometryFingerprint;
+ project=duplicateLibraryItem(project,'pattern',parent.id,{recordsOnly:true});
+ const savedParent=project.carrierStudies[0],child=project.carrierStudies[1];
+ assert.notEqual(readWeaveIdentity(child).weaveId,readWeaveIdentity(savedParent).weaveId);
+ assert.match(readWeaveIdentity(child).weaveId,/^weave-/);
+ assert.equal(readWeaveParent(child).weaveId,readWeaveIdentity(savedParent).weaveId);
+ assert.equal(readWeaveParent(child).revisionId,savedParent.revisions[0].id);
+ assert.equal(readWeaveParent(savedParent),null);
+ assert.equal(child.revisions[0].generation.parameters.families.A.spacing,savedParent.revisions[0].generation.parameters.families.A.spacing);
+ assert.equal(child.revisions[0].generation.seed,savedParent.revisions[0].generation.seed);
+ assert.equal(canonical(child.revisions[0].boundary),canonical(savedParent.revisions[0].boundary));
+ assert.deepEqual(child.evaluations,[]);
+ assert.deepEqual(child.derivedAnalysis,{});
+ assert.deepEqual(child.designerData,{});
+ assert.equal(readEvaluationSummary(child).status,'not-evaluated');
+ assert.equal(readAnalysisStatus(child).status,'not-analyzed');
+ assert.deepEqual(savedParent.evaluations,[{id:'parent-score'}]);
+ assert.equal(canonical(savedParent.revisions[0]),parentRevision);
+ const opened=restoreCarrierStudy(project,child.revisions[0].id);
+ assert.equal(opened.working.carrier.families.A.spacing,savedParent.revisions[0].carrier.families.A.spacing);
+ assert.equal(opened.working.carrierSourceRevisionId,child.revisions[0].id);
+ assert.equal(canonical(opened.carrierStudies[0].revisions[0]),parentRevision);
+ opened.working.carrier.families.A.spacing=80;
+ const varied=finalizeSavedWeaveRecord(opened,child.name,{now:LATER,generatorVersion:'TEST-BUILD'}).project;
+ const variedParent=varied.carrierStudies[0],variedChild=varied.carrierStudies[1];
+ assert.equal(variedParent.revisions.length,1);
+ assert.equal(variedParent.revisions[0].geometryRef.geometryFingerprint,parentFingerprint);
+ assert.deepEqual(variedParent.evaluations,[{id:'parent-score'}]);
+ assert.equal(variedChild.revisions.length,2);
+ assert.notEqual(variedChild.revisions[1].geometryRef.geometryFingerprint,variedChild.revisions[0].geometryRef.geometryFingerprint);
+ assert.equal(variedChild.revisions[1].geometryRef.geometryVersion,'analysis-geometry-v1');
+ assert.equal(readWeaveParent(variedChild).weaveId,readWeaveIdentity(variedParent).weaveId);
+ assert.deepEqual(variedChild.evaluations,[]);
+ assert.equal(readAnalysisStatus(variedChild).status,'not-analyzed');
+ ws.projects[0]=varied;
+ validateTrustedWorkspace(ws);
+});
+
+test('the evaluation page names the parent and can compare without ranking the child',()=>{
+ const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+ const app=readFileSync(new URL('../dist/app.mjs',import.meta.url),'utf8');
+ assert.match(html,/id="evaluation-detail-compare-parent"/);
+ assert.match(html,/COMPARE WITH PARENT/);
+ assert.match(app,/DERIVED FROM/);
+ assert.match(app,/evaluation-detail-compare-parent/);
+ assert.doesNotMatch(app,/better|worse/i);
+ assert.doesNotMatch(html,/better|worse/i);
+});
