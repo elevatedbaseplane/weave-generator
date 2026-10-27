@@ -156,3 +156,4 @@ body[data-view="evaluation"] #shell,body[data-view="evaluation"] #shell.boards-h
 .evaluation-parameter{display:flex;align-items:center;gap:10px;color:var(--ink)}
 .evaluation-parameter b{min-width:3ch}
 .evaluation-parameter-bar{flex:1;height:2px;margin:0;pointer-events:none;accent-color:var(--ink)}
+#source-image-layer,#source-image-handles{pointer-events:none}#source-image-controls{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--ink)}#source-image-controls .feature-actions{margin-top:8px}#source-image-upload{width:100%;margin-top:8px}.source-image-frame{fill:none;stroke:var(--ink);stroke-width:1;stroke-dasharray:4 3}.source-image-handle{fill:var(--paper);stroke:var(--ink);stroke-width:1}

@@ -53,6 +53,8 @@ import {History} from './history.mjs';
 import {IndexedStore,STORE_KEY,ADVISORY_KEY} from './storage.mjs?storage-epoch=20260918';
 
 import {fitView,toScreen,toDocument,zoomAt} from './viewport.mjs';
+import {fitImagePlacement,moveImage,resizeImageFromCorner,imageScreenRect,hitSourceImage,prepareSourceImage} from './source-image.mjs';
+import {readSourceImage,writeSourceImage,deleteSourceImage} from './source-image-store.mjs';
 
 import {boundarySvg,boundaryDxf} from './exchange.mjs';
 
@@ -85,7 +87,7 @@ const workingRoots=new WeakMap();
 
 const history=()=>{const id=workspace.activeProjectId;if(!histories.has(id))histories.set(id,new History());return histories.get(id);};
 
-let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,fieldPresentationPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0,savingWeave=false;
+let view=null,width=1,height=1,tool='select',draft=[],selected=null,drag=null,vertexPreview=null,stagedSvg=null,carrierPreview=null,fieldPresentationPreview=null,carrierDerivationCount=0,weaveDerivationCount=0,fullRenderCount=0,targetedRenderCount=0,savingWeave=false,sourceImage=null,sourceImageUrl='';
 
 let activePatternFamily='A',activeInfluenceFamily='A',activeInfluenceId=undefined;
 
@@ -415,9 +417,21 @@ function hasVisibleDistortion(weave){if(!weave)return false;if(weave.weaveVersio
 
 function svgElement(tag,attributes){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value] of Object.entries(attributes))el.setAttribute(key,String(value));return el;}
 
+function sourceImageRecord(){const {url,...record}=sourceImage;return record;}
+
+function applySourceImage(record){if(sourceImageUrl)URL.revokeObjectURL(sourceImageUrl);sourceImageUrl='';if(!record){sourceImage=null;}else{sourceImageUrl=URL.createObjectURL(record.blob);sourceImage={...record,url:sourceImageUrl};}syncSourceImageControls();if(view)renderCanvas();}
+
+async function refreshSourceImage(){try{applySourceImage(await readSourceImage(project().id));}catch(error){status(`SOURCE IMAGE UNAVAILABLE: ${error.message}`,true);}}
+
+function syncSourceImageControls(){const actions=$('source-image-actions'),statusNode=$('source-image-status');if(!actions||!statusNode)return;actions.hidden=!sourceImage;if(!sourceImage){statusNode.textContent='NO IMAGE';return;}const lock=$('source-image-lock'),visible=$('source-image-visible'),opacity=$('source-image-opacity');lock.textContent=sourceImage.locked?'UNLOCK PLACEMENT':'LOCK PLACEMENT';visible.checked=sourceImage.visible!==false;if(document.activeElement!==opacity)opacity.value=String(Math.round((sourceImage.opacity??0.72)*100));$('source-image-opacity-value').value=`${opacity.value}%`;statusNode.textContent=!sourceImage.visible?'HIDDEN':sourceImage.locked?'LOCKED · DRAW THE BOUNDARY ON THIS IMAGE':'UNLOCKED · DRAG TO MOVE · CORNER TO RESIZE';}
+
+function renderSourceImage(){const layer=$('source-image-layer'),handles=$('source-image-handles');if(!layer||!handles)return;layer.replaceChildren();handles.replaceChildren();if(!sourceImage?.visible||!sourceImage.url)return;const screen=imageScreenRect(sourceImage.placement,view,width,height,toScreen),image=svgElement('image',{x:screen.x,y:screen.y,width:Math.max(1,screen.width),height:Math.max(1,screen.height),opacity:sourceImage.opacity??0.72,preserveAspectRatio:'none'});image.setAttributeNS('http://www.w3.org/1999/xlink','href',sourceImage.url);image.setAttribute('href',sourceImage.url);layer.append(image);if(sourceImage.locked||tool!=='select')return;handles.append(svgElement('rect',{x:screen.x,y:screen.y,width:screen.width,height:screen.height,class:'source-image-frame'}));for(const point of [{x:screen.x,y:screen.y},{x:screen.x+screen.width,y:screen.y},{x:screen.x,y:screen.y+screen.height},{x:screen.x+screen.width,y:screen.y+screen.height}])handles.append(svgElement('rect',{x:point.x-5,y:point.y-5,width:10,height:10,class:'source-image-handle'}));}
+
+function sourceImageHit(screenPoint){if(!sourceImage?.visible||sourceImage.locked||tool!=='select')return null;return hitSourceImage(screenPoint,imageScreenRect(sourceImage.placement,view,width,height,toScreen));}
+
 function renderCanvas(){
 
-  if(!view)return;updateThreadClip();
+  if(!view)return;updateThreadClip();renderSourceImage();
 
   const geometry=$('geometry'),preview=$('draft-layer');geometry.replaceChildren();preview.replaceChildren();
 
@@ -453,7 +467,7 @@ function renderCanvas(){
 
   $('frame-layer').replaceChildren();if(display.grid)$('frame-layer').append(svgElement('rect',{x:40,y:50,width:Math.max(1,width-80),height:Math.max(1,height-100)}));
 
-  $('empty-hint').hidden=display.boundary||display.sourceLattice||display.originalGrid||(weave&&(display.weaveSource||display.weaveDerived))||tool==='draw';$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
+  $('empty-hint').hidden=display.boundary||display.sourceLattice||display.originalGrid||(weave&&(display.weaveSource||display.weaveDerived))||tool==='draw'||Boolean(sourceImage?.visible);$('zoom-label').textContent=`${(view.scale*100).toFixed(1)}%`;
 
 }
 
@@ -503,7 +517,7 @@ async function openSavedWeaveRecord(revisionId){const found=findCarrierRevision(
 
 const libraryClick=event=>attempt(async()=>{
 
-  const action=event.target.closest('[data-library-action]');if(action){event.preventDefault();event.stopPropagation();const type=action.dataset.libraryType,itemId=action.dataset.libraryId;if(type==='board'){const entry=workspace.projects.find(x=>x.id===itemId);if(!entry)throw Error('Board is missing.');let next=clone(workspace);if(action.dataset.libraryAction==='rename'){const name=prompt('Rename board',entry.name);if(name===null)return;const clean=name.trim().toUpperCase().slice(0,80);if(!clean)throw Error('Give this board a name.');next.projects.find(x=>x.id===itemId).name=clean;}else if(action.dataset.libraryAction==='duplicate'){const incoming={schemaVersion:workspace.schemaVersion,activeProjectId:itemId,projects:[{...clone(entry),name:entry.name+' COPY'}]};next=mergeBackup(workspace,incoming,true,true);}else{if(next.projects.length===1)throw Error('Keep at least one board.');if(!confirm(`Delete ${entry.name} and its complete saved tree?`))return;next.projects=next.projects.filter(x=>x.id!==itemId);if(next.activeProjectId===itemId)next.activeProjectId=next.projects[0].id;}await persist(next,true);histories.clear();render();status(`BOARD ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}const entry=(type==='boundary'?project().boundaries:type==='pattern'?project().carrierStudies:project().weaveStudies).find(x=>x.id===itemId);if(!entry)throw Error('Saved item is missing.');let updated;if(action.dataset.libraryAction==='rename'){const name=prompt(`Rename ${type}`,entry.name);if(name===null)return;updated=renameLibraryItem(project(),type,itemId,name);}else if(action.dataset.libraryAction==='duplicate')updated=duplicateLibraryItem(project(),type,itemId);else{if(!confirm(`Delete ${entry.name}${type==='boundary'?' and every nested Weave Pattern and Influenced Grid':type==='pattern'?' and every nested Influenced Grid':''}?`))return;updated=deleteLibraryItem(project(),type,itemId);}const next=clone(workspace);next.projects=next.projects.map(p=>p.id===updated.id?updated:p);await persist(next,true);render();status(`${type.toUpperCase()} ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}
+  const action=event.target.closest('[data-library-action]');if(action){event.preventDefault();event.stopPropagation();const type=action.dataset.libraryType,itemId=action.dataset.libraryId;if(type==='board'){const entry=workspace.projects.find(x=>x.id===itemId);if(!entry)throw Error('Board is missing.');let next=clone(workspace);if(action.dataset.libraryAction==='rename'){const name=prompt('Rename board',entry.name);if(name===null)return;const clean=name.trim().toUpperCase().slice(0,80);if(!clean)throw Error('Give this board a name.');next.projects.find(x=>x.id===itemId).name=clean;}else if(action.dataset.libraryAction==='duplicate'){const incoming={schemaVersion:workspace.schemaVersion,activeProjectId:itemId,projects:[{...clone(entry),name:entry.name+' COPY'}]};next=mergeBackup(workspace,incoming,true,true);}else{if(next.projects.length===1)throw Error('Keep at least one board.');if(!confirm(`Delete ${entry.name} and its complete saved tree?`))return;await deleteSourceImage(itemId);next.projects=next.projects.filter(x=>x.id!==itemId);if(next.activeProjectId===itemId)next.activeProjectId=next.projects[0].id;}await persist(next,true);histories.clear();render();await refreshSourceImage();status(`BOARD ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}const entry=(type==='boundary'?project().boundaries:type==='pattern'?project().carrierStudies:project().weaveStudies).find(x=>x.id===itemId);if(!entry)throw Error('Saved item is missing.');let updated;if(action.dataset.libraryAction==='rename'){const name=prompt(`Rename ${type}`,entry.name);if(name===null)return;updated=renameLibraryItem(project(),type,itemId,name);}else if(action.dataset.libraryAction==='duplicate')updated=duplicateLibraryItem(project(),type,itemId);else{if(!confirm(`Delete ${entry.name}${type==='boundary'?' and every nested Weave Pattern and Influenced Grid':type==='pattern'?' and every nested Influenced Grid':''}?`))return;updated=deleteLibraryItem(project(),type,itemId);}const next=clone(workspace);next.projects=next.projects.map(p=>p.id===updated.id?updated:p);await persist(next,true);render();status(`${type.toUpperCase()} ${action.dataset.libraryAction.toUpperCase()} COMPLETE.`);return;}
 
   const weaveOpen=event.target.closest('[data-weave-open]');if(weaveOpen){event.preventDefault();event.stopPropagation();await openSavedWeaveRecord(weaveOpen.dataset.carrierRevision);return;}
 
@@ -511,7 +525,7 @@ const libraryClick=event=>attempt(async()=>{
 
   if(templateRevision){event.preventDefault();event.stopPropagation();libraryTemplateRevisionId=templateRevision.dataset.templateRevision;renderBoards();status('REUSABLE WEAVE SELECTED. CHOOSE A BOUNDARY, THEN USE IT ON THAT BOUNDARY.');return;}
 
-  if(board){event.preventDefault();event.stopPropagation();treeOpenState.set(`board:${board.dataset.board}`,true);const next=clone(workspace);next.activeProjectId=board.dataset.board;await persist(next);setTool('select');syncBoundaryName();render();fit();status('BOARD RESTORED.');}
+  if(board){event.preventDefault();event.stopPropagation();treeOpenState.set(`board:${board.dataset.board}`,true);const next=clone(workspace);next.activeProjectId=board.dataset.board;await persist(next);setTool('select');syncBoundaryName();render();fit();await refreshSourceImage();status('BOARD RESTORED.');}
 
   if(revision){event.preventDefault();event.stopPropagation();if(pending)cancelPending('OPENING BOUNDARY.');const found=findRevision(project(),revision.dataset.revision);if(!found)throw Error('This boundary is missing.');const updated=clone(project());updated.working={boundary:clone(found.revision.boundary),sourceRevisionId:revision.dataset.revision,carrier:null,carrierSourceRevisionId:null,weave:null};delete updated.working.familyCatalog;delete updated.working.threadAppearance;delete updated.working.interlacing;delete updated.working.fieldPresentation;await editWorking(updated.working,'BOUNDARY OPENED. SELECT NEW OR APPLY THE PREVIOUSLY SELECTED WEAVE.',{projectUpdate:updated});$('boundary-name').value=found.entry.name;display.boundary=true;display.originalGrid=false;display.weaveSource=false;display.weaveDerived=false;display.attractor=false;saveView();selected=null;fit();}
 
@@ -525,11 +539,11 @@ for(const id of ['board-list','boundary-list','weave-list','library-template-lis
 
 $('new-board').onclick=()=>$('board-dialog').showModal();
 
-$('board-form').onsubmit=event=>{event.preventDefault();attempt(async()=>{const next=clone(workspace),board=createProject($('board-name').value);next.projects.push(board);next.activeProjectId=board.id;await persist(next);$('board-dialog').close();setTool('select');render();fit();status('NEW BOARD CREATED.');});};
+$('board-form').onsubmit=event=>{event.preventDefault();attempt(async()=>{const next=clone(workspace),board=createProject($('board-name').value);next.projects.push(board);next.activeProjectId=board.id;await persist(next);$('board-dialog').close();setTool('select');render();fit();await refreshSourceImage();status('NEW BOARD CREATED.');});};
 
 $('library-new-project').onclick=$('new-board').onclick;
 $('library-rename-project').onclick=()=>attempt(async()=>{const entry=project(),name=prompt('Rename project',entry.name);if(name===null)return;const clean=name.trim().toUpperCase().slice(0,80);if(!clean)throw Error('Give this project a name.');const next=clone(workspace);next.projects.find(item=>item.id===entry.id).name=clean;await persist(next,true);render();status('PROJECT RENAMED.');});
-$('library-delete-project').onclick=()=>attempt(async()=>{if(workspace.projects.length===1)throw Error('Keep at least one project.');if(!confirm(`Delete ${project().name} and all of its boundaries and weaves?`))return;const next=clone(workspace);next.projects=next.projects.filter(item=>item.id!==workspace.activeProjectId);next.activeProjectId=next.projects[0].id;await persist(next,true);histories.clear();libraryTemplateRevisionId=null;render();fit();status('PROJECT DELETED.');});
+$('library-delete-project').onclick=()=>attempt(async()=>{if(workspace.projects.length===1)throw Error('Keep at least one project.');if(!confirm(`Delete ${project().name} and all of its boundaries and weaves?`))return;const removed=workspace.activeProjectId,next=clone(workspace);next.projects=next.projects.filter(item=>item.id!==removed);next.activeProjectId=next.projects[0].id;await deleteSourceImage(removed);await persist(next,true);histories.clear();libraryTemplateRevisionId=null;render();fit();await refreshSourceImage();status('PROJECT DELETED.');});
 
 async function persistLibraryProject(updated,message){const next=clone(workspace);next.projects=next.projects.map(item=>item.id===updated.id?updated:item);await persist(next,true);render();status(message);}
 
@@ -905,6 +919,14 @@ $('export-svg').onclick=()=>attempt(()=>download(boundarySvg(project().working.b
 
 $('export-dxf').onclick=()=>attempt(()=>download(boundaryDxf(project().working.boundary),'weave-boundary.dxf','application/dxf'));
 
+$('source-image-upload').onclick=()=>$('source-image-file').click();
+$('source-image-file').onchange=()=>attempt(async()=>{const file=$('source-image-file').files?.[0];$('source-image-file').value='';if(!file)return;if(!view)fit();const prepared=await prepareSourceImage(file),placement=fitImagePlacement(view,width,height,prepared.width,prepared.height),record={projectId:project().id,blob:prepared.blob,name:prepared.name,pixelWidth:prepared.width,pixelHeight:prepared.height,placement,locked:false,visible:true,opacity:0.72};await writeSourceImage(record);applySourceImage(record);$('boundary-section').open=true;status('IMAGE LOADED. DRAG TO MOVE IT. DRAG A CORNER TO RESIZE. LOCK IT BEFORE YOU DRAW THE BOUNDARY.');});
+$('source-image-lock').onclick=()=>attempt(async()=>{if(!sourceImage)return;sourceImage.locked=!sourceImage.locked;await writeSourceImage(sourceImageRecord());syncSourceImageControls();renderCanvas();status(sourceImage.locked?'IMAGE LOCKED. DRAW THE BOUNDARY ON THIS IMAGE.':'IMAGE UNLOCKED. DRAG TO MOVE. DRAG A CORNER TO RESIZE.');});
+$('source-image-delete').onclick=()=>attempt(async()=>{if(!sourceImage)return;await deleteSourceImage(project().id);applySourceImage(null);status('IMAGE DELETED. THE BOUNDARY IS UNCHANGED.');});
+$('source-image-visible').onchange=()=>attempt(async()=>{if(!sourceImage)return;sourceImage.visible=$('source-image-visible').checked;await writeSourceImage(sourceImageRecord());syncSourceImageControls();renderCanvas();status(sourceImage.visible?'IMAGE SHOWN.':'IMAGE HIDDEN. THE BOUNDARY IS UNCHANGED.');});
+$('source-image-opacity').oninput=event=>{if(!sourceImage)return;sourceImage.opacity=Number(event.target.value)/100;$('source-image-opacity-value').value=`${event.target.value}%`;renderCanvas();};
+$('source-image-opacity').onchange=()=>attempt(async()=>{if(!sourceImage)return;await writeSourceImage(sourceImageRecord());});
+
 const localPoint=event=>{const rect=$('canvas').getBoundingClientRect();return {x:event.clientX-rect.left,y:event.clientY-rect.top};};
 
 function deselectActiveInfluence(){if(activeInfluenceId===null||activeInfluenceId===undefined)return;activeInfluenceId=null;renderAttractorControls();renderAttractorGuide();status('INFLUENCE DESELECTED. SELECT A GUIDE OR LIST ITEM TO EDIT IT.');}
@@ -929,6 +951,8 @@ $('canvas').onpointerdown=event=>{
 
   else if(event.target.dataset.vertex!==undefined){selected=Number(event.target.dataset.vertex);vertexPreview=null;drag={type:'vertex',index:selected,points:clone(project().working.boundary.points)};renderVertexControls(project().working.boundary);renderCanvas();}
 
+  else if(!influenceId&&event.button===0){const hit=sourceImageHit(p);if(hit)drag={type:'source-image',mode:hit.kind,corner:hit.corner||null,startDoc:toDocument(p,view,width,height),origin:clone(sourceImage.placement)};}
+
   else {selected=null;renderCanvas();}
 
   if(drag)$('canvas').setPointerCapture(event.pointerId);
@@ -943,13 +967,15 @@ $('canvas').onpointermove=event=>{
 
   else if(drag?.type==='vertex'){drag.points[drag.index]={x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))};renderCanvas();}
 
+  else if(drag?.type==='source-image'){sourceImage.placement=drag.mode==='move'?moveImage(drag.origin,doc.x-drag.startDoc.x,doc.y-drag.startDoc.y):resizeImageFromCorner(drag.origin,drag.corner,doc);renderCanvas();}
+
   else if(drag?.type==='attractor'){const influence=drag.handle==='center'?{center:{x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))}}:drag.handle==='direction'?{direction:Number((Math.atan2(doc.y-drag.field.center.y,doc.x-drag.field.center.x)*180/Math.PI).toFixed(3))}:{radius:Math.hypot(doc.x-drag.field.center.x,doc.y-drag.field.center.y)};attempt(()=>{focusDerivedEditing(true);return influenceParameterEdit(['canvas',drag.field.id,drag.handle],influence,false,(_base,raw)=>({influenceId:drag.field.id,influence:raw}),`DIRECT ${drag.handle.toUpperCase()} MOVE`)});}
 
 };
 
-$('canvas').onpointerup=event=>{if(event.target.closest('[data-crossing]'))return;const completed=drag;drag=null;if(completed?.type==='vertex')attempt(async()=>{await setBoundary(validateBoundary(completed.points),'VERTEX MOVED. ONE UNDO RESTORES THE DRAG.');renderVertexControls(project().working.boundary);});if(completed?.type==='attractor')attempt(()=>{const doc=toDocument(localPoint(event),view,width,height),influence=completed.handle==='center'?{center:{x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))}}:completed.handle==='direction'?{direction:Number((Math.atan2(doc.y-completed.field.center.y,doc.x-completed.field.center.x)*180/Math.PI).toFixed(3))}:{radius:Math.hypot(doc.x-completed.field.center.x,doc.y-completed.field.center.y)};focusDerivedEditing(true);return influenceParameterEdit(['canvas',completed.field.id,completed.handle],influence,true,(_base,raw)=>({influenceId:completed.field.id,influence:raw}),`DIRECT ${completed.handle.toUpperCase()} MOVE`)});renderCanvas();};
+$('canvas').onpointerup=event=>{const completed=drag;drag=null;if(completed?.type==='source-image')attempt(async()=>{await writeSourceImage(sourceImageRecord());status(sourceImage.locked?'IMAGE LOCKED.':'IMAGE PLACED. LOCK IT BEFORE YOU DRAW THE BOUNDARY.');});if(event.target.closest('[data-crossing]'))return;if(completed?.type==='vertex')attempt(async()=>{await setBoundary(validateBoundary(completed.points),'VERTEX MOVED. ONE UNDO RESTORES THE DRAG.');renderVertexControls(project().working.boundary);});if(completed?.type==='attractor')attempt(()=>{const doc=toDocument(localPoint(event),view,width,height),influence=completed.handle==='center'?{center:{x:Number(doc.x.toFixed(6)),y:Number(doc.y.toFixed(6))}}:completed.handle==='direction'?{direction:Number((Math.atan2(doc.y-completed.field.center.y,doc.x-completed.field.center.x)*180/Math.PI).toFixed(3))}:{radius:Math.hypot(doc.x-completed.field.center.x,doc.y-completed.field.center.y)};focusDerivedEditing(true);return influenceParameterEdit(['canvas',completed.field.id,completed.handle],influence,true,(_base,raw)=>({influenceId:completed.field.id,influence:raw}),`DIRECT ${completed.handle.toUpperCase()} MOVE`)});renderCanvas();};
 
-$('canvas').onpointercancel=()=>{drag=null;if(pending)cancelPending();else renderCanvas();};
+$('canvas').onpointercancel=()=>{const completed=drag;drag=null;if(completed?.type==='source-image'&&sourceImage){sourceImage.placement=completed.origin;renderCanvas();return;}if(pending)cancelPending();else renderCanvas();};
 
 $('canvas').addEventListener('wheel',event=>{event.preventDefault();view=zoomAt(view,Math.exp(-event.deltaY*.001),localPoint(event),width,height);renderCanvas();},{passive:false});
 
@@ -963,7 +989,7 @@ document.querySelectorAll('#controls > details').forEach(d=>d.open=d.id==='proje
 
 if(matchMedia('(max-width:760px)').matches){$('toggle-boards').click();$('toggle-controls').click();}
 
-syncBoundaryName();render();renderCriterionLabels();saveView();if(loadError){$('boundary-action-status').textContent='SAVING PAUSED: '+loadError;status(loadError,true);$('raw-backup').hidden=!(store.lastRaw||store.recoveryPacked);if(store.recoveryPacked)$('raw-backup').textContent='DOWNLOAD VALIDATED PREVIOUS ↓';}else status(store.head?.generation>1||store.lastRaw?'WORKSPACE RESTORED. SAVED REVISIONS ARE AVAILABLE IN BOARDS.':'SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.');
+syncBoundaryName();render();renderCriterionLabels();saveView();attempt(()=>refreshSourceImage());if(loadError){$('boundary-action-status').textContent='SAVING PAUSED: '+loadError;status(loadError,true);$('raw-backup').hidden=!(store.lastRaw||store.recoveryPacked);if(store.recoveryPacked)$('raw-backup').textContent='DOWNLOAD VALIDATED PREVIOUS ↓';}else status(store.head?.generation>1||store.lastRaw?'WORKSPACE RESTORED. SAVED REVISIONS ARE AVAILABLE IN BOARDS.':'SQUARE READY. SHOW BOUNDARY OR DRAW YOUR OWN.');
 
 if(document.modelContext?.registerTool){
 
