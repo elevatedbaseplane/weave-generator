@@ -22,6 +22,12 @@ test('black and white PNG vector sources change only visible line color and cont
  const project=fixture(),black=derivedSvg(project.working,project.id,true,null,'black'),white=derivedSvg(project.working,project.id,true,null,'white');assert.match(black,/<g fill="none" stroke="black"/);assert.match(white,/<g fill="none" stroke="white"/);assert.doesNotMatch(black,/<rect/);assert.doesNotMatch(white,/<rect/);assert.equal(black.replace('stroke="black"','stroke="white"'),white);
 });
 
+test('PNG fill paints the thread width white and leaves the stroke open',()=>{
+ const project=fixture(),svg=derivedSvg(project.working,project.id,true,null,'white','fill'),source=sourceLayerSvg(project.working,project.id,'white','fill');
+ assert.match(svg,/<g fill="#ffffff" stroke="none"/);assert.match(svg,/stroke-width="0"/);assert.match(svg,/Z"/);assert.doesNotMatch(svg,/stroke="white"|stroke="black"/);
+ assert.match(source,/<g fill="#ffffff" stroke="none"/);assert.match(source,/stroke-width="0"/);assert.match(source,/Z"/);
+});
+
 test('source-pattern PNG vector source contains the selected weave source layer without a background',()=>{
  const project=fixture(),svg=sourceLayerSvg(project.working,project.id,'black');assert.match(svg,/data-weave-export="source-layer"/);assert.match(svg,/data-presentation-part="source"/);assert.match(svg,/data-weave-family="A"/);assert.doesNotMatch(svg,/<rect|<mask/);
 });
